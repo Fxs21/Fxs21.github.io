@@ -1,0 +1,975 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Shuang">
+  <meta name="keywords" content="Shuang">
+  
+    <meta name="description" content="Python 面向对象部分.注意理解鸭子类型.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流畅的 Python-类和协议">
+<meta property="og:url" content="http://windsand.top/2024/10/30/%E6%B5%81%E7%95%85%E7%9A%84Python/3.%E7%B1%BB%E5%92%8C%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="Shuang blog">
+<meta property="og:description" content="Python 面向对象部分.注意理解鸭子类型.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://windsand.top/img/Fluent_Python_2nd.png">
+<meta property="article:published_time" content="2024-10-29T16:25:18.185Z">
+<meta property="article:modified_time" content="2024-10-29T17:44:25.780Z">
+<meta property="article:author" content="Shuang">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://windsand.top/img/Fluent_Python_2nd.png">
+  
+  
+  
+  <title>流畅的 Python-类和协议 - Shuang blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"windsand.top","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>windsand</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/train.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="流畅的 Python-类和协议"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-10-30 00:25" pubdate>
+          2024年10月30日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">流畅的 Python-类和协议</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="流畅的-Python-类和协议"><a href="#流畅的-Python-类和协议" class="headerlink" title="流畅的 Python-类和协议"></a>流畅的 Python-类和协议</h1><hr>
+<h2 id="10-Python-风格的对象"><a href="#10-Python-风格的对象" class="headerlink" title="10 Python 风格的对象"></a>10 Python 风格的对象</h2><h3 id="10-1-构建二维向量类"><a href="#10-1-构建二维向量类" class="headerlink" title="10.1 构建二维向量类"></a>10.1 构建二维向量类</h3><ol>
+<li><p>以开发一个二维向量类 <code>Vector2d</code> 的例子(<code>vector2d.py</code>)说明 <strong>Python风格的对象(能够简单,自然地执行任务)</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> array <span class="hljs-keyword">import</span> array<br><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Vector2d</span>:<br>    typecode = <span class="hljs-string">&#x27;d&#x27;</span>  <span class="hljs-comment"># 类属性 typecode.标识转换成实例字节时,存储为 C 语言的数据类型</span><br>    __match_args__ = (<span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-string">&#x27;y&#x27;</span>)	<span class="hljs-comment"># 类属性 __match_args__ 使其支持位置匹配模式,而关键字模式已得到支持</span><br>    __slots__ = (<span class="hljs-string">&#x27;__x&#x27;</span>, <span class="hljs-string">&#x27;__y&#x27;</span>)	<span class="hljs-comment"># 类属性 __slots__ 列出实例属性名,同时类属性 __dict__ 将被屏蔽</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, x, y</span>):<br>        <span class="hljs-variable language_">self</span>.__x = <span class="hljs-built_in">float</span>(x)  <span class="hljs-comment"># 2个前导下划线,表示属性为私有的</span><br>        <span class="hljs-variable language_">self</span>.__y = <span class="hljs-built_in">float</span>(y)  <span class="hljs-comment"># 私有属性 __x, __y 为向量分量,只读</span><br><br><span class="hljs-meta">    @property			</span><span class="hljs-comment"># @property 装饰器将读值方法标记为特性</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">x</span>(<span class="hljs-params">self</span>):		<span class="hljs-comment"># 读值方法,该方法与属性同名</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.__x	<span class="hljs-comment"># 在其他地方读取分量时,仍可使用self.x</span><br><br><span class="hljs-meta">    @property</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">y</span>(<span class="hljs-params">self</span>):		<span class="hljs-comment"># 同样给予 y 为读值方法.在外部使用 object.y 即可获取值</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.__y<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__iter__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 将实例变为可迭代对象,因而支持拆包</span><br>        <span class="hljs-keyword">return</span> (i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> (<span class="hljs-variable language_">self</span>.x, <span class="hljs-variable language_">self</span>.y))  <span class="hljs-comment"># 调用生成器表达式依次产出分量</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__repr__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 提供对象的字符串表示形式</span><br>        class_name = <span class="hljs-built_in">type</span>(<span class="hljs-variable language_">self</span>).__name__  <span class="hljs-comment"># 获取类名 Vector2d</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;&#123;&#125;(&#123;!r&#125;, &#123;!r&#125;)&#x27;</span>.<span class="hljs-built_in">format</span>(class_name, *<span class="hljs-variable language_">self</span>)  <span class="hljs-comment"># 形如 Vector2d(3.0, 4.0)</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># print()函数: 形如(3.0, 4.0)</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">tuple</span>(<span class="hljs-variable language_">self</span>))  <span class="hljs-comment"># 因存在__iter__方法成为可迭代对象,则可调用 tuple()</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">angle</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> math.atan2(<span class="hljs-variable language_">self</span>.y, <span class="hljs-variable language_">self</span>.x)  <span class="hljs-comment"># 使用 atan2 计算极坐标形式的角度 θ</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__format__</span>(<span class="hljs-params">self, fmt_spec=<span class="hljs-string">&#x27;&#x27;</span></span>):  <span class="hljs-comment"># 供 f字符串, format(), str.format() 调用</span><br>        <span class="hljs-string">&quot;&quot;&quot;根据用户输入的格式说明符 输出对象的字符串表示形式&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">if</span> fmt_spec.endswith(<span class="hljs-string">&#x27;p&#x27;</span>):		<span class="hljs-comment"># 当格式说明符以 &#x27;p&#x27; 结尾时,显示极坐标形式 &lt;r, θ&gt;</span><br>            fmt_spec = fmt_spec[:-<span class="hljs-number">1</span>]	<span class="hljs-comment"># 去掉 &#x27;p&#x27;</span><br>            coords = (<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>), <span class="hljs-variable language_">self</span>.angle())  <span class="hljs-comment"># 构建极坐标元组</span><br>            outer_fmt = <span class="hljs-string">&#x27;&lt;&#123;&#125;, &#123;&#125;&gt;&#x27;</span>  	<span class="hljs-comment"># 外层设为 &lt;&gt;</span><br>        <span class="hljs-keyword">else</span>:							<span class="hljs-comment"># 格式说明符不以 &#x27;p&#x27; 结尾,正常格式化 (x, y)</span><br>            coords = <span class="hljs-variable language_">self</span>  				<span class="hljs-comment"># 构建直角坐标元组</span><br>            outer_fmt = <span class="hljs-string">&#x27;(&#123;&#125;, &#123;&#125;)&#x27;</span>  	<span class="hljs-comment"># 外层设为 ()</span><br>        components = (<span class="hljs-built_in">format</span>(c, fmt_spec) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> coords)  <span class="hljs-comment"># 遍历实例的分量,并将其格式化</span><br>        <span class="hljs-keyword">return</span> outer_fmt.<span class="hljs-built_in">format</span>(*components)  <span class="hljs-comment"># 返回格式化后的字符串</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__bytes__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># bytes()函数: 获取实例的二进制表示形式</span><br>        <span class="hljs-comment"># 形如 b&#x27;d\x00\x00\x00\x00\x00\x00\x08@\x00\x00\x00\x00\x00\x00\x10@&#x27;</span><br>        <span class="hljs-keyword">return</span> (<span class="hljs-built_in">bytes</span>([<span class="hljs-built_in">ord</span>(<span class="hljs-variable language_">self</span>.typecode)])) + <span class="hljs-built_in">bytes</span>(array(<span class="hljs-variable language_">self</span>.typecode, <span class="hljs-variable language_">self</span>))<br><br><span class="hljs-meta">    @classmethod  </span><span class="hljs-comment"># classmethod 装饰的方法可直接在类上调用</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">frombytes</span>(<span class="hljs-params">cls, octets</span>):  <span class="hljs-comment"># 参数 cls: 类自身, 参数 octets: 实例的二进制表示形式</span><br>        <span class="hljs-string">&quot;&quot;&quot;使用 bytes()函数生成的二进制形式重建实例&quot;&quot;&quot;</span><br>        typecode = <span class="hljs-built_in">chr</span>(octets[<span class="hljs-number">0</span>])  <span class="hljs-comment"># 获取实例类型</span><br>        memv = <span class="hljs-built_in">memoryview</span>(octets[<span class="hljs-number">1</span>:]).cast(typecode)  <span class="hljs-comment"># 按照 typecode 类型转换</span><br>        <span class="hljs-keyword">return</span> cls(*memv)  <span class="hljs-comment"># 对 memv 进行拆包,获得构造函数所需的参数</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__eq__</span>(<span class="hljs-params">self, other</span>):  <span class="hljs-comment"># 重载 ==</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">tuple</span>(<span class="hljs-variable language_">self</span>) == <span class="hljs-built_in">tuple</span>(other)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__hash__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 实现了 __eq__, __hash__. 因而对象可哈希</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">hash</span>((<span class="hljs-variable language_">self</span>.x, <span class="hljs-variable language_">self</span>.y))  <span class="hljs-comment"># 文档建议 __hash__ 方法根据元组的分量计算哈希值</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__abs__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># abs()函数: 获取二维向量的模</span><br>        <span class="hljs-keyword">return</span> math.hypot(<span class="hljs-variable language_">self</span>.x, <span class="hljs-variable language_">self</span>.y)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__bool__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># bool()函数: 判断是否为零向量</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">bool</span>(<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>测试代码(<code>test_vector2d.py</code>)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> pytest<br><span class="hljs-keyword">from</span> vector2d <span class="hljs-keyword">import</span> Vector2d<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TestClassVector2d</span>:<br><span class="hljs-meta">    @pytest.fixture</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">vector2d_object_test</span>(<span class="hljs-params">self</span>):<br>        v = Vector2d(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)<br>        <span class="hljs-keyword">return</span> v<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">test_vector2d_func</span>(<span class="hljs-params">self, vector2d_object_test</span>):<br>        <span class="hljs-keyword">assert</span> (vector2d_object_test.x, vector2d_object_test.y) == (<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)  <span class="hljs-comment"># 测试读取属性</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">abs</span>(vector2d_object_test) == <span class="hljs-number">5</span>  <span class="hljs-comment"># __abs__</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">bool</span>(vector2d_object_test) <span class="hljs-keyword">is</span> <span class="hljs-literal">True</span>  <span class="hljs-comment"># __bool__</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">tuple</span>(_<span class="hljs-built_in">property</span> <span class="hljs-keyword">for</span> _<span class="hljs-built_in">property</span> <span class="hljs-keyword">in</span> vector2d_object_test) == (<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)  <span class="hljs-comment"># __iter__</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">repr</span>(vector2d_object_test) == <span class="hljs-string">&#x27;Vector2d(3.0, 4.0)&#x27;</span>  <span class="hljs-comment"># __repr__</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">str</span>(vector2d_object_test) == <span class="hljs-string">&#x27;(3.0, 4.0)&#x27;</span>  <span class="hljs-comment"># __str__</span><br>        <span class="hljs-keyword">assert</span> vector2d_object_test.angle() == math.atan(<span class="hljs-number">4.0</span> / <span class="hljs-number">3</span>)  <span class="hljs-comment"># angle</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">format</span>(vector2d_object_test, <span class="hljs-string">&#x27;.2f&#x27;</span>) == <span class="hljs-string">&#x27;(3.00, 4.00)&#x27;</span>  <span class="hljs-comment"># __format__ 直角坐标</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">format</span>(vector2d_object_test, <span class="hljs-string">&#x27;.2p&#x27;</span>) == <span class="hljs-string">&#x27;&lt;5.0, 0.93&gt;&#x27;</span>  <span class="hljs-comment"># __format__ 极坐标</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;vector2d_object_test&#125;</span>&#x27;</span> == <span class="hljs-string">&#x27;(3.0, 4.0)&#x27;</span>  <span class="hljs-comment"># __format__ f字符串</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">bytes</span>(vector2d_object_test) == \<br>               <span class="hljs-string">b&#x27;d\x00\x00\x00\x00\x00\x00\x08@\x00\x00\x00\x00\x00\x00\x10@&#x27;</span>  <span class="hljs-comment"># __bytes__</span><br>        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(&#123;Vector2d(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>), Vector2d(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)&#125;) == <span class="hljs-number">2</span>  <span class="hljs-comment"># __hash__</span><br><br>        octets = <span class="hljs-built_in">bytes</span>(vector2d_object_test)<br>        v = Vector2d.frombytes(octets)<br>        <span class="hljs-keyword">assert</span> v == vector2d_object_test  <span class="hljs-comment"># frombytes</span><br><br>        <span class="hljs-keyword">match</span> vector2d_object_test:  <span class="hljs-comment"># 关键字模式匹配</span><br>            <span class="hljs-keyword">case</span> Vector2d(x=<span class="hljs-number">3</span>, y=<span class="hljs-number">4</span>):<br>                <span class="hljs-keyword">assert</span> <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">case</span> _:<br>                <span class="hljs-keyword">assert</span> <span class="hljs-literal">False</span><br><br>        <span class="hljs-keyword">match</span> vector2d_object_test:  <span class="hljs-comment"># 位置匹配模式</span><br>            <span class="hljs-keyword">case</span> Vector2d(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>):<br>                <span class="hljs-keyword">assert</span> <span class="hljs-literal">True</span><br>            <span class="hljs-keyword">case</span> _:<br>                <span class="hljs-keyword">assert</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>私有属性</p>
+<ul>
+<li>Python 中并不能像 Java 中 <code>private</code> 修饰符那样创建私有属性,但存在<strong>受保护的属性</strong></li>
+<li><strong>名称改写(name mangling)</strong>: 对于双下划线开头的属性(<code>__property</code>)<br>Python 会将属性名处理为 <code>_ClassName__property</code>,然后存入实例属性 <code>__dict__</code> 中</li>
+<li>尽量不要使用双下划线开头.<strong>大多约定以单下划线开头表示私有属性</strong>,但 Python 解释器并不对其进行特殊处理</li>
+</ul>
+</li>
+<li><p>类属性 <code> __slots__</code>: 改变存储实例属性的方式,节约内存</p>
+<ul>
+<li>Python 默认将各实例的属性存储于名为 <code>__dict__</code> 的字典,消耗内存较多</li>
+<li>若在定义类时声明 <code>__slots__</code> 属性,则 Python 将使用其他模型存储实例属性(<code>__dict__</code> 属性消失)</li>
+<li>在继承时,子类需要重新声明 <code>__slots__</code>属性.形如: <code>__slots__ = (&#39;p1&#39;, &#39;p2&#39;)</code><ul>
+<li>若子类只需接收基类的 <code>__slots__</code>,则可声明 <code>__slots__ = ()</code></li>
+<li>若子类需要额外属性,则须在 <code>__slots__</code> 中列出</li>
+</ul>
+</li>
+<li>为支持弱引用,类默认有 <code>__weakref__</code> 属性.若需要类实例成为弱引用的目标,需将 <code>__weakref__</code> 添加到 <code>__slots__</code></li>
+<li>实例只能拥有 <code>__slots__</code> 列出的属性,也不能使用 <code>@cached_property</code> 装饰器,除非将 <code>__dict__</code> 加入 <code>__slots__</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="10-2-格式化显示"><a href="#10-2-格式化显示" class="headerlink" title="10.2 格式化显示"></a>10.2 格式化显示</h3><ol>
+<li><p>每个面向对象的语言都至少有一种获取对象字符串表示形式的标准方式(Python有2种)</p>
+<ul>
+<li><p><code>__repr__</code> 方法供内置函数 <code>repr()</code> 调用.用于获取对象的字符串形式(开发者友好,显示于控制台,调试器)</p>
+</li>
+<li><p><code>__str__</code> 方法供内置函数 <code>print()</code> 调用.用于输出用户友好的字符串</p>
+</li>
+<li><p><code>__bytes__</code> 方法供内置函数 <code>bytes()</code>函数调用.该方法获取对象的字节序列表示形式</p>
+</li>
+</ul>
+</li>
+<li><p><code>classmethod</code> 装饰器</p>
+<ul>
+<li>作用: 被 <code>@classmethod</code> 装饰的方法成为 操作类的方法,而非操作实例的方法</li>
+<li>方法调用方式改为: <code>ClassName.methodName(paramList)</code></li>
+<li>方法接收的参数改为: 第一个参数不再是实例(<code>self</code>),而是类本身(<code>cls</code>)</li>
+</ul>
+</li>
+<li><p><code>staticmethod</code> 装饰器</p>
+<ul>
+<li>作用: 被 <code>@staticmethod</code> 装饰的方法成为<strong>静态方法</strong>(本质就是位于类中的普通函数)</li>
+<li>参数: 第一个参数将不存在特殊的地方,仅为普通参数</li>
+</ul>
+</li>
+<li><p>格式化显示</p>
+<ul>
+<li><p><code>__format__</code>方法供 &lt;f 字符串, 内置函数<code>format(), str.format()</code>方法&gt; 调用</p>
+</li>
+<li><p>若类中没有定义 <code>__format__</code>方法,则从 object 继承: 返回 <code>str(my_object)</code> </p>
+</li>
+<li><p>通过调用<code>obj.__format__(format_spec)</code> 以特殊的格式化代码显示对象的字符串表示形式</p>
+<ul>
+<li><p>其中<code>format_spec</code> 是<strong>格式说明符</strong>.也是 <code>format(my_obj, format_spec)</code> 的第二个参数</p>
+</li>
+<li><p>如下例所示: <code>&#39;0.6f&#39;, 0.2f</code> 即为格式说明符<code>format_spec</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># format_spec 是 &#123;&#125; 内代换字段中冒号后的部分</span><br>cny = <span class="hljs-number">1</span> / <span class="hljs-number">7.3168</span>              <span class="hljs-comment"># 0.13667176907937897</span><br><span class="hljs-built_in">format</span>(cny, <span class="hljs-string">&#x27;0.6f&#x27;</span>)           <span class="hljs-comment"># &#x27;0.136672&#x27;</span><br><span class="hljs-string">f&#x27;1 USD = <span class="hljs-subst">&#123;<span class="hljs-number">1</span> / cny:<span class="hljs-number">0.2</span>f&#125;</span> CNY&#x27;</span> <span class="hljs-comment"># &#x27;1 USD = 7.32 CNY&#x27;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="10-3-构建多维向量类"><a href="#10-3-构建多维向量类" class="headerlink" title="10.3 构建多维向量类"></a>10.3 构建多维向量类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;使用组合模式实现 Vector 类(vector.py),而非继承&quot;&quot;&quot;</span><br><span class="hljs-keyword">import</span> functools<br><span class="hljs-keyword">import</span> itertools<br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">import</span> operator<br><span class="hljs-keyword">import</span> reprlib<br><span class="hljs-keyword">from</span> array <span class="hljs-keyword">import</span> array<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Vector</span>:<br>    typecode = <span class="hljs-string">&#x27;d&#x27;</span><br>    __match_args__ = (<span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-string">&#x27;y&#x27;</span>, <span class="hljs-string">&#x27;z&#x27;</span>, <span class="hljs-string">&#x27;t&#x27;</span>)  <span class="hljs-comment"># 支持位置模式匹配</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, components</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;序列类型的构造函数最好接受可迭代对象为参数,如 Vector([3, 4])&quot;&quot;&quot;</span><br>        <span class="hljs-variable language_">self</span>._components = array(<span class="hljs-variable language_">self</span>.typecode, components)  <span class="hljs-comment"># _components 以数组形式存储Vector分量</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__iter__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;本质上通过 array对象存储数据,直接返回该对象的可迭代形式&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">iter</span>(<span class="hljs-variable language_">self</span>._components)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__repr__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;由于分量可以很多,因此显示时需要对长度作出限制&quot;&quot;&quot;</span><br>        components = reprlib.<span class="hljs-built_in">repr</span>(<span class="hljs-variable language_">self</span>._components)  <span class="hljs-comment"># &quot;array(&#x27;d&#x27;, [0.0, 1.0, 2.0, 3.0, 4.0, ...])&quot;</span><br>        components = components[components.find(<span class="hljs-string">&#x27;[&#x27;</span>):-<span class="hljs-number">1</span>]  <span class="hljs-comment"># [0.0, 1.0, 2.0, 3.0, 4.0, ...]</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&#x27;Vector(<span class="hljs-subst">&#123;components&#125;</span>)&#x27;</span>  <span class="hljs-comment"># 形如 Vector([0.0, 1.0, 2.0, 3.0, 4.0, ...])</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__str__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;转为元组后显示&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">str</span>(<span class="hljs-built_in">tuple</span>(<span class="hljs-variable language_">self</span>))<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__bytes__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 与 Vector2d 中一致</span><br>        <span class="hljs-keyword">return</span> (<span class="hljs-built_in">bytes</span>([<span class="hljs-built_in">ord</span>(<span class="hljs-variable language_">self</span>.typecode)])) + <span class="hljs-built_in">bytes</span>(<span class="hljs-variable language_">self</span>._components)<br><br><span class="hljs-meta">    @classmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">frombytes</span>(<span class="hljs-params">cls, octets</span>):  <span class="hljs-comment"># 与 Vector2d 中几乎一致</span><br>        typecode = <span class="hljs-built_in">chr</span>(octets[<span class="hljs-number">0</span>])<br>        memv = <span class="hljs-built_in">memoryview</span>(octets[<span class="hljs-number">1</span>:].cast(typecode))<br>        <span class="hljs-keyword">return</span> cls(memv)  <span class="hljs-comment"># 由于构造函数现在接受可迭代对象,因此不需要拆包</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__eq__</span>(<span class="hljs-params">self, other</span>):  <span class="hljs-comment"># 更快地判断相等性</span><br>        <span class="hljs-comment"># return len(self) == len(other)  and \</span><br>        <span class="hljs-comment">#        all(a == b for a, b in zip(self, other))  # 一行流</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>) != <span class="hljs-built_in">len</span>(other):  <span class="hljs-comment"># 长度不一样时,提前返回不相等</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(<span class="hljs-variable language_">self</span>, other):  <span class="hljs-comment"># zip 可并行迭代多个对象,返回元组的生成器</span><br>            <span class="hljs-keyword">if</span> a != b:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__hash__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 规约映射:将函数作用于各分量,形成新序列,然后计算值</span><br>        hashes = (<span class="hljs-built_in">hash</span>(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>._components)  <span class="hljs-comment"># 创建生成器,惰性计算各分量的 hash</span><br>        <span class="hljs-comment"># hashes = map(hash, self._components)</span><br>        <span class="hljs-keyword">return</span> functools.reduce(operator.xor, hashes, <span class="hljs-number">0</span>)  <span class="hljs-comment"># 对各分量进行异或,初值为0</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__abs__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 与 Vector2d 中几乎一致</span><br>        <span class="hljs-keyword">return</span> math.hypot(*<span class="hljs-variable language_">self</span>)  <span class="hljs-comment"># Python 3.8 开始,hypot 接受 N 维坐标(需要先拆包)</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__bool__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 与 Vector2d 中一致</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">bool</span>(<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>))<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__len__</span>(<span class="hljs-params">self</span>):  <span class="hljs-comment"># 支持 len()</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>._components)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, key</span>):  <span class="hljs-comment"># 支持 [] 运算符和切片</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(key, <span class="hljs-built_in">slice</span>):  <span class="hljs-comment"># 若传入的是 slice对象,则调用构造函数创建对象</span><br>            cls = <span class="hljs-built_in">type</span>(<span class="hljs-variable language_">self</span>)<br>            <span class="hljs-keyword">return</span> cls(<span class="hljs-variable language_">self</span>._components[key])<br>        index = operator.index(key)  <span class="hljs-comment"># 否则认为,传入的是单个索引值.背后调用__index__魔法方法</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>._components[index]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getattr__</span>(<span class="hljs-params">self, key</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;支持前4个分量使用 .x .y .z .t 方式获取&quot;&quot;&quot;</span><br>        cls = <span class="hljs-built_in">type</span>(<span class="hljs-variable language_">self</span>)  <span class="hljs-comment"># 获取类</span><br>        <span class="hljs-keyword">try</span>:<br>            pos = cls.__match_args__.index(key)  <span class="hljs-comment"># 获取key在__match_arg__中的位置</span><br>        <span class="hljs-keyword">except</span> ValueError:<br>            pos = -<span class="hljs-number">1</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-number">0</span> &lt;= pos &lt; <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>._components):  <span class="hljs-comment"># 索引正确时返回对应分量</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>._components[pos]<br>        msg = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;cls.__name__!r&#125;</span> object has no attribute <span class="hljs-subst">&#123;key!r&#125;</span>&#x27;</span><br>        <span class="hljs-keyword">raise</span> AttributeError(msg)  <span class="hljs-comment"># 索引不正确时抛出属性错误</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__setattr__</span>(<span class="hljs-params">self, key, value</span>):  <span class="hljs-comment"># 禁止将单个小写字母设为属性</span><br>        <span class="hljs-string">&quot;&quot;&quot;实现了__getattr__方法,则需要实现__setattr__方法,以防对象行为不一致&quot;&quot;&quot;</span><br>        cls = <span class="hljs-built_in">type</span>(<span class="hljs-variable language_">self</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(key) == <span class="hljs-number">1</span>:<br>            <span class="hljs-keyword">if</span> key <span class="hljs-keyword">in</span> cls.__match_args__:  <span class="hljs-comment"># 如果想设置的属性名为 x,y,z,t.提示这些是只读的</span><br>                error = <span class="hljs-string">&#x27;readonly attribute &#123;attr_name!r&#125;&#x27;</span><br>            <span class="hljs-keyword">elif</span> key.islower():  <span class="hljs-comment"># 其他小写字母也不许设为属性</span><br>                error = <span class="hljs-string">&quot;can&#x27;t set attribute &#x27;a&#x27; to &#x27;z&#x27; in &#123;cls_name!r&#125;&quot;</span><br>            <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># 大写字母允许设置</span><br>                error = <span class="hljs-string">&#x27;&#x27;</span><br>            <span class="hljs-keyword">if</span> error:  <span class="hljs-comment"># 当 error 非空时,抛出错误</span><br>                msg = error.<span class="hljs-built_in">format</span>(cls_name=cls.__name__, attr_name=key)<br>                <span class="hljs-keyword">raise</span> AttributeError(msg)<br>        <span class="hljs-built_in">super</span>().__setattr__(key, value)  <span class="hljs-comment"># 非小写设为属性时,允许设置</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">angle</span>(<span class="hljs-params">self, n</span>):<br>        r = math.hypot(*<span class="hljs-variable language_">self</span>[n:])<br>        a = math.atan2(r, <span class="hljs-variable language_">self</span>[n-<span class="hljs-number">1</span>])<br>        <span class="hljs-keyword">if</span> (n == <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>) - <span class="hljs-number">1</span>) <span class="hljs-keyword">and</span> (<span class="hljs-variable language_">self</span>[-<span class="hljs-number">1</span>] &lt; <span class="hljs-number">0</span>):<br>            <span class="hljs-keyword">return</span> math.pi * <span class="hljs-number">2</span> - a<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> a<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">angles</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> (<span class="hljs-variable language_">self</span>.angle(n) <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>)))<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__format__</span>(<span class="hljs-params">self, fmt_spec=<span class="hljs-string">&#x27;&#x27;</span></span>):  <span class="hljs-comment"># 供 &lt; f 字符串, format(), str.format() &gt; 调用</span><br>        <span class="hljs-string">&quot;&quot;&quot;根据用户输入的格式说明符 输出对象的字符串表示形式&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">if</span> fmt_spec.endswith(<span class="hljs-string">&#x27;h&#x27;</span>):  <span class="hljs-comment"># 当格式说明符以 &#x27;h&#x27; 结尾时,显示极坐标形式 &lt;r, θ1, θ2, θ3&gt;</span><br>            fmt_spec = fmt_spec[:-<span class="hljs-number">1</span>]  <span class="hljs-comment"># 去掉 &#x27;h&#x27;</span><br>            coords = itertools.chain([<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>)], <span class="hljs-variable language_">self</span>.angles())  <span class="hljs-comment"># 构建极坐标生成器表达式</span><br>            outer_fmt = <span class="hljs-string">&#x27;&lt;&#123;&#125;&gt;&#x27;</span>  <span class="hljs-comment"># 外层设为 &lt;&gt;</span><br>        <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># 格式说明符不以 &#x27;h&#x27; 结尾,正常格式化 (x, y, z, t)</span><br>            coords = <span class="hljs-variable language_">self</span>  <span class="hljs-comment"># 构建直角坐标元组</span><br>            outer_fmt = <span class="hljs-string">&#x27;(&#123;&#125;)&#x27;</span>  <span class="hljs-comment"># 外层设为 ()</span><br>        components = (<span class="hljs-built_in">format</span>(c, fmt_spec) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> coords)  <span class="hljs-comment"># 遍历实例的分量,并将其格式化</span><br>        <span class="hljs-keyword">return</span> outer_fmt.<span class="hljs-built_in">format</span>(<span class="hljs-string">&#x27;,&#x27;</span>.join(components))  <span class="hljs-comment"># 返回格式化后的字符串</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="11-协议"><a href="#11-协议" class="headerlink" title="11 协议"></a>11 协议</h2><h3 id="11-1-协议"><a href="#11-1-协议" class="headerlink" title="11.1 协议"></a>11.1 协议</h3><ol>
+<li><p>**协议是非正式的接口,不具有强制性.**只在文档中定义,不在代码中定义</p>
+<ul>
+<li><strong>序列协议</strong>: Python 对象想要表现得像序列,就需实现 <code>__len__, __getitem__</code> 方法</li>
+<li><strong>可变序列协议</strong>: 想要表现得像可变序列,需额外提供 <code>__setitem__, __delitem___, insert</code>方法</li>
+<li><strong>可迭代</strong>: 想要表现得像可迭代对象,就需实现 <code>__iter__</code> 方法</li>
+<li><code>__getitem__</code> 方法: 按索引获取项,支持迭代,支持<code>in</code>运算符,因而是序列协议的核心<ul>
+<li>支持迭代的方式: 当没有<code>__iter__</code>时,Python 传入索引 0,并尝试迭代</li>
+<li>支持<code>in</code>运算符的方式: 当没有 <code>__contains__</code> 时,全面检查序列,判断元素是否存在</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>动&#x2F;静态协议</p>
+<ul>
+<li>对象可以只实现动态协议的部分,但静态协议要求提供协议类中的每个方法</li>
+<li>类无须通过名称(如继承)声明支持什么协议</li>
+</ul>
+</li>
+<li><p>实例属性的设置</p>
+<ul>
+<li>读取属性: 当读取对象不存在的属性名时,Python 会先对实列属性进行查找<ul>
+<li>对于 <code>obj.attr</code> 表达式,Python 首先查找 <code>obj</code> 实例是否拥有名为 <code>attr</code> 的属性</li>
+<li>若没有该属性,则在类属性 <code>obj.__class__</code> 中查找(类属性为实例属性提供默认值)</li>
+<li>若没有找到,则沿着继承图继续向上查找(超类中的属性为实例提供属性值)</li>
+<li>若还没找到,则调用实例 <code>obj</code> 所属类中的 <code>__getattr__</code> 魔法方法,并将属性名以字符串形式(<code>&#39;attr&#39;</code>)传入</li>
+</ul>
+</li>
+<li>设置属性: Python 先调用 <code>__setattr__</code> 魔法方法,对实例属性进行设置<ul>
+<li>当没有 <code>__setattr__</code> 魔法方法,设置对象不存在的属性名时,Python 将为实例创建一个新属性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>__hash__</code>方法: 适合使用<code>functools.reduce</code> 函数将异或运算符<code>^</code>应用到各分量的哈希值</p>
+</li>
+<li><p>切片原理</p>
+<ul>
+<li><p>形如 <code>s[start, stop, step]</code>,其背后调用的方法为 <code>s.__getitem__(self, key)</code></p>
+<ul>
+<li>其中 <code>key</code> 将接收参数成为 <code>slice</code> 对象.即 <code>key = slice(start, stop, step)</code></li>
+<li>形如 <code>s[1:4:2, 7:9]</code>,则 <code>key = (slice(1, 4, 2), slice(7, 9, None))</code></li>
+</ul>
+</li>
+<li><p><code>slice</code> 的 <code>indices</code> 方法: 可以优雅处理 <code>start, stop, step</code> 为非负数,且落于指定长度序列的边界内</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">S.indices(<span class="hljs-built_in">len</span>) -&gt; (start, stop, step)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="11-2-类型"><a href="#11-2-类型" class="headerlink" title="11.2 类型"></a>11.2 类型</h3><ol>
+<li><p>类型图</p>
+<p><img src="/2024/10/30/%E6%B5%81%E7%95%85%E7%9A%84Python/3.%E7%B1%BB%E5%92%8C%E5%8D%8F%E8%AE%AE/assets/Type_diagram.png" srcset="/img/loading.gif" lazyload alt="Type diagram"></p>
+<ul>
+<li><strong>鸭子类型</strong>: Python 默认的类型实现方式.不必检查对象的类型,而是直接执行操作.若抛出异常,则处理异常</li>
+<li>大鹅类型: 由抽象基类支持的方式.在运行时检查对象是否符合抽象基类的要求</li>
+<li>静态类型: C 语言采用的方式.从Python 3.5开始由 <code>typing</code> 模块支持</li>
+<li><strong>静态鸭子类型</strong>: 实现协议,但不是其子类.由 <code>typing.Protocol</code> 的子类支持</li>
+<li>静态类型由外部类型检查工具检查,动态类型由 Python 解释器在运行时检查</li>
+</ul>
+</li>
+<li><p>静态协议实例: 为 double 函数添加类型提示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">double</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> x * <span class="hljs-number">2</span><br><span class="hljs-comment"># double(1.5) = 3.0, double(&#x27;A&#x27;) = &#x27;AA&#x27;</span><br><span class="hljs-comment"># 因此,double 函数接收那些支持 *2 运算的参数</span><br><br><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> TypeVar, Protocol<br>T = TypeVar(<span class="hljs-string">&#x27;T&#x27;</span>)<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Repeatable</span>(<span class="hljs-title class_ inherited__">Protocol</span>):  <span class="hljs-comment"># 定义 Repeatable 协议,__mul__ 是协议的核心方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__mul__</span>(<span class="hljs-params">self: T, repeat_count: <span class="hljs-built_in">int</span></span>) -&gt; T: ...  <span class="hljs-comment"># 乘数限制为 int 类型</span><br>RT = TypeVar(<span class="hljs-string">&#x27;RT&#x27;</span>, bound=Repeatable)  <span class="hljs-comment"># RT 的上界限定为 Repeatable 协议</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">double</span>(<span class="hljs-params">x: RT</span>) -&gt; RT:  <span class="hljs-comment"># 类型检查工具将了解: double 函数的参数x可以乘以整数, 返回值类型与x相同</span><br>    <span class="hljs-keyword">return</span> x * <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>typing.Protocol</code> 位于静态检查区域(类型图中的下半部分)</p>
+<ul>
+<li>运行时可检查的静态协议: 定义 <code>typing.Protocol</code> 的子类时:<br>可以通过 <code>@runtime_checkable</code> 装饰器支持运行时使用 <code>isinstance/issubclass</code> 检查</li>
+</ul>
+</li>
+<li><p>设计静态协议时,窄协议(narrow protocol)更有用,即只有一个方法的协议</p>
+<ul>
+<li>命名方式: 对于窄协议的方法,若其名称为动词,而在末尾加上<code>-er</code>或<code>-or</code></li>
+<li>接口隔离原则(Interface Segregation Principle): 不应强迫客户依赖用不到的接口</li>
+<li>拓展协议: 若协议需要多个方法,不要直接添加新方法,而应衍生原协议,创建新协议</li>
+</ul>
+</li>
+</ol>
+<h3 id="11-3-大鹅类型"><a href="#11-3-大鹅类型" class="headerlink" title="11.3 大鹅类型"></a>11.3 大鹅类型</h3><ol>
+<li><p><strong>大鹅类型: 只要 cls 是抽象基类(cls 元类是 abc.ABCMeta),就可以使用 <code>isinstance(obj, cls)</code></strong></p>
+<ul>
+<li><p><strong>虚拟子类</strong>: 不继承其他类而成为抽象基类的子类,能被<code>isinstance(), issubclass()</code>识别</p>
+</li>
+<li><p>将类注册为抽象基类的虚拟子类时,Python 不会检查是否实现了抽象基类的接口</p>
+</li>
+<li><p>注册方式: 在抽象基类上调用 <code>register</code> 类方法.且注册的类不会从抽象基类中继承方法或属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">AbstractClass.register(ClassName)  <span class="hljs-comment"># 调用register类方法</span><br><span class="hljs-meta">@AbstractClass.register  </span><span class="hljs-comment"># 使用装饰器标记虚拟子类</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>抽象基类</p>
+<ul>
+<li><p>抽象类表示接口: Python 没有 interface 关键字,使用抽象基类定义接口,在运行时显示类型检查</p>
+</li>
+<li><p>抽象基类是对鸭子类型的补充,提供一种定义接口的方式</p>
+</li>
+<li><p>声明抽象基类的方式: 继承<code>abc.ABC</code> 或 其他抽象基类</p>
+</li>
+<li><p>抽象基类的本质就是几个特殊方法,只要实现了相应的特殊方法,就能识别为子类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> abc<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Struggle</span>():<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__len__</span>(<span class="hljs-params">self</span>): <span class="hljs-keyword">return</span> <span class="hljs-number">23</span><br><br><span class="hljs-built_in">isinstance</span>(Struggle(), abc.Sized)  <span class="hljs-comment"># True.实现了__len__(),就是 Sized 的子类</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>抽象方法</p>
+<ul>
+<li>抽象方法使用 <code>@abc.abstractmethod</code> 装饰器标记(装饰器叠放时需位于最里层),其主体通常只有文档字符串</li>
+<li>抽象方法可以有实现代码,但子类仍需将其覆盖.通过 <code>super()</code> 函数可以在其基础上添加功能</li>
+</ul>
+</li>
+<li><p>标准库中的抽象基类: 大多在 <code>collections.abc</code> 模块中定义.<code>io, numbers</code> 包中也有一些</p>
+<ul>
+<li><p><code>collections.abc</code> 模块的17个抽象基类的 UML 类图</p>
+<p><img src="/2024/10/30/%E6%B5%81%E7%95%85%E7%9A%84Python/3.%E7%B1%BB%E5%92%8C%E5%8D%8F%E8%AE%AE/assets/collections_abc.png" srcset="/img/loading.gif" lazyload alt="collections_abc"></p>
+</li>
+<li><p>每个容器都继承 <code>Iterable, Container, Sized</code> 三个抽象基类或实现相应的协议</p>
+<ul>
+<li><code>Iterable</code> 通过实现 <code>__iter__</code> 方法支持迭代</li>
+<li><code>Container</code> 通过实现 <code>__contains__</code> 方法支持 <code>in</code> 运算符</li>
+<li><code>Sized</code> 通过实现 <code>__len__</code> 方法支持 <code>len()</code> 函数</li>
+</ul>
+</li>
+<li><p><code>Collection</code> 本身没有方法,其目的是为了方便子类化 <code>Iterable, Container, Sized</code></p>
+</li>
+<li><p><code>Sequence, Mapping, Set</code> 是主要的不可变容器类型,且各自有其可变的子类</p>
+</li>
+<li><p>映射方法 <code>item(), keys(), values()</code> 返回的对象分别实现 <code>ItemsView, KeysView, ValuesView</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="12-继承"><a href="#12-继承" class="headerlink" title="12 继承"></a>12 继承</h2><h3 id="12-1-super-函数"><a href="#12-1-super-函数" class="headerlink" title="12.1 super 函数"></a>12.1 super 函数</h3><ol>
+<li><p>子类中覆盖超类的方法通常要调用超类中相应的方法</p>
+<ul>
+<li><p>内置类型(如list, dict, str)的原生方法使用C语言实现,它们不会调用子类中覆盖的方法(极少数例外)</p>
+</li>
+<li><p>Java 构造方法会自动调用超类不接受参数的构造方法,而Python不会,因而经常需要</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, a, b</span>):<br>    <span class="hljs-built_in">super</span>().__init__(a, b) ...<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>使用 super 函数而非直接调用超类方法的好处</p>
+<ul>
+<li>避免了硬编码基类的名称</li>
+<li>super 实现的逻辑能处理多重继承涉及的类层次结构</li>
+</ul>
+</li>
+<li><p>super 函数的可选参数: <code>super(type, object_or_type)</code></p>
+<ul>
+<li><code>type</code>: 从哪里开始向上搜索实现所需方法的超类.默认为 super() 调用所在的方法所属的类</li>
+<li><code>object_or_type</code>: 接收调用方法的对象(调用实例方法时,默认为<code>self</code>)或类(调用类方法时)</li>
+</ul>
+</li>
+<li><p><strong>多重继承的 super 函数</strong></p>
+<ul>
+<li>多重继承需要处理潜在的命名冲突,这种冲突由超类实现同名方法引起</li>
+<li>每个类都有名为<code>__mro__</code>的属性(元组),按照方法解析顺序列出各个超类,从当前类一直到 object 类</li>
+<li>调用的 super 函数时,Python 将按<code>__mro__</code>的顺序调用超类中的方法(与声明基类时的顺序有关)</li>
+<li>super 函数沿着<code>__mro__</code>元组的顺序,直到 object 类,或者基类方法中不在出现 super 函数</li>
+</ul>
+</li>
+</ol>
+<h3 id="12-2-多重继承"><a href="#12-2-多重继承" class="headerlink" title="12.2 多重继承"></a>12.2 多重继承</h3><ol>
+<li>混入类<ul>
+<li>混入类在多重继承中会连同其他类一起被子类化</li>
+<li>混入类不能作为具体类的唯一基类,且在类声明继承时需要位于第一位,建议在名称后加上<code>Mixin</code></li>
+<li>混入类不为具体对象提供全部功能,而是增加或定制子类或同级类的行为</li>
+</ul>
+</li>
+<li>由于多重继承中的 super 函数会按顺序调取超类的方法,因而可以在继承时,额外继承一个混入类<ul>
+<li>此时,当方法重名,super() 函数先调用混入类的方法,然后调用后面基类的方法</li>
+<li>先调用的混入类方法就可以对数据预处理,供后面基类方法使用.起到增加功能的作用</li>
+</ul>
+</li>
+<li>多重继承: Python 中多重继承最明显的用途在于 collections.abc 包,即对接口多重继承<ul>
+<li><strong>优先使用对象组合,而不是类继承</strong>: 使用继承容易得出令人费解和脆弱的设计</li>
+<li>当继承接口,创建子类型,实现’是什么’关系时,最好使用抽象基类</li>
+<li>当继承实现,通过重用避免代码重复时,可以利用混入类</li>
+<li>若类的作用是定义接口,则应显式地将其定义为抽象基类或 <code>typing.Protocol</code> 的子类</li>
+</ul>
+</li>
+</ol>
+<h2 id="13-运算符重载"><a href="#13-运算符重载" class="headerlink" title="13 运算符重载"></a>13 运算符重载</h2><ol>
+<li>运算符重载的作用<ul>
+<li>让用户定义的对象可以使用中缀运算符或一元运算符</li>
+<li>以及函数调用<code>()</code>, 属性访问<code>.</code>, 访问和切片<code>[]</code></li>
+</ul>
+</li>
+<li>Python 对函数重载的限制<ul>
+<li>不能改变内置类型的运算符表达的意思</li>
+<li>不能新建运算符,只能重载现有运算符</li>
+<li>有些运算符不能重载: <code>is, and, or, not</code></li>
+</ul>
+</li>
+<li>一元运算符: <code>-, +, ~, abs()</code><ul>
+<li>对于一元运算符,其背后支持的方法只有一个参数 self</li>
+<li>遵守运算符的基本规则: 始终返回新对象,而不要修改 self</li>
+</ul>
+</li>
+<li>重载加法运算符 <code>+</code>: 需要实现 <code>__add__</code> 或 <code>__radd__</code> 魔法方法</li>
+<li>对于中缀运算符,Python解释器的执行步骤为(以<code>a+b</code>为例)<ul>
+<li>尝试调用 <code>a.__add__()</code>,若没有该方法,尝试调用 <code>b.__radd__()</code>,若还没有,抛出 <code>TypeError</code></li>
+<li>若调用特殊方法的结果是 <code>NotImplemented</code>(表示不能处理给定的操作数),也会抛出 <code>TypeError</code></li>
+</ul>
+</li>
+<li><code>@</code>作为中缀运算符<ul>
+<li><code>@</code> 是函数装饰器的前缀,先也可用作中缀运算符,NumPy 数组的点积可以写作<code>a @ b</code></li>
+<li><code>@</code> 运算符由 <code>__matmul__, __rmatmul__, __imatmul__</code> 支持,即矩阵乘法(matrix multiplication)</li>
+</ul>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B5%81%E7%95%85%E7%9A%84-Python/" class="category-chain-item">流畅的 Python</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>流畅的 Python-类和协议</div>
+      <div>http://windsand.top/2024/10/30/流畅的Python/3.类和协议/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Shuang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年10月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/10/30/%E6%B5%81%E7%95%85%E7%9A%84Python/4.%E6%8E%A7%E5%88%B6%E6%B5%81/" title="流畅的 Python-控制流">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">流畅的 Python-控制流</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/10/30/%E6%B5%81%E7%95%85%E7%9A%84Python/2.%E5%87%BD%E6%95%B0%E5%8D%B3%E5%AF%B9%E8%B1%A1/" title="流畅的 Python-函数即对象">
+                        <span class="hidden-mobile">流畅的 Python-函数即对象</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
