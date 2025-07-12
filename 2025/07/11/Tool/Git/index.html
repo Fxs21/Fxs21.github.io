@@ -1,0 +1,1186 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Shuang">
+  <meta name="keywords" content="Shuang">
+  
+    <meta name="description" content="Git 的使用方式介绍; GitHub Pages 页面的配置方法; 在 IDE 中使用 Git; hexo 的安装使用; typora 的配置; MarkDown 语法.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 使用">
+<meta property="og:url" content="http://example.com/2025/07/11/Tool/Git/index.html">
+<meta property="og:site_name" content="Shuang blog">
+<meta property="og:description" content="Git 的使用方式介绍; GitHub Pages 页面的配置方法; 在 IDE 中使用 Git; hexo 的安装使用; typora 的配置; MarkDown 语法.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/Git.svg">
+<meta property="article:published_time" content="2025-07-10T17:38:24.121Z">
+<meta property="article:modified_time" content="2025-07-11T14:34:17.158Z">
+<meta property="article:author" content="Shuang">
+<meta property="article:tag" content="Code">
+<meta property="article:tag" content="工具箱">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/Git.svg">
+  
+  
+  
+  <title>Git 使用 - Shuang blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>windsand</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/train.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Git 使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-11 01:38" pubdate>
+          2025年7月11日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Git 使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Git-使用"><a href="#Git-使用" class="headerlink" title="Git 使用"></a>Git 使用</h1><h2 id="1-Git"><a href="#1-Git" class="headerlink" title="1 Git"></a>1 Git</h2><h3 id="1-1-Git-安装"><a href="#1-1-Git-安装" class="headerlink" title="1.1 Git 安装"></a>1.1 Git 安装</h3><ol>
+<li><p>在 <a target="_blank" rel="noopener" href="https://git-scm.com/download">git 官网</a> 下载对应系统的安装包</p>
+</li>
+<li><p>安装: 一直下一步安装即可</p>
+</li>
+<li><p>检查安装是否成功: 在命令行中输入 <code>git -v</code>.如果出现版本信息,则说明安装成功</p>
+</li>
+<li><p>在 Windows 中,还会自动安装 <code>Git Bash</code>(在文件夹中右键即可看到)</p>
+</li>
+</ol>
+<h3 id="1-2-Git-基础"><a href="#1-2-Git-基础" class="headerlink" title="1.2 Git 基础"></a>1.2 Git 基础</h3><ol>
+<li><p>git 的使用方式分为</p>
+<ul>
+<li>命令行(最基本,最常见)</li>
+<li>图形化界面(GUI)</li>
+<li>IDE 插件&#x2F;扩展</li>
+</ul>
+</li>
+<li><p>初始化操作</p>
+<ul>
+<li><p><strong>git 的所有命令均以 <code>git</code> 开头,后面再接具体的命令.如: <code>git init</code> 表示初始化仓库</strong></p>
+</li>
+<li><p>git 安装后需要进行配置用户名和邮箱,以便查看代码提交者(只需设置一次)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;用户名&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;用户邮箱&quot;</span><br>git config --list  <span class="hljs-comment"># 检查配置是否成功</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果用户名参数包含空格,则需要使用双引号包裹</p>
+</li>
+<li><p><code>--global</code> 表示全局配置,对所有仓库有效.如果省略则表示本地配置,只对本地仓库有效</p>
+</li>
+</ul>
+</li>
+<li><p>新建仓库</p>
+<ul>
+<li><p>仓库 &#x2F; 版本库(Repository, 简称 Reop): 是一个文件目录,其中的文件被 <code>git</code> 管理</p>
+</li>
+<li><p>对仓库中文件的 修改, 删除, 添加操作都将被 <code>git</code> 追踪</p>
+</li>
+<li><p><strong>本地创建仓库</strong>: 在 <code>Git Bash</code> 命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git init<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>此时 <code>git</code> 将会创建一个 <code>.git</code> 的隐藏目录.用于存放仓库的数据(不要自己更改)</p>
+</li>
+<li><p><strong>从服务器克隆仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> url<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="1-3-Git-概念"><a href="#1-3-Git-概念" class="headerlink" title="1.3 Git 概念"></a>1.3 Git 概念</h3><ol>
+<li><p>工作区域</p>
+<ul>
+<li><p><strong>工作区(Working Directory)</strong>: 实际操作的目录</p>
+</li>
+<li><p><strong>暂存区(Staging Area&#x2F;Index)</strong>: 临时存储区域.保存即将提交到 <code>git</code> 仓库的修改内容</p>
+</li>
+<li><p><strong>本地仓库(Local Repository)</strong>: 存储代码和版本信息的主要位置.包含完整的项目历史和元数据</p>
+<p><img src="/2025/07/11/Tool/Git/1-Git-workingArea.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>提交流程</p>
+<ul>
+<li><p>在对工作区的文件进行修改后,需要先提交到暂存区,然后将暂存区的修改提交到本地仓库</p>
+</li>
+<li><p>在上述过程中,可以使用 <code>git</code> 命令进行查看, 比较, 撤销修改</p>
+</li>
+<li><p><strong>添加: 从工作区 -&gt; 暂存区</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git add<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>提交: 从暂存区 -&gt; 本地仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git commit<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在多次添加到暂存区后,到达需要增加版本的地步,就可以进行提交(push)</p>
+</li>
+</ul>
+</li>
+<li><p>文件状态</p>
+<ul>
+<li><p><strong>未跟踪(Untrack)</strong>: 新创建的,未被 <code>git</code> 管理的文件</p>
+</li>
+<li><p><strong>未修改(Unmodified)</strong>: 已经被 <code>git</code> 管理,但内容没有变化</p>
+</li>
+<li><p><strong>已修改(Modified)</strong>: 修改了文件,但未添加到暂存区</p>
+</li>
+<li><p><strong>已暂存(Staged)</strong>: 修改后,并添加到暂存区的文件</p>
+<p><img src="/2025/07/11/Tool/Git/1-Git-fileState.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-4-提交"><a href="#1-4-提交" class="headerlink" title="1.4 提交"></a>1.4 提交</h3><ol>
+<li><p>添加与提交</p>
+<ul>
+<li><strong><code>git status</code>: 展示目录中的文件的状态</strong></li>
+<li><code>git add fileName</code>: 将指定的 <code>fileName</code> 文件添加到暂存区.还可以接收目录名参数</li>
+<li><code>git commit -m &quot;提交信息备注&quot;</code>: 将暂存区中的修改提交到本地仓库(注意不会提交工作区的文件)</li>
+<li><code>git log</code>: 查看提交记录.包含: 提交ID(唯一的16进制数), 作者, 时间, 备注信息</li>
+</ul>
+</li>
+<li><p>版本穿梭</p>
+<ul>
+<li><p><strong><code>git reset --模式参数 版本号</code>: 穿梭到指定的版本</strong></p>
+<p><img src="/2025/07/11/Tool/Git/1-Git-Reset.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><code>soft</code>: 保留工作区和暂存区的内容</p>
+<ul>
+<li>当回退低版本时,高版本添加的文件将被保留到暂存区</li>
+<li>此时对暂存区的这些文件进行修改,就可以再次执行提交</li>
+</ul>
+</li>
+<li><p><code>hard</code>: 不保留工作区和暂存区的内容.这将导致高版本才添加的文件被删除(谨慎使用)</p>
+</li>
+<li><p><strong><code>mixed</code>: 默认参数.只保留工作区中的内容</strong></p>
+<ul>
+<li>当回退低版本时,高版本添加的文件将被保留到工作区,而非暂存区</li>
+<li>在工作区中对内容进行修改后,再进行 添加, 提交 操作</li>
+</ul>
+</li>
+<li><p>使用场景: 多次 <code>commit</code> 后,想要将其合并为一次 <code>commit</code>: 先回退,然后提交</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-5-差异"><a href="#1-5-差异" class="headerlink" title="1.5 差异"></a>1.5 差异</h3><ol>
+<li><p><strong>查看差异</strong>: 后续可以使用 IDE 更美观地查看</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">git diff           <span class="hljs-comment"># 工作区 vs 暂存区</span><br>git diff HEAD      <span class="hljs-comment"># 工作区 + 暂存区 vs 本地仓库</span><br>git diff --cached  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br>git diff --staged  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br><br>git diff &lt;commit_hash&gt; &lt;commit_hash&gt;  <span class="hljs-comment"># 比较指定两次提交的差异</span><br>git diff HEAD~ HEAD                   <span class="hljs-comment"># 上一次提交 vs 本地仓库</span><br>git diff &lt;branch_hash&gt; &lt;branch_hash&gt;  <span class="hljs-comment"># 比较两个分支的差异</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2025/07/11/Tool/Git/1-Git-diff.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>删除文件</strong>: 删除工作区和暂存区中的指定文件.但版本库不变</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">rm</span> fileName<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>忽略文件</strong>: 通过 <code>.gitignore</code> 文件来指定忽略特定的文件</p>
+<p><img src="/2025/07/11/Tool/Git/1-Gitignore.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>新建一个 <code>.gitignore</code> 文件,在其中存储想要被忽略的文件名</li>
+<li>会从上往下逐行匹配,每行表示一个忽略模式</li>
+</ul>
+</li>
+<li><p><strong><code>.gitignore</code> 匹配规则: 使用标准的 Blob 模式匹配</strong></p>
+<ul>
+<li>文件可以使用通配符.如 <code>*.log</code> 表示忽略所有后缀为 log 的文件</li>
+<li>文件夹需要以 <code>/</code> 结尾</li>
+<li>以 <code>#</code> 开头的行表示注释</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-6-分支"><a href="#1-6-分支" class="headerlink" title="1.6 分支"></a>1.6 分支</h3><ol>
+<li><p>分支(Branch): 代码的不同版本</p>
+<ul>
+<li><strong><code>git branch</code>: 查看分支</strong>.其中 <code>*</code> 表示当前所处的分支</li>
+<li><strong><code>git branch name</code>: 创建新分支</strong>.创建新分支后并不会自动切换分支</li>
+<li><strong><code>git switch name</code>: 切换分支</strong>.同时工作区的文件会被自动替换为目标分支的状态</li>
+<li><strong><code>git merge name</code>: 将 <code>name</code> 分支合并到当前分支</strong>.该指令会执行一次提交,因此需要输入提交信息</li>
+<li><code>git log --graph --oneline --decorate --all</code>: 查看分支图</li>
+<li><code>git branch -d name</code>: 删除指定的已合并分支</li>
+</ul>
+</li>
+<li><p>合并冲突</p>
+<ul>
+<li><strong>当合并分支时,出现同一文件被不同分支修改时,会出现冲突,需要手动解决冲突</strong></li>
+<li>此时,使用 <code>git status</code> 命令查看冲突文件的列表.<code>git diff</code> 可以查看冲突的具体内容</li>
+</ul>
+</li>
+<li><p>变基(Rebase): </p>
+<ul>
+<li><strong><code>git rebase main</code>: 将当前分支变基到 <code>main</code> 分支</strong><ul>
+<li>每个分支都有一个 <code>head</code> 指针,指向当前分支的最新提交记录</li>
+<li>当执行变基时,将寻找两个分支的共同的祖先节点</li>
+<li>然后将当前分支的祖先节点之后的提交移植到目标分支的后面</li>
+</ul>
+</li>
+<li>变基使得分支始终保持简单的线性结构.但破坏了原分支的提交记录.不要在公共分支 <code>rebase</code></li>
+<li>分支合并不会破坏提交记录,方便回溯.但产生了额外的节点</li>
+</ul>
+</li>
+<li><p>分支的最佳实践</p>
+<ul>
+<li><p>保证 <code>master</code> 分支中的代码是可发布的.不允许直接修改,只能合并,每当合并时生成一个版本号</p>
+</li>
+<li><p>首先在主分支中分离出自己的分支进行开发测试,先在本地进行提交</p>
+</li>
+<li><p>然后发起推送请求(PR).经过 Review 之后,将该分支合并到主分支中</p>
+<p><img src="/2025/07/11/Tool/Git/1-Git-GitHubFlow.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-7-关联-github-仓库"><a href="#1-7-关联-github-仓库" class="headerlink" title="1.7 关联 github 仓库"></a>1.7 关联 github 仓库</h3><ol>
+<li><p>要关联本地仓库与远程仓库,首先需要设置 SSH 密钥</p>
+<ul>
+<li><p>检查主机是否已经存在 ssh key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/.ssh  # 切换到.ssh目录<br>ls         # 如果有 id_rsa(私钥) id_rsa.pub(公钥) 文件,说明已经有 ssh key<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果没有 ssh key.则需要先生成(如果有 ssh key.则直接获取)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096  # 生成 rsa 密钥,大小为 4096<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>在 GitHub 账号中添加公钥</p>
+<ul>
+<li><p>回到 GitHub,点击头像 -&gt; <code>Settings</code> -&gt; <code>SSH and GPG keys</code> -&gt; <code>New SSH key</code></p>
+<p><img src="/2025/07/11/Tool/Git/1-Git-github-sshkey.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>将 <code>id_rsa.pub</code> 文件中的内容复制到 Key 中即可</p>
+</li>
+<li><p>验证设置是否成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh -T git@github.com<br><span class="hljs-meta prompt_"># </span><span class="language-bash">成功将显示: Hi Fxs21! You<span class="hljs-string">&#x27;ve successfully authenticated...</span></span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>完成 SSH 的设置后,可以直接使用 SSH 进行 <code>git clone</code> 操作</p>
+</li>
+<li><p>本地仓库和远程仓库是不同的仓库.想要将两者的文件同步.需要 <code>git pull, git push</code> 指令</p>
+<p><img src="/2025/07/11/Tool/Git/1-Git-push.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>此时,完成了关联本地仓库与远程仓库的准备工作.先在 github 上创建一个新仓库.然后进行操作</p>
+<ul>
+<li><code>git remote add &lt;shortname&gt; &lt;url&gt;</code>: 将本地仓库关联到远程仓库.同时创建了远程库的别名</li>
+<li><code>git remote -v</code>: 查看当前仓库对应的远程仓库的别名和地址(默认别名 <code>shortname == origin</code>)</li>
+<li><code>git branch -M main</code>: 指定分支名为 <code>main</code></li>
+<li><strong><code>git push -u origin main</code>: 将本地的 main 分支与远程仓库 <code>origin</code> 的 <code>main</code> 分支关联.并推送</strong></li>
+<li><strong><code>git pull &lt;远程仓库名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</code>: 拉取远程仓库中的分支.默认为 <code>origin</code> 的 <code>main</code> 分支</strong></li>
+</ul>
+</li>
+</ol>
+<h2 id="2-GitHub-Pages"><a href="#2-GitHub-Pages" class="headerlink" title="2 GitHub Pages"></a>2 GitHub Pages</h2><h3 id="2-1-创建-github-仓库"><a href="#2-1-创建-github-仓库" class="headerlink" title="2.1 创建 github 仓库"></a>2.1 创建 github 仓库</h3><ol>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/">github</a>: 代码托管平台</p>
+</li>
+<li><p>创建仓库: 名称格式为 <code>username.github.io</code></p>
+<p><img src="/2025/07/11/Tool/Git/1-Git-githubCreateRepo.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>在 <code>settings</code> 中找到 <code>Pages</code>.此时 <code>Source</code> 为空.因此需要上传静态页面</p>
+</li>
+</ol>
+<h3 id="2-2-克隆仓库到本地"><a href="#2-2-克隆仓库到本地" class="headerlink" title="2.2 克隆仓库到本地"></a>2.2 克隆仓库到本地</h3><ol>
+<li><p>下载 <code>github desktop</code>,并与 github 账号关联.然后将创建的仓库克隆到本地</p>
+<p><img src="/2025/07/11/Tool/Git/2-Git-githubDesktop.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>将需要上传的文件全部复制到本地仓库路径中(需要填写描述信息 Summary)</p>
+<p><img src="/2025/07/11/Tool/Git/2-Git-githubDesktop-file.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>然后点击上方的 <code>Publish branch</code>.将本地仓库上传到 <code>github</code></p>
+</li>
+</ol>
+<h3 id="2-3-公网访问项目"><a href="#2-3-公网访问项目" class="headerlink" title="2.3 公网访问项目"></a>2.3 公网访问项目</h3><ol>
+<li><p>此时再次进入 github. 在 <code>settings</code> 中找到 <code>Pages</code>.此时 <code>Source</code> 就有了 <code>master</code> 分支</p>
+<p><img src="/2025/07/11/Tool/Git/2-Git-githubSource.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>显示 Your site is live at <a target="_blank" rel="noopener" href="https://fxs21.github.io/">https://fxs21.github.io/</a>: 表示成功部署可以在网页中打开</p>
+<p><img src="/2025/07/11/Tool/Git/2-Git-shark.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="2-4-开源项目的结构"><a href="#2-4-开源项目的结构" class="headerlink" title="2.4 开源项目的结构"></a>2.4 开源项目的结构</h3><ol>
+<li><p>开源项目: jQuery 为例</p>
+<p><img src="/2025/07/11/Tool/Git/2-Git-jQuery.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h2 id="3-IDE-集成-Git"><a href="#3-IDE-集成-Git" class="headerlink" title="3 IDE 集成 Git"></a>3 IDE 集成 Git</h2><h3 id="3-1-配置-Git"><a href="#3-1-配置-Git" class="headerlink" title="3.1 配置 Git"></a>3.1 配置 Git</h3><ol>
+<li><p>以 Pycharm 为例.需要先配置 Git</p>
+<ul>
+<li><p>需要给 Pycharm 指出 Git 的安装目录.显示出版本信息表示配置成功</p>
+</li>
+<li><p><kbd>设置</kbd> -&gt; <kbd>版本控制</kbd> -&gt; <kbd>Git</kbd> -&gt; 选择 Git 可执行文件路径为 <code>Git\cmd\git.exe</code></p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-PycharmSet.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>初始化 git: 点击左下角的 <kbd>Git</kbd> -&gt; <kbd>创建 Git 仓库...</kbd>.选择创建仓库的目录后确认即可</p>
+</li>
+<li><p>git 界面</p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-Pycharm.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="3-2-Git-操作"><a href="#3-2-Git-操作" class="headerlink" title="3.2 Git 操作"></a>3.2 Git 操作</h3><ol>
+<li><p>对现有的 Git 仓库进行操作</p>
+<ul>
+<li><strong>获取网络上的 Git 仓库</strong>: 在编辑器右键 -&gt; <kbd>Git</kbd> -&gt; <kbd>克隆...</kbd>.填写 <code>URL</code> 和 <code>本地目录</code>即可</li>
+<li><strong>新建分支</strong>: 点击左上角的 <kbd>VCS 微件</kbd> -&gt; <kbd>新建分支</kbd>.输入新分支的名称,进行创建</li>
+<li><strong>提交修改</strong>: 在新分支修改文件后,IDE 将会检测到修改<br>点击左侧的 <kbd>提交</kbd>.选择需要进行版本管理的文件.在下方的<kbd>提交消息</kbd>中添加更改信息即可<br>点击<kbd>提交消息</kbd>的右下角的设置,勾选<kbd>格式化代码</kbd>将会根据代码样式自动编辑文件</li>
+<li><strong>修正</strong>: 如果忘记添加某些需要提交的文件,可以勾选<kbd>修正</kbd>再次提交</li>
+<li><strong>推送到远程仓库</strong>: <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>K</kbd> 打开推送对话框.即可推送提交</li>
+</ul>
+</li>
+<li><p>查看项目历史记录</p>
+<ul>
+<li>点击左下的 <kbd>Git</kbd>.可以看到 git 分支.提交记录可以进行筛选,右键可以对其进行多种操作</li>
+<li>工具栏右侧可以看到相关信息.双击提交文件树中的文件可以查看具体差异</li>
+<li><kbd>与本地比较</kbd> 也可以对比文件的差异.其中绿色表示无差异,蓝色表示存在差异</li>
+</ul>
+</li>
+<li><p>功能分支工作流</p>
+<ul>
+<li><p>完成分支工作后准备推送到远程.需要检查是否与 Main 分支中已提交的内容产生冲突</p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-Branch01.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>签出 <code>Main</code> 分支: 点击左上角的 <kbd>VCS 微件</kbd> -&gt; 选中<kbd>Main</kbd> -&gt; <kbd>签出</kbd></p>
+</li>
+<li><p>更新 <code>Main</code> 分支: <kbd>Ctrl</kbd><kbd>T</kbd>打开<code>更新项目</code>对话框进行更新.此时 Main 分支可能已经作出更改:</p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-Branch02.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>变基</strong>: 将提交放在他人的修改之后可能更加合适,此时就需要进行变基<br>点击左上角的 <kbd>VCS 微件</kbd> -&gt; 选中<kbd>feature</kbd> -&gt; <kbd>签出并变基到 Main</kbd></p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-Branch03.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>更新到远程仓库</strong>: 右键<code>HEAD</code>,选择<kbd>推送</kbd>.此时由于本地的<code>feature</code>分支 变基后与远程冲突<br>因此,需要使用<kbd>强制推送</kbd>(慎重使用)</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3-设置-GitHub-账号"><a href="#3-3-设置-GitHub-账号" class="headerlink" title="3.3 设置 GitHub 账号"></a>3.3 设置 GitHub 账号</h3><ol>
+<li><p><kbd>文件</kbd> -&gt; <kbd>设置</kbd> -&gt; <kbd>版本控制</kbd> -&gt; <kbd>GitHub</kbd> -&gt; <kbd>添加账号</kbd></p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-github.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>分享到 Github: <kbd>Git</kbd> -&gt; <kbd>GitHub</kbd> -&gt; <kbd>在 GitHub 上共享项目</kbd></p>
+</li>
+<li><p><code>clone</code>: 在首页 -&gt; <kbd>从VCS获取</kbd> -&gt; <kbd>仓库URL</kbd></p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-clone.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><code>push</code>: 默认使用 HTTPS.因此需要修改为 SSH.别名也需要修改,否则会冲突</p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-push-1.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><code>pull</code>: 注意在修改代码之前,应该保证代码是最新版本.因此需要先进行 <code>pull</code></p>
+<p><img src="/2025/07/11/Tool/Git/3-Git-pull.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h2 id="4-hexo"><a href="#4-hexo" class="headerlink" title="4 hexo"></a>4 hexo</h2><h3 id="4-1-安装-hexo"><a href="#4-1-安装-hexo" class="headerlink" title="4.1 安装 hexo"></a>4.1 安装 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">hexo</a></h3><ol>
+<li><p><code>git</code> 配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;fxs&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;yshuang68@163.com&quot;</span><br>git config --list<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>安装 NodeJS: <a target="_blank" rel="noopener" href="https://nodejs.org/en">官网下载</a>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">node -v  # 验证安装<br>npm config set prefix &quot;D:\code\npm_path&quot;  # 配置 npm 的全局安装路径<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>安装 <code>hexo</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-cli -g  <span class="hljs-comment"># 安装 hexo</span><br>hexo -v                  <span class="hljs-comment"># 验证安装</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>初始化 <code>hexo</code>(新建一个空目录,然后使用 <code>git bash</code> 打开)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo init  <span class="hljs-comment"># 从 github 拉取代码</span><br>git init   <span class="hljs-comment"># 初始化 git 仓库</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>hexo</code> 的 hello world</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo s<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>打开网址 <a target="_blank" rel="noopener" href="http://localhost:4000/.%E8%83%BD%E7%9C%8B%E5%88%B0">http://localhost:4000/.能看到</a> hello world 网页表示配置成功</p>
+<p><img src="/2025/07/11/Tool/Git/4-hexo-hello-world.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-2-hexo-部署"><a href="#4-2-hexo-部署" class="headerlink" title="4.2 hexo 部署"></a>4.2 hexo 部署</h3><ol>
+<li><p>配置 SSH 免密登录</p>
+<ul>
+<li><p>先检查是否已经生成过密钥(<code>PowerShell </code>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls ~\.ssh\id_rsa.pub  # 查看是否已经生成过密钥<br>cat ~\.ssh\id_rsa.pub # 查看生成的密钥(复制输出的内容.以 ssh-rsa AAA... 开头)  <br></code></pre></td></tr></table></figure>
+</li>
+<li><p>若没有生成过则生成密钥(默认保存路径为 <code>C:\Users\你的用户名\.ssh\id_rsa</code>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>在 GitHub 上添加公钥(参考 [1.7章](# 1.7 关联 github 仓库))</p>
+</li>
+<li><p>安装部署插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install hexo-deployer-git --save<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>配置 hexo 上传的地址(打开 <code>_config.yml</code> 文件,在最后添加内容.<strong>注意这里的配置决定了仓库地址</strong>)</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">&#x27;git&#x27;</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">git@github.com:Fxs21/Fxs21.github.io.git</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用 hexo 命令将代码部署到远程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo cl <span class="hljs-comment"># 清除文件</span><br>hexo g  <span class="hljs-comment"># 生成静态文件.路径为 ./public/</span><br>hexo d  <span class="hljs-comment"># 上传到服务器</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>对于调试不需要生成静态文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo cl &amp;&amp; hexo s<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-3-hexo-配置"><a href="#4-3-hexo-配置" class="headerlink" title="4.3 hexo 配置"></a>4.3 hexo 配置</h3><ol>
+<li><p><strong>更换主题</strong>: 在 <a target="_blank" rel="noopener" href="https://hexo.io/themes/">Themes | Hexo</a> 选择合适的主题.这里以 <code>Fluid</code> 为例,根据 <a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">参考文档</a> 安装</p>
+<ul>
+<li><p>安装 <code>Fluid</code> 主题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install --save hexo-theme-fluid<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在博客目录下创建 <code>_config.fluid.yml</code> 文件</p>
+</li>
+<li><p>将 <code>./node_modules/hexo-theme-fluid/_config.yml</code> 的内容复制到 <code>_config.fluid.yml</code> 文件</p>
+</li>
+<li><p>更改默认的主题: 打开 <code>_config.yml</code> 文件,修改 <code>theme, language</code> 项</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">theme:</span> <span class="hljs-string">fluid</span>     <span class="hljs-comment"># 指定主题</span><br><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CH</span>  <span class="hljs-comment"># 指定语言</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建关于页</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>./source/about/index.md</code> 文件中添加一行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">layout: about<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>工作目录(初始化之后的目录)</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs 1c">.<br>├── _config.yml<br>├── package.json<br>├── scaffolds<br>├── source<br><span class="hljs-string">|   ├── _drafts</span><br><span class="hljs-string">|   └── _posts</span><br>└── themes<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong><code>_config.yml</code>: 网站的 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration">配置</a> 文件.可以在此配置大部分的参数</strong></li>
+<li><code>package.json</code>: 应用程序的信息. <a target="_blank" rel="noopener" href="https://ejs.co/">EJS</a>, <a target="_blank" rel="noopener" href="http://learnboost.github.io/stylus/">Stylus</a> 和 <a target="_blank" rel="noopener" href="http://daringfireball.net/projects/markdown/">Markdown</a> 渲染引擎 已默认安装</li>
+<li><code>scaffolds</code>: 模板文件夹.新建文章时根据此文件创建</li>
+<li><strong><code>source</code>: 存放用户资源</strong><ul>
+<li>除 <code>_posts</code> 文件夹之外,开头命名为 <code>_</code> (下划线)的文件 &#x2F; 文件夹和隐藏的文件将会被忽略</li>
+<li>Markdown 和 HTML 文件会被解析并放到 <code>public</code> 文件夹,而其他文件会被拷贝过去</li>
+</ul>
+</li>
+<li><code>themes</code>: 主题文件夹.Hexo 会根据主题来生成静态页面</li>
+</ul>
+</li>
+<li><p><strong>站点配置</strong>: Hexo 博客目录下的 <code>_config.yml</code> 文件</p>
+<ul>
+<li><p>站点名称</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># Site</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">Shuang</span> <span class="hljs-string">blog</span><br><span class="hljs-attr">subtitle:</span> <span class="hljs-string">&#x27;Shuang blog&#x27;</span><br><span class="hljs-attr">description:</span> <span class="hljs-string">&#x27;Shuang blog&#x27;</span><br><span class="hljs-attr">keywords:</span> <span class="hljs-string">Shuang</span><br><span class="hljs-attr">author:</span> <span class="hljs-string">Shuang</span><br><span class="hljs-attr">language:</span> <span class="hljs-string">zh-CN</span><br><span class="hljs-attr">timezone:</span> <span class="hljs-string">&#x27;Asia/Shuanghai&#x27;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>资源文件夹</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">post_asset_folder:</span> <span class="hljs-literal">true</span><br><span class="hljs-attr">marked:</span><br>  <span class="hljs-attr">prependRoot:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">postAsset:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启用后,资源图片将会被自动解析为其对应文章的路径</li>
+<li>例如: <code>image.jpg</code> 位置为 <code>/2020/01/02/foo/image.jpg</code>.这表示它是 <code>/2020/01/02/foo/</code> 文章的一张资源图片</li>
+<li><code>![](image.jpg)</code> 将会被解析为 <code>&lt;img src=&quot;/2020/01/02/foo/image.jpg&quot;&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-4-Fluid-主题"><a href="#4-4-Fluid-主题" class="headerlink" title="4.4 Fluid  主题"></a>4.4 <a target="_blank" rel="noopener" href="https://hexo.fluid-dev.com/docs/start/">Fluid </a> 主题</h3><ol>
+<li><p>配置文件的修改</p>
+<ul>
+<li><strong>主题配置</strong>: <code>theme/fluid/_config.yml</code> 或者 <code>_config.fluid.yml</code> 文件</li>
+</ul>
+</li>
+<li><p>Fluid 主题默认总体概览</p>
+<p><img src="/2025/07/11/Tool/Git/4-fluid-appearance.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>主题字体</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># 主题字体配置</span><br><span class="hljs-attr">font:</span><br>  <span class="hljs-attr">font_size:</span> <span class="hljs-string">16px</span><br>  <span class="hljs-attr">font_family:</span> <span class="hljs-string">consolas</span>  <span class="hljs-comment"># 使用 consolas 字体</span><br>  <span class="hljs-attr">letter_spacing:</span> <span class="hljs-number">0.</span><span class="hljs-string">02em</span><br>  <span class="hljs-attr">code_font_size:</span> <span class="hljs-number">85</span><span class="hljs-string">%</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>导航栏左侧标题(默认为 <code>Fluid</code>)</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">navbar:</span><br>  <span class="hljs-attr">blog_title:</span> <span class="hljs-string">&quot;windsand&quot;</span>  <span class="hljs-comment"># 将会以文本的形式显示</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>首页背景图以及 slogan 文本</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">index:</span><br>  <span class="hljs-comment"># 首页 Banner 头图,可以是相对路径或绝对路径,以下相同</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/train.png</span>  <span class="hljs-comment"># 首页背景图.注意要自己存放图片资源到路径</span><br>  <span class="hljs-attr">banner_img_height:</span> <span class="hljs-number">100</span><br>  <span class="hljs-attr">banner_mask_alpha:</span> <span class="hljs-number">0.3</span><br><br>  <span class="hljs-comment"># 首页副标题的独立设置</span><br>  <span class="hljs-attr">slogan:</span><br>    <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">text:</span> <span class="hljs-string">&quot;人生如逆旅,我亦是行人&quot;</span>  <span class="hljs-comment"># 首页 slogan</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>文章页背景图(归档页, 分类页, 标签页, 关于页, 自定义页, 404 页, 友链页 同理)</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">post:</span><br>  <span class="hljs-attr">banner_img:</span> <span class="hljs-string">/img/train.png</span>  <span class="hljs-comment"># 与上面的首页背景图配置方法相同</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>文章内数学公式</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">math:</span><br>  <span class="hljs-comment"># 开启后文章默认可用,自定义页面如需使用,需在 Front-matter 中指定 math: true</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>   <br>  <span class="hljs-comment"># 开启后,只有在文章 Front-matter 里指定 math: true 才会在文章页启动公式转换</span><br>  <span class="hljs-comment"># 以便在页面不包含公式时提高加载速度</span><br>  <span class="hljs-attr">specific:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-5-文章属性"><a href="#4-5-文章属性" class="headerlink" title="4.5 文章属性"></a>4.5 文章属性</h3><ol>
+<li><p>以本文为例,在 <code>front-matter</code> 中编写内容</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">typora-root-url:</span> <span class="hljs-string">./Git</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">Git</span> <span class="hljs-string">使用</span><br><span class="hljs-attr">tags:</span> [<span class="hljs-string">Git</span>, <span class="hljs-string">工具箱</span>, <span class="hljs-string">笔记</span>, <span class="hljs-string">Code</span>]<br><span class="hljs-attr">categories:</span> <span class="hljs-string">工具箱</span><br><span class="hljs-attr">excerpt:</span> <span class="hljs-string">&quot;Git 的使用方式介绍; GitHub Pages 页面的配置方法; 在 IDE 中使用 Git; hexo 的安装使用; typora 的配置; MarkDown 语法.&quot;</span><br><span class="hljs-attr">index_img:</span> <span class="hljs-string">/img/Git.svg</span><br><span class="hljs-attr">math:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2025/07/11/Tool/Git/4-Hexo-front-matter.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><code>typora-root-url</code>: typora 中图片的根目录</p>
+</li>
+<li><p><code>title</code>: 文章的标题.将会在主页中显示</p>
+</li>
+<li><p><code>tags</code>: 文章的标签.将会在主页中显示,点击可以跳转.一篇文章可以有多个 tag</p>
+</li>
+<li><p><code>categories</code>: 文章的类别.分类下面可以有多篇文章</p>
+</li>
+<li><p><code>excerpt</code>: 文章的摘要</p>
+</li>
+<li><p><code>index_img</code>: 文章封面图的路径.本示例的路径为 <code>./source/img/Git.svg</code></p>
+</li>
+</ol>
+<h2 id="5-typora"><a href="#5-typora" class="headerlink" title="5 typora"></a>5 typora</h2><h3 id="5-1-typora-配置"><a href="#5-1-typora-配置" class="headerlink" title="5.1 typora 配置"></a>5.1 typora 配置</h3><ol>
+<li><p>为了与 hexo 部署兼容(主要是图片存放路径)</p>
+<ul>
+<li><p>文件 -&gt; 偏好设置 -&gt; 图像 -&gt; 插入图片时 -&gt; 复制到指定路径 <code>./$&#123;filename&#125;</code></p>
+<p><img src="/2025/07/11/Tool/Git/5-typora-image-setting.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>格式 -&gt; 图像 -&gt; 设置图片根目录 -&gt; 将 <code>./$&#123;filename&#125;</code> 目录设置为根目录</p>
+</li>
+</ul>
+</li>
+<li><p>图片命令不要包含中文或空格.否则可能显示异常</p>
+</li>
+<li><p>为了更好的结构化管理,图片命名时前缀加上图片所在的章节</p>
+</li>
+</ol>
+<h3 id="5-2-MarkDown-语法"><a href="#5-2-MarkDown-语法" class="headerlink" title="5.2 MarkDown 语法"></a>5.2 MarkDown 语法</h3>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="category-chain-item">工具箱</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Code/" class="print-no-link">#Code</a>
+      
+        <a href="/tags/%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="print-no-link">#工具箱</a>
+      
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
+      
+        <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Git 使用</div>
+      <div>http://example.com/2025/07/11/Tool/Git/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Shuang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/07/11/Embedded/STM32/" title="STM32">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">STM32</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/01/Computer/C-Language-Advanced/" title="C 语言进阶">
+                        <span class="hidden-mobile">C 语言进阶</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
