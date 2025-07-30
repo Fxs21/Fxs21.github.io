@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Git.svg">
 <meta property="article:published_time" content="2022-02-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-11T14:34:17.158Z">
+<meta property="article:modified_time" content="2025-07-30T16:58:30.084Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="Code">
 <meta property="article:tag" content="Git">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.2k 字
+          4.3k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          35 分钟
+          36 分钟
         
       </span>
     
@@ -281,22 +281,21 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Git-使用"><a href="#Git-使用" class="headerlink" title="Git 使用"></a>Git 使用</h1><h2 id="1-Git"><a href="#1-Git" class="headerlink" title="1 Git"></a>1 Git</h2><h3 id="1-1-Git-安装"><a href="#1-1-Git-安装" class="headerlink" title="1.1 Git 安装"></a>1.1 Git 安装</h3><ol>
-<li><p>在 <a target="_blank" rel="noopener" href="https://git-scm.com/download">git 官网</a> 下载对应系统的安装包</p>
+                <h1 id="Git-使用"><a href="#Git-使用" class="headerlink" title="Git 使用"></a>Git 使用</h1><h2 id="1-Git-操作"><a href="#1-Git-操作" class="headerlink" title="1 Git 操作"></a>1 Git 操作</h2><h3 id="1-1-Git-基础"><a href="#1-1-Git-基础" class="headerlink" title="1.1 Git 基础"></a>1.1 Git 基础</h3><ol>
+<li><p>git 安装</p>
+<ul>
+<li><p>在 <a target="_blank" rel="noopener" href="https://git-scm.com/download">git 官网</a> 下载对应系统的安装包.一直下一步安装即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git --version  <span class="hljs-comment"># 验证安装</span><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>安装: 一直下一步安装即可</p>
+<li><p>在 Windows 中,会自动安装 <code>Git Bash</code>(在文件夹中右键即可看到)</p>
 </li>
-<li><p>检查安装是否成功: 在命令行中输入 <code>git -v</code>.如果出现版本信息,则说明安装成功</p>
+</ul>
 </li>
-<li><p>在 Windows 中,还会自动安装 <code>Git Bash</code>(在文件夹中右键即可看到)</p>
-</li>
-</ol>
-<h3 id="1-2-Git-基础"><a href="#1-2-Git-基础" class="headerlink" title="1.2 Git 基础"></a>1.2 Git 基础</h3><ol>
 <li><p>git 的使用方式分为</p>
 <ul>
 <li>命令行(最基本,最常见)</li>
 <li>图形化界面(GUI)</li>
-<li>IDE 插件&#x2F;扩展</li>
+<li>IDE 插件&#x2F;扩展(推荐使用 VS Code 中的 git 插件)</li>
 </ul>
 </li>
 <li><p>初始化操作</p>
@@ -328,7 +327,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-3-Git-概念"><a href="#1-3-Git-概念" class="headerlink" title="1.3 Git 概念"></a>1.3 Git 概念</h3><ol>
+<h3 id="1-2-Git-概念"><a href="#1-2-Git-概念" class="headerlink" title="1.2 Git 概念"></a>1.2 Git 概念</h3><ol>
 <li><p>工作区域</p>
 <ul>
 <li><p><strong>工作区(Working Directory)</strong>: 实际操作的目录</p>
@@ -370,7 +369,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-4-提交"><a href="#1-4-提交" class="headerlink" title="1.4 提交"></a>1.4 提交</h3><ol>
+<h3 id="1-3-提交"><a href="#1-3-提交" class="headerlink" title="1.3 提交"></a>1.3 提交</h3><ol>
 <li><p>添加与提交</p>
 <ul>
 <li><strong><code>git status</code>: 展示目录中的文件的状态</strong></li>
@@ -403,7 +402,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-5-差异"><a href="#1-5-差异" class="headerlink" title="1.5 差异"></a>1.5 差异</h3><ol>
+<h3 id="1-4-差异"><a href="#1-4-差异" class="headerlink" title="1.4 差异"></a>1.4 差异</h3><ol>
 <li><p><strong>查看差异</strong>: 后续可以使用 IDE 更美观地查看</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">git diff           <span class="hljs-comment"># 工作区 vs 暂存区</span><br>git diff HEAD      <span class="hljs-comment"># 工作区 + 暂存区 vs 本地仓库</span><br>git diff --cached  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br>git diff --staged  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br><br>git diff &lt;commit_hash&gt; &lt;commit_hash&gt;  <span class="hljs-comment"># 比较指定两次提交的差异</span><br>git diff HEAD~ HEAD                   <span class="hljs-comment"># 上一次提交 vs 本地仓库</span><br>git diff &lt;branch_hash&gt; &lt;branch_hash&gt;  <span class="hljs-comment"># 比较两个分支的差异</span><br></code></pre></td></tr></table></figure>
 
@@ -427,7 +426,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-6-分支"><a href="#1-6-分支" class="headerlink" title="1.6 分支"></a>1.6 分支</h3><ol>
+<h3 id="1-5-分支"><a href="#1-5-分支" class="headerlink" title="1.5 分支"></a>1.5 分支</h3><ol>
 <li><p>分支(Branch): 代码的不同版本</p>
 <ul>
 <li><strong><code>git branch</code>: 查看分支</strong>.其中 <code>*</code> 表示当前所处的分支</li>
@@ -468,14 +467,14 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-7-关联-github-仓库"><a href="#1-7-关联-github-仓库" class="headerlink" title="1.7 关联 github 仓库"></a>1.7 关联 github 仓库</h3><ol>
+<h2 id="2-GitHub-Pages"><a href="#2-GitHub-Pages" class="headerlink" title="2 GitHub Pages"></a>2 GitHub Pages</h2><h3 id="2-1-关联-github"><a href="#2-1-关联-github" class="headerlink" title="2.1 关联 github"></a>2.1 关联 github</h3><ol>
 <li><p>要关联本地仓库与远程仓库,首先需要设置 SSH 密钥</p>
 <ul>
 <li><p>检查主机是否已经存在 ssh key</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/.ssh  # 切换到.ssh目录<br>ls         # 如果有 id_rsa(私钥) id_rsa.pub(公钥) 文件,说明已经有 ssh key<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls ~/.ssh/id_rsa.pub  # 查看是否已经生成过密钥 id_rsa(私钥) id_rsa.pub(公钥)<br>cat ~/.ssh/id_rsa.pub # 查看生成的密钥(复制输出的内容.以 ssh-rsa AAA... 开头)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>如果没有 ssh key.则需要先生成(如果有 ssh key.则直接获取)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096  # 生成 rsa 密钥,大小为 4096<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/.ssh  # 切换到.ssh目录<br>ssh-keygen -t rsa -b 4096  # 生成 rsa 密钥,大小为 4096<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>在 GitHub 账号中添加公钥</p>
@@ -504,7 +503,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="2-GitHub-Pages"><a href="#2-GitHub-Pages" class="headerlink" title="2 GitHub Pages"></a>2 GitHub Pages</h2><h3 id="2-1-创建-github-仓库"><a href="#2-1-创建-github-仓库" class="headerlink" title="2.1 创建 github 仓库"></a>2.1 创建 github 仓库</h3><ol>
+<h3 id="2-2-创建-Pages"><a href="#2-2-创建-Pages" class="headerlink" title="2.2 创建 Pages"></a>2.2 创建 Pages</h3><ol>
 <li><p><a target="_blank" rel="noopener" href="https://github.com/">github</a>: 代码托管平台</p>
 </li>
 <li><p>创建仓库: 名称格式为 <code>username.github.io</code></p>
@@ -512,28 +511,17 @@
 </li>
 <li><p>在 <code>settings</code> 中找到 <code>Pages</code>.此时 <code>Source</code> 为空.因此需要上传静态页面</p>
 </li>
+<li><p>拉取代码到本地</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git init<br>git pull git@github.com:Fxs21/Fxs21.github.io.git<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>上传代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git remote -v  # 检查是否已经添加了远程仓库<br>git remote add origin git@github.com:Fxs21/Fxs21.github.io.git  # 添加远程仓库<br>ssh -T git@github.com  # 测试 SSH 连接<br>git push -u origin master  # 或你的分支名<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="2-2-克隆仓库到本地"><a href="#2-2-克隆仓库到本地" class="headerlink" title="2.2 克隆仓库到本地"></a>2.2 克隆仓库到本地</h3><ol>
-<li><p>下载 <code>github desktop</code>,并与 github 账号关联.然后将创建的仓库克隆到本地</p>
-<p><img src="/2022/02/01/Tool/Git/2-Git-githubDesktop.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>将需要上传的文件全部复制到本地仓库路径中(需要填写描述信息 Summary)</p>
-<p><img src="/2022/02/01/Tool/Git/2-Git-githubDesktop-file.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>然后点击上方的 <code>Publish branch</code>.将本地仓库上传到 <code>github</code></p>
-</li>
-</ol>
-<h3 id="2-3-公网访问项目"><a href="#2-3-公网访问项目" class="headerlink" title="2.3 公网访问项目"></a>2.3 公网访问项目</h3><ol>
+<h3 id="2-3-公网访问"><a href="#2-3-公网访问" class="headerlink" title="2.3 公网访问"></a>2.3 公网访问</h3><ol>
 <li><p>此时再次进入 github. 在 <code>settings</code> 中找到 <code>Pages</code>.此时 <code>Source</code> 就有了 <code>master</code> 分支</p>
 <p><img src="/2022/02/01/Tool/Git/2-Git-githubSource.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p>显示 Your site is live at <a target="_blank" rel="noopener" href="https://fxs21.github.io/">https://fxs21.github.io/</a>: 表示成功部署可以在网页中打开</p>
-<p><img src="/2022/02/01/Tool/Git/2-Git-shark.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ol>
-<h3 id="2-4-开源项目的结构"><a href="#2-4-开源项目的结构" class="headerlink" title="2.4 开源项目的结构"></a>2.4 开源项目的结构</h3><ol>
-<li><p>开源项目: jQuery 为例</p>
-<p><img src="/2022/02/01/Tool/Git/2-Git-jQuery.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ol>
 <h2 id="3-IDE-集成-Git"><a href="#3-IDE-集成-Git" class="headerlink" title="3 IDE 集成 Git"></a>3 IDE 集成 Git</h2><h3 id="3-1-配置-Git"><a href="#3-1-配置-Git" class="headerlink" title="3.1 配置 Git"></a>3.1 配置 Git</h3><ol>
@@ -541,15 +529,24 @@
 <ul>
 <li><p>需要给 Pycharm 指出 Git 的安装目录.显示出版本信息表示配置成功</p>
 </li>
-<li><p><kbd>设置</kbd> -&gt; <kbd>版本控制</kbd> -&gt; <kbd>Git</kbd> -&gt; 选择 Git 可执行文件路径为 <code>Git\cmd\git.exe</code></p>
+<li><p><kbd>设置</kbd> -&gt; <kbd>版本控制</kbd> -&gt; <kbd>Git</kbd> -&gt; 选择 Git 可执行文件路径为 <code>Git安装路径\cmd\git.exe</code></p>
 <p><img src="/2022/02/01/Tool/Git/3-Git-PycharmSet.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ul>
 </li>
 <li><p>初始化 git: 点击左下角的 <kbd>Git</kbd> -&gt; <kbd>创建 Git 仓库...</kbd>.选择创建仓库的目录后确认即可</p>
 </li>
-<li><p>git 界面</p>
-<p><img src="/2022/02/01/Tool/Git/3-Git-Pycharm.png" srcset="/img/loading.gif" lazyload></p>
+<li><p>设置 GitHub 账号</p>
+<ul>
+<li><p><kbd>文件</kbd> -&gt; <kbd>设置</kbd> -&gt; <kbd>版本控制</kbd> -&gt; <kbd>GitHub</kbd> -&gt; <kbd>添加账号</kbd></p>
+<p><img src="/2022/02/01/Tool/Git/3-Git-github.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>分享到 Github: <kbd>Git</kbd> -&gt; <kbd>GitHub</kbd> -&gt; <kbd>在 GitHub 上共享项目</kbd></p>
+</li>
+<li><p><code>clone</code>: 在首页 -&gt; <kbd>从VCS获取</kbd> -&gt; <kbd>仓库URL</kbd></p>
+<p><img src="/2022/02/01/Tool/Git/3-Git-clone.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ol>
 <h3 id="3-2-Git-操作"><a href="#3-2-Git-操作" class="headerlink" title="3.2 Git 操作"></a>3.2 Git 操作</h3><ol>
@@ -587,24 +584,8 @@
 </ul>
 </li>
 </ol>
-<h3 id="3-3-设置-GitHub-账号"><a href="#3-3-设置-GitHub-账号" class="headerlink" title="3.3 设置 GitHub 账号"></a>3.3 设置 GitHub 账号</h3><ol>
-<li><p><kbd>文件</kbd> -&gt; <kbd>设置</kbd> -&gt; <kbd>版本控制</kbd> -&gt; <kbd>GitHub</kbd> -&gt; <kbd>添加账号</kbd></p>
-<p><img src="/2022/02/01/Tool/Git/3-Git-github.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>分享到 Github: <kbd>Git</kbd> -&gt; <kbd>GitHub</kbd> -&gt; <kbd>在 GitHub 上共享项目</kbd></p>
-</li>
-<li><p><code>clone</code>: 在首页 -&gt; <kbd>从VCS获取</kbd> -&gt; <kbd>仓库URL</kbd></p>
-<p><img src="/2022/02/01/Tool/Git/3-Git-clone.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p><code>push</code>: 默认使用 HTTPS.因此需要修改为 SSH.别名也需要修改,否则会冲突</p>
-<p><img src="/2022/02/01/Tool/Git/3-Git-push-1.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p><code>pull</code>: 注意在修改代码之前,应该保证代码是最新版本.因此需要先进行 <code>pull</code></p>
-<p><img src="/2022/02/01/Tool/Git/3-Git-pull.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ol>
 <h2 id="4-hexo"><a href="#4-hexo" class="headerlink" title="4 hexo"></a>4 hexo</h2><h3 id="4-1-安装-hexo"><a href="#4-1-安装-hexo" class="headerlink" title="4.1 安装 hexo"></a>4.1 安装 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">hexo</a></h3><ol>
-<li><p><code>git</code> 配置</p>
+<li><p>安装 <code>git</code> 并配置</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;fxs&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;yshuang68@163.com&quot;</span><br>git config --list<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>安装 NodeJS: <a target="_blank" rel="noopener" href="https://nodejs.org/en">官网下载</a>安装</p>
@@ -620,7 +601,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo s<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><p>打开网址 <a target="_blank" rel="noopener" href="http://localhost:4000/.%E8%83%BD%E7%9C%8B%E5%88%B0">http://localhost:4000/.能看到</a> hello world 网页表示配置成功</p>
+<li><p>打开网址 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a>. 能看到 hello world 网页表示配置成功</p>
 <p><img src="/2022/02/01/Tool/Git/4-hexo-hello-world.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ul>
@@ -630,7 +611,7 @@
 <li><p>配置 SSH 免密登录</p>
 <ul>
 <li><p>先检查是否已经生成过密钥(<code>PowerShell </code>)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls ~\.ssh\id_rsa.pub  # 查看是否已经生成过密钥<br>cat ~\.ssh\id_rsa.pub # 查看生成的密钥(复制输出的内容.以 ssh-rsa AAA... 开头)  <br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls ~/.ssh/id_rsa.pub  # 查看是否已经生成过密钥 id_rsa(私钥) id_rsa.pub(公钥)<br>cat ~/.ssh/id_rsa.pub # 查看生成的密钥(复制输出的内容.以 ssh-rsa AAA... 开头)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>若没有生成过则生成密钥(默认保存路径为 <code>C:\Users\你的用户名\.ssh\id_rsa</code>)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096<br></code></pre></td></tr></table></figure></li>
@@ -648,7 +629,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo cl <span class="hljs-comment"># 清除文件</span><br>hexo g  <span class="hljs-comment"># 生成静态文件.路径为 ./public/</span><br>hexo d  <span class="hljs-comment"># 上传到服务器</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>对于调试不需要生成静态文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo cl &amp;&amp; hexo s<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo cl &amp;&amp; hexo s<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>hexo 文章按照 <code>date</code> 字段(建立日期)排序.下面是 Windows 中修改创建日期的指令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs powershell">(<span class="hljs-built_in">Get-Item</span> <span class="hljs-string">&quot;文件路径&quot;</span>).CreationTime = <span class="hljs-string">&quot;新时间&quot;</span>  <span class="hljs-comment"># 修改单个文件的创建时间</span><br>(<span class="hljs-built_in">Get-Item</span> <span class="hljs-string">&quot;文件路径&quot;</span>).CreationTime.ToString(<span class="hljs-string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>) <span class="hljs-comment"># 查看创建时间</span><br><br><span class="hljs-comment"># 示例: 将 D:\blog\post.md 创建时间设为 2023-01-01 12:00</span><br>(<span class="hljs-built_in">Get-Item</span> <span class="hljs-string">&quot;D:\blog\post.md&quot;</span>).CreationTime = <span class="hljs-string">&quot;2023-01-01 12:00&quot;</span><br><br><span class="hljs-comment"># 批量修改文件夹内所有文件</span><br><span class="hljs-built_in">Get-ChildItem</span> <span class="hljs-string">&quot;文件夹路径&quot;</span> | <span class="hljs-built_in">ForEach-Object</span> &#123; <span class="hljs-variable">$_</span>.CreationTime = <span class="hljs-string">&quot;新时间&quot;</span> &#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="4-3-hexo-配置"><a href="#4-3-hexo-配置" class="headerlink" title="4.3 hexo 配置"></a>4.3 hexo 配置</h3><ol>
 <li><p><strong>更换主题</strong>: 在 <a target="_blank" rel="noopener" href="https://hexo.io/themes/">Themes | Hexo</a> 选择合适的主题.这里以 <code>Fluid</code> 为例,根据 <a target="_blank" rel="noopener" href="https://github.com/fluid-dev/hexo-theme-fluid">参考文档</a> 安装</p>
@@ -746,7 +730,7 @@
 </li>
 </ol>
 <h2 id="5-typora"><a href="#5-typora" class="headerlink" title="5 typora"></a>5 typora</h2><h3 id="5-1-typora-配置"><a href="#5-1-typora-配置" class="headerlink" title="5.1 typora 配置"></a>5.1 typora 配置</h3><ol>
-<li><p>为了与 hexo 部署兼容(主要是图片存放路径)</p>
+<li><p><strong>为了与 hexo 部署兼容(主要是图片存放路径)</strong></p>
 <ul>
 <li><p>文件 -&gt; 偏好设置 -&gt; 图像 -&gt; 插入图片时 -&gt; 复制到指定路径 <code>./$&#123;filename&#125;</code></p>
 <p><img src="/2022/02/01/Tool/Git/5-typora-image-setting.png" srcset="/img/loading.gif" lazyload></p>
@@ -760,7 +744,8 @@
 <li><p>为了更好的结构化管理,图片命名时前缀加上图片所在的章节</p>
 </li>
 </ol>
-<h3 id="5-2-MarkDown-语法"><a href="#5-2-MarkDown-语法" class="headerlink" title="5.2 MarkDown 语法"></a>5.2 MarkDown 语法</h3>
+<h3 id="5-2-MarkDown-语法-待完成"><a href="#5-2-MarkDown-语法-待完成" class="headerlink" title="5.2 MarkDown 语法&#x3D;&#x3D;待完成&#x3D;&#x3D;"></a>5.2 MarkDown 语法&#x3D;&#x3D;待完成&#x3D;&#x3D;</h3><p>1. </p>
+
                 
               </div>
             
