@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2021-09-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-27T18:56:22.586Z">
+<meta property="article:modified_time" content="2025-07-31T15:21:36.165Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="C 语言">
 <meta property="article:tag" content="计算机">
@@ -1083,8 +1083,8 @@
 </tr>
 <tr>
 <td>10</td>
-<td>位运算符 OR: &#96;</td>
-<td>&#96;</td>
+<td>位运算符 OR: |</td>
+<td>—&gt;</td>
 </tr>
 <tr>
 <td>11</td>
@@ -1093,8 +1093,8 @@
 </tr>
 <tr>
 <td>12</td>
-<td>逻辑运算符 OR: &#96;</td>
-<td></td>
+<td>逻辑运算符 OR: ||</td>
+<td>—&gt;</td>
 </tr>
 <tr>
 <td>13</td>
@@ -1786,7 +1786,7 @@
 <li><p><strong>转置位</strong>: 将源数据对指定的掩码进行按位异或 ^</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">value ^= mask;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="8-CLion-远程开发"><a href="#8-CLion-远程开发" class="headerlink" title="8 CLion 远程开发"></a>8 CLion 远程开发</h2><h3 id="8-1-CLion-连接-Linux"><a href="#8-1-CLion-连接-Linux" class="headerlink" title="8.1 CLion 连接 Linux"></a>8.1 CLion 连接 Linux</h3><ol>
+<h2 id="8-CLion-使用"><a href="#8-CLion-使用" class="headerlink" title="8 CLion 使用"></a>8 CLion 使用</h2><h3 id="8-1-连接-Linux"><a href="#8-1-连接-Linux" class="headerlink" title="8.1 连接 Linux"></a>8.1 连接 Linux</h3><ol>
 <li><p>新建一个项目,然后在 设置 -&gt; 工具链 中添加 <code>远程主机</code></p>
 <p><img src="/2021/09/01/Computer/C-Language-Basic/8-Clion-tool-chain.png" srcset="/img/loading.gif" lazyload></p>
 </li>
@@ -1797,7 +1797,7 @@
 <p><img src="/2021/09/01/Computer/C-Language-Basic/8-Clion-pass.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p>构建工具需要远程主机已安装 CMake(下面是 Ubuntu 安装 CMake 的方法)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt update                   # 更新系统包<br>sudo apt install build-essential  # 安装依赖软件包<br>wget https://cmake.org/files/v3.20/cmake-3.20.0.tar.gz  # 下载 CMake 源码<br>tar -zxvf cmake-3.20.0.tar.gz     # 解压源代码<br><br>cd cmake-3.20.0<br>./configure         # 配置 CMake<br>make -j$(nproc)     # 编译 CMake<br>sudo make install   # 安装 CMake<br>cmake --version     # 验证安装<br><br>sudo apt install cmake  # 一条指令安装<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt update                   # 更新系统包<br>sudo apt install build-essential  # 安装依赖软件包<br>wget https://cmake.org/files/v3.20/cmake-3.20.0.tar.gz  # 下载 CMake 源码<br>tar -zxvf cmake-3.20.0.tar.gz     # 解压源代码<br><br>cd cmake-3.20.0<br>./configure         # 配置 CMake<br>make -j$(nproc)     # 编译 CMake<br>sudo make install   # 安装 CMake<br>cmake --version     # 验证安装<br><br>sudo apt install cmake  # 或直接使用该指令安装<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>如果远程主机安装了 CMake,则构建工具部分会自动检测</p>
 <p><img src="/2021/09/01/Computer/C-Language-Basic/8-Clion-make-tool.png" srcset="/img/loading.gif" lazyload></p>
@@ -1808,7 +1808,7 @@
 <p><img src="/2021/09/01/Computer/C-Language-Basic/8-Clion-GDB.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ol>
-<h3 id="8-2-远程项目部署"><a href="#8-2-远程项目部署" class="headerlink" title="8.2 远程项目部署"></a>8.2 远程项目部署</h3><ol>
+<h3 id="8-2-远程部署"><a href="#8-2-远程部署" class="headerlink" title="8.2 远程部署"></a>8.2 远程部署</h3><ol>
 <li><p>在 <code>设置 -&gt; 构建,执行,部署 -&gt; CMake</code> 进行添加</p>
 <p><img src="/2021/09/01/Computer/C-Language-Basic/8-Clion-CMake-config.png" srcset="/img/loading.gif" lazyload></p>
 </li>
