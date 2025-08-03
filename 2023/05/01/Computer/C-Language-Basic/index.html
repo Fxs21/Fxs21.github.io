@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-02T21:29:46.082Z">
+<meta property="article:modified_time" content="2025-08-03T04:29:52.934Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="C 语言">
 <meta property="article:tag" content="计算机">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          96 分钟
+          98 分钟
         
       </span>
     
@@ -431,7 +431,7 @@
 </li>
 </ul>
 </li>
-<li><p>宏相对于函数的区别</p>
+<li><p>宏与函数</p>
 <ul>
 <li><p>函数调用有压栈,弹栈的额外开销</p>
 </li>
@@ -531,12 +531,16 @@
 <li>每个头文件仅需包含一组函数 &#x2F; 数据的声明</li>
 </ul>
 </li>
-<li><p><strong>包含库函数的头文件: <code>#include &lt;filename&gt;</code></strong></p>
+<li><p><strong>包含库函数的头文件</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;filename.h&gt;</span></span><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li><code>filename</code> 并不存在限制.但约定标准库文件以 <code>.h</code> 结尾</li>
+<li><code>filename</code> 命令并不存在限制.但约定标准库文件以 <code>.h</code> 结尾</li>
 </ul>
 </li>
-<li><p><strong>包含本地文件: <code>#include &quot;filename&quot;</code></strong></p>
+<li><p><strong>包含本地文件</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;filename&quot;</span></span><br></code></pre></td></tr></table></figure>
+
 <ul>
 <li>处理方式: 先在源文件的当前位置查找,若没有,则用查找函数库头文件的方式查找</li>
 </ul>
@@ -556,8 +560,9 @@
 </ul>
 </li>
 <li><p><code>#line</code> 指令</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">line</span> number <span class="hljs-string">&quot;string&quot;</span></span><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>语法: <code>#line number &quot;string&quot;</code></li>
 <li>作用: 通知编译器 <code>number</code> 是下一行输入的行号.<code>&quot;string&quot;</code> 为可选部分.表示将其作为当前文件的名字</li>
 <li><strong><code>#line</code> 将会修改 <code>__LINE__</code> 和 <code>__FILE__</code> 的值</strong></li>
 <li>常用于将其他语言代码转化为 C代码的程序</li>
@@ -572,7 +577,7 @@
 </li>
 </ol>
 <h3 id="0-5-词法分析"><a href="#0-5-词法分析" class="headerlink" title="0.5 词法分析"></a>0.5 词法分析</h3><ol>
-<li><p><code>token</code> 指程序的一个基本组成单元</p>
+<li><p><code>token</code>: 程序的一个基本组成单元</p>
 </li>
 <li><p>词法分析器: 编译器中负责将程序分解为一个一个符号的部分</p>
 <ul>
@@ -600,9 +605,9 @@
 <ul>
 <li><strong><code>分别编译</code>是 C 语言的一个重要思想: 多个源程序分别编译,在恰当的时候整合</strong></li>
 <li>连接器并不需要理解 C 语言.它理解机器语言和内存布局.而编译器将源程序翻译给连接器</li>
-<li>连接器读入目标模块,同时生成载入模块<ul>
-<li>对于目标模块的每个外部对象,连接器需要检查载入模块中是否有同名的外部对象</li>
-<li>没有,则将该外部对象添加到载入模块</li>
+<li>连接器读入目标模块,同时生成载入模块</li>
+<li>对于目标模块的每个外部对象,连接器需要检查载入模块中是否有同名的外部对象<ul>
+<li>若没有,则将该外部对象添加到载入模块</li>
 <li>若有,则处理命名冲突</li>
 </ul>
 </li>
@@ -613,26 +618,13 @@
 </li>
 </ul>
 </li>
-<li><p>声明与定义</p>
+<li><p><strong>声明与定义: 每个外部对象必须在程序的某个地方定义</strong></p>
 <ul>
-<li>当 <code>int a;</code> 语句声明于函数外部.a 定义为一个外部整型变量.且会为 a 分配存储空间,将其初始化为0</li>
-<li>声明 <code>extern int a;</code> 时,并非是对 a 的定义(但仍是外部变量).连接器认为这是对外部变量 a 的引用,而非定义</li>
-<li><strong>每个外部对象必须在程序的某个地方定义</strong></li>
-</ul>
+<li><p>将语句声明于函数外部</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a; <span class="hljs-comment">// 定义 a 成为一个外部整型变量,且会为 a 分配存储空间.默认初始化为0</span><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>形参, 实参, 返回值</p>
-<ul>
-<li><strong>任何一个 C 函数都有返回类型: <code>void</code> 或函数生成结果的类型</strong><ul>
-<li>若函数在调用它的文件中,第一次调用之前进行了声明或定义.则其返回值类型是非常明确的</li>
-<li><strong>若函数在被声明或定义之前被调用,则返回类型默认为 <code>int</code></strong></li>
-<li>若需要调用另一文件中的函数,则应在调用它的文件中对其进行声明</li>
-</ul>
-</li>
-<li>形参和实参的匹配<ul>
-<li><strong>ANSI C 允许声明时指定函数的类型</strong></li>
-<li>函数声明中可以省略参数类型的说明,而函数定义中不能省略</li>
-</ul>
-</li>
+<li><p>下面声明语句并非是对 a 的定义(但仍是外部变量)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">extern</span> <span class="hljs-type">int</span> a; <span class="hljs-comment">// 连接器认为这是对外部变量 a 的引用,而非定义</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ol>
@@ -1023,7 +1015,9 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-4-运算符"><a href="#1-4-运算符" class="headerlink" title="1.4 运算符"></a>1.4 运算符</h3><table>
+<h3 id="1-4-运算符"><a href="#1-4-运算符" class="headerlink" title="1.4 运算符"></a>1.4 运算符</h3><ol>
+<li><p>使用括号可以完全避免因不清楚运算符优先级导致的问题.但括号太多反而会不好理解</p>
+<table>
 <thead>
 <tr>
 <th>优先级</th>
@@ -1112,7 +1106,7 @@
 <td>—&gt;</td>
 </tr>
 </tbody></table>
-<ol>
+</li>
 <li><p>单目运算符</p>
 <ul>
 <li><strong>单目运算符的优先级仅低于后缀运算符</strong></li>
@@ -1136,7 +1130,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">taxRate = income &gt; <span class="hljs-number">40000</span> &amp;&amp; residence &lt; <span class="hljs-number">5</span> ? <span class="hljs-number">3.5</span> : <span class="hljs-number">2.0</span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><strong>三目运算符优先级低于: 算术,移位,关系,位,逻辑运算符.因而允许在条件表达式中包括关系运算符的逻辑组合</strong></li>
+<li><strong>三目运算符优先级低于: 算术, 移位, 关系, 位, 逻辑运算符.因而允许在条件表达式中包括关系运算符的逻辑组合</strong></li>
 <li>三目运算符优先级高于: 赋值运算符.因而可以最后进行赋值操作</li>
 </ul>
 </li>
@@ -1373,6 +1367,26 @@
 <li><p>函数的声明方式: 去掉函数体,加上分号即为声明语句</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">类型名 函数名(参数列表);<br></code></pre></td></tr></table></figure>
 </li>
+<li><p>函数的类型</p>
+<ul>
+<li><strong>任何一个 C 函数都有返回类型: <code>void</code> 或函数生成结果的类型</strong><ul>
+<li>若函数在调用它的文件中,第一次调用之前进行了声明或定义.则其返回值类型是非常明确的</li>
+<li><strong>若函数在被声明或定义之前被调用,则返回类型默认为 <code>int</code></strong></li>
+<li>若需要调用另一文件中的函数,则应在调用它的文件中对其进行声明</li>
+</ul>
+</li>
+<li>形参和实参的匹配<ul>
+<li><strong>ANSI C 允许声明时指定函数的类型</strong></li>
+<li>函数声明中可以省略参数类型的说明,而函数定义中不能省略</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>main</code> 函数和其他函数一样,如果未显示声明返回类型,则默认返回整型</p>
+<ul>
+<li>C 语言通过 <code>main</code> 函数的返回值告知系统是否执行成功(0 表示成功, 非0表示失败)</li>
+</ul>
+</li>
 <li><p>参数的传递</p>
 <ul>
 <li><strong>C 语言是按值调用的(call-by-value),也称按值传递(pass-by-value)</strong></li>
@@ -1474,7 +1488,7 @@
 </ol>
 <h3 id="3-3-一维数组"><a href="#3-3-一维数组" class="headerlink" title="3.3 一维数组"></a>3.3 一维数组</h3><ol>
 <li><p>声明方式</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">数据类型 数组名[数量];<br><span class="hljs-type">int</span> arr[<span class="hljs-number">5</span>];<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">数据类型 数组名[数量];<br><span class="hljs-type">int</span> arr[<span class="hljs-number">5</span>];  <span class="hljs-comment">// 数组下标索引从 0 开始</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><code>[]</code>: 后缀运算符,表示声明的对象是数组</li>
@@ -1491,14 +1505,20 @@
 <li>若省略数组长度,则将由编译器自行计算数组长度</li>
 </ul>
 </li>
-<li><p><strong>访问数组元素: 数组名本质上是常量指针.因此 <code>arr[1]</code> 将被计算为 <code>*(arr+1)</code></strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">数组名[下标]	 <span class="hljs-comment">// 数组下标索引从 0 开始</span><br>arr[<span class="hljs-number">1</span>]       <span class="hljs-comment">// 取出数组 arr 的第2个元素的值</span><br></code></pre></td></tr></table></figure>
+<li><p>对于一个数组,需要的的数据为: 指向首个元素的指针 和 数组长度</p>
+<ul>
+<li>任何关于数组的操作,实际上均通过指针进行</li>
+<li>任何一个数组下标运算等同于一个对应指针运算</li>
+</ul>
 </li>
-<li><p>获取数组长度</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> length = <span class="hljs-keyword">sizeof</span>(numbers) / <span class="hljs-keyword">sizeof</span>(numbers[<span class="hljs-number">0</span>]);  <span class="hljs-comment">// 计算方法</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))  <span class="hljs-comment">// 宏实现</span></span><br></code></pre></td></tr></table></figure>
+<li><p><strong>访问数组元素: 数组名本质上是常量指针,指向数组的首个元素</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">arr[<span class="hljs-number">1</span>]; <span class="hljs-comment">// arr[1] 被计算为 *(arr+1)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>获取数组长度(数组名只有在作为 <code>sizeof</code> 运算符的参数时是数组)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> length = <span class="hljs-keyword">sizeof</span>(arr) / <span class="hljs-keyword">sizeof</span>(arr[<span class="hljs-number">0</span>]);             <span class="hljs-comment">// 获取 arr 长度</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0])) <span class="hljs-comment">// 宏实现</span></span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>遍历数组</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; ++i) &#123;<br>    code block;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; length; ++i) &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;arr[%d]: %d\n&quot;</span>, i, arr[i]);<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>可变长数组: 可以用变量指定数组的维度</p>
 <ul>
@@ -1530,7 +1550,7 @@
 </ul>
 </li>
 <li><p>遍历二维数组: 采用嵌套循环的方式</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; row; ++i) &#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; column; ++j) &#123;<br>        code block;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; row; ++i) &#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; column; ++j) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;arr[%d][%d]: %d\n&quot;</span>, row, column, arr[row][column]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>多维数组: 形式上与二维数组类似,仅需在定义时增加下标数量</p>
 </li>
@@ -1652,6 +1672,9 @@
 </li>
 <li><p>参数为函数指针,返回值为函数指针</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> (*funA(<span class="hljs-type">int</span>, <span class="hljs-type">void</span> (*funB)(<span class="hljs-type">int</span>)))(<span class="hljs-type">int</span>);<br><span class="hljs-comment">/* funA 是一个指针函数.有两个参数 int, funB</span><br><span class="hljs-comment">** funB 是一个函数指针,指向的类型为 void (int)</span><br><span class="hljs-comment">** 分析 funA 的返回值: 先化简 void (*funA(参数))(int).</span><br><span class="hljs-comment">** 返回值类型为 void (int),即函数指针 */</span><br><br><span class="hljs-comment">/* 提取出共同点,可以有更为清晰的定义方式 */</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">void</span> <span class="hljs-params">(*PTR2FUN)</span><span class="hljs-params">(<span class="hljs-type">int</span>)</span>;	<span class="hljs-comment">// PTR2FUN 是一个函数指针</span><br>PTR2FUN <span class="hljs-title function_">funA</span><span class="hljs-params">(<span class="hljs-type">int</span>, PTR2FUN)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>获取类型转换符的方法为: 去掉变量名和分号,再用括号整体封装</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">float</span> (*h)();  <span class="hljs-comment">// 声明 h 是一个指针,指向一个返回值为 float 的函数</span><br>(<span class="hljs-type">float</span> (*)())  <span class="hljs-comment">// 构造出对应的类型转换符</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>以显式的方式调用首地址为0的子例程</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">(*( <span class="hljs-type">void</span> (*)() ) <span class="hljs-number">0</span>)()<br></code></pre></td></tr></table></figure>
