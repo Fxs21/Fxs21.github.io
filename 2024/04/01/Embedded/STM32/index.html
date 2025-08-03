@@ -1,0 +1,2385 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Shuang">
+  <meta name="keywords" content="Shuang">
+  
+    <meta name="description" content="STM32 工程创建; STM32F103C8T6 外设功能介绍;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32">
+<meta property="og:url" content="http://example.com/2024/04/01/Embedded/STM32/index.html">
+<meta property="og:site_name" content="Shuang blog">
+<meta property="og:description" content="STM32 工程创建; STM32F103C8T6 外设功能介绍;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/STM32.svg">
+<meta property="article:published_time" content="2024-04-01T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-11T16:42:42.353Z">
+<meta property="article:author" content="Shuang">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/STM32.svg">
+  
+  
+  
+  <title>STM32 - Shuang blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>windsand</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/train.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="STM32"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-01 12:00" pubdate>
+          2024年4月1日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          110 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">STM32</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="STM32"><a href="#STM32" class="headerlink" title="STM32"></a>STM32</h1><h2 id="0-开发板介绍"><a href="#0-开发板介绍" class="headerlink" title="0 开发板介绍"></a>0 开发板介绍</h2><h3 id="0-1-STM32-开发板"><a href="#0-1-STM32-开发板" class="headerlink" title="0.1 STM32 开发板"></a>0.1 STM32 开发板</h3><p><img src="/2024/04/01/Embedded/STM32/0-STM32F103C8T6-Board-Features.jpg" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li>使用右侧 SWD 接口下载程序及供电</li>
+<li>32.768KHz 晶振: 连接到 LSE(low-speed external clock signal),给 RTC 提供时钟.<br>如果无需使用掉电不丢失时间的功能,可去掉.由内部 40KHz 的 RC 时钟源给 RTC 提供时钟</li>
+<li>8MHz 晶振: 连接到 HSE(high-speed external clock signal),给 SYSCLK 提供时钟.<br>由于芯片内部的 HSI RC 时钟源不够精准,<strong>通常采用外部独立时钟源来为芯片提供系统时钟</strong></li>
+</ol>
+<h3 id="0-2-开发板引脚图"><a href="#0-2-开发板引脚图" class="headerlink" title="0.2 开发板引脚图"></a>0.2 开发板引脚图</h3><p><img src="/2024/04/01/Embedded/STM32/0-STM32F103C8T6-Blue-Pill-Pin-Layout.gif" srcset="/img/loading.gif" lazyload></p>
+<h3 id="0-3-最小系统电路"><a href="#0-3-最小系统电路" class="headerlink" title="0.3 最小系统电路"></a>0.3 最小系统电路</h3><p><img src="/2024/04/01/Embedded/STM32/0-minimal-system-circuit.png" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li>3V3 与 GND 间的 100nF 滤波电容: 保证供电电压的稳定</li>
+<li><strong>晶振</strong>: 8MHz 晶振的典型电路.20pF 作为起振电容.接到芯片的5,6号脚.3,4号引脚预留接 32.768KHz 晶振</li>
+<li><strong>复位</strong>: NRST 接到7号引脚,低电平复位<ul>
+<li>刚上电时,电容充电,相当于短路,NRST 下拉至 GND(上电复位).充满电后短路,上拉至 3V3</li>
+<li>之后,K1 断开时,NRST 拉至 3V3.K1 闭合时,电容放电,NRST 接地(手动复位)</li>
+</ul>
+</li>
+<li><strong>启动配置</strong>: H1 起到开关的作用.实际中采用跳线帽的方式选择模式</li>
+<li><strong>下载端口</strong>: SWDIO, SWCLK 分别接到芯片的34,37号引脚(PA13,14).正负极间同样可以加滤波电容</li>
+</ol>
+<h2 id="1-STM32"><a href="#1-STM32" class="headerlink" title="1 STM32"></a>1 STM32</h2><h3 id="1-1-STM32-命名规则"><a href="#1-1-STM32-命名规则" class="headerlink" title="1.1 STM32 命名规则"></a>1.1 STM32 命名规则</h3><p><img src="/2024/04/01/Embedded/STM32/1-STM32-naming.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-2-存储器和总线构架"><a href="#1-2-存储器和总线构架" class="headerlink" title="1.2 存储器和总线构架"></a>1.2 存储器和总线构架</h3><p><img src="/2024/04/01/Embedded/STM32/1-system-architecture.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-3-F103C8T6-引脚定义"><a href="#1-3-F103C8T6-引脚定义" class="headerlink" title="1.3 F103C8T6 引脚定义"></a>1.3 F103C8T6 引脚定义</h3><p><img src="/2024/04/01/Embedded/STM32/1-STM32F103C8T6-pin-define.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="1-4-片上资源-外设"><a href="#1-4-片上资源-外设" class="headerlink" title="1.4 片上资源(外设)"></a>1.4 片上资源(外设)</h3><table>
+<thead>
+<tr>
+<th>英文缩写</th>
+<th>名称</th>
+<th>英文缩写</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NVIC</td>
+<td>嵌套向量中断控制器</td>
+<td>CAN</td>
+<td>CAN 通信</td>
+</tr>
+<tr>
+<td>SysTick</td>
+<td>系统滴答定时器</td>
+<td>USB</td>
+<td>USB 通信</td>
+</tr>
+<tr>
+<td>RCC</td>
+<td>复位和时钟控制</td>
+<td>RTC</td>
+<td>实时时钟</td>
+</tr>
+<tr>
+<td>GPIO</td>
+<td>通用 IO 口</td>
+<td>CRC</td>
+<td>CRC 校验</td>
+</tr>
+<tr>
+<td>AFIO</td>
+<td>复用 IO 口</td>
+<td>PWR</td>
+<td>电源控制</td>
+</tr>
+<tr>
+<td>EXTI</td>
+<td>外部中断</td>
+<td>BKP</td>
+<td>备份寄存器</td>
+</tr>
+<tr>
+<td>TIM</td>
+<td>定时器</td>
+<td>IWDG</td>
+<td>独立看门狗</td>
+</tr>
+<tr>
+<td>ADC</td>
+<td>模数转换器</td>
+<td>WWDG</td>
+<td>窗口看门狗</td>
+</tr>
+<tr>
+<td>DMA</td>
+<td>直接内存访问</td>
+<td>DAC</td>
+<td>数模转换器</td>
+</tr>
+<tr>
+<td>USART</td>
+<td>同步 &#x2F; 异步串口通信</td>
+<td>SDIO</td>
+<td>SD 卡接口</td>
+</tr>
+<tr>
+<td>I2C</td>
+<td>I2C 通信</td>
+<td>FSMC</td>
+<td>可变静态存储控制器</td>
+</tr>
+<tr>
+<td>SPI</td>
+<td>SPI 通信</td>
+<td>USB OTG</td>
+<td>USB 主机接口</td>
+</tr>
+</tbody></table>
+<h2 id="2-工程建立"><a href="#2-工程建立" class="headerlink" title="2 工程建立"></a>2 工程建立</h2><h3 id="2-1-搭建开发环境"><a href="#2-1-搭建开发环境" class="headerlink" title="2.1 搭建开发环境"></a>2.1 搭建开发环境</h3><ol>
+<li><p><strong>Keil5 MDK: IDE, 集成开发环境</strong></p>
+<ul>
+<li><p>运行 <code>MDK542a.exe</code> 文件,更改安装路径后,一路点击 <code>next</code> 即可</p>
+</li>
+<li><p>软件注册: 以管理员身份运行 Keil5 -&gt; <code>File</code> -&gt; <code>License Management</code> -&gt; 复制 CID</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-register-Keil.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>运行 <code>keygen_new2032.exe</code> 文件 -&gt; 粘贴 <code>CID</code> -&gt; <code>Target</code> 选 <code>ARM</code> -&gt; 点击 <code>Generate</code> 生成序列码</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-keygen.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>将序列码粘贴到 keil5 中的 <code>New License ID Code</code> 栏 -&gt; <code>ADD LIC</code></p>
+</li>
+</ul>
+</li>
+<li><p><strong>器件支持包: 对相应的 MCU 型号提供支持</strong></p>
+<ul>
+<li><p>离线安装: 下载后,运行相应的器件支持包文件即可(<code>Keil.STM32F1xx_DFP.2.2.0.pack</code>)</p>
+</li>
+<li><p>在线安装: 打开 Keil -&gt; <code>Pack Installer</code> -&gt; <code>Device</code> -&gt; <code>STMicroelectronics</code> -&gt; install 后缀 <code>DFP</code> 的文件</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-pack-installer.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p><strong>STLink 驱动</strong>: Keil5 安装目录中自带(<code>Keil5\ARM\STLink\USBDriver\dpinst_amd64.exe</code>)</p>
+</li>
+<li><p><strong>JLink 驱动</strong>: 同样位于 Keil5 安装目录中(<code>Keil5\ARM\Segger\JLink.exe</code>)</p>
+</li>
+<li><p><strong>USB 转串口驱动</strong>: 运行 <code>CH341SER.EXE</code></p>
+</li>
+<li><p>STM32 开发方式</p>
+<ul>
+<li>基于寄存器: STM32 结构复杂,寄存器数量太多,不推荐</li>
+<li>基于库函数: 使用 ST 官方提供的函数,间接配置寄存器(官方停止维护)</li>
+<li>基于 HAL 库: 图形化界面配置 STM32(官方主推)</li>
+</ul>
+</li>
+<li><p>基于库函数需要 STM32 库函数的文件(固件库)</p>
+</li>
+</ol>
+<h3 id="2-2-寄存器开发"><a href="#2-2-寄存器开发" class="headerlink" title="2.2 寄存器开发"></a>2.2 寄存器开发</h3><ol>
+<li><p>在 Keil5 中 -&gt; <code>Project</code> -&gt; <code>New uVision Project</code> -&gt; 设置工程文件名(project) -&gt; 选择芯片型号</p>
+<ul>
+<li><p>此时工程目录下将会有一个 <code>project.uvprojx</code> 文件.该文件为 keil 工程文件</p>
+</li>
+<li><p>配合使用 git 管理代码版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git init<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建 <code>.gitignore</code> 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">.vscode/<br>DebugConfig/<br>Listings/<br>Objects/<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>添加固件库文件: 在工程目录中创建 Start 目录存放下列启动文件(STM32程序从启动文件开始执行)</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Start-directory.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>将文件添加到工程</strong></p>
+<ul>
+<li><p>将左侧的 <code>Source Group 1</code> 改名为 <code>Start</code> -&gt; 右击后选择 <code>Add Existing Files to Group</code> 添加文件</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-add-start-file.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>启动文件需要根据型号选择(这里选择仅 <code>startup_stm32f10x_md.s</code>)</p>
+</li>
+</ul>
+</li>
+<li><p><strong>添加文件夹的头文件路径</strong>: <code>Options</code> -&gt; <code>C/C++</code> -&gt; 在 <code>Include Paths</code> 栏添加路径</p>
+</li>
+<li><p><strong>编写测试函数</strong>: 首先创建 User 目录用于存放用户代码</p>
+<ul>
+<li><p>创建 <code>main.c</code> 文件并添加到工程</p>
+<ul>
+<li><p>右键 <code>Target</code> -&gt; <code>Add Group</code> 并将名称改为 <code>User</code> -&gt; 右键 <code>Add New item...</code></p>
+</li>
+<li><p>选择 <code>C File</code> -&gt; 名称设为 <code>main</code> -&gt; 修改文件存放路径为 <code>User</code> 目录</p>
+</li>
+</ul>
+</li>
+<li><p>测试配置: 打开 <code>main</code> 文件在空白处右击,选择 insert <code>#include file stm32f10x.h</code> -&gt; 编写任意代码 -&gt; <code>Build</code></p>
+</li>
+<li><p>若编译没有错误说明工程建立正常.到此可以进行<strong>基于寄存器的开发</strong>.如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stm32f10x.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;  <span class="hljs-comment">/* 点亮 PC13 的 LED */</span><br>	RCC-&gt;APB2ENR |= <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">4</span>;				<span class="hljs-comment">/* 开启 APB2 的 GPIOC 时钟 */</span><br>	GPIOC-&gt;CRH |= <span class="hljs-number">3</span> &lt;&lt; (<span class="hljs-number">4</span> * (<span class="hljs-number">13</span> - <span class="hljs-number">8</span>));	<span class="hljs-comment">/* 指定 GPIO_Pin_13 为推挽输出.50MHz */</span><br>	GPIOC-&gt;ODR &amp;= !(<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">13</span>);			<span class="hljs-comment">/* 指定 GPIO_Pin_13 引脚的电压为低 */</span><br>	<span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>连接最小系统板时需要选择对应的调试方式(这里使用 STLink)</p>
+<ul>
+<li><p><code>Options</code> -&gt; <code>Debug</code> -&gt; Use 栏选择 <code>ST-Link Debugger</code> -&gt; <code>Settings</code> -&gt; <code>Flash Download</code> -&gt; 勾选 <code>Reset and Run</code></p>
+<p><img src="/2024/04/01/Embedded/STM32/2-debug-config.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-3-标准库开发"><a href="#2-3-标准库开发" class="headerlink" title="2.3 标准库开发"></a>2.3 标准库开发</h3><ol>
+<li><p>在工程新建 <code>Library</code> 目录,添加 <code>Libraries\STM32F10x_StdPeriph_Driver\src, inc</code> 目录下的所有文件(各23个)</p>
+</li>
+<li><p>将 <code>Project\STM32F10x_StdPeriph_Template</code> 目录下的三个文件添加到工程的 <code>User</code> 目录</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-User-directory.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>添加全局宏定义</p>
+<ul>
+<li><p>打开 <code>&quot;stm32f10x.h&quot;</code> 文件,在文件末尾有条件编译语句</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> USE_STDPERIPH_DRIVER</span><br>  <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stm32f10x_conf.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>因此需要宏定义 <code>USE_STDPERIPH_DRIVER</code>: <code>Options</code> -&gt; 在 <code>C/C++ Define</code> 栏填 <code>USE_STDPERIPH_DRIVER</code></p>
+</li>
+</ul>
+</li>
+<li><p>需要再次完成 <strong>将文件添加到工程,添加文件夹的头文件路径</strong> 步骤</p>
+</li>
+<li><p>至此可以进行<strong>基于库函数的开发</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stm32f10x.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>	<span class="hljs-comment">/* 配置 GPIOC.并设置为: 推挽输出,引脚选中13, 速率50MHz */</span><br>	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);<br>	GPIO_InitTypeDef GPIO_InitStructure;<br>	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;<br>	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;<br>	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;<br>	GPIO_Init(GPIOC, &amp;GPIO_InitStructure);<br>	GPIO_ResetBits(GPIOC, GPIO_Pin_13);  <span class="hljs-comment">// 将 PC13 置为低电平</span><br>	<span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>库函数调用逻辑: 复位中断函数才是程序的入口(在复位后执行).其职责为调用 <code>SystemInit, main</code> 函数</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Engineering-architecture.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="2-4-Keil5-使用"><a href="#2-4-Keil5-使用" class="headerlink" title="2.4 Keil5 使用"></a>2.4 Keil5 使用</h3><ol>
+<li><strong>界面设置(Configuration)</strong><ul>
+<li><code>Configuration</code> -&gt; <code>Color &amp; Fonts</code> -&gt; <code>C/C++ Editor files</code> -&gt; 设置字体及其大小</li>
+<li><code>Configuration</code> -&gt; <code>Editor</code> -&gt; <code>Encoding</code> 改为 <code>UTF-8</code> 编码, <code>Tab Size</code> 改为4</li>
+<li><code>Manage Project Items</code> -&gt; 可以调整左侧文件显示的顺序</li>
+</ul>
+</li>
+<li>Keil 中直接写入汉字报错的解决方式<ul>
+<li><code>Options</code> -&gt; <code>C/C++</code> -&gt; <code>Misc Controls</code> 栏填入 <code>--no-multibyte-chars</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="2-5-串口下载"><a href="#2-5-串口下载" class="headerlink" title="2.5 串口下载"></a>2.5 串口下载</h3><ol>
+<li><p>启动模式</p>
+<table>
+<thead>
+<tr>
+<th>BOOT1</th>
+<th>BOOT 0</th>
+<th>启动模式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>X</td>
+<td>0</td>
+<td>主闪存存储器</td>
+<td><strong>主闪存存储器被选为启动区域(主要使用方式)</strong></td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>系统存储器</td>
+<td>系统存储器被选为启动区域.运行 BootLoader(串口下载)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>内置 SRAM</td>
+<td>内置 SRAM 被选为启动区域(程序调试)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>FlyMcu 串口下载程序</p>
+<ul>
+<li><p>需要连接 USB转串口模块的 RX(PA9), TX(PA10), GND</p>
+</li>
+<li><p>需要工程生成的 HEX 文件(在 Keil 中 <code>Options for target</code> -&gt; <code>output</code> 勾选 <code>Creact HEX File</code>)</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-CreateHEX.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><code>搜索串口</code> -&gt; bps 默认115200 -&gt; 选择下载的程序文件(.hex)</p>
+</li>
+<li><p>单片机引脚配置: 让STM32执行 <code>BootLoader</code> 程序</p>
+<ul>
+<li>将 Boot0 配置为1(插在右边), Boot1 配置为0(插在左边)</li>
+<li>按下复位键,此时 STM32 将不断接收 USART1 的数据.刷新到主闪存</li>
+</ul>
+</li>
+<li><p>点击<code>开始编程</code>.写入完成后,将 Boot0 配置为0(插在左边).按下复位键.程序开始执行</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-FlyMcu.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p><strong>STM32 一键下载</strong>(需要搭建另外的电路)</p>
+<ul>
+<li>但是仍可以勾选<code>编程后执行</code>,反勾选<code>编程到FLASH时写选项字节</code></li>
+<li>然后 boot0 选为1 -&gt; 按下复位键 -&gt; 下载程序.完成下载后程序会直接运行</li>
+<li>原理为指定运行程序从 0800 0000 开始运行.复位其本质后仍执行 <code>BootLoader</code> 程序</li>
+</ul>
+</li>
+<li><p>ST-LINK Utility(需连接 ST Link 下载)</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-ST-LINK-Utility.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><strong><code>Target</code> -&gt; <code>Option Bytes</code>(快捷键 Ctrl + B): 打开选项字节的设置页面</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="2-6-HAL-库开发"><a href="#2-6-HAL-库开发" class="headerlink" title="2.6 HAL 库开发"></a>2.6 HAL 库开发</h3><ol>
+<li><p>CubeMX <a target="_blank" rel="noopener" href="https://www.st.com/en/development-tools/stm32cubemx.html">官网下载</a></p>
+<ul>
+<li><p>运行 <code>SetupSTM32CubeMX-6.12.1-Win.exe</code> 安装 CubeMX</p>
+</li>
+<li><p>注意第一次需要使用管理员权限打开</p>
+</li>
+<li><p>安装支持包(在线安装): Help -&gt; Manage embedded software packages.选择对应版本下载</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Cube-pack-manager.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>创建项目: Access to MCU selector -&gt; 选择相应 MCU</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Cube-pin.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>引脚配置</strong></p>
+<ul>
+<li><strong>RCC 选择 Crystal&#x2F;Ceramic Resonator</strong></li>
+<li><strong>SYS 中 Debug 选择 Serial Wire</strong></li>
+<li><strong>PC13 选择 GPIO_Output</strong></li>
+</ul>
+</li>
+<li><p><strong>时钟配置: HCLK 设为72MHz</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Cube-clock.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>项目配置</p>
+<ul>
+<li><p>需要指定项目名称, IDE 选择 <code>MDK-ARM</code></p>
+</li>
+<li><p>在 <code>Code Generator</code> 中勾选 <code>Generate peripheral initialization as a pair of &quot;.c/.h&quot; files per peripheral</code></p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Cube-project-config.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-7-VSCode-插件"><a href="#2-7-VSCode-插件" class="headerlink" title="2.7 VSCode 插件"></a>2.7 VSCode 插件</h3><ol>
+<li><p>VSCode <a target="_blank" rel="noopener" href="https://code.visualstudio.com/">官网下载</a></p>
+<ul>
+<li><p>安装插件: <code>C/C++, Keil Assistant</code></p>
+<p><img src="/2024/04/01/Embedded/STM32/2-VSCode-plug.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>关联 Keil: 设置中搜索 keil, 在 <code>Keil Assistant.MDK: Uv4 Path</code> 栏指定 UV4 路径</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Keil4-path.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>在资源管理器中将会新增 keil 栏.可以进行编译下载(其本质仍是调用 Keil 的配置)</p>
+<p><img src="/2024/04/01/Embedded/STM32/2-Keil.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="3-GPIO-输入输出"><a href="#3-GPIO-输入输出" class="headerlink" title="3 GPIO 输入输出"></a>3 GPIO 输入输出</h2><h3 id="3-1-GPIO-结构"><a href="#3-1-GPIO-结构" class="headerlink" title="3.1 GPIO 结构"></a>3.1 GPIO 结构</h3><ol>
+<li><p>GPIO 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/3-GPIO-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>I&#x2F;O 引脚连接驱动器寄存器到 APB2</li>
+<li>内核写入(读取)输出寄存器(输入寄存器),以此控制(读取) I&#x2F;O 引脚的高低电平</li>
+</ul>
+</li>
+<li><p>IO 口的基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/3-IOpin-struct.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>输入电路分析</p>
+<ul>
+<li><code>保护二极管</code>对输入电压进行限幅: 确保输入电压范围在 $V_{SS} \sim V_{DD}$</li>
+<li><code>上拉电阻和下拉电阻</code>: 避免引脚悬空导致的输入数据不确定, 设定一个默认值<ul>
+<li>上方闭合,下方断开: <strong>上拉输入模式,即默认高电平</strong></li>
+<li>上方断开,下方闭合: <strong>下拉输入模式,即默认低电平</strong></li>
+<li>开关均断开: <strong>浮空输入模式</strong></li>
+</ul>
+</li>
+<li><code>施密特触发器</code>(图中翻译错误): 对输入电压整形,然后写入<code>输入数据寄存器</code><ul>
+<li>输入电压大于某个上限,输出瞬间升为高电平;</li>
+<li>输入电压小于某个下限,输出瞬间将为低电平;否则不变</li>
+</ul>
+</li>
+<li>模拟输入, 复用功能输入<ul>
+<li><strong>模拟输入</strong>需要连续量,因此在施密特触发器之前.连接到 ADC.此时 GPIO 失效</li>
+<li><strong>复用功能输入</strong>(如串口的输入引脚)需要数字量,因此在施密特触发器之后</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>输出电路分析: 输出可由 <code>输出数据寄存器</code>(普通IO输出) 或 <code>片上外设</code>(<strong>复用功能输出</strong>) 控制</p>
+<ul>
+<li><code>位设置/清除寄存器</code>: 单独操作输出数据寄存器的某一位, 而不影响其他位<br>将需要置1的对应写1,其余写0,即可自动将相应位置置1,其他位不变</li>
+<li><code>输出数据寄存器</code>: 输出整个寄存器的数据.只能整体写入,不能单独操作某一位</li>
+<li><code>数据输出选择器</code>: 选择由输出数据寄存器或是复用功能输出</li>
+<li><code>P-MOS, N-MOS</code>的作用: 输出控制<ul>
+<li>当 P-MOS,N-MOS 均有效时为<strong>推挽输出</strong>, 高低电平均有驱动能力</li>
+<li>当 P-MOS 无效, N-MOS 有效时为<strong>开漏输出</strong>,仅低电平具有驱动能力<ul>
+<li>当数据寄存器为1时,N-MOS 断开,呈现出高阻态</li>
+<li>当数据寄存器为0时,N-MOS 导通,输出低电平</li>
+<li>开漏输出模式可以用于通信协议的驱动,如 I2C</li>
+<li>开漏输出模式输出 5V 信号: 在 I&#x2F;O 口外接一个上拉电阻到 5V 电源正极</li>
+</ul>
+</li>
+<li>当 P-MOS N-MOS 均无效时,输出关闭,端口电平由外部控制</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-2-标准库代码分析"><a href="#3-2-标准库代码分析" class="headerlink" title="3.2 标准库代码分析"></a>3.2 标准库代码分析</h3><ol>
+<li><p>对 <code>stm32f10x_gpio.h, stm32f10x_gpio.c</code> 源码的分析</p>
+</li>
+<li><p><strong>头文件中的通用格式</strong>: 防止重复包含以及保证对 C++ 的兼容性</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> __STM32F10x_GPIO_H  <span class="hljs-comment">/* 防止头文件重复包含 */</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __STM32F10x_GPIO_H</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus  <span class="hljs-comment">/* 对 C++ 的兼容 */</span></span><br> <span class="hljs-keyword">extern</span> <span class="hljs-string">&quot;C&quot;</span> &#123;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> __cplusplus</span><br>&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span>  <span class="hljs-comment">/* 对 C++ 的兼容 */</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">/* __STM32F10x_GPIO_H */</span></span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>参数合理性判断</strong>: 对于后续编写的函数,需要判断传入参数是否为 GPIO.在调用函数前断言</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> IS_GPIO_ALL_PERIPH(PERIPH) (((PERIPH) == GPIOA) || \</span><br><span class="hljs-meta">                                    ((PERIPH) == GPIOB) || \</span><br><span class="hljs-meta">                                    ((PERIPH) == GPIOC) || \</span><br><span class="hljs-meta">                                    ((PERIPH) == GPIOD) || \</span><br><span class="hljs-meta">                                    ((PERIPH) == GPIOE) || \</span><br><span class="hljs-meta">                                    ((PERIPH) == GPIOF) || \</span><br><span class="hljs-meta">                                    ((PERIPH) == GPIOG))</span><br><br><span class="hljs-comment">/* 分析: 断言参数 expr.若非零,则通过.否则断言失败,直接在编译时报错,并指出错误位置 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> assert_param(expr) ((expr) ? (void)0 : assert_failed((uint8_t *)__FILE__, __LINE__))</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>枚举定义</strong>: 初始化时,需要根据手册中的位组合确定模式时,提前对其定义.枚举非常多</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 分析: 对于输出最大速率寄存器的组合,在这里直接定义为对应的值,方便使用 */</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> &#123;</span><br>  GPIO_Speed_10MHz = <span class="hljs-number">1</span>,		<span class="hljs-comment">/* MODE = 01 */</span><br>  GPIO_Speed_2MHz,			<span class="hljs-comment">/* MODE = 10 */</span><br>  GPIO_Speed_50MHz			<span class="hljs-comment">/* MODE = 11 */</span><br>&#125; GPIOSpeed_TypeDef;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-3-HAL-库"><a href="#3-3-HAL-库" class="headerlink" title="3.3 HAL 库"></a>3.3 HAL 库</h3><ol>
+<li><p>使用 HAL 库使 led 闪烁</p>
+<p><img src="/2024/04/01/Embedded/STM32/3-GPIO-HAL.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="3-4-中断方式读取按键"><a href="#3-4-中断方式读取按键" class="headerlink" title="3.4 中断方式读取按键"></a>3.4 中断方式读取按键</h3><ol>
+<li><p>按键操作定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 操作定义</span><br><span class="hljs-comment">** 短按: 按下时间 &lt; 1秒</span><br><span class="hljs-comment">** 长按: 按下时间 &gt; 1秒</span><br><span class="hljs-comment">** </span><br><span class="hljs-comment">** 按键事件</span><br><span class="hljs-comment">** 长按事件: 出现1次长按操作</span><br><span class="hljs-comment">** 单击事件: 1次短按后,间隔0.5秒内无操作</span><br><span class="hljs-comment">** 双击事件: 2次短按时间 &lt; 0.5秒.则这2次短按产生一次双击事件</span><br><span class="hljs-comment">** 特别的:   短按 + 0.5秒内长按不算双击.长按 + 0.5秒内短按也不算双击</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>实现思路</p>
+</li>
+</ol>
+<h2 id="4-EXTI-外部中断"><a href="#4-EXTI-外部中断" class="headerlink" title="4 EXTI 外部中断"></a>4 EXTI 外部中断</h2><h3 id="4-1-中断"><a href="#4-1-中断" class="headerlink" title="4.1 中断"></a>4.1 中断</h3><ol>
+<li><p>中断系统</p>
+<ul>
+<li>中断允许微控制器在执行主程序的同时,对发生的特定事件做出及时响应</li>
+<li>在 STM32 中,中断用于处理外部事件,如按键输入,定时器溢出,串口数据接收等</li>
+<li><strong>中断处理程序: 一段特殊的代码,用于处理中断事件</strong></li>
+<li>当中断发生时,自动跳转到对应中断向量表项中存储的中断处理程序地址,并执行其中的代码</li>
+</ul>
+</li>
+<li><p>中断向量表</p>
+<ul>
+<li><strong>中断处理程序的入口地址存储在中断向量表中</strong></li>
+<li>中断向量表是一个存储中断处理程序地址的数组,每个中断都有一个对应的向量表项</li>
+</ul>
+</li>
+<li><p><strong>中断优先级: 每个中断都有一个优先级,用于确定中断的相对重要性</strong></p>
+<ul>
+<li>较高优先级的中断将优先处理,而较低优先级的中断可能会被延迟处理</li>
+<li><strong>中断嵌套: 即在一个中断处理程序中,可以允许更高优先级的中断打断当前正在执行的中断处理程序.以确保对于紧急事件的及时响应</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="4-2-NVIC"><a href="#4-2-NVIC" class="headerlink" title="4.2 NVIC"></a>4.2 NVIC</h3><p><img src="/2024/04/01/Embedded/STM32/4-NVIC.png" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li><strong>NVIC(Nested Vectored Interrupt Controller, 嵌套向量中断控制器)是内核外设</strong><ul>
+<li>中断通道可以将 EXTI, TIM, ADC, USART… 作为输入</li>
+<li>只有一条输出通道,根据中断优先级分配先后顺序</li>
+</ul>
+</li>
+<li>优先级分组: 由优先级寄存器的4位决定<ul>
+<li>优先级寄存器分为高 n 位的抢占优先级和低 (4-n) 位的响应优先级</li>
+<li><strong>抢占优先级可以中断嵌套,响应优先级则需要进行排队</strong></li>
+</ul>
+</li>
+<li>优先级规则<ul>
+<li>优先级数字越小,优先级越高.如果不设置优先级,默认为0</li>
+<li>若抢占优先级和响应优先级都一样,则查找中断向量表,值小的先响应</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-3-EXTI"><a href="#4-3-EXTI" class="headerlink" title="4.3 EXTI"></a>4.3 EXTI</h3><ol>
+<li><p>EXTI 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-EXTI.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>EXTI(Extern Interrupt, 外部中断)</strong></p>
+<ul>
+<li>EXTI 可以监测指定 GPIO 口的电平信号,当其指定的 GPIO 口产生电平变化时,EXTI 将立即向 NVIC 发出中断申请,经过 NVIC 裁决后即可中断 CPU 主程序,使 CPU 执行 EXTI 对应的中断程序</li>
+<li>支持所有的 GPIO 口.但同 Pin 不能同时触发</li>
+<li><strong>触发方式: 上升 &#x2F; 下降 &#x2F; 双边沿, 软件触发</strong></li>
+<li>通道数: 16个 GPIO_Pin, PVD 输出, RTC 闹钟, USB 唤醒, 以太网唤醒</li>
+</ul>
+</li>
+<li><p>响应方式</p>
+<ul>
+<li><strong>中断响应: 正常中断流程,申请中断</strong></li>
+<li><strong>事件响应: 不申请中断,通向其他外设,触发其他外设的操作</strong></li>
+</ul>
+</li>
+<li><p>判断代码是否成功进入中断的方法</p>
+<ul>
+<li>进入调试模式,在中断函数设置一个断点</li>
+<li>选择全速运行代码,手动触发一个中断条件,使代码进入中断</li>
+<li>如果代码运行到设置的断点处,说明进入了中断</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-4-AFIO"><a href="#4-4-AFIO" class="headerlink" title="4.4 AFIO"></a>4.4 AFIO</h3><ol>
+<li><p><strong>AFIO 功能: 引脚复用功能重映射, 中断引脚选择</strong></p>
+</li>
+<li><p>中断引脚选择: PA0~PG0 只能有一个通过 AFIO 的选择到达 EXTI</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-AFIO.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>AFIO 引脚重映射(以 TIM2 的 CH1 为例)</p>
+<ul>
+<li><p>TIM2 的 CH1 原本位于 PA0.可以将其重映射到 PA15</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-AFIO-redefine.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>因此,可以使用部分重映射1或完全重映射实现使用 PA15 作为 TIM2 的 CH1</p>
+</li>
+<li><p>需要注意的是,PA15 原本的功能是作为 JTAG 的调试功能,因此还需要将其关闭,作为普通 GPIO 引脚</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-JTAG-disable.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-5-HAL-库操作"><a href="#4-5-HAL-库操作" class="headerlink" title="4.5 HAL 库操作"></a>4.5 HAL 库操作</h3><ol>
+<li><p>直接在引脚上选择 GPIO_EXTI</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-HAL-EXTI-pin.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>在 GPIO 中选择其配置</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-HAL-EXTI-pin-config.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>enable EXTI 中断线</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-NVIC-enable.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>在 NVIC 中配置优先级(注意 hal_delay 的实现依赖于 SysTick 中断,因此若在中断使用 delay 需要 SysTick 优先级高于当前中断)</p>
+<p><img src="/2024/04/01/Embedded/STM32/4-NVIC-priority.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>生成的代码主要关注 <code>stm32f1xx_it.c</code> 文件,会增加一个中断处理函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* This function handles EXTI line1 interrupt. */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">EXTI1_IRQHandler</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>  HAL_GPIO_EXTI_IRQHandler(key1_Pin);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>其底层会调用到一个弱实现的回调函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">HAL_GPIO_EXTI_IRQHandler</span><span class="hljs-params">(<span class="hljs-type">uint16_t</span> GPIO_Pin)</span> &#123;<br>  <span class="hljs-comment">/* EXTI line interrupt detected */</span><br>  <span class="hljs-keyword">if</span> (__HAL_GPIO_EXTI_GET_IT(GPIO_Pin) != <span class="hljs-number">0x00u</span>) &#123;<br>    __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);<br>    HAL_GPIO_EXTI_Callback(GPIO_Pin);<br>  &#125;<br>&#125;<br><br>__weak <span class="hljs-type">void</span> <span class="hljs-title function_">HAL_GPIO_EXTI_Callback</span><span class="hljs-params">(<span class="hljs-type">uint16_t</span> GPIO_Pin)</span> &#123;<br>  UNUSED(GPIO_Pin);  <span class="hljs-comment">/* Prevent unused argument(s) compilation warning */</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>因此可以通过重新实现回调函数来执行逻辑</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">HAL_GPIO_EXTI_Callback</span><span class="hljs-params">(<span class="hljs-type">uint16_t</span> GPIO_Pin)</span> &#123;<br>  <span class="hljs-keyword">if</span> (GPIO_Pin == key1_Pin)<br>      <span class="hljs-comment">// 具体逻辑...</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="5-TIM-定时器"><a href="#5-TIM-定时器" class="headerlink" title="5 TIM 定时器"></a>5 TIM 定时器</h2><h3 id="5-1-定时器"><a href="#5-1-定时器" class="headerlink" title="5.1 定时器"></a>5.1 定时器</h3><ol>
+<li><p><strong>定时器: 对输入时钟计数,在计数值达到设定值时触发中断</strong></p>
+<ul>
+<li>基本定时功能: 每隔一段时间产生一个中断</li>
+<li>定时器输出比较: 常用来产生 PWM 波形</li>
+<li>定时器输入捕获: 测量方波频率</li>
+<li>定时器编码器接口: 读取正交编码器的输出波形</li>
+</ul>
+</li>
+<li><p>定时器类型</p>
+<table>
+<thead>
+<tr>
+<th><strong>类型</strong></th>
+<th align="left"><strong>编号</strong></th>
+<th><strong>总线</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基本定时器</td>
+<td align="left">TIM6 &amp; TIM7</td>
+<td>APB1</td>
+<td>定时中断, 主模式触发 DAC</td>
+</tr>
+<tr>
+<td>通用定时器</td>
+<td align="left">TIM2 ~ TIM5</td>
+<td>APB1</td>
+<td>拥有基本定时器全部功能. 额外具有: 内外时钟源选择,<br />输入捕获输出比较, 编码器接口, 主从触发模式等功能</td>
+</tr>
+<tr>
+<td>高级定时器</td>
+<td align="left">TIM1 &amp; TIM8</td>
+<td>APB2</td>
+<td>拥有通用定时器全部功能. 额外具有: 重复计数器,<br />死区生成, 互补输出, 刹车输入等功能</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>基本定时器</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-basic-timer.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><strong>时基单元: 最基本的计数计时电路</strong><ul>
+<li><code>PSC 预分频器</code>: 对 72MHz 的时钟进行预分频.实际分频系数 &#x3D; PSC + 1</li>
+<li><code>CNT 计数器</code>: 对预分频后的时钟进行计数.每有一个上升沿,CNT ++</li>
+<li><code>ARR 自动重装载寄存器</code>: 存储计数目标.<strong>当计数值 &#x3D;&#x3D; 重装值时,产生一个中断信号,并清零计数器</strong></li>
+</ul>
+</li>
+<li><strong>主模式输出: 可以将定时器的更新事件映射到触发控制器(TRGO),TRGO 接到 DAC 的触发转换引脚</strong></li>
+</ul>
+</li>
+<li><p>通用定时器</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-universal-timer.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><strong>通用计时器的时基单元: 通用定时器包含基本定时器的电路.时基单元是相似的</strong></li>
+<li>内外时钟选择:<code>TIMx_ETR</code>引脚接一个外部方波时钟.经过<code>极性选择,边沿检测,预分频器,输入滤波</code>后分为两路<ul>
+<li>向上进入<code>触发控制器</code>,作为时基单元的时钟</li>
+<li>向下进入<code>TRGI</code>,用作触发输入.触发定时器的从模式</li>
+</ul>
+</li>
+<li><code>ITR</code> 信号: 来自其他定时器从 <code>TRGO</code> 的输出</li>
+<li><code>TIIF_ED</code>: 连接到输入捕获单元的 CH1 引脚</li>
+<li><code>TI1FP1, TI2FP2</code>: 连接到输入滤波器和边沿检测器的后面</li>
+<li><strong>主模式输出: TRGO 可将内部的事件映射到 TRGO 引脚</strong></li>
+</ul>
+</li>
+<li><p>高级定时器</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-advanced-timer.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>高级定时器包含了通用定时器的电路.额外增加了下列内容<ul>
+<li>申请中断的后面加入一个 <code>REP</code> 重复次数计数器,可以每个几个计数周期才发生一次更新事件&#x2F;中断</li>
+<li><code>DTG</code> 寄存器: 死区生成电路.右侧输出引脚变为了两个,可以输出一对互补的 PWM 波</li>
+<li><code>TIMxBKIN</code>: 若 <code>TIMxBKIN</code> 引脚产生刹车信号或内部时钟失效,将由控制电路自动切断电机输出</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-2-时基单元"><a href="#5-2-时基单元" class="headerlink" title="5.2 时基单元"></a>5.2 时基单元</h3><ol>
+<li><p>预分频时序图</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-count-timing-sequence-1-2.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p><code>预分频缓冲器(影子寄存器)</code>: 实际上起作用的寄存器.预分频控制寄存器修改后,为保证此计数周期内频率一致.<br>该修改并不立即生效,在本次计数结束后才生效.<code>自动加载寄存器, 捕获 / 比较寄存器</code>同样有影子寄存器</p>
+</li>
+<li><p>计数器计数频率公式<br>$$<br>\mathrm{CK_CNT} &#x3D; \frac{\mathrm{CK_PSC}}{\mathrm{(PSC +1)}}<br>$$</p>
+</li>
+</ul>
+</li>
+<li><p>计数器时序图</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-count-timing-sequence.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><strong>计数器溢出频率公式</strong><br>$$<br>\mathrm{freq} &#x3D; \frac{\mathrm{CK_CNT}}{\mathrm{(ARR + 1)}}<br>&#x3D; \frac{\mathrm{CK_PSC}}{\mathrm{(PSC +1)(ARR + 1)}}<br>$$</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-3-RCC-时钟树"><a href="#5-3-RCC-时钟树" class="headerlink" title="5.3 RCC 时钟树"></a>5.3 RCC 时钟树</h3><p><img src="/2024/04/01/Embedded/STM32/5-RCC-clock-tree.png" srcset="/img/loading.gif" lazyload></p>
+<ol>
+<li>RCC 产生和配置时钟,然后发送给各个外设的系统<ul>
+<li><strong>时钟是所有外设运行的基础,需要最先配置</strong></li>
+<li>左侧为时钟产生电路,右侧为时钟分配电路.中间的 <code>SYSCLK</code> 为系统时钟(72MHz)</li>
+</ul>
+</li>
+<li><strong>程序在 <code>main</code> 函数之前会执行 <code>SystemInit</code> 函数,以配置时钟树</strong><ul>
+<li>首先尝试以 线路1 按照 8MHz 频率运行,稳定后切换为 线路2</li>
+<li>CSS 可以检测时钟运行是否正常.若出错会切换到内部时钟</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-4-定时中断"><a href="#5-4-定时中断" class="headerlink" title="5.4 定时中断"></a>5.4 定时中断</h3><ol>
+<li><p>定时中断基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-timer-interrupt-struct.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>基本定时中断配置步骤</p>
+<ul>
+<li>开启 RCC 的 TIM 外设时钟</li>
+<li>时基单元的时钟源选择(选择内部时钟模式). 配置时基单元</li>
+<li>配置中断输出控制,允许更新中断输出到 NVIC. 配置 NVIC,打开定时器的中断通道</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-5-输出比较"><a href="#5-5-输出比较" class="headerlink" title="5.5 输出比较"></a>5.5 输出比较</h3><ol>
+<li><p><strong>OC(Output Compare, 输出比较)</strong></p>
+<ul>
+<li><strong>通过比较 CNT 和 CCR 寄存器值(CNT 计数自增,CCR 手动给定).</strong><br><strong>然后对输出电平 置1 &#x2F; 置0 &#x2F; 翻转,实现输出一定频率和占空比的 PWM 波形</strong></li>
+<li>每个高级寄存器(前3个通道拥有死区生成和互补输出功能)和通用寄存器均拥有4个输出比较通道</li>
+<li>CCR 被输入捕获和输出比较共用<ul>
+<li>使用输入捕获时,CCR 作为捕获寄存器</li>
+<li>使用输出比较时,CCR 作为比较寄存器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>PWM(Pulse Width Modulation 脉冲宽度调制)</strong></p>
+<ul>
+<li>在惯性系统中,可以通过对一系列脉冲的宽度进行调制,来等效地获得所需要的模拟参量</li>
+<li>参数: 频率: $freq &#x3D; \frac{1}{T_S}$, 占空比: $duty &#x3D; \frac{T_{ON}}{T_S}$, 分辨率: 占空比变化步距(1%即可)<br>其中 $T_S$ 为周期(高低电平变化一次的时间), $T_{ON}$ 为周期中高电平的维持时间</li>
+</ul>
+</li>
+<li><p>捕获 &#x2F; 比较通道</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-capture-channel.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>输出比较模式(输出模式控制器)</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>冻结</td>
+<td>CNT&#x3D;CCR 时,REF 保持为原状态.即维持为暂停时刻的状态不变</td>
+</tr>
+<tr>
+<td>匹配时置有效电平</td>
+<td>CNT&#x3D;CCR 时,REF 置有效电平</td>
+</tr>
+<tr>
+<td>匹配时置无效电平</td>
+<td>CNT&#x3D;CCR 时,REF 置无效电平</td>
+</tr>
+<tr>
+<td>匹配时电平翻转</td>
+<td>CNT&#x3D;CCR 时,REF 电平翻转</td>
+</tr>
+<tr>
+<td>强制为无效电平</td>
+<td>CNT 与 CCR 无效,REF 强制为无效电平</td>
+</tr>
+<tr>
+<td>强制为有效电平</td>
+<td>CNT 与 CCR 无效.REF 强制为有效电平</td>
+</tr>
+<tr>
+<td><strong>PWM 模式1</strong></td>
+<td><strong>向上计数: CNT &lt; CCR 时,REF 置有效电平;CNT ≥ CCR 时,REF 置无效电平</strong> <br />向下计数: CNT &gt; CCR 时,REF 置无效电平;CNT ≤ CCR 时,REF 置有效电平</td>
+</tr>
+<tr>
+<td><strong>PWM 模式2</strong></td>
+<td><strong>向上计数: CNT &lt; CCR 时,REF 置无效电平,CNT ≥ CCR 时,REF 置有效电平</strong> <br />向下计数: CNT &gt; CCR 时,REF 置有效电平,CNT ≤ CCR 时,REF 置无效电平</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>高级定时器输出比较(相较于通用定时器可以输出互补电平信号和产生死区)</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-advanced-timer-output.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>输出 <code>OC1,OC1N</code> 分别接到外部推挽电路的控制极,2个推挽电路构成 H桥,3个推挽电路即可驱动三相无刷电机</li>
+<li><code>死区生成器</code>: 在 MOS 管关闭时,进行一段延时,然后是另一个 MOS 管导通.防止因器件原因造成正负极短路</li>
+</ul>
+</li>
+<li><p>PWM 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-PWM-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>图示中蓝线为 CNT(不断自增); 红线为 CCR(手动设置); 黄线为 ARR(手动设置).PWM 模式1</li>
+<li>输出 PWM 波形不需要进行中断申请</li>
+</ul>
+</li>
+<li><p><strong>PWM 参数计算</strong></p>
+<ul>
+<li><p>已知 $\mathrm{CK_PSC}$, PSC, ARR, CCR.计算频率, 占空比, 分辨率</p>
+<ul>
+<li><p>频率:     $\mathrm{freq} &#x3D; \frac{\mathrm{CK_PSC}}{\mathrm{(PSC + 1)}\mathrm{(ARR + 1)}}$</p>
+</li>
+<li><p>占空比: $\mathrm{Duty} &#x3D; \frac{\mathrm{CCR}}{\mathrm{(ARR + 1)}}$</p>
+</li>
+<li><p>分辨率: $\mathrm{Reso} &#x3D; \frac{1}{(\mathrm{ARR} + 1)}$</p>
+</li>
+</ul>
+</li>
+<li><p>已知 时钟频率, PWM 频率, 占空比, 分辨率时.计算 PSC, ARR, CCR</p>
+<ul>
+<li>$\mathrm{ARR+1} &#x3D; \frac{1}{\mathrm{Reso}}$</li>
+<li>$\mathrm{CCR} &#x3D; \frac{\mathrm{Duty}}{\mathrm{Reso}}$ </li>
+<li>$\mathrm{PSC + 1} &#x3D; \frac{\mathrm{Reso\cdot CK_{PSC}}}{\mathrm{freq}}$</li>
+</ul>
+</li>
+<li><p><strong>确定 PSC, ARR, CCR 的方式</strong></p>
+<ul>
+<li>首先根据分辨率决定 ARR.如要求分辨率为 1% 时, (ARR + 1) &#x3D; 100.此后固定 ARR 的值,方便计算</li>
+<li>此时 CRR 值即为占空比的百分数.如 CCR &#x3D; 50 时,占空比 duty &#x3D; 50%.代码中改变 CRR,即可调节占空比</li>
+<li>最后确定 PSC 的值.代码中改变 PSC,即可调节频率</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-6-输入捕获"><a href="#5-6-输入捕获" class="headerlink" title="5.6 输入捕获"></a>5.6 输入捕获</h3><ol>
+<li><p><strong>IC(Input Capture 输入捕获)</strong></p>
+<ul>
+<li>输入捕获模式下<ul>
+<li>当通道输入引脚出现指定电平跳变时,当前 CNT 的值将被锁存到 CCR 中</li>
+<li>可用于测量 PWM 波形的频率, 占空比, 脉冲间隔, 电平持续时间等参数</li>
+</ul>
+</li>
+<li>每个高级定时器和通用定时器都拥有4个输入捕获通道<ul>
+<li>可配置为 PWMI 模式,同时测量频率和占空比</li>
+<li>可配合主从触发模式,实现硬件全自动测量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>频率测量方法</strong></p>
+<ul>
+<li><strong>测频法</strong>: 在闸门时间 T 内对上升沿计次 N,则频率 $f_x &#x3D; \frac{N}{T}$</li>
+<li><strong>测周法</strong>: 两个上升沿内以标准频率 $f_c$ 计次 N,则频率 $f_x &#x3D; \frac{f_c}{N}$</li>
+<li><strong>中界频率</strong>: 测频法与测周法误差相等的频率 $f_m &#x3D; \sqrt{\frac{f_c}{T}}$</li>
+</ul>
+</li>
+<li><p>捕获比较通道框图</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-capture-channel-block.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>主从触发模式</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-%E4%B8%BB%E4%BB%8E%E8%A7%A6%E5%8F%91%E6%A8%A1%E5%BC%8F.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><strong>主模式: 可将定时器内部的信号映射到 TRGO 引脚,触发其他外设</strong></li>
+<li><strong>从模式: 接收其他外设或使用自身外设的信号.用以控制自身控制器的运行</strong></li>
+<li>触发源选择: 指定 从模式的触发信号 得到 TRGI,然后触发选定的从模式</li>
+</ul>
+</li>
+<li><p>输入捕获基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-capture-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>从GPIO口输入方波信号,经过<code>滤波器, 边沿检测, 极性选择</code>得到 <code>TI1FP1</code>,最后连接到 <code>CCR1</code></li>
+<li>当<code>TI1FP1</code>出现上升沿,不断自增的 <code>CNT</code> 转运到 <code>CCR1</code> 中</li>
+<li>同时,触发源选择为 <code>TI1FP1</code>,从模式配置为 <code>Reset</code>.当 <code>TI1FP1</code> 出现上升沿,<code>CNT</code> 自动清零,再次自增</li>
+</ul>
+</li>
+<li><p>PWMI 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-PWMI-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>PWMI 与 输入捕获的区别在于使用2个通道捕获同一 GPIO,可以同时测量周期和占空比</li>
+<li>当上升沿来临,<code>TI1FP1</code> 触发,<code>CCR1</code> 捕获,清零 <code>CNT</code></li>
+<li><code>TI1FP2</code>配置为下降沿触发.当下降沿来临,<code>TI1FP2</code> 触发,<code>CCR2</code> 捕获,不清零 <code>CNT</code></li>
+<li>因而 <code>CCR2</code> 的值反映高电平维持时间,<code>CCR1</code> 的值反映周期的时间.占空比为 $\frac{CCR2}{CCR1}$</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-7-编码器"><a href="#5-7-编码器" class="headerlink" title="5.7 编码器"></a>5.7 编码器</h3><ol>
+<li><p>编码器接口(Encoder Interface)</p>
+<ul>
+<li>编码器接口可接收增量(正交)编码器的信号<ul>
+<li>根据编码器旋转产生的正交信号脉冲</li>
+<li>自动控制 CNT 自增或自减,从而指示 编码器的位置, 旋转方向, 旋转速度</li>
+</ul>
+</li>
+<li>每个高级定时器和通用定时器都拥有1个编码器接口</li>
+<li>编码器接口的两个输入引脚借用了输入捕获的通道1和通道2</li>
+</ul>
+</li>
+<li><p>正交编码器</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-encoder.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>由于正转和反转输出的波形一致,故仅凭一项输出信号无法判断旋转方向.因此需要 A, B相</li>
+<li>A相与B相 相位差90°.每当出现边沿变化时,判断另一相的状态,对照右侧表格,即可确定旋转方向</li>
+</ul>
+</li>
+<li><p>编码器接口基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/5-encoder-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>当编码器正转时,CNT++; 反转时,CNT–.结合固定的闸门时间,即可完成测速任务</p>
+</li>
+<li><p><code>TI1FP1, TI2FP2</code>来自 GPIO 端口输入.<strong>类似于一个外部时钟源,配置为编码器模式</strong></p>
+<ul>
+<li>因此此时 PSC 建议设为 0,不进行分频.ARR 设为 65535,最大</li>
+</ul>
+</li>
+<li><p>配置 GPIO 为输入模式 -&gt; 配置时基单元 -&gt; 配置输入捕获单元 -&gt; 配置编码器接口(下行代码)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 编码器接口配置.并设置为: 定时器3, 选择编码器模式, TI1, TI2都计数, 不反相</span><br><span class="hljs-comment">** 注意此时参数的 Rising 和 Falling 不再代表上升沿和下降沿了,而是代表是否反相</span><br><span class="hljs-comment">** 此函数必须在输入捕获初始化之后进行,否则输入捕获的配置会覆盖此函数的部分配置 */</span><br>TIM_EncoderInterfaceConfig(TIM3, TIM_EncoderMode_TI12,<br>                           TIM_ICPolarity_Rising, TIM_ICPolarity_Rising);<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="6-ADC"><a href="#6-ADC" class="headerlink" title="6 ADC"></a>6 ADC</h2><h3 id="6-1-ADC-功能"><a href="#6-1-ADC-功能" class="headerlink" title="6.1  ADC  功能"></a>6.1  ADC  功能</h3><ol>
+<li><p><strong>ADC(Analog-Digital Converter, 模拟-数字转换器)</strong></p>
+<ul>
+<li>作用: 可将引脚上连续变化的模拟电压 转换为内存中存储的数字变量</li>
+<li>18个输入通道: 可测量16个外部(GPIO)和2个内部信号源(温度传感器,内部参考电压)<ul>
+<li>输入电压范围: 0 ~ 3.3V</li>
+<li>分辨率为 12位: 即表示范围 $0 \sim 2^{12}-1$</li>
+<li>1$\mu$s 转换时间: 即开始转换到产生结果耗时.对应频率为 1MHz</li>
+</ul>
+</li>
+<li>STM32 增强功能: 规则组和注入组两个转换单元</li>
+</ul>
+</li>
+<li><p>逐次逼近型 ADC 结构(<code>ADC0809</code> 内部结构图, 8位逐次逼近型)</p>
+<p><img src="/2024/04/01/Embedded/STM32/6-approx-ADC.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>ADC 框图</p>
+<p><img src="/2024/04/01/Embedded/STM32/6-ADC-block.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>ADC 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/6-ADC-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>配置 GPIO 为模拟输入模式 -&gt; 配置数据选择器 -&gt; 配置 ADC 转换器 -&gt; 开启 ADC</li>
+</ul>
+</li>
+</ol>
+<h3 id="6-2-ADC-模式"><a href="#6-2-ADC-模式" class="headerlink" title="6.2 ADC 模式"></a>6.2 ADC 模式</h3><ol>
+<li><p><strong>规则组的转换模式</strong></p>
+<ul>
+<li>单次转换: 在一次转换结束后,转换结果存放在数据寄存器中,置 EOC 标志位,结束转换</li>
+<li>连续转换: 在一次转换结束后,置 EOC 标志位,立即开始下一轮的转换</li>
+<li>非扫描模式: 规则组的序列只有一个通道有效.即只处理一个通道的信号</li>
+<li>扫描模式: 规则组的序列有效,一次转换多个通道的信号</li>
+</ul>
+</li>
+<li><p>ADC 转换触发控制</p>
+<p><img src="/2024/04/01/Embedded/STM32/6-ADC-external-trigger.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>数据对齐: 对于一个 12bit ADC,其转换结果为 12bit.而数据寄存器为16bit,需进行数据对齐</p>
+<ul>
+<li><strong>右对齐: 有效数据右对齐,左边补0</strong></li>
+<li>左对齐: 有效数据左对齐,右边补0</li>
+</ul>
+</li>
+<li><p>转换时间(采样, 保持, 量化, 编码)</p>
+<ul>
+<li>ADC 的总转换时间: <code>T = 采样时间 + 12.5 * ADC 周期</code></li>
+<li>采样时间可在程序中配置.量化编码因是12位 ADC,需要 12.5 个周期</li>
+<li>例: 采样时间配置为1.5, ADC 频率为14MHz,则总转换时间为14个 ADC 周期,即 1us</li>
+</ul>
+</li>
+</ol>
+<h2 id="7-DMA"><a href="#7-DMA" class="headerlink" title="7 DMA"></a>7 DMA</h2><h3 id="7-1-DMA-功能"><a href="#7-1-DMA-功能" class="headerlink" title="7.1 DMA 功能"></a>7.1 DMA 功能</h3><ol>
+<li><p><strong>DMA(Direct Memory Access, 直接存储器存取)</strong></p>
+<ul>
+<li>DMA 可以提供外设和存储器或者存储器和存储器之间的高速数据传输</li>
+<li>本质上是从某个地址取出数据,转运到另一地址</li>
+<li>作用: DMA 数据传输无须 CPU 干预,节省 CPU 的资源</li>
+<li>12个独立可配置的通道: DMA1(7个通道), DMA2(5个通道)</li>
+<li>每个通道都支持软件触发和特定的硬件触发</li>
+</ul>
+</li>
+<li><p><strong>存储器映像</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>起始地址</th>
+<th>存储器</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ROM</td>
+<td>0x0800 0000</td>
+<td>程序存储器 Flash</td>
+<td>存储编译后的 C 语言程序代码</td>
+</tr>
+<tr>
+<td></td>
+<td>0x1FFF F000</td>
+<td>系统存储器</td>
+<td>存储 BootLoader,用于串口下载</td>
+</tr>
+<tr>
+<td></td>
+<td>0x1FFF F800</td>
+<td>选项字节</td>
+<td>存储一些独立于程序代码的配置参数</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>0x2000 0000</td>
+<td>运行内存 SRAM</td>
+<td>存储运行过程中的临时变量</td>
+</tr>
+<tr>
+<td></td>
+<td>0x4000 0000</td>
+<td>外设寄存器</td>
+<td>存储各个外设的配置参数</td>
+</tr>
+<tr>
+<td></td>
+<td>0xE000 0000</td>
+<td>内核外设寄存器</td>
+<td>存储内核各个外设的配置参数</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>DMA 框图</p>
+<p><img src="/2024/04/01/Embedded/STM32/7-DMA-block.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>DMA 通过 <code>DMA 总线</code>主动访问各种存储器.DMA 总线是被分时复用的<ul>
+<li><code>仲裁器</code>根据通道的优先级处理 DMA 通道的冲突</li>
+<li><code>总线矩阵</code>也有仲裁器,当 CPU 和 DMA 访问同一目标时.保障 CPU 正常工作</li>
+</ul>
+</li>
+<li>DMA 作为外设,也有寄存器.连接在 <code>AHB 总线</code>上,因此 CPU 可以访问,配置 DMA<ul>
+<li>硬件可通过 DMA 请求线路向 DMA 发出硬件触发信号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-2-DMA-转运"><a href="#7-2-DMA-转运" class="headerlink" title="7.2 DMA 转运"></a>7.2 DMA 转运</h3><ol>
+<li><p><strong>DMA 基本结构</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/7-DMA-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>DMA 数据转运<ul>
+<li>条件: DMA 使能, <code>传输计数器</code> &gt; 0, 触发源有触发信号</li>
+<li>方向: 外设 -&gt; 存储器, 存储器 -&gt; 外设, Flash -&gt; SRAM</li>
+<li>参数: 源端和目标的 <code>起始地址, 数据宽度, 地址是否自增</code></li>
+</ul>
+</li>
+<li><strong>传输计数器</strong>: 在完成一次转运后会进行自减,当其值为0时结束转运,起始地址参数复位<ul>
+<li><code>自动重装器</code>: 可以在传输计数器自减到0后,恢复传输计数器的值,再次自减.使得可以循环转运</li>
+<li>DMA 转运完成后,必须先关闭 DMA,然后再次开启,才能给 <code>传输计数器</code> 写值</li>
+</ul>
+</li>
+<li>触发方式: 由 <code>M2M</code> 控制<ul>
+<li>软件触发: DMA 不断运行,直到 <code>传输计数器</code> 清零.此时不应开启 <code>自动重装器</code>,一般用于存储器间数据转运</li>
+<li>硬件触发: 达到某种条件(如 ADC 转换完成,串口接收到数据,达到定时时间),触发 DMA 运行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>DMA1 请求映像 </p>
+<p><img src="/2024/04/01/Embedded/STM32/7-DMA1-request-map.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><strong>每个通道的硬件触发源不同.而软件触发都一样.需要根据触发选择 ADC 通道</strong></li>
+<li>对于外设请求信号的选择: 由外设的 DMA 控制决定,开启就可以发出请求信号</li>
+<li>外设请求信号经过 或门到硬件请求.一般只开启一个外设请求</li>
+</ul>
+</li>
+<li><p>DMA 传输数据宽度</p>
+<ul>
+<li>源端宽度 &#x3D; 目标宽度: 正常传输</li>
+<li>源端宽度 &gt; 目标宽度: 高位舍弃</li>
+<li>源端宽度 &lt; 目标宽度: 高位补0</li>
+</ul>
+</li>
+</ol>
+<h2 id="8-USART-串口"><a href="#8-USART-串口" class="headerlink" title="8 USART 串口"></a>8 USART 串口</h2><h3 id="8-1-通信接口"><a href="#8-1-通信接口" class="headerlink" title="8.1 通信接口"></a>8.1 通信接口</h3><ol>
+<li><p><strong>通信协议</strong></p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>引脚</th>
+<th>双工</th>
+<th>时钟</th>
+<th>电平</th>
+<th>设备</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>USART</td>
+<td>TX, RX</td>
+<td>全双工</td>
+<td>异步</td>
+<td>单端</td>
+<td>点对点</td>
+</tr>
+<tr>
+<td>I2C</td>
+<td>SCL, SDA</td>
+<td>半双工</td>
+<td>同步</td>
+<td>单端</td>
+<td>多设备</td>
+</tr>
+<tr>
+<td>SPI</td>
+<td>SCLK, MOSI, MISO, CS</td>
+<td>全双工</td>
+<td>同步</td>
+<td>单端</td>
+<td>多设备</td>
+</tr>
+<tr>
+<td>CAN</td>
+<td>CAN_H, CAN_L</td>
+<td>半双工</td>
+<td>异步</td>
+<td>差分</td>
+<td>多设备</td>
+</tr>
+<tr>
+<td>USB</td>
+<td>DP, DM</td>
+<td>半双工</td>
+<td>异步</td>
+<td>差分</td>
+<td>点对点</td>
+</tr>
+</tbody></table>
+<ul>
+<li>全双工: 通信双方能够同时进行双向通信.一般需要2根通信线</li>
+<li>半双工: 通信双方无法同时输入 &#x2F; 输出数据</li>
+<li>单工: 数据传输方向为单向</li>
+<li>时钟: 确定数据的采集时机</li>
+</ul>
+</li>
+<li><p>电平标准: 数据1&#x2F;0的表达方式(当电平信号不一致时,需要加入电平转换芯片)</p>
+<table>
+<thead>
+<tr>
+<th>电平标准</th>
+<th>data: 1</th>
+<th>data: 0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TTL</strong></td>
+<td><strong>+3.3V 或 +5V</strong></td>
+<td><strong>0V</strong></td>
+</tr>
+<tr>
+<td>RS232 电平</td>
+<td>-3 ~ -15V</td>
+<td>+3 ~ +15</td>
+</tr>
+<tr>
+<td>RS485 电平(差分信号)</td>
+<td>+2 ~ +6V</td>
+<td>-2 ~ -6V</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>串口时序</p>
+<p><img src="/2024/04/01/Embedded/STM32/8-uart-timing-sequence.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>串口参数</p>
+<ul>
+<li><strong>波特率: 串口通信的速率.每秒传输码元的个数</strong></li>
+<li>比特率: 每秒传输的比特数(bit&#x2F;s).二进制情况下,码元即是 bit,波特率等于比特率</li>
+<li>起始位: 标志一个数据帧的开始,固定为低电平(空闲时为高电平)</li>
+<li><strong>数据位: 数据帧的有效载荷.1为高电平,0为低电平.低位先行</strong></li>
+<li>校验位: 用于数据验证(如奇校验表示连同校验位共有奇数个1,还有 CRC 校验)</li>
+<li>停止位: 用于数据帧间隔.固定为高电平</li>
+</ul>
+</li>
+</ol>
+<h3 id="8-2-USART-外设"><a href="#8-2-USART-外设" class="headerlink" title="8.2 USART 外设"></a>8.2 USART 外设</h3><ol>
+<li><p><strong>USART(Universal Synchronous&#x2F;Asynchronous Receiver&#x2F;Transmitter, 通用同步&#x2F;异步收发器)</strong></p>
+<ul>
+<li>STM32 内部集成 USART 外设<ul>
+<li>可根据数据寄存器的一个字节数据自动生成数据帧时序.由 TX 引脚发送</li>
+<li>可自动接收 RX 引脚的数据帧时序,拼接为一个字节数据,存放于数据寄存器</li>
+<li>自带波特率发生器.最高达4.5Mbits&#x2F;s(本质是一个预分频器)</li>
+</ul>
+</li>
+<li>可配置参数<ul>
+<li>数据位长度(<strong>8</strong> &#x2F; 9). 停止位长度(0.5 &#x2F; <strong>1</strong> &#x2F; 1.5 &#x2F; 2)</li>
+<li>校验位: <strong>无校验,</strong> 奇校验, 偶校验</li>
+<li>支持同步模式, 硬件流控制, DMA, 智能卡, IrDA, LIN</li>
+</ul>
+</li>
+<li>stm32f103 的 usart1 的引脚: tx - PA9, rx - PA10</li>
+</ul>
+</li>
+<li><p>USART 框图</p>
+<p><img src="/2024/04/01/Embedded/STM32/8-USART-block.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><code>TX</code> 引脚连接 <code>发送移位寄存器</code>,在<code>发送器控制</code>的控制下,将数据按位移出<ul>
+<li>当 <code>TDR</code>(只写) 被写入数据时,先检查<code>移位寄存器</code>是否有数据正在移位</li>
+<li>若无,则数据发送到<code>移位寄存器</code>,同时,置 <code>TXE 标志位</code>,可以再次向 <code>TDR</code> 写入数据</li>
+<li>若有,则等待移位完成后,立即转移数据</li>
+</ul>
+</li>
+<li><code>RX</code> 连接通向 <code>接收移位寄存器</code>,在<code>接收器控制</code>的控制下,将数据按位移出<ul>
+<li><code>接收移位寄存器</code>按位读取 <code>RX</code> 引脚的信号</li>
+<li>读取满1byte 后,将数据转移到 <code>RDR</code>.同时,置 <code>RXNE 标志位</code>.此时可从 <code>RDR</code>(只读)读出数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>USART 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/8-USART-struct.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>APB的时钟信号到达波特率发生器进行分频</li>
+<li>发送器 &#x2F; 接收器的波特率 &#x3D; $\mathrm{\frac{f_{PCLK}} { {16} \cdot {DIV} } }$. 由 <code>波特率寄存器 BRR</code> 中的 <code>DIV</code> 决定</li>
+</ul>
+</li>
+</ol>
+<h3 id="8-3-重定向-printf"><a href="#8-3-重定向-printf" class="headerlink" title="8.3 重定向 printf"></a>8.3 重定向 <code>printf</code></h3><ol>
+<li><p>格式化打印: 对 <code>printf</code>函数的重定向</p>
+</li>
+<li><p>打开工程文件中的 <code>Options for target</code>,勾选 <code>Use MicroLIB</code>(Keil 为嵌入式平台准备的精简库)</p>
+<p><img src="/2024/04/01/Embedded/STM32/8-UseMicroLib.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>由于<code>printf</code>函数底层调用<code>fput</code>函数不断打印,因此可以将 <code>printf</code> 函数重定向为向串口发送数据</strong></p>
+</li>
+<li><p>方法1: 重写的<code>fputc</code>函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fputc</span><span class="hljs-params">(<span class="hljs-type">int</span> ch, FILE *f)</span> &#123;<br>	serial_send_byte(ch);  <span class="hljs-comment">// 这是一个串口传输数据的函数,需要自行实现</span><br>	<span class="hljs-keyword">return</span> ch;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>方法2: 对 <code>sprintf</code> 的封装(<code>sprintf</code> 函数: 将内容打印打印到字符串中)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdarg.h&gt;</span></span><br><span class="hljs-type">void</span> <span class="hljs-title function_">serial_printf</span><span class="hljs-params">(<span class="hljs-type">char</span> *format, ...)</span> &#123;<br>	<span class="hljs-type">char</span> <span class="hljs-built_in">string</span>[<span class="hljs-number">100</span>];               <span class="hljs-comment">// 定义字符数组</span><br>	va_list arg;                    <span class="hljs-comment">// 定义可变参数列表数据类型的变量 arg</span><br>	va_start(arg, format);          <span class="hljs-comment">// 从 format 开始,接收参数列表到 arg 变量</span><br>	<span class="hljs-built_in">vsprintf</span>(<span class="hljs-built_in">string</span>, format, arg);  <span class="hljs-comment">// 使用 vsprintf 打印格式化字符串和参数列表到字符数组中</span><br>	va_end(arg);                    <span class="hljs-comment">// 结束变量 arg</span><br>	serial_send_string(<span class="hljs-built_in">string</span>);     <span class="hljs-comment">// 串口发送字符数组的函数,需要自行实现</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="8-4-HAL-库"><a href="#8-4-HAL-库" class="headerlink" title="8.4 HAL 库"></a>8.4 HAL 库</h3><ol>
+<li>配置 UART1</li>
+</ol>
+<p>   <img src="/2024/04/01/Embedded/STM32/8-USART-HAL.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="2">
+<li><p>在 <code>stm32f1xx_hal_uart.h</code> 中有很多中断回调函数,以及功能实现函数</p>
+<ul>
+<li><p>收发函数(还有中断和 dma 版本)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">HAL_StatusTypeDef <span class="hljs-title function_">HAL_UART_Transmit</span><span class="hljs-params">(UART_HandleTypeDef *huart, </span><br><span class="hljs-params">                                    <span class="hljs-type">const</span> <span class="hljs-type">uint8_t</span> *pData, </span><br><span class="hljs-params">                                    <span class="hljs-type">uint16_t</span> Size, </span><br><span class="hljs-params">                                    <span class="hljs-type">uint32_t</span> Timeout)</span>;<br>HAL_StatusTypeDef <span class="hljs-title function_">HAL_UART_Receive</span><span class="hljs-params">(UART_HandleTypeDef *huart, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint8_t</span> *pData, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint16_t</span> Size, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint32_t</span> Timeout)</span>;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="9-I2C-通信"><a href="#9-I2C-通信" class="headerlink" title="9 I2C 通信"></a>9 I2C 通信</h2><h3 id="9-1-I2C-协议"><a href="#9-1-I2C-协议" class="headerlink" title="9.1 I2C 协议"></a>9.1 I2C 协议</h3><ol>
+<li><p><strong>I2C(Inter IC BUS).由 Philips 公司开发的一种通用数据总线</strong></p>
+<ul>
+<li><strong>通信线: SCL(Serial Clock), SDA(Serial Data)</strong></li>
+<li>属于同步通信,半双工通信.可以数据应答,支持总线挂载多设备</li>
+<li>I2C 外设出厂会有一个地址(7位或10位)</li>
+</ul>
+</li>
+<li><p>硬件电路</p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-bus.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>SDA 和 SCL 的控制<ul>
+<li>主机拥有对 SCL 线的完全控制权.也可控制空闲状态下的 SDA 线</li>
+<li>从机只能读取 SCL 线,也不允许主动控制 SDA 线</li>
+<li>仅在应答或主机要读取从机时才能获取 SDA 的控制权</li>
+</ul>
+</li>
+<li>接线方式<ul>
+<li>所有 I2C 设备的 SCL 连在一起,SDA 连在一起.均默认为高电平</li>
+<li><strong>设备的 SCL 和 SDA 均要配置成开漏输出模式,禁止输出高电平</strong></li>
+<li>SCL 和 SDA 各添加一个上拉电阻,阻值一般为4.7KΩ</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>I2C 时序基本单元</strong></p>
+<ul>
+<li><p><strong>起始与终止</strong>: 始终由主机控制,从机无权发送该指令</p>
+<ul>
+<li><p>起始条件: 主机拉低 SDA 电平(下降沿,此时从机复位).然后拉低 SCL,占用 SCL</p>
+</li>
+<li><p>终止条件: 主机先放开 SCL,然后放开 SDA (上升沿).回到初始态</p>
+</li>
+<li><p><strong>除了起始和终止条件,每个时序单元的 SCL 以低电平开始,也以低电平结束</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-start-end.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p><strong>发送数据</strong></p>
+<ul>
+<li><p>起始状态后.SCL,SDA均为低电平.主机将数据置于 SDA 线(高位先行)</p>
+</li>
+<li><p>然后释放 SCL.从机在 SCL 高电平期间读取数据位,需要尽快读取,最好在上升沿时就立即读取</p>
+</li>
+<li><p>当 SCL 高电平时, SDA 不应发生变化,维持一段时间后,主机再次拉低 SCL.完成一位数据的传输</p>
+</li>
+<li><p>循环上述过程8次,即可传输一个字节的数据</p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-send-byte.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p><strong>接收数据</strong></p>
+<ul>
+<li><p>主机需要先释放 SDA.在 SCL 低电平期间,从机将数据置于 SDA 线(高位先行)</p>
+</li>
+<li><p>然后主机释放 SCL.由主机读取数据位</p>
+</li>
+<li><p><strong>SDA 总是在 SCL 低电平(下降沿)时被放置数据,在 SCL 高点平(上升沿)时被读取</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-receive-byte.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p><strong>主机发送应答</strong>: 主机接收完一个字节后,在下一个时钟发送一位数据.<strong>0为应答,1为非应答</strong></p>
+</li>
+<li><p><strong>接收从机应答</strong>: 主机发送完一个字节后,在下一个时钟接收一位数据.<strong>0为应答,1为非应答</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-ack.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>指定地址写: 给指定设备(slave addr)的指定地址(reg addr)写入指定数据(data)</p>
+<ul>
+<li><p>起始条件 -&gt; 发送 1byte(前 7bit 为 slave addr, 后 1bit 表示读(1) &#x2F; <strong>写(0)</strong> ) -&gt; 从机应答0 -&gt; </p>
+</li>
+<li><p>发送 1byte 数据(reg addr) -&gt; 从机应答0 -&gt; </p>
+</li>
+<li><p>发送 1byte 数据(data) -&gt; 从机应答0 -&gt; 终止条件</p>
+</li>
+<li><p>后续字节: 传输真正的数据(寄存器的地址将会自增).当完成传输时,主机需要产生一个终止条件</p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-write-reg.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>当前地址读: 对于指定设备(slave addr),读取从机当前地址指针的数据(data)</p>
+<ul>
+<li><p>起始条件 -&gt; 发送 1byte(前 7bit 为 slave addr, 后 1bit 表示<strong>读(1)</strong> &#x2F; 写(0) ) -&gt; 从机应答0 -&gt;</p>
+</li>
+<li><p>接收 1byte data(此时从机在 scl 低电平写入 sda,主机在 scl 高电平读取 sda) -&gt; 主机应答1 -&gt; 终止条件</p>
+</li>
+<li><p>当主机不想再接收数据时,需要在发送应答时给出非应答,此时从机将不再发送数据</p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-read-reg.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>指定地址读: 给指定设备(slave addr)的指定地址(reg addr)读取数据(data)</p>
+<ul>
+<li><p>起始条件 -&gt; 发送 1byte(前 7bit 为 slave addr, 后 1bit 表示读(1) &#x2F; <strong>写(0)</strong> ) -&gt; 从机应答0 -&gt; </p>
+</li>
+<li><p>发送 1byte 数据(reg addr) -&gt; 从机应答0 -&gt; </p>
+</li>
+<li><p>重复起始条件 -&gt; 发送 1byte(前 7bit 为 slave addr, 后 1bit 表示<strong>读(1)</strong> &#x2F; 写(0) ) -&gt; 从机应答0 -&gt;</p>
+</li>
+<li><p>接收 1byte data(此时从机在 scl 低电平写入 sda,主机在 scl 高电平读取 sda) -&gt; 主机应答1 -&gt; 终止条件  </p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-set-addr-read-reg.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="9-2-I2C-外设"><a href="#9-2-I2C-外设" class="headerlink" title="9.2 I2C 外设"></a>9.2 I2C 外设</h3><ol>
+<li><p>STM32 内部集成了硬件 I2C 收发电路</p>
+<ul>
+<li>可以由硬件自动执行时钟生成,起始终止条件生成,应答位收发,数据收发等功能.减轻CPU的负担</li>
+<li>支持 7bit &#x2F; 10bit 地址模式(若第一字节的前5位为11110,则表示10位地址)</li>
+<li>支持不同的通讯速度,标准速度(高达100 kHz), 快速(高达400 kHz)</li>
+<li>支持 DMA, 多主机模型, 兼容 SMBus(System Management Bus)协议</li>
+</ul>
+</li>
+<li><p>I2C 基本结构图</p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-struct.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>硬件 I2C 波形</p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-hardware-wave.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="9-3-HAL-库"><a href="#9-3-HAL-库" class="headerlink" title="9.3 HAL 库"></a>9.3 HAL 库</h3><ol>
+<li><p>I2C2 配置</p>
+<p><img src="/2024/04/01/Embedded/STM32/9-I2C-hal.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>在 <code>stm32f1xx_hal_i2c.h</code> 中有很多中断回调函数,以及功能实现函数</p>
+<ul>
+<li><p>收发函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c">HAL_StatusTypeDef <span class="hljs-title function_">HAL_I2C_Mem_Write</span><span class="hljs-params">(I2C_HandleTypeDef *hi2c, </span><br><span class="hljs-params">                                    <span class="hljs-type">uint16_t</span> DevAddress,  <span class="hljs-comment">// 注意是 7bit地址 &lt;&lt; 1</span></span><br><span class="hljs-params">                                    <span class="hljs-type">uint16_t</span> MemAddress,</span><br><span class="hljs-params">                                    <span class="hljs-type">uint16_t</span> MemAddSize, </span><br><span class="hljs-params">                                    <span class="hljs-type">uint8_t</span> *pData, </span><br><span class="hljs-params">                                    <span class="hljs-type">uint16_t</span> Size, </span><br><span class="hljs-params">                                    <span class="hljs-type">uint32_t</span> Timeout)</span>;<br>HAL_StatusTypeDef <span class="hljs-title function_">HAL_I2C_Mem_Read</span><span class="hljs-params">(I2C_HandleTypeDef *hi2c, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint16_t</span> DevAddress, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint16_t</span> MemAddress, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint16_t</span> MemAddSize, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint8_t</span> *pData, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint16_t</span> Size, </span><br><span class="hljs-params">                                   <span class="hljs-type">uint32_t</span> Timeout)</span>;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="10-SPI-通信"><a href="#10-SPI-通信" class="headerlink" title="10 SPI 通信"></a>10 SPI 通信</h2><h3 id="10-1-SPI-协议"><a href="#10-1-SPI-协议" class="headerlink" title="10.1 SPI 协议"></a>10.1 SPI 协议</h3><ol>
+<li><p><strong>SPI(Serial Peripheral Interface): 由Motorola公司开发的一种通用数据总线</strong></p>
+<ul>
+<li>通信线: SCK(Serial Clock), SS(Slave Select),<br>MOSI(Master Output Slave Input), MISO(Master Input Slave Output)</li>
+<li>同步, 全双工.支持总线挂载多设备(一主多从)</li>
+</ul>
+</li>
+<li><p>硬件电路</p>
+<p><img src="/2024/04/01/Embedded/STM32/10-SPI-bus.jpg" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>所有 SPI 设备的 SCK, MOSI, MISO 分别连在一起<ul>
+<li><strong>SCK: 时钟线</strong>.完全由主机掌控.由主机进行输出,从机得到输入</li>
+<li><strong>MOSI: 主机输出从机输入</strong>.在主机上,表现为数据输出.在从机上,表现为数据输入</li>
+<li><strong>MISO: 主机输入从机输出</strong>.在主机上,表现为数据输入.在从机上,表现为数据输出</li>
+</ul>
+</li>
+<li><strong>主机另外引出多条 SS 控制线,分别接到各从机的 SS 引脚</strong><ul>
+<li>当从机的 SS 高电平时,MISO 必须为高阻态,不允许从机输出,防止 MISO 数据冲突</li>
+<li>SS 低电平有效,且只能同时选中一个从机.如需指定从机输入输出数据.则将对应的 SS 拉至低电平</li>
+<li>输出的引脚需配置为推挽输出,保证高低电平均有强驱动能力.输入的引脚需配置为浮空或上拉输入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SPI 数据交换</p>
+<p><img src="/2024/04/01/Embedded/STM32/10-SPI-swap-byte.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><code>波特率发生器</code>时钟上升沿时,所有移位寄存器向左移位,置于引脚</li>
+<li><code>波特率发生器</code>时钟下降沿时,对引脚电平采样,置于移位寄存器的最低位</li>
+<li>主机与从机的数据交换<ul>
+<li>在一个周期内,从机由高位移出的数据传输到主机的低位,主机由高位移出的数据传输到从机的低位</li>
+<li>循环8次后,从机的数据完整到达主机,主机的数据也完整达到从机,完成一次数据交换</li>
+</ul>
+</li>
+<li>如果仅需主机发送数据,仍然需要执行数据交换,忽略接收到的数据即可</li>
+<li>如果仅需接收从机数据,仍然需要执行数据交换,此时主机可使用任意数据交换(一般0x00或0xFF)</li>
+</ul>
+</li>
+<li><p>SPI 基本时序</p>
+<ul>
+<li><p>起始条件: SS 从高电平切换到低电平</p>
+</li>
+<li><p>终止条件: SS 从低电平切换到高电平</p>
+</li>
+<li><p>可选择 上升&#x2F;下降沿 移位.可配置时钟相位提前半个时钟</p>
+<ul>
+<li><code>CPOL(Clock Polarity)</code><ul>
+<li>CPOL&#x3D;0: SCK 空闲时为低电平</li>
+<li>CPOL&#x3D;1: SCK 空闲时为高电平</li>
+</ul>
+</li>
+<li><code>CPHA(Clock phase)</code><ul>
+<li>CPHA&#x3D;0: SCK 奇数边沿时移入数据.偶数边沿移出数据(提前)</li>
+<li>CPHA&#x3D;1: SCK 奇数边沿时移出数据.偶数边沿移入数据(正常)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>模式0 使用最多(CPOL&#x3D;0,CPHA&#x3D;0): 空闲时,SCK为低电平,上升沿采集数据</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/10-SPI-mode0.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+<li><p>SPI 通常使用指令码和读写数据的方式操作从机: 从机选择 -&gt; 发送指令 -&gt; 发送数据<br>向指定设备发送指令 0x02,然后写入数据</p>
+<p><img src="/2024/04/01/Embedded/STM32/10-SPI-timing-sequence.jpg" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="10-2-SPI-外设"><a href="#10-2-SPI-外设" class="headerlink" title="10.2 SPI 外设"></a>10.2 SPI 外设</h3><ol>
+<li><p>STM32 内部集成了硬件 SPI 收发电路</p>
+<ul>
+<li>可配置 8 &#x2F; 16位数据帧, 高 &#x2F; 低位先行</li>
+<li>时钟频率: PCLK &#x2F; (2, 4, 8, 16, 32, 64, 128, 256)</li>
+<li>支持多主机模型(主&#x2F;从操作), 可精简为半双工&#x2F;单工通信, 支持 DMA, 兼容 I2S 协议</li>
+</ul>
+</li>
+<li><p>SPI 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/10-SPI-struct.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="10-3-HAL-库"><a href="#10-3-HAL-库" class="headerlink" title="10.3 HAL 库"></a>10.3 HAL 库</h3><ol>
+<li><p>SPI1 配置</p>
+<p><img src="/2024/04/01/Embedded/STM32/10-SPI-hal.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>spi 基础函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">HAL_StatusTypeDef <span class="hljs-title function_">HAL_SPI_TransmitReceive</span><span class="hljs-params">(SPI_HandleTypeDef *hspi, </span><br><span class="hljs-params">                                          <span class="hljs-type">const</span> <span class="hljs-type">uint8_t</span> *pTxData, </span><br><span class="hljs-params">                                          <span class="hljs-type">uint8_t</span> *pRxData,</span><br><span class="hljs-params">                                          <span class="hljs-type">uint16_t</span> Size, </span><br><span class="hljs-params">                                          <span class="hljs-type">uint32_t</span> Timeout)</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="11-RTC-实时时钟"><a href="#11-RTC-实时时钟" class="headerlink" title="11 RTC 实时时钟"></a>11 RTC 实时时钟</h2><h3 id="11-1-Unix-时间戳"><a href="#11-1-Unix-时间戳" class="headerlink" title="11.1 Unix 时间戳"></a>11.1 Unix 时间戳</h3><ol>
+<li><p><strong>Unix 时间戳(Timestamp): 从 UTC &#x2F; GMT 的 <code>1970年1月1日00:00:00</code> 开始经过的秒数</strong></p>
+<ul>
+<li>秒计数器为 32 &#x2F; 64bit 的整型变量</li>
+<li>各时区的秒计数器相同,但不同时区通过偏移得到当地时间</li>
+</ul>
+</li>
+<li><p>GMT(Greenwich Mean Time): 格林尼治标准时间,将地球自转一周的时间等分为24小时</p>
+</li>
+<li><p>UTC(Universal Time Coordinated): 协调世界时,以原子钟为基础的时间计量系统</p>
+</li>
+<li><p>时间戳与时间的转换: C语言的 <code>&lt;time.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> tm* <span class="hljs-title function_">gmtime</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">time_t</span>*)</span>;     <span class="hljs-comment">// 秒计数器转换为日期时间</span><br><span class="hljs-keyword">struct</span> tm* <span class="hljs-title function_">localtime</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">time_t</span>*)</span>;  <span class="hljs-comment">// 秒计数器转换为当地时间</span><br><span class="hljs-type">time_t</span> <span class="hljs-title function_">mktime</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> tm*)</span>;            <span class="hljs-comment">// 日期时间转换为秒计数器</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/04/01/Embedded/STM32/11-timestamp-convert.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="11-2-BKP-备份寄存器"><a href="#11-2-BKP-备份寄存器" class="headerlink" title="11.2 BKP 备份寄存器"></a>11.2 BKP 备份寄存器</h3><ol>
+<li><p>BKP 可用于存储用户应用程序数据</p>
+<ul>
+<li>当 VDD(2.0 ~ 3.6V)电源被切断时,仍由 VBAT(1.8 ~ 3.6V)维持供电</li>
+<li>就算系统复位,电源复位,BKP 也不会复位</li>
+<li>用户数据存储容量: 20字节(中&#x2F;小容量), 84字节(大容量&#x2F;互联型)</li>
+</ul>
+</li>
+<li><p><strong>TAMPER 引脚产生的侵入事件会将所有备份寄存器内容清除</strong></p>
+</li>
+<li><p>RTC 引脚可以输出: RTC 校准时钟, RTC 闹钟脉冲, 秒脉冲</p>
+</li>
+<li><p>BPK 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/11-BPK-struct.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="11-3-RTC-实时时钟"><a href="#11-3-RTC-实时时钟" class="headerlink" title="11.3 RTC 实时时钟"></a>11.3 RTC 实时时钟</h3><ol>
+<li><p><strong>RTC(Real Time Clock): 实时时钟,RTC是一个独立的定时器,可为系统提供时钟 &#x2F; 日历功能</strong></p>
+<ul>
+<li>RTC 和 时钟配置系统处于后备区域,系统复位时数据不清零</li>
+<li>拥有32位可编程计数器,对应 Unix 时间戳的秒计数器</li>
+<li>拥有20位可编程预分频器,适配不同频率的输入时钟.可选时钟源有<ul>
+<li>HSE 时钟除以128(8MHz&#x2F;128)</li>
+<li><strong>LSE 振荡器时钟(32.768KHZ)</strong></li>
+<li>LSI 振荡器时钟(40KHz)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>RTC 框图</p>
+<p><img src="/2024/04/01/Embedded/STM32/11-RTC-block.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>RTC 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/11-RTC-struct.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h2 id="12-PWR-电源控制"><a href="#12-PWR-电源控制" class="headerlink" title="12 PWR 电源控制"></a>12 PWR 电源控制</h2><h3 id="12-1-PWR"><a href="#12-1-PWR" class="headerlink" title="12.1 PWR"></a>12.1 PWR</h3><ol>
+<li><p><strong>PWR(Power Control, 电源控制): 负责 STM32 内部的电源供电部分,可实现可编程电压检测器和低功耗模式</strong></p>
+</li>
+<li><p>电源框图</p>
+<p><img src="/2024/04/01/Embedded/STM32/12-power-block.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>上电复位和掉电复位</p>
+<p><img src="/2024/04/01/Embedded/STM32/12-reset.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>可编程电压检测器(PVD): 监控 VDD 电源电压,当 VDD 上升&#x2F;下降到 PVD 阈值时,触发中断,执行紧急关闭任务</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/12-PVD-threshold.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="12-2-低功耗模式"><a href="#12-2-低功耗模式" class="headerlink" title="12.2 低功耗模式"></a>12.2 低功耗模式</h3><ol>
+<li><p><strong>低功耗模式: 在系统空闲时,降低 STM32 的功耗,延长设备的使用时间</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/12-low-power-mode.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>芯片在低功耗模式下无法直接下载程序: 下载程序步骤:按住复位键,点击下载程序,然后及时松开复位键</strong></p>
+</li>
+<li><p>修改芯片主频(修改文件 <code>Start/system_stm32f10x.c</code>)</p>
+<ul>
+<li>外部可见变量 <code>SystemCoreClock</code>: 系统主频的值</li>
+<li>搜索 <code>SYSCLK_FREQ_xxMHz</code>,在此处进行的宏定义将会决定运行哪个设置系统时钟的函数</li>
+</ul>
+</li>
+<li><p>进入睡眠模式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">__WFI();  <span class="hljs-comment">// 进入睡眠模式,等待中断唤醒.一般置于主循环的最后一行</span><br>__WFE();  <span class="hljs-comment">// 进入睡眠模式,等待唤醒事件</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>进入停机 &#x2F; 待机模式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);      <span class="hljs-comment">// 停机和待机模式需开启 PWR 的时钟</span><br><br>PWR_EnterSTOPMode(PWR_Regulator_ON, PWR_STOPEntry_WFI);  <span class="hljs-comment">// 进入停止模式,并等待外部中断唤醒</span><br>PWR_EnterSTANDBYMode();  <span class="hljs-comment">// 进入待机模式,并等待指定的唤醒事件.唤醒后程序从头执行</span><br><br>SystemInit();  <span class="hljs-comment">// 从停止模式唤醒后,需重新配置时钟为 HSE(72MHz).而待机模式不需要</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>设置闹钟或 PA0 上升沿唤醒待机模式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">PWR_WakeUpPinCmd(ENABLE);  <span class="hljs-comment">// 使能 WakeUp 引脚(PA0)唤醒待机的功能(默认下拉低电平,高电平有效)</span><br>RTC_SetAlarm(RTC_GetCounter() + <span class="hljs-number">10</span>);  <span class="hljs-comment">// 设置 RTC 闹钟的值.为 10s 后</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="13-WDG-看门狗"><a href="#13-WDG-看门狗" class="headerlink" title="13 WDG 看门狗"></a>13 WDG 看门狗</h2><h3 id="13-1-看门狗功能"><a href="#13-1-看门狗功能" class="headerlink" title="13.1 看门狗功能"></a>13.1 看门狗功能</h3><ol>
+<li><p><strong>看门狗(WDG, Watchdog)</strong></p>
+<ul>
+<li>监测程序的运行状态,当程序卡死时复位程序.保证安全性和可靠性</li>
+<li><strong>看门狗本质是定时器,在指定的时间范围内,若未重置计数器,则硬件电路将产生复位信号</strong></li>
+</ul>
+</li>
+<li><p><strong>独立看门狗(Independent WDG)</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/13-independent-wdg.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><p>键寄存器 IWDG_KR: 控制寄存器,用于控制硬件电路的工作,避免干扰发生</p>
+<table>
+<thead>
+<tr>
+<th>写入键寄存器的值</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0xCCCC</td>
+<td>启用独立看门狗</td>
+</tr>
+<tr>
+<td>0xAAAA</td>
+<td>IWDG_RLR 中的值重新加载到计数器(喂狗)</td>
+</tr>
+<tr>
+<td>0x5555</td>
+<td>解除 IWDG_PR, IWDG_RLR 的写保护</td>
+</tr>
+<tr>
+<td>0x5555之外的值</td>
+<td>启用 IWDG_PR, IWDG_RLR 的写保护</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>超时时间</p>
+<p><img src="/2024/04/01/Embedded/STM32/13-wdg-timeout.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>超时时间: $T_{IWDG}$ &#x3D; 时钟周期 * PR 预分频系数 * (重装计数值 + 1)</li>
+<li>其中,时钟周期&#x3D;1&#x2F;40KHz, PR 预分频系数只能取表中限定的值, 重装计数值12位(0~4095)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>窗口看门狗(Window WDG): 要求看门狗在精确计时窗口时作用(过早过晚均不行)</strong></p>
+<p><img src="/2024/04/01/Embedded/STM32/13-wdg-block.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>对比独立看门狗与窗口看门狗</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>独立看门狗</th>
+<th>窗口看门狗</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>复位时机</td>
+<td>计数器减到0</td>
+<td>计数器T[5:0] 减到0 &#x2F; 过早重装计数器</td>
+</tr>
+<tr>
+<td>中断</td>
+<td>&#x2F;</td>
+<td>早期唤醒中断</td>
+</tr>
+<tr>
+<td>时钟源</td>
+<td>LSI(40KHz)</td>
+<td>PCLK1(36MHz)</td>
+</tr>
+<tr>
+<td>预分频系数</td>
+<td>4, 8, 32, 64, 128, 256</td>
+<td>1, 2, 4, 8</td>
+</tr>
+<tr>
+<td>计数器</td>
+<td>12位</td>
+<td>6位</td>
+</tr>
+<tr>
+<td>超时时间</td>
+<td>0.1ms ~ 26214.4ms</td>
+<td>113us ~ 58.25ms</td>
+</tr>
+<tr>
+<td>喂狗方式</td>
+<td>写入键寄存器,重装固定值 RLR</td>
+<td>直接写入计数器</td>
+</tr>
+<tr>
+<td>防误操作</td>
+<td>键寄存器和写保护</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>独立工作,对时间精度要求较低</td>
+<td>要求看门狗在精确计时窗口起作用</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="13-2-看门狗代码"><a href="#13-2-看门狗代码" class="headerlink" title="13.2 看门狗代码"></a>13.2 看门狗代码</h3><ol>
+<li><p>判断复位信号来源</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (RCC_GetFlagStatus(RCC_FLAG_IWDGRST) == SET) &#123;  <span class="hljs-comment">// 成立说明是独立看门狗复位</span><br><span class="hljs-comment">//if (RCC_GetFlagStatus(RCC_FLAG_WWDGRST) == SET) &#123;  // 成立说明是窗口看门狗复位</span><br>	RCC_ClearFlag();  <span class="hljs-comment">// 标志位不会自动清除,进入后需要手动清除</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>操作独立看门狗</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* IWDG 初始化.LSI 会在设置看门狗后自动配置,无需手动开启 */</span><br>IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);  <span class="hljs-comment">// 独立看门狗写使能</span><br>IWDG_SetPrescaler(IWDG_Prescaler_16);  <span class="hljs-comment">// 设置预分频为16</span><br>IWDG_SetReload(<span class="hljs-number">2499</span>);  <span class="hljs-comment">// 设置重装值为2499,独立看门狗的超时时间为 1/40000 * 16 * 2500=1s</span><br>IWDG_ReloadCounter();  <span class="hljs-comment">// 重装计数器,初始化喂狗. 主循环中每1秒都需要喂狗,否则复位</span><br>IWDG_Enable();  <span class="hljs-comment">// 独立看门狗使能</span><br><span class="hljs-comment">/* 主循环中喂狗 */</span><br>IWDG_ReloadCounter();  <span class="hljs-comment">//重装计数器</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>操作窗口看门狗</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* WWDG 初始化.以窗口时长 30~50ms 为例 */</span><br>RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);  <span class="hljs-comment">// 开启 WWDG 的时钟</span><br>WWDG_SetPrescaler(WWDG_Prescaler_8);  <span class="hljs-comment">// 设置预分频为8</span><br>WWDG_SetWindowValue(<span class="hljs-number">0x40</span> | <span class="hljs-number">21</span>);  <span class="hljs-comment">// 设置窗口时长 1/36,000,000 * 4096 * 8 * (54-21) = 30ms</span><br>WWDG_Enable(<span class="hljs-number">0x40</span> | <span class="hljs-number">54</span>);  <span class="hljs-comment">// 使能并第一次喂狗,超时时间为 1/36,000,000 * 4096 * 8 * (54+1) = 50ms</span><br><span class="hljs-comment">/* 主循环中喂狗 */</span><br>WWDG_SetCounter(<span class="hljs-number">0x40</span> | <span class="hljs-number">54</span>);  <span class="hljs-comment">//重装计数器</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="14-Flash-闪存"><a href="#14-Flash-闪存" class="headerlink" title="14 Flash 闪存"></a>14 Flash 闪存</h2><h3 id="14-1-Flash-功能"><a href="#14-1-Flash-功能" class="headerlink" title="14.1 Flash 功能"></a>14.1 Flash 功能</h3><ol>
+<li><p>STM32F1 系列中容量产品 Flash 闪存模块组织</p>
+<p><img src="/2024/04/01/Embedded/STM32/14-flash.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>读写 Flash 的用途</strong></p>
+<ul>
+<li><strong>利用程序存储器的剩余空间,保存用户数据(掉电不丢失)</strong></li>
+<li><strong>通过在程序中编程(In-Application Programming),实现程序自我更新</strong></li>
+</ul>
+</li>
+<li><p>下载程序方式</p>
+<ul>
+<li><strong>在线编程(In-Circuit Programming)</strong>: 更新程序存储器的全部内容<ul>
+<li>通过 JTAG, SWD 协议(ST Link)或系统加载程序(Bootloader)下载程序</li>
+</ul>
+</li>
+<li><strong>在程序中编程(In-Application Programming)</strong>: 使用微控制器支持的任意通信接口下载程序<ul>
+<li>需要自己编写 Bootloader 程序(存储于程序更新时不覆盖的地方)</li>
+<li>需要更新程序时,控制程序跳转到 Bootloader,接收通信数据(程序信息)</li>
+<li>然后通过控制 Flash 读写,将程序信息存储于程序正常运行的地方</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Flash 基本结构</p>
+<p><img src="/2024/04/01/Embedded/STM32/14-Flash-struct.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>指针访问存储器</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// #define __IO volatile  // STM32对__IO的宏定义</span><br><span class="hljs-type">uint16_t</span> Data = *((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x08000000</span>));  <span class="hljs-comment">// 读取0x8000 0000地址的数据</span><br>* ((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x80000000</span>)) = <span class="hljs-number">0x1234</span>;  <span class="hljs-comment">// 给0x8000 0000地址写入数据.需要先解锁,执行相应流程</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>器件电子签名: 存放于闪存的系统存储区域,不可更改</strong></p>
+<ul>
+<li>读取方式: 使用指针直接读取指定地址下的存储器获得</li>
+<li>闪存容量(单位kb)寄存器(16位)基地址: <code>0x1FFF F7E0</code></li>
+<li>产品唯一身份标识寄存器(96位)基地址: <code>0x1FFF F7E8</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="14-2-Flash-烧录"><a href="#14-2-Flash-烧录" class="headerlink" title="14.2 Flash 烧录"></a>14.2 Flash 烧录</h3><ol>
+<li><p>读取芯片 ID</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">*((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x1FFFF7E0</span>));  <span class="hljs-comment">// 闪存容量寄存器的值</span><br>*((__IO <span class="hljs-type">uint32_t</span> *)(<span class="hljs-number">0x1FFFF7E8</span>));  <span class="hljs-comment">// 产品唯一身份标识寄存器的值,共96位</span><br>*((__IO <span class="hljs-type">uint32_t</span> *)(<span class="hljs-number">0x1FFFF7E8</span> + <span class="hljs-number">0x04</span>));<br>*((__IO <span class="hljs-type">uint32_t</span> *)(<span class="hljs-number">0x1FFFF7E8</span> + <span class="hljs-number">0x08</span>));<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>指定烧录程序是的起始地址</strong>: 打开工程选项 -&gt; Target</p>
+<p><img src="/2024/04/01/Embedded/STM32/14-start-addr.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><strong>程序占用空间大小查看</strong></p>
+<ul>
+<li><p>编译完成后会出现提示信息: <code>Program Size: Code=2784 RO-data=1788 RW-data=4 ZI-data=2660</code></p>
+<ul>
+<li><code>Code + RO=-data + Rw-data = 4576</code>: ROM 使用空间</li>
+<li><code>Rw-data + ZI-data = 2664</code>:  RAM 使用空间</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储位置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Code</td>
+<td>Flash</td>
+<td>代码</td>
+</tr>
+<tr>
+<td>RO-Data</td>
+<td>Flash</td>
+<td>只读数据.如 const 修饰</td>
+</tr>
+<tr>
+<td>RW-Data</td>
+<td>Flash &amp; SRAM</td>
+<td>初值非0 可读可写的数据</td>
+</tr>
+<tr>
+<td>ZI-Data</td>
+<td>SRAM</td>
+<td>初值为0 可读可写数据</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>双击 <code>Target 1</code> 出现 <code>Project.map</code> 文件,拉到文件底部,可以直接查看程序占用空间情况</p>
+<p><img src="/2024/04/01/Embedded/STM32/14-total-process-size.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="category-chain-item">嵌入式</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
+      
+        <a href="/tags/STM32/" class="print-no-link">#STM32</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>STM32</div>
+      <div>http://example.com/2024/04/01/Embedded/STM32/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Shuang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年4月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/01/Embedded/FreeRTOS/" title="FreeRTOS">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">FreeRTOS</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/01/Computer/Python-Crash-Course/" title="Python Crash Couser">
+                        <span class="hidden-mobile">Python Crash Couser</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1636 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Shuang">
+  <meta name="keywords" content="Shuang">
+  
+    <meta name="description" content="C 语言的环境搭建. 编译调试; 库函数介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C Language Environment">
+<meta property="og:url" content="http://example.com/2023/05/02/Computer/C-Language-Environment/index.html">
+<meta property="og:site_name" content="Shuang blog">
+<meta property="og:description" content="C 语言的环境搭建. 编译调试; 库函数介绍">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/C-Language.svg">
+<meta property="article:published_time" content="2023-05-02T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-03T02:44:19.122Z">
+<meta property="article:author" content="Shuang">
+<meta property="article:tag" content="C 语言">
+<meta property="article:tag" content="计算机">
+<meta property="article:tag" content="Code">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/C-Language.svg">
+  
+  
+  
+  <title>C Language Environment - Shuang blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>windsand</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/train.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C Language Environment"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-02 12:00" pubdate>
+          2023年5月2日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          64 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">C Language Environment</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="0-开发环境"><a href="#0-开发环境" class="headerlink" title="0 开发环境"></a>0 开发环境</h2><h3 id="0-1-Windows-环境"><a href="#0-1-Windows-环境" class="headerlink" title="0.1 Windows 环境"></a>0.1 Windows 环境</h3><ol>
+<li><p>下载安装 <a target="_blank" rel="noopener" href="https://www.mingw-w64.org/downloads/#mingw-w64-builds">MinGW</a></p>
+<ul>
+<li><p>将 <code>x86_64-15.1.0-release-win32-seh-ucrt-rt_v12-rev0.7z</code> 解压得到 <code>mingw64</code> 目录</p>
+</li>
+<li><p>配置环境变量: 在系统 <code>path</code> 中添加 <code>mingw64</code> 路径. 如: <code>D:\code\mingw64\bin</code></p>
+</li>
+<li><p>检查安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc --version<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>运行</strong>: 在 VS Code 中编写代码,然后点击右上角运行 -&gt; <code>C/C++:gcc.exe 生成和调试活动文件</code>.进行编译运行</p>
+</li>
+<li><p><strong>多文件编译</strong>(<code>tasks.json</code> 文件配置): 编译快捷键 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>B</kbd> </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;tasks&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppbuild&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;C/C++: gcc.exe 生成活动文件&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;D:/code/mingw64/bin/gcc.exe&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// gcc 绝对路径</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;-fdiagnostics-color=always&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 启用彩色诊断信息</span><br>                <span class="hljs-string">&quot;-g&quot;</span><span class="hljs-punctuation">,</span>                          <span class="hljs-comment">// 生成调试信息.用于 GDB 调试</span><br>                <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/*.c&quot;</span><span class="hljs-punctuation">,</span>      <span class="hljs-comment">// 编译所有 .c 文件</span><br>                <span class="hljs-string">&quot;-o&quot;</span><span class="hljs-punctuation">,</span>                          <span class="hljs-comment">// 指定输出文件名</span><br>                <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/main.exe&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 生成的可执行文件名称</span><br>                <span class="hljs-string">&quot;-Wall&quot;</span><span class="hljs-punctuation">,</span>     <span class="hljs-comment">// 开启所有警告</span><br>                <span class="hljs-string">&quot;-Wextra&quot;</span><span class="hljs-punctuation">,</span>   <span class="hljs-comment">// 启用额外警告</span><br>                <span class="hljs-string">&quot;-Werror&quot;</span><span class="hljs-punctuation">,</span>   <span class="hljs-comment">// 警告视为错误</span><br>                <span class="hljs-string">&quot;-pedantic&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 严格遵循标准</span><br>                <span class="hljs-string">&quot;-std=c17&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 使用 C17 标准</span><br>                <span class="hljs-string">&quot;-O0&quot;</span><span class="hljs-punctuation">,</span>       <span class="hljs-comment">// 优化级别 0.不优化,调试时使用</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;fileDirname&#125;&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;$gcc&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;group&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;kind&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;isDefault&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;detail&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;调试器生成的任务。&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2.0.0&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>调试</strong>(<code>launch.json</code> 文件配置): 运行和调试 -&gt; 创建 <code>launch.json</code> 文件 -&gt; C++(GDB&#x2F;LLDB)<br>-&gt; 添加配置 -&gt; C&#x2F;C++: (gdb) 启动</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.2.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;(gdb) 调试 C 程序&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppdbg&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;launch&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;program&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/main.exe&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;stopAtEntry&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;environment&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;externalConsole&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 需要输入时改为 true</span><br>            <span class="hljs-attr">&quot;MIMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gdb&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;miDebuggerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;D:/code/mingw64/bin/gdb.exe&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// gdb 绝对路径</span><br>            <span class="hljs-attr">&quot;setupCommands&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;启用漂亮打印&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-enable-pretty-printing&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;反汇编风格为 Intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-gdb-set disassembly-flavor intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;preLaunchTask&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;C/C++: gcc.exe 生成活动文件&quot;</span>  <span class="hljs-comment">// 调试前自动编译</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>clangd</code> 插件</p>
+<ul>
+<li><p>需要下载安装包含 <code>clangd</code> 可执行文件的 LLVM&#x2F;Clang 工具链(直接使用 VS Code 提示安装)</p>
+</li>
+<li><p>解决标准库标红(在项目根目录下创建 <code>.clangd</code> 文件)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">CompileFlags:<br>  Add: [<br>    --target=x86_64-w64-mingw32,<br>    -isystem, D:/code/mingw64/x86_64-w64-mingw32/include,<br>    -isystem, D:/code/mingw64/include,<br>  ]<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>CMake</code> 使用</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://cmake.org/download/">下载安装 <code>CMake</code></a> &amp; 验证安装是否成功(在 VS Code 中安装 <code>CMake, CMake Tools, Code Runner</code> 插件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cmake --version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>手动构建方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir build &amp;&amp; cd build  # 创建并进入 build 目录<br>cmake ..                 # 编译上级目录的 CMakeList.txt<br>make                     # 构建项目<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">3.20 之后改为</span><br>cmake -B build           # 创建 build 目录,编译 CMakeList.txt<br>cmake -build build       # 构建项目<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 VS Code 中配置 <code>CMake</code> 路径<br><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd> -&gt; <code>Preferences: Open Settings (JSON)</code> 在 <code>setting.json</code> 文件中添加内容</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;cmake.cmakePath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;D:/code/cmake/bin/cmake.exe&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// cmake 绝对路径</span><br><span class="hljs-attr">&quot;cmake.generator&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;MinGW Makefiles&quot;</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>CmakeLists.txt</code> 文件(在项目根目录下创建)</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.20</span>)<br><br><span class="hljs-comment"># 项目设置</span><br><span class="hljs-keyword">project</span>(VscodeProjectTest LANGUAGES C)<br><br><span class="hljs-comment"># 严格编译器设置</span><br><span class="hljs-keyword">set</span>(CMAKE_C_STANDARD <span class="hljs-number">17</span>)          <span class="hljs-comment"># 使用 C17 标准</span><br><span class="hljs-keyword">set</span>(CMAKE_C_STANDARD_REQUIRED <span class="hljs-keyword">ON</span>) <span class="hljs-comment"># 强制要求编译器必须严格支持指定的 C 语言标准</span><br><span class="hljs-keyword">set</span>(CMAKE_C_EXTENSIONS <span class="hljs-keyword">OFF</span>)       <span class="hljs-comment"># 禁用编译器扩展(模拟-pedantic)</span><br><br><span class="hljs-comment"># 启用编译数据库生成.配合 clangd</span><br><span class="hljs-keyword">set</span>(CMAKE_EXPORT_COMPILE_COMMANDS <span class="hljs-keyword">ON</span>)<br><br><span class="hljs-comment"># 强制启用所有警告</span><br><span class="hljs-keyword">add_compile_options</span>(<br>    -Wall     <span class="hljs-comment"># 开启所有警告</span><br>    -Wextra   <span class="hljs-comment"># 启用额外警告</span><br>    -Werror   <span class="hljs-comment"># 将警告视为错误</span><br>    -pedantic <span class="hljs-comment"># 严格遵循标准</span><br>)<br><br><span class="hljs-comment"># 根据构建类型设置优化级别</span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">NOT</span> CMAKE_BUILD_TYPE)<br>  <span class="hljs-keyword">set</span>(CMAKE_BUILD_TYPE <span class="hljs-string">&quot;Debug&quot;</span>) <span class="hljs-comment"># 默认 Debug 模式(自动包含-g)</span><br><span class="hljs-keyword">endif</span>()<br><br><span class="hljs-comment"># 显式包含当前目录(确保头文件能找到)</span><br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>)<br><br><span class="hljs-comment"># 添加可执行文件(推荐显式列出文件)</span><br><span class="hljs-keyword">add_executable</span>(<br>    <span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span><br>    main.c<br>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用 CMake 编译出的文件路径为: <code>./build/xxx.exe</code>.因此调试需要修改 <code>launch.json</code> 文件配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;program&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/build/VscodeProjectTest.exe&quot;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>至此,可以 <code>CMake Tools</code> 插件可以利用 CMake 构建, 运行项目,且可以使用 gdb 调试</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="0-2-Linux-环境"><a href="#0-2-Linux-环境" class="headerlink" title="0.2 Linux 环境"></a>0.2 Linux 环境</h3><ol>
+<li><p>在 Linux(发行版为 windows 的 wsl, Ubuntu 24.04) 使用 C 语言开发</p>
+</li>
+<li><p>在 Linux 安装必要的工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install build-essential gdb gcc g++ make<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Windows 远程连接到 Linux(需要先确保 Linux 服务器已开启 SSH 服务)</p>
+<ul>
+<li><p>在 PowerShell 中生成密钥(默认保存路径为 <code>C:\Users\你的用户名\.ssh\id_rsa</code>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查看生成的密钥(复制输出的内容.以 <code>ssh-rsa AAA...</code> 开头)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat ~\.ssh\id_rsa.pub<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 Linux 上添加公钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir -p ~/.ssh  # 如果目录不存在则创建<br>echo &quot;Windows 中输出的公钥内容&quot; &gt;&gt; ~/.ssh/authorized_keys<br>chmod 600 ~/.ssh/authorized_keys  # 设置权限<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 PowerShell 中测试 ssh 连接(若能够直接连接而无需密码,表示配置正确)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh username@linux_server_ip # 格式为 用户名@ip地址<br>logout                       # 退出 ssh<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>在 VS Code 安装 <code>remote</code> 扩展</p>
+<ul>
+<li><p>按 <kbd>F1</kbd> 或 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd> -&gt; <code>Remote-SSH: Connect to Host...</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh username@linux_server_ip<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>VS Code 会提示选择 SSH 配置文件(默认是 <code>C:\Users\你的用户名\.ssh\config</code>),确认保存</p>
+</li>
+<li><p>ssh 连接 <code>config</code> 文件的含义(非必需项,仅了解含义)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">Host mylinux  # 自定义别名<br>    HostName linux_server_ip<br>    User username<br>    IdentityFile ~/.ssh/id_rsa<br>    Port 22  # 默认端口,如果修改过请调整<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>配置 VS Code 编译, 调试设置(相较于 Windows 生成的可执行文件, Linux 无需 <code>.exe</code> 后缀)</p>
+<ul>
+<li><p>相较于 Windows 的 <code>tasks.json</code> 文件修改内容</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/gcc&quot;</span> <span class="hljs-comment">// gcc 绝对路径</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>相较于 Windows 的 <code>launch.json</code> 文件修改内容</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;miDebuggerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/gdb&quot;</span> <span class="hljs-comment">// gdb 绝对路径</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>CMake</code> 使用(相较于 Windows 的 <code>CMakeLists.txt</code> 文件添加内容, 指定 gcc, g++ 路径)</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(CMAKE_C_COMPILER <span class="hljs-string">&quot;/usr/bin/gcc&quot;</span>)<br><span class="hljs-keyword">set</span>(CMAKE_CXX_COMPILER <span class="hljs-string">&quot;/usr/bin/g++&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>若想要使用 CMake 构建项目, gdb 进行调试,则 <code>task.json</code> 改为</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2.0.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;tasks&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;shell&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake-configure&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;-B&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;-DCMAKE_BUILD_TYPE=Debug&quot;</span> <span class="hljs-comment">// Debug 模式方便调试</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;owner&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;fileLocation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                    <span class="hljs-string">&quot;relative&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><br>                <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;pattern&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;regexp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^(.*):(\\d+):\\s+(.*)$&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;file&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;line&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;shell&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake-build&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;--build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;--parallel&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;owner&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cpp&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;fileLocation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                    <span class="hljs-string">&quot;relative&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/build&quot;</span><br>                <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;pattern&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;regexp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^(.*):(\\d+):(\\d+):\\s+(warning|error|fatal error):\\s+(.*)$&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;file&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;line&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;column&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;severity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Full Build&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;dependsOrder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;sequence&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;dependsOn&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;cmake-configure&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;cmake-build&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;group&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;kind&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;isDefault&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>launch.json</code> 改为</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.2.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;GDB Debug&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppdbg&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;launch&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;program&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/build/VscodeProjectTest&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 替换为你的可执行文件名</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;stopAtEntry&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;environment&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;externalConsole&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;MIMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gdb&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;miDebuggerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/gdb&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;setupCommands&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Enable pretty-printing for gdb&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-enable-pretty-printing&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Set disassembly flavor to Intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-gdb-set disassembly-flavor intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;preLaunchTask&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Full Build&quot;</span>  <span class="hljs-comment">// 调试前自动构建</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>clangd</code> 插件(VS Code 中需安装插件)</p>
+<ul>
+<li><p>下载, 验证安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install clangd<br>clangd --version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>setting.json</code> 中添加配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;clangd.path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/clangd&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;clangd.arguments&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;--background-index&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--clang-tidy&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--completion-style=detailed&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--header-insertion=never&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;disabled&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 禁用微软引擎</span><br>  <span class="hljs-attr">&quot;C_Cpp.codeFolding&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;disabled&quot;</span><span class="hljs-punctuation">,</span>         <span class="hljs-comment">// 避免冲突</span><br>  <span class="hljs-attr">&quot;editor.semanticHighlighting.enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>clangd</code> 依赖 <code>compile_commands.json</code> 来获取项目的编译信息.CMake 生成该文件位于 <code>build</code> 目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ln -s build/compile_commands.json .  # 创建软连接供 clangd 使用<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>clang-format</code> 格式化代码(VS Code 快捷键 <kbd>Shift</kbd><kbd>Alt</kbd><kbd>F</kbd>)</p>
+<ul>
+<li><p>安装 <code>clang-format</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install clang-format<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在项目根目录新建 <code>.clang-format</code> 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">BasedOnStyle: Google  # 使用 Google 风格<br>IndentWidth: 4        # 覆盖为 4 空格缩进<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="0-3-GCC-编译器"><a href="#0-3-GCC-编译器" class="headerlink" title="0.3 GCC 编译器"></a>0.3 GCC 编译器</h3><ol>
+<li><p>GCC(GNU Compiler Collection): gcc &#x2F; g++ 分别是 GNU 的 C &#x2F; C++ 编译器</p>
+</li>
+<li><p>gcc &#x2F; g++ 在执行编译工作的步骤</p>
+<ul>
+<li>预处理器 cpp: 预处理,生成 <code>.i</code> 的文件</li>
+</ul>
+<ul>
+<li>编译器 egcs: 将预处理后的文件转换成汇编语言, 生成 <code>.s</code> 文件</li>
+<li>汇编器 as: 有汇编变为目标代码(机器代码)生成 <code>.o</code> 的文件</li>
+<li>链接器 ld: 连接目标代码, 生成可执行程序</li>
+</ul>
+</li>
+<li><p>查看版本信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc --version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>gcc 编译选项(gcc 会按照后缀名进行编译.对于 C 程序,应当保持后缀名为 <code>.c</code>)</p>
+<ul>
+<li><p>编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -E hello.c &gt; hello.i  # 只激活预处理,不生成文件.但可以重定向到一个输出文件<br>gcc -S hello.i -o hello.s # 只激活预处理和编译.将文件编译成汇编代码<br>gcc -c hello.s -o hello.o # 只激活预处理, 编译, 汇编.生成 obj 文件<br>gcc hello.o -o hello      # 完整地编译文件(默认生成的可以执行文件名为 a.out)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>调试, 优化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -g hello.c -o hello  # 生成可供 gdb 调试可执行文件<br>gcc -O2 hello.c -o hello # 优化级别2<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>标准, 警告</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -Wall hello.c    # 打印 gcc 的警告信息<br>gcc -w hello.c       # 关闭 gcc 的警告信息<br>gcc -std=c11 hello.c # 使用 C11 标准<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>编译时定义宏</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -D宏名 hello.c<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="0-4-GDB-调试器"><a href="#0-4-GDB-调试器" class="headerlink" title="0.4 GDB 调试器"></a>0.4 GDB 调试器</h3><ol>
+<li><p>GDB(GNU Project Debugger) 功能</p>
+<ul>
+<li>指定参数</li>
+<li>设置断点</li>
+<li>分析 crash 现场</li>
+<li>直接修改程序,观测结果</li>
+</ul>
+</li>
+<li><p>下载, 验证安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get install gbd<br>gdb --version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>启动 gdb(注意: 在 gcc 编译时需要加上 <code>-g</code> 选项才能生成可供调试的可执行文件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gdb filename       # 从头运行程序并调试<br>gdb filename core  # 调试 crash 的程序<br>gdb -p 进程号      # 调试运行中的程序<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>gdb 命令(<kbd>Enter</kbd> 表示重复上一命令)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell">run         # 运行<br>start       # 单步执行.停在第一行<br>quit(q)     # 退出<br>list(l)     # 查看代码<br>break(b)    # 设置断点,行数<br>delete(d)   # 删除断点<br>next(n)     # 单步执行,逐过程<br>step(s)     # 单步执行,逐语句<br>finish      # 结束当前函数,跳出<br>continue(c) # 继续运行<br>display     # 追踪变量<br>undisplay   # 取消追踪<br>watch       # 观察点修改时进行打印<br><br>print(p) # 查看变量<br>set var  # 设置变量<br>info(i)  # 查看信息<br>x 0x...  # 查看内存信息<br>!clear   # 清屏<br>thread   # 线程<br>disass   # 汇编<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="1-库函数"><a href="#1-库函数" class="headerlink" title="1 库函数"></a>1 库函数</h2><h3 id="1-1-字符处理"><a href="#1-1-字符处理" class="headerlink" title="1.1 字符处理"></a>1.1 字符处理</h3><ol>
+<li><p>字符分类(返回值非零时表示真,函数声明于 <code>&lt;ctype.h&gt;</code>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">isalnum</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 字母或数字</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isalpha</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 字母</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isblank</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 空白字符(空格或\t)(C99新增)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">iscntrl</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 控制字符</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isdigit</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 十进制数字</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isgraph</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 可显示字符(除空格)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">islower</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 小写字母</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isprint</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 可打印字符(包括空格)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">ispunct</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 标点符号</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isspace</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 空白字符(空格、\f、\n、\r、\t、\v)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isupper</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 大写字母</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">isxdigit</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>; <span class="hljs-comment">// 十六进制数字</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>字符转换(声明于 <code>&lt;ctype.h&gt;</code>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">tolower</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 转换为小写</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">toupper</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;  <span class="hljs-comment">// 转换为大写</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="1-2-字符串处理"><a href="#1-2-字符串处理" class="headerlink" title="1.2 字符串处理"></a>1.2 字符串处理</h3><ol>
+<li><p>下列函数声明于 <code>&lt;string.h&gt;</code></p>
+</li>
+<li><p>字符串操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 复制</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">strcpy</span><span class="hljs-params">(<span class="hljs-type">char</span> *dest, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *src)</span>;<br><span class="hljs-type">char</span> *<span class="hljs-title function_">strncpy</span><span class="hljs-params">(<span class="hljs-type">char</span> *dest, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *src, <span class="hljs-type">size_t</span> n)</span>;<br><br><span class="hljs-comment">// 连接</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">strcat</span><span class="hljs-params">(<span class="hljs-type">char</span> *dest, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *src)</span>;<br><span class="hljs-type">char</span> *<span class="hljs-title function_">strncat</span><span class="hljs-params">(<span class="hljs-type">char</span> *dest, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *src, <span class="hljs-type">size_t</span> n)</span>;<br><br><span class="hljs-comment">// 比较</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">strcmp</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s1, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *s2)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">strncmp</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s1, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *s2, <span class="hljs-type">size_t</span> n)</span>;<br><br><span class="hljs-comment">// 长度</span><br><span class="hljs-type">size_t</span> <span class="hljs-title function_">strlen</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>内存操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 按照指定的字节数进行 copy</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">memcpy</span><span class="hljs-params">(<span class="hljs-type">void</span> *dest, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *src, <span class="hljs-type">size_t</span> n)</span>;<br><br><span class="hljs-comment">// 将 copy 过程扩展为内存重叠时仍可正确执行</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">memmove</span><span class="hljs-params">(<span class="hljs-type">void</span> *dest, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *src, <span class="hljs-type">size_t</span> n)</span>;<br><br><span class="hljs-comment">// 按照指定的字节数初始化内存区域</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">memset</span><span class="hljs-params">(<span class="hljs-type">void</span> *s, <span class="hljs-type">int</span> c, <span class="hljs-type">size_t</span> n)</span>;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">memcmp</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *s1, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *s2, <span class="hljs-type">size_t</span> n)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>搜索函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> *<span class="hljs-title function_">strchr</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s, <span class="hljs-type">int</span> c)</span>;    <span class="hljs-comment">// 查找字符首次出现</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">strrchr</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s, <span class="hljs-type">int</span> c)</span>;   <span class="hljs-comment">// 查找字符最后出现</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">strstr</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *haystack, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *needle)</span>; <span class="hljs-comment">// 查找子串</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">strtok</span><span class="hljs-params">(<span class="hljs-type">char</span> *str, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *delim)</span>;  <span class="hljs-comment">// 字符串分割</span><br><br><span class="hljs-comment">// 在字符串中查找指定字符集合中任意字符的首次出现位置</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">strpbrk</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *str, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *accept)</span>;<br><br><span class="hljs-comment">// 在指定内存区域中查找特定字符的首次出现</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">memchr</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *ptr, <span class="hljs-type">int</span> value, <span class="hljs-type">size_t</span> num)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>其他</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 计算字符串开头连续包含指定字符集合中字符的字符数</span><br><span class="hljs-type">size_t</span> <span class="hljs-title function_">strspn</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *str, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *accept)</span>;<br><br><span class="hljs-comment">// 计算字符串开头连续不包含指定字符集合中字符的字符数</span><br><span class="hljs-type">size_t</span> <span class="hljs-title function_">strcspn</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *str, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *reject)</span>;<br><br><span class="hljs-comment">// 将错误号转换为可读的错误描述字符串</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">strerror</span><span class="hljs-params">(<span class="hljs-type">int</span> errnum)</span>;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="1-3-输入输出"><a href="#1-3-输入输出" class="headerlink" title="1.3 输入输出"></a>1.3 输入输出</h3><ol>
+<li><p>字符 IO(函数声明于 <code>stdio.h</code>.且通常实现为宏)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">getchar</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;  <span class="hljs-comment">// 从 stdin 读取一个字符.通常对应键盘输入</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">putchar</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>; <span class="hljs-comment">// 向 stdout 写入一个字符.通常输出到屏幕</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>getchar</code> 成功时返回读取的字符; 失败 &#x2F; 文件结束返回 <code>EOF</code>(在 <code>stdio.h</code> 中定义)</li>
+<li><code>putchar</code> 成功时返回输出的字符; 失败时返回 <code>EOF</code></li>
+</ul>
+</li>
+<li><p>报告错误信息(函数声明于 <code>stdio.h</code>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">perror</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s)</span>;  <span class="hljs-comment">// 向标准错误流 (stderr) 输出错误信息</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>perror</code> 内部会检查 <code>errno</code> 的值.根据 <code>errno</code> 查找对应的错误描述字符串</li>
+<li>错误描述来自 <code>errno</code> 宏(定义在 <code>&lt;errno.h&gt;</code>).表示最近一次错误的错误码</li>
+<li>输出格式为 <code>&quot;自定义字符串: 错误描述\n&quot;</code></li>
+<li>多线程环境中需注意 <code>errno</code> 是线程局部的,每个线程有自己的 <code>errno</code></li>
+</ul>
+</li>
+<li><p><code>printf</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 将字符串进行格式化转换,然后进行标准化输出.等价于 fprintf(stdout, ...)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">printf</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *format, ...)</span>;<br><span class="hljs-comment">// format: 格式化字符串, 包含普通字符和格式说明符</span><br><span class="hljs-comment">// ...: 可变参数列表, 对应格式字符串中的格式说明符</span><br><span class="hljs-comment">// 返回值: 成功时返回输出的字符数, 失败时返回负值</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>格式化字符串结构分为</p>
+<ul>
+<li><p>普通字符: 原样输出</p>
+</li>
+<li><p>转义序列: 如 <code>\n, \t</code></p>
+</li>
+<li><p>格式说明符: 以 <code>%</code> 开头,形式为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">%[flags][width][.precision][length]specifier<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>基本格式说明符(若<code>%</code>后的字符不是转换字符,则为未定义行为)</p>
+<table>
+<thead>
+<tr>
+<th>specifier</th>
+<th>参数类型 &amp; 转换结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d, i</td>
+<td>int. 有符号十进制表示</td>
+</tr>
+<tr>
+<td>u</td>
+<td>int. 无符号十进制表示</td>
+</tr>
+<tr>
+<td>o</td>
+<td>unsigned int. 无符号八进制表示(无前导0)</td>
+</tr>
+<tr>
+<td>x, X</td>
+<td>unsigned int. 无符号十六进制表示(无前导0x&#x2F;0X),区分大小写</td>
+</tr>
+<tr>
+<td>f</td>
+<td>double. 形式为: [-]mmm.ddd 的十进制表示</td>
+</tr>
+<tr>
+<td>e, E</td>
+<td>double. 形式为: [-]m.dddddd e&#x2F;E xx 的十进制表示</td>
+</tr>
+<tr>
+<td>g, G</td>
+<td>double. 自动选择科学计数法(%e &#x2F; %E)或 %f</td>
+</tr>
+<tr>
+<td>c</td>
+<td>int. 转换为 unsigned char 类型后的单个字符</td>
+</tr>
+<tr>
+<td>s</td>
+<td>char *. 打印字符串.直到 <code>&#39;\0&#39;</code> 或 达到精度指定的字符数</td>
+</tr>
+<tr>
+<td>p</td>
+<td>void *. 打印指针值</td>
+</tr>
+<tr>
+<td>%</td>
+<td>不进行参数转化.打印 <code>%</code></td>
+</tr>
+</tbody></table>
+</li>
+<li><p>标志(flags 出现顺序不限): 用于修改转换说明</p>
+<table>
+<thead>
+<tr>
+<th>标志</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-</td>
+<td>左对齐</td>
+</tr>
+<tr>
+<td>+</td>
+<td>强制显示正负号</td>
+</tr>
+<tr>
+<td><kbd>space</kbd></td>
+<td>正数前加空格代替加号</td>
+</tr>
+<tr>
+<td>0</td>
+<td>用0填充而非空格(配合 width 使用)</td>
+</tr>
+<tr>
+<td>#</td>
+<td>%0: 加前导0<br />%x &#x2F; %X: 加前导 0x &#x2F; 0X<br />%f &#x2F; %e &#x2F; %E &#x2F; %g &#x2F; %G: 强制带小数点</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>宽度(width): 最小输出宽度(可以使用 <code>*</code> 来用参数指定)</p>
+</li>
+<li><p>精度(.precision): 不同转换类型含义不同(可以使用 <code>*</code> 来用参数指定)</p>
+<table>
+<thead>
+<tr>
+<th>转换类型</th>
+<th>精度的含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>整数</td>
+<td>最小数字位数(不足补0)</td>
+</tr>
+<tr>
+<td>浮点数(<code>e/E/f</code>)</td>
+<td>小数点后的位数</td>
+</tr>
+<tr>
+<td>科学计数法(<code>g/G</code>)</td>
+<td>有效数字位数</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>最大输出字符数</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>长度修饰符(length): 用于将参数指定为某种类型</p>
+<table>
+<thead>
+<tr>
+<th align="left">修饰符</th>
+<th align="left">适用类型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">hh</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">signed &#x2F; unsigned char</td>
+</tr>
+<tr>
+<td align="left">h</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">short</td>
+</tr>
+<tr>
+<td align="left">l</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">long</td>
+</tr>
+<tr>
+<td align="left">ll</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">long long</td>
+</tr>
+<tr>
+<td align="left">L</td>
+<td align="left">%f, %e, %E, %g, %G</td>
+<td align="left">long double</td>
+</tr>
+<tr>
+<td align="left">z</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">size_t</td>
+</tr>
+<tr>
+<td align="left">t</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">ptrdiff_t</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p><code>scanf</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 从标准输入读取输入,根据 format 进行匹配, 匹配到赋给后续的各个参数</span><br><span class="hljs-comment">// 后续的参数必须是指针. 等价于 scanf(stdout, ...)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">scanf</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *format, ...)</span>;<br><span class="hljs-comment">// format: 格式化字符串,指定输入数据的预期格式</span><br><span class="hljs-comment">// ...: 可变参数列表, 对应格式字符串中的格式说明符</span><br><span class="hljs-comment">// 返回实际被转换并赋值的输入项的数目</span><br><span class="hljs-comment">// 若到达文件的末尾或在转换输入前出错,则返回 EOF</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>格式串字符串结构</p>
+<ul>
+<li><p>空白字符: 空格, 制表符, 换行符</p>
+</li>
+<li><p>非空白字符: 必须与输入精确匹配的字符</p>
+</li>
+<li><p>格式说明符: 以 <code>%</code> 开头,形式为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">%[*][width][length]specifier<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>基本格式说明符</p>
+<table>
+<thead>
+<tr>
+<th>specifier</th>
+<th>参数类型 &amp; 输入数据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>d</td>
+<td>int *. 十进制整型数</td>
+</tr>
+<tr>
+<td>i</td>
+<td>int *. 整数(自动检测进制)</td>
+</tr>
+<tr>
+<td>u</td>
+<td>unsigned int *. 无符号十进制整型数</td>
+</tr>
+<tr>
+<td>o</td>
+<td>unsigned int *. 无符号八进制整型数</td>
+</tr>
+<tr>
+<td>x, X</td>
+<td>unsigned int *. 十六进制整型数</td>
+</tr>
+<tr>
+<td>e &#x2F; f &#x2F; g</td>
+<td>float *. 格式为: \pm(可选), 数字串(可能有小数), 指数字段(可选)</td>
+</tr>
+<tr>
+<td>c</td>
+<td>char *. 字符</td>
+</tr>
+<tr>
+<td>s</td>
+<td>char *. 由非空白符组成的字符串(不包含引号).自动在数组末尾增加 <code>&#39;\0&#39;</code></td>
+</tr>
+<tr>
+<td>p</td>
+<td>void **. 指针地址.无实用价值</td>
+</tr>
+<tr>
+<td>[…]</td>
+<td>char *.与方括号中的字符集. 匹配的输入字符中 最长的非空字符串<br />如 <code>[]...]</code> 表示集合中包含字符<code>]</code>. 会自动在数组末尾增加 <code>&#39;\0&#39;</code></td>
+</tr>
+<tr>
+<td>[^…]</td>
+<td>char *.与方括号中的字符集. <strong>不匹配</strong>的输入字符中 最长的非空字符串<br />如 <code>[^]...]</code> 表示集合中<strong>不包含</strong>字符<code>]</code>. 自动在数组末尾增加 <code>&#39;\0&#39;</code></td>
+</tr>
+<tr>
+<td>%</td>
+<td>表示 <code>%</code>,不进行赋值</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>*</code>: 赋值抑制.匹配但不存储输入</p>
+</li>
+<li><p><code>width</code>: 指定最大输入宽度</p>
+</li>
+<li><p><code>length</code>: 用于将参数指定为某种类型</p>
+<table>
+<thead>
+<tr>
+<th align="left">修饰符</th>
+<th align="left">适用类型</th>
+<th align="left">参数类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">hh</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">signed &#x2F; unsigned char *</td>
+</tr>
+<tr>
+<td align="left">h</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">short *</td>
+</tr>
+<tr>
+<td align="left">l</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">long *</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">%f, %e, %g</td>
+<td align="left">double *</td>
+</tr>
+<tr>
+<td align="left">ll</td>
+<td align="left">%d, %i, %o, %u, %x</td>
+<td align="left">long long *</td>
+</tr>
+<tr>
+<td align="left">L</td>
+<td align="left">%f, %e, %g</td>
+<td align="left">long double *</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-4-整型函数"><a href="#1-4-整型函数" class="headerlink" title="1.4 整型函数"></a>1.4 整型函数</h3><ol>
+<li><p>算术(下列整型函数均声明于 <code>&lt;stdlib.h&gt;</code>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">abs</span><span class="hljs-params">(<span class="hljs-type">int</span> value)</span>;             <span class="hljs-comment">// 绝对值</span><br><span class="hljs-type">long</span> <span class="hljs-type">int</span> <span class="hljs-title function_">labs</span><span class="hljs-params">(<span class="hljs-type">long</span> <span class="hljs-type">int</span> value)</span>;  <span class="hljs-comment">// abs 的 long int 形式</span><br><span class="hljs-type">div_t</span> <span class="hljs-title function_">div</span><span class="hljs-params">(<span class="hljs-type">int</span> numerator, <span class="hljs-type">int</span> denominator)</span>;<br><span class="hljs-type">ldiv_t</span> <span class="hljs-title function_">ldiv</span><span class="hljs-params">(<span class="hljs-type">long</span> <span class="hljs-type">int</span> numerator, <span class="hljs-type">long</span> <span class="hljs-type">int</span> denominator)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>div</code> 函数进行带余整数除法,返回一个 <code>div_t</code> 的结构.包含两个字段:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> quot; <span class="hljs-comment">// 商</span><br><span class="hljs-type">int</span> rem;  <span class="hljs-comment">// 余数</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>ldiv</code> 函数处理的对象为 <code>long int</code> 类型,而返回 <code>ldiv_t</code> 结构</p>
+</li>
+</ul>
+</li>
+<li><p>随机数</p>
+<ul>
+<li><p>用于产生伪随机数的函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">rand</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">srand</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> seed)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>rand</code> 返回一个范围在 0~RAND_MAX(至少为32767) 的伪随机数</p>
+</li>
+<li><p>可以用对 <code>rand</code> 返回值取模,然后加上一个偏移量的方式获取一个固定区间的随机数</p>
+</li>
+<li><p><code>srand</code> 函数可以设置随机数种子.根据参数对随机数发生器初始化</p>
+</li>
+<li><p>可以用时间作为随机数产生器的种子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">srand( (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>) time(<span class="hljs-number">0</span>) );<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>字符串转换</p>
+<ul>
+<li><p>字符串转换函数将 字符串转换为数值</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">atoi</span><span class="hljs-params">(<span class="hljs-type">char</span> <span class="hljs-type">const</span> *<span class="hljs-built_in">string</span>)</span>;<br><span class="hljs-type">long</span> <span class="hljs-type">int</span> <span class="hljs-title function_">atol</span><span class="hljs-params">(<span class="hljs-type">char</span> <span class="hljs-type">const</span> *<span class="hljs-built_in">string</span>)</span>;<br><span class="hljs-type">long</span> <span class="hljs-type">int</span> <span class="hljs-title function_">strtol</span><span class="hljs-params">(<span class="hljs-type">char</span> <span class="hljs-type">const</span> *<span class="hljs-built_in">string</span>, <span class="hljs-type">char</span> **unused, <span class="hljs-type">int</span> base)</span>;<br><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">int</span> <span class="hljs-title function_">strtoul</span><span class="hljs-params">(<span class="hljs-type">char</span> <span class="hljs-type">const</span> *<span class="hljs-built_in">string</span>, <span class="hljs-type">char</span> **unused, <span class="hljs-type">int</span> base)</span>; <br><span class="hljs-type">double</span> <span class="hljs-title function_">atof</span><span class="hljs-params">(<span class="hljs-type">char</span> <span class="hljs-type">const</span> *<span class="hljs-built_in">string</span>)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">strtod</span><span class="hljs-params">(<span class="hljs-type">char</span> <span class="hljs-type">const</span> *<span class="hljs-built_in">string</span>, <span class="hljs-type">char</span> **unused)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>atoi,atol</code> 函数进行基数为10的转换</li>
+<li><code>strtol,strtoul</code> 函数允许指定基数,还允许访问字符串的剩余部分</li>
+<li>如果参数 <code>string</code> 中包含了前导空白字符 以及非法缀尾字符,将会被忽略</li>
+<li>参数 <code>base</code> 的取值范围为 2<del>36,此时字母 A</del>Z 分别表示 10~35</li>
+<li>特别的,当 <code>base</code> 的值为0时,表示接受 程序中任何可书写的整型字面值</li>
+</ul>
+</li>
+<li><p><code>strol</code> 函数示例:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">x = strol(<span class="hljs-string">&quot;   590bear&quot;</span>, next, <span class="hljs-number">12</span>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>该指令的返回值为 9947,由于 e 在基数为12时非法,转换终止</li>
+<li><code>next</code> 是一个指向指针的指针,指向的内容为: 指向字母 e 的指针</li>
+</ul>
+</li>
+<li><p>如果参数 <code>string</code> 中不包含任何一个合法数值,返回0</p>
+</li>
+<li><p>如果被转换的值无法表示,函数将在 <code>errno</code> 中存储值 <code>ERANGE</code>.并返回下表中的一个值</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>返回值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>strol</td>
+<td>若值过大且为负,返回 <code>LONG_MIN</code>. 若值过大且为正,返回 <code>LONG_MAX</code></td>
+</tr>
+<tr>
+<td>stroul</td>
+<td>若值过大,返回 <code>ULONG_MAX</code></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-5-浮点型函数"><a href="#1-5-浮点型函数" class="headerlink" title="1.5 浮点型函数"></a>1.5 浮点型函数</h3><ol>
+<li><p>下列函数声明于 <code>&lt;math.h&gt;</code>.绝大多数的参数和返回值类型为 <code>double</code></p>
+<ul>
+<li>若函数的参数不在定义域内,出现<code>定义域错误</code>.函数返回一个由编译器提供的错误值,并置 <code>errno</code> 值为 <code>EDOM</code></li>
+<li>若函数的结果值过大&#x2F;小,超出 <code>double</code> 的范围,出现返回错误.<ul>
+<li>若过大,函数返回 <code>HUGE_VAL</code>(在<code>math.h</code>中定义)</li>
+<li>若过小,函数返回 0,事实上也是范围错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>三角函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 参数为弧度制的角度值 */</span><br><span class="hljs-type">double</span> <span class="hljs-title function_">sin</span><span class="hljs-params">(<span class="hljs-type">double</span> angle)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">cos</span><span class="hljs-params">(<span class="hljs-type">double</span> angle)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">tan</span><span class="hljs-params">(<span class="hljs-type">double</span> angle)</span>;<br><br><span class="hljs-comment">/* 返回值为弧度制的角度值 */</span><br><span class="hljs-type">double</span> <span class="hljs-title function_">asin</span><span class="hljs-params">(<span class="hljs-type">double</span> value)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">acos</span><span class="hljs-params">(<span class="hljs-type">double</span> value)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">atan</span><span class="hljs-params">(<span class="hljs-type">double</span> value)</span>;<br><br><span class="hljs-comment">/* 返回值为 y/x 的反正切值,利用参数的符号决定象限 */</span><br><span class="hljs-type">double</span> <span class="hljs-title function_">atan2</span><span class="hljs-params">(<span class="hljs-type">double</span> x, <span class="hljs-type">double</span> y)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>双曲函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 参数为弧度制的角度值 */</span><br><span class="hljs-type">double</span> <span class="hljs-title function_">sinh</span><span class="hljs-params">(<span class="hljs-type">double</span> angle)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">cosh</span><span class="hljs-params">(<span class="hljs-type">double</span> angle)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">tanh</span><span class="hljs-params">(<span class="hljs-type">double</span> angle)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>对数和指数函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">double</span> <span class="hljs-title function_">exp</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">log</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">log10</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>exp</code> 返回 $e^x$</li>
+<li><code>log</code> 返回 $\mathrm{ln}x$</li>
+<li><code>log10</code> 返回 $\mathrm{log}_{10} x$</li>
+<li>利用换底公式 $\mathrm{log}_b x&#x3D;\frac{\mathrm{ln} x}{\mathrm{ln} b}$ 可计算任意底数的对数</li>
+</ul>
+</li>
+<li><p>浮点表示形式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">double</span> <span class="hljs-title function_">frexp</span><span class="hljs-params">(<span class="hljs-type">double</span> value, <span class="hljs-type">int</span> *exponent)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">ldexp</span><span class="hljs-params">(<span class="hljs-type">double</span> fraction, <span class="hljs-type">int</span> exponent)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">modf</span><span class="hljs-params">(<span class="hljs-type">double</span> value, <span class="hljs-type">double</span> *ipart)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>frexp</code> 函数返回值 <code>fraction</code>,取值范围为 [0.5, 1).满足 $\mathrm{fraction}\cdot2^\mathrm{exponent} &#x3D; \mathrm{value}$</li>
+<li><code>ldexp</code> 函数相对地返回 <code>value</code>: $\mathrm{value}&#x3D;\mathrm{fraction}\cdot2^\mathrm{exponent}$</li>
+<li><code>modf</code> 函数将浮点值分成整数和小数两部分,它们拥有与原值相同的符号</li>
+</ul>
+</li>
+<li><p>幂</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">double</span> <span class="hljs-title function_">pow</span><span class="hljs-params">(<span class="hljs-type">double</span> x, <span class="hljs-type">double</span> y)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">sqrt</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pow</code> 函数返回 $x^y$. 计算时可能会用到对数</li>
+<li><code>sqrt</code> 函数返回 $\sqrt{x}$</li>
+</ul>
+</li>
+<li><p>底数, 顶数, 绝对值, 余数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">double</span> <span class="hljs-title function_">floor</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">ceil</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">fabs</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">fmod</span><span class="hljs-params">(<span class="hljs-type">double</span> x, <span class="hljs-type">double</span> y)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>floor</code> 函数返回不大于参数的最大整数值,即向下取整</li>
+<li><code>ceil</code> 函数返回不小于参数的最小整数值,即向上取整</li>
+<li><code>fabs</code> 函数返回参数的绝对值</li>
+<li><code>fmod</code> 函数返回 <code>x / y</code> 的余数,符号与 <code>x</code> 相同</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-6-日期时间"><a href="#1-6-日期时间" class="headerlink" title="1.6 日期时间"></a>1.6 日期时间</h3><ol>
+<li><p>处理器时间(下列时间&#x2F;日期函数均声明于 <code>&lt;time.h&gt;</code>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">clock_t</span> <span class="hljs-title function_">clock</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>clock</code> 函数返回程序开始起处理去所消耗的时间,可能是个近似值</li>
+<li>若需要精确时间,可在<code>main</code>函数开始调用一次<code>clock</code>,随后的调用进行减法来获取时间</li>
+<li>若时间值过大,或机器无法获得时间,返回 -1</li>
+<li><code>clock</code> 函数返回的数字由编译器定义,一般为处理器时钟滴答的次数</li>
+<li>若需要将返回值换算成秒,应将其除以 <code>CLOCKS_PER_SEC</code></li>
+</ul>
+</li>
+<li><p>当天时间</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">time_t</span> <span class="hljs-title function_">time</span><span class="hljs-params">(<span class="hljs-type">time_t</span> *returned_value)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>若参数为非NULL指针,则时间值将通过这个指针存储</li>
+<li>若时间值太大,或机器无法提供日期和时间,返回 -1</li>
+<li>标准并未规定时间的编码方式,因此不应使用字面值常量</li>
+</ul>
+</li>
+<li><p>日期和时间的转换</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> *<span class="hljs-title function_">ctime</span><span class="hljs-params">(<span class="hljs-type">time_t</span> <span class="hljs-type">const</span> *time_value)</span>;<br><span class="hljs-type">double</span> <span class="hljs-title function_">difftime</span><span class="hljs-params">(<span class="hljs-type">time_t</span> time1, <span class="hljs-type">time_t</span> time2)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ctime</code> 函数的参数为 指向 <code>time_t</code> 的指针,返回一个指向字符串的指针<ul>
+<li>返回的字符串格式为: <code>Sun Jul 4 04:02:48 1976\n\0</code></li>
+<li>字符串内部的空格是固定的</li>
+</ul>
+</li>
+<li><code>difftime</code> 函数计算 <code>time2 - time1</code> 的值,并将结果转换为秒</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">struct</span> tm *<span class="hljs-title function_">gmtime</span><span class="hljs-params">(<span class="hljs-type">time_t</span> <span class="hljs-type">const</span> *time_value)</span>;<br><span class="hljs-keyword">struct</span> tm *<span class="hljs-title function_">localtime</span><span class="hljs-params">(<span class="hljs-type">time_t</span> <span class="hljs-type">const</span> *time_value)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>将一个 <code>time_t</code> 的值转换为一个 <code>tm</code> 结构,可以方便地访问各组成部分</p>
+<ul>
+<li><p><code>gmtime</code> 函数转换为世界协调时间</p>
+</li>
+<li><p><code>localtime</code> 函数转换为当地时间</p>
+</li>
+<li><p><code>tm</code> 结构的字段</p>
+<table>
+<thead>
+<tr>
+<th>类型 &amp; 名称</th>
+<th>范围</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>int tm_sec</code></td>
+<td>0~61</td>
+<td>分之后的秒数</td>
+</tr>
+<tr>
+<td><code>int tm_min</code></td>
+<td>0~59</td>
+<td>小时后的分数</td>
+</tr>
+<tr>
+<td><code>int tm_hour</code></td>
+<td>0~23</td>
+<td>午夜后的小时数</td>
+</tr>
+<tr>
+<td><code>int tm_mday</code></td>
+<td>1~31</td>
+<td>当月的日期</td>
+</tr>
+<tr>
+<td><code>int tm_mon</code></td>
+<td>0~11</td>
+<td>1月后的月数</td>
+</tr>
+<tr>
+<td><code>int tm_year</code></td>
+<td>0~?</td>
+<td>1900年后的年数</td>
+</tr>
+<tr>
+<td><code>int tm_wday</code></td>
+<td>0~6</td>
+<td>星期天之后的天数</td>
+</tr>
+<tr>
+<td><code>int tm_yday</code></td>
+<td>0~365</td>
+<td>1月1日后的天数</td>
+</tr>
+<tr>
+<td><code>int tm_isdat</code></td>
+<td></td>
+<td>夏令时标志</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>将 <code>tm</code> 结构转换为字符串格式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">char</span> *<span class="hljs-title function_">asctime</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> tm <span class="hljs-type">const</span> *tm_ptr)</span>;<br><span class="hljs-type">size_t</span> <span class="hljs-title function_">strftime</span><span class="hljs-params">(<span class="hljs-type">char</span> *<span class="hljs-built_in">string</span>, <span class="hljs-type">size_t</span> maxsize, <span class="hljs-type">char</span> <span class="hljs-type">const</span> *format, <span class="hljs-keyword">struct</span> tm <span class="hljs-type">const</span> *tm_str)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>asctime</code> 转换为字符串的格式与 <code>ctime</code> 一致</p>
+<ul>
+<li><p><code>strftime</code> 格式化的非常灵活</p>
+</li>
+<li><p>若转换的结果字符串长度小于 <code>maxsize</code>,则该字符串将被复制到 <code>string</code> 中</p>
+</li>
+<li><p><code>strftime</code> 的返回值为字符串的长度.若返回的是 -1,则 <code>string</code> 内容未定义</p>
+</li>
+<li><p><code>strftime</code> 格式代码</p>
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>被 … 替代</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%%</td>
+<td><code>%</code></td>
+</tr>
+<tr>
+<td>%a(%A)</td>
+<td>星期中的某天,用当地的简写(全写)表示</td>
+</tr>
+<tr>
+<td>%b(%B)</td>
+<td>月份,用当地的简写(全写)表示</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>日期和时间,使用 <code>%x %X</code></td>
+</tr>
+<tr>
+<td>%d</td>
+<td>月份中的某天(01~31)</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>小时,24小时制(00~23)</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>小时,12小时制(00~12)</td>
+</tr>
+<tr>
+<td>%J</td>
+<td>一年中的某天(001~366)</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>月份(01~12)</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分钟(00~59)</td>
+</tr>
+<tr>
+<td>%P</td>
+<td>AM&#x2F;PM</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>秒(00~61)</td>
+</tr>
+<tr>
+<td>%U(%W)</td>
+<td>一年中的第几个星期(00~53),以星期日&#x2F;星期一为第一天</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>一星期的第几天,星期日为 0</td>
+</tr>
+<tr>
+<td>%x(%X)</td>
+<td>日期&#x2F;时间,本地格式</td>
+</tr>
+<tr>
+<td>%y(%Y)</td>
+<td>当前世纪的年份(00~99)&#x2F;年份的全写(如2023)</td>
+</tr>
+<tr>
+<td>%z</td>
+<td>时区的简写,无法判断时为空</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>将 <code>tm</code> 结构转化为 <code>time_t</code> 值</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">time_t</span> <span class="hljs-title function_">mktime</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> tm *tm_ptr)</span>;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="1-7-排序查找"><a href="#1-7-排序查找" class="headerlink" title="1.7 排序查找"></a>1.7 排序查找</h3><ol>
+<li><p>排序 <code>&lt;stdlib.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">qsort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> n_elements, <span class="hljs-type">size_t</span> el_size, \</span><br><span class="hljs-params">           <span class="hljs-type">int</span> (*compare)(<span class="hljs-type">void</span> <span class="hljs-type">const</span> *, <span class="hljs-type">void</span> <span class="hljs-type">const</span> *) )</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>qsort</code> 函数是类型无关的,对任意数据类型的,固定长度的数组进行升序排序</p>
+</li>
+<li><p><code>base</code> 参数: 指向待排序的数组</p>
+</li>
+<li><p><code>n_elements</code> 参数: 指定数组中的元素数目</p>
+</li>
+<li><p><code>el_size</code> 参数: 指定每个元素的长度(单位为 字符)</p>
+</li>
+<li><p><code>compare</code> 是一个函数指针,对需要排序的元素类型进行比较.在排序时,调用该函数进行大小比较</p>
+</li>
+<li><p>比较函数接受2个参数,指向待比较的值.返回一个整数,表示参数的大小关系</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-comment">// 定义一个结构,根据 key 排序</span><br> <span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>     <span class="hljs-type">char</span> key[<span class="hljs-number">10</span>];<br>     <span class="hljs-type">int</span> otherData;<br> &#125; Record;<br><br><span class="hljs-comment">// 比较函数,直接返回 strcmp 的计算结果</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">recordCompare</span><span class="hljs-params">(<span class="hljs-type">void</span> <span class="hljs-type">const</span> *a, <span class="hljs-type">void</span> <span class="hljs-type">const</span> *b)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">strcmp</span>( (Record *)a-&gt;key, (Record *)b-&gt;key );<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    Record <span class="hljs-built_in">array</span>[<span class="hljs-number">50</span>];<br>    qsort(<span class="hljs-built_in">array</span>, <span class="hljs-number">50</span>, <span class="hljs-keyword">sizeof</span>(Record), recordCompare);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>二分查找 <code>&lt;stdlib.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> *<span class="hljs-title function_">bsearch</span><span class="hljs-params">(<span class="hljs-type">void</span> <span class="hljs-type">const</span> *key, <span class="hljs-type">void</span> <span class="hljs-type">const</span> *base, <span class="hljs-type">size_t</span> n_elements,\</span><br><span class="hljs-params">             <span class="hljs-type">size_t</span> el_size, <span class="hljs-type">int</span> (*compare)(<span class="hljs-type">void</span> <span class="hljs-type">const</span> *, <span class="hljs-type">void</span> <span class="hljs-type">const</span> *) )</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>key</code> 参数: 待查找的值,必须和目标数组元素的类型相同</p>
+</li>
+<li><p><code>base</code> 参数: 指向目标数组</p>
+</li>
+<li><p><code>n_elements</code> 参数: 数组的元素数目</p>
+</li>
+<li><p><code>el_size</code> 参数: 每个元素的长度(以字符为单位)</p>
+</li>
+<li><p><code>compare</code> 参数: 指向比较参数.与 <code>qsort</code> 函数相同</p>
+</li>
+<li><p><code>bsearch</code> 函数: 返回一个指针,指向查找到的数组元素.若不存在,返回 <code>NULL</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-comment">// 定义一个结构,根据 key 排序</span><br> <span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>     <span class="hljs-type">char</span> key[<span class="hljs-number">10</span>];<br>     <span class="hljs-type">int</span> otherData;<br> &#125; Record;<br><br><span class="hljs-comment">// 比较函数,直接返回 strcmp 的计算结果</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">recordCompare</span><span class="hljs-params">(<span class="hljs-type">void</span> <span class="hljs-type">const</span> *a, <span class="hljs-type">void</span> <span class="hljs-type">const</span> *b)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">strcmp</span>( (Record *)a-&gt;key, (Record *)b-&gt;key );<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    Record <span class="hljs-built_in">array</span>[<span class="hljs-number">50</span>];<br>    Record key; <span class="hljs-comment">// 待查找的对象</span><br>    Record *ans;<br>    <br>    <span class="hljs-built_in">strcpy</span>(key.key, <span class="hljs-string">&quot;value&quot;</span>); <span class="hljs-comment">// 比较函数中用到的 key 字段必须填充</span><br>    qsort(<span class="hljs-built_in">array</span>, <span class="hljs-number">50</span>, <span class="hljs-keyword">sizeof</span>(Record), recordCompare); <span class="hljs-comment">// 注意: 二分查找需要先排序</span><br>    ans = bsearch(&amp;key, <span class="hljs-built_in">array</span>, <span class="hljs-number">50</span>, <span class="hljs-keyword">sizeof</span>(Record, recordCompare));<br>    <span class="hljs-comment">/* 现在 ans指向查找到的目标 */</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="1-8-信号"><a href="#1-8-信号" class="headerlink" title="1.8 信号"></a>1.8 信号</h3><ol>
+<li><p>信号</p>
+<ul>
+<li>程序中绝大部分事件由其本身引发.但对于外部中断等事件,程序需要预备对这类时间作出反应</li>
+<li><strong>信号表示一种事件,可能会异步发生.程序可设置一个信号处理函数,当信号发生,就调用它</strong></li>
+<li>下面的函数位于 <code>&lt;signal.h&gt;</code></li>
+</ul>
+</li>
+<li><p>信号名</p>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SIGABRT</td>
+<td>程序请求异常终止</td>
+</tr>
+<tr>
+<td>SIGFPE</td>
+<td>发生一个算术错误</td>
+</tr>
+<tr>
+<td>SIGILL</td>
+<td>检测到非法指令</td>
+</tr>
+<tr>
+<td>SIGSEGV</td>
+<td>检测到对内存的非法访问</td>
+</tr>
+<tr>
+<td>SIGINT</td>
+<td>收到一个交互性注意信号</td>
+</tr>
+<tr>
+<td>SIGTERM</td>
+<td>收到一个终止程序的请求</td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>SIGABRT</code> 是由 <code>abort</code> 函数引发的信号,用于终止程序</li>
+<li><code>SIGILL</code> 提示 CPU 试图执行一条非法指令</li>
+<li><code>SIGINT</code> 和 <code>SIGTERM</code> 是异步的,由程序外部产生</li>
+</ul>
+</li>
+<li><p>处理信号</p>
+<ul>
+<li><p>显式的引发一个信号</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">raise</span><span class="hljs-params">(<span class="hljs-type">int</span> sig)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>当一个信号发生时,程序可以有3种反应: 缺省方式(终止程序); 将其忽略; 设置信号处理函数对其反应</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> (*signal(<span class="hljs-type">int</span> sig, <span class="hljs-type">void</span> (*handler)(<span class="hljs-type">int</span>))) (<span class="hljs-type">int</span>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>signal</code> 是一个函数.返回一个函数指针,指向一个参数为 <code>int</code> 的无返回值函数</li>
+<li><code>sig</code> 参数是<code>信号名</code>中列举的信号之一</li>
+<li><code>handler</code> 参数是希望为该信号设置的处理函数,是一个函数指针,指向一个参数为 <code>int</code> 的无返回值函数</li>
+<li>当信号发生时,信号的代码作为参数传递给 <code>handler</code> 指向的信号处理函数</li>
+<li><code>signal</code> 返回一个指向该信号以前的处理函数的指针</li>
+<li><code>signal.h</code> 定义了宏 <code>SIG_DFL, SIG_IGN</code>,可作为 <code>handler</code> 参数的值.分别表示缺省处理&#x2F;忽略信号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>信号处理函数</p>
+<ul>
+<li>当一个已设置的信号处理函数的信号发生时,系统恢复对该信号的缺省行为(防止处理函数内部再次发生该信号而引起无限循环),然后,信号处理函数被调用,信号代码作为参数传入</li>
+<li>信号处理函数可能执行的工作非常有限.对于异步信号,不应调用除 <code>signal.h</code> 以外的库函数</li>
+<li>信号处理函数仅能向一个类型为 <code>volatile sig_atomic_t</code> 的静态变量赋值,其他静态数据可能无法访问</li>
+<li>从一个信号处理函数返回,将导致执行流从信号发生的地点恢复执行(除了<code>SIGFPE</code>,无法完成计算)</li>
+<li>若希望将来再次捕获同类型信号,需要在处理函数返回前,调用 <code>signal</code> 函数进行设置</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-9-非本地跳转"><a href="#1-9-非本地跳转" class="headerlink" title="1.9 非本地跳转"></a>1.9 非本地跳转</h3><ol>
+<li><p>类似于 <code>goto</code> 语句,但作用域并非局限于函数作用域</p>
+</li>
+<li><p>需要包含头文件 <code>&lt;setjump.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">setjump</span><span class="hljs-params">(jmp_buf state)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">longjump</span><span class="hljs-params">(jmp_buf state, <span class="hljs-type">int</span> value)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>调用方式: 声明一个 <code>jmp_buf</code> 变量,使用 <code>setjump</code> 函数进行初始化,返回值为0</li>
+<li><code>setjump</code> 会将程序信息保存到缓冲区.调用 <code>sejump</code> 时所处的函数成为 <code>顶层函数</code></li>
+<li>在<code>顶层函数</code>或其他被它调用的函数处 调用 <code>longjump</code> 时,被保存的程序信息将会恢复.跳回 <code>顶层函数</code></li>
+<li>当 <code>setjump</code> 函数第一次被调用返回0.当 <code>setjump</code> 作为 <code>longjump</code> 的执行结果时,返回 <code>value</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="1-10-执行环境"><a href="#1-10-执行环境" class="headerlink" title="1.10 执行环境"></a>1.10 执行环境</h3><ol>
+<li><p>终止执行 <code>&lt;stdlib.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">abort</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">atexit</span><span class="hljs-params">(<span class="hljs-type">void</span> (func)(<span class="hljs-type">void</span>))</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">exit</span><span class="hljs-params">(<span class="hljs-type">int</span> status)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>abort</code> 函数用于不正常地终止一个正在执行的程序.它将引发 <code>SIGABRT</code>,可为它设置信号处理函数</li>
+<li><code>atexit</code> 函数可将一些函数注册为 <code>退出函数</code>.当程序要正常终止时,退出函数将被调用</li>
+<li><strong><code>exit</code> 函数用于正常终止程序.当它被调用时,所有被 <code>atexit</code> 注册为退出函数按被注册顺序逆序依次调用.然后所有用于流的缓冲区被刷新,所有打开的文件被关闭,用<code>tempfile</code>函数创建的文件被删除.退出状态返回给宿主环境.程序停止执行</strong></li>
+<li><code>exit</code> 函数的<code>status</code> 参数将会返回给操作系统</li>
+<li><code>exit</code> 函数没有返回值: 当 <code>exit</code> 结束时,程序已经消失,它已无处可返</li>
+</ul>
+</li>
+<li><p><strong>断言: 声明某事应该为真</strong> <code>&lt;assert.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">assert</span><span class="hljs-params">(<span class="hljs-type">int</span> expression)</span>; <span class="hljs-comment">// 实际上这是不是函数,而是一个宏</span><br><span class="hljs-comment">/* expression 若为假,向标准错误打印一条诊断信息并终止程序.若为真,程序继续执行 */</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>断言一般用于程序调试.当程序被完整地测试完毕,可在包含头文件 <code>aseert.h</code> 之前增加:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> NDEBUG</span><br><span class="hljs-comment">/* 定义了 NDEBUG 之后,预处理将丢弃所有的断言,而不必在源文件中实际将其删除 */</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>执行系统命令 <code>&lt;stdlib.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">system</span><span class="hljs-params">(<span class="hljs-type">char</span> <span class="hljs-type">const</span> *command)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>system</code> 函数将字符串参数传递给宿主操作系统</li>
+<li><code>system</code> 函数可用 <code>NULL</code> 参数进行调用,用于询问命令处理器是否存在.若存在,返回一个非零值</li>
+</ul>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="category-chain-item">计算机</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="print-no-link">#计算机</a>
+      
+        <a href="/tags/Code/" class="print-no-link">#Code</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C Language Environment</div>
+      <div>http://example.com/2023/05/02/Computer/C-Language-Environment/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Shuang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月2日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/03/Computer/C-Language-Advanced/" title="C Language Advanced">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C Language Advanced</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/01/Computer/C-Language-Basic/" title="C Language Basic">
+                        <span class="hidden-mobile">C Language Basic</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
