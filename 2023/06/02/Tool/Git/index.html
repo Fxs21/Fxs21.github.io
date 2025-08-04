@@ -28,11 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Git.svg">
 <meta property="article:published_time" content="2023-06-02T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-02T21:34:35.142Z">
+<meta property="article:modified_time" content="2025-08-04T14:29:18.409Z">
 <meta property="article:author" content="Shuang">
+<meta property="article:tag" content="工具箱">
 <meta property="article:tag" content="Code">
 <meta property="article:tag" content="Git">
-<meta property="article:tag" content="工具箱">
 <meta property="article:tag" content="笔记">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/Git.svg">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k 字
+          4.7k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          36 分钟
+          40 分钟
         
       </span>
     
@@ -303,7 +303,7 @@
 <li><p><strong>git 的所有命令均以 <code>git</code> 开头,后面再接具体的命令.如: <code>git init</code> 表示初始化仓库</strong></p>
 </li>
 <li><p>git 安装后需要进行配置用户名和邮箱,以便查看代码提交者(只需设置一次)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;用户名&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;用户邮箱&quot;</span><br>git config --list  <span class="hljs-comment"># 检查配置是否成功</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;user&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;email&quot;</span><br>git config --list  <span class="hljs-comment"># 检查配置是否成功</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>如果用户名参数包含空格,则需要使用双引号包裹</p>
 </li>
@@ -317,10 +317,8 @@
 </li>
 <li><p>对仓库中文件的 修改, 删除, 添加操作都将被 <code>git</code> 追踪</p>
 </li>
-<li><p><strong>本地创建仓库</strong>: 在 <code>Git Bash</code> 命令</p>
+<li><p><strong>本地创建仓库</strong>: 此时 <code>git</code> 将会创建一个 <code>.git</code> 的隐藏目录.用于存放仓库的数据(不要自己更改其中的内容)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git init<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>此时 <code>git</code> 将会创建一个 <code>.git</code> 的隐藏目录.用于存放仓库的数据(不要自己更改)</p>
 </li>
 <li><p><strong>从服务器克隆仓库</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> url<br></code></pre></td></tr></table></figure></li>
@@ -330,7 +328,7 @@
 <h3 id="1-2-Git-概念"><a href="#1-2-Git-概念" class="headerlink" title="1.2 Git 概念"></a>1.2 Git 概念</h3><ol>
 <li><p>工作区域</p>
 <ul>
-<li><p><strong>工作区(Working Directory)</strong>: 实际操作的目录</p>
+<li><p><strong>工作目录(Working Directory)</strong>: 实际操作的目录</p>
 </li>
 <li><p><strong>暂存区(Staging Area&#x2F;Index)</strong>: 临时存储区域.保存即将提交到 <code>git</code> 仓库的修改内容</p>
 </li>
@@ -341,11 +339,11 @@
 </li>
 <li><p>提交流程</p>
 <ul>
-<li><p>在对工作区的文件进行修改后,需要先提交到暂存区,然后将暂存区的修改提交到本地仓库</p>
+<li><p>在对工作目录的文件进行修改后,需要先提交到暂存区,然后将暂存区的修改提交到本地仓库</p>
 </li>
 <li><p>在上述过程中,可以使用 <code>git</code> 命令进行查看, 比较, 撤销修改</p>
 </li>
-<li><p><strong>添加(git add): 从工作区 -&gt; 暂存区</strong></p>
+<li><p><strong>添加(git add): 从工作目录 -&gt; 暂存区</strong></p>
 </li>
 <li><p><strong>提交(git commit): 从暂存区 -&gt; 本地仓库</strong></p>
 </li>
@@ -368,40 +366,62 @@
 </li>
 </ol>
 <h3 id="1-3-提交"><a href="#1-3-提交" class="headerlink" title="1.3 提交"></a>1.3 提交</h3><ol>
-<li><p>添加与提交</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git log    # 查看提交记录.包含: 提交 ID, 作者, 时间, 备注信息<br>git status # 查看目录中的文件的状态<br><br>git add &lt;filename&gt;          # 将指定的文件添加到暂存区.还可以接收目录名参数<br>git commit -m &quot;提交信息备注&quot; # 将暂存区中的修改提交到本地仓库(注意不会提交工作区的文件)<br></code></pre></td></tr></table></figure>
+<li><p>查看状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git log    # 查看提交记录.包含: 提交 ID, 作者, 时间, 备注信息<br>git status # 查看目录中的文件的状态<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>添加: 将指定的文件添加到暂存区(会排除 <code>.gitignore</code> 中匹配的文件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add &lt;filename&gt; # 添加指定文件(无论是修改, 新建, 删除均使用 add 暂存)<br>git add .          # 添加当前目录及其所有子目录下的所有新文件和已修改文件<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>提交: 将暂存区中的修改提交到本地仓库(注意不会提交工作目录的文件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git commit -m &quot;message&quot; # 提交并直接在命令行中提供提交信息的标题<br>git commit --amend      # 修改提交信息 或 添加遗漏的文件<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>版本穿梭</p>
 <p><img src="/2023/06/02/Tool/Git/1-Git-Reset.png" srcset="/img/loading.gif" lazyload></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset --模式参数 版本号 # 穿梭到指定的版本<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset --&lt;mode&gt; &lt;commit&gt; # 穿梭到指定的 commit 版本<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><p><code>soft</code>: 保留工作区和暂存区的内容</p>
-<ul>
-<li>当回退低版本时,高版本添加的文件将被保留到暂存区</li>
-<li>此时对暂存区的这些文件进行修改,就可以再次执行提交</li>
+<li><p><strong><code>git reset</code> 本质上是移动当前分支所指向的提交(即 <code>HEAD</code> 指针)到指定的历史提交</strong></p>
+<table>
+<thead>
+<tr>
+<th>mode 参数</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>soft</code></td>
+<td>自 <code>&lt;commit&gt;</code> 后的提交在提交历史中暂时消失(可以通过 <code>git relog</code> 找回).<br />之前提交的所有修改(相对于 <code>&lt;commit&gt;</code> 的改动)都变成了 <strong>已暂存的更改</strong>.<br />不影响暂存区,也不影响工作目录</td>
+</tr>
+<tr>
+<td><code>mixed</code>(默认参数)</td>
+<td>自 <code>&lt;commit&gt;</code> 后的提交在提交历史中暂时消失.<br />之前提交的所有修改(相对于 <code>&lt;commit&gt;</code> 的改动)都变成了 <strong>未暂存的更改</strong>.<br />重置暂存区,但不影响工作目录</td>
+</tr>
+<tr>
+<td><code>hard</code>(极其危险)</td>
+<td>自 <code>&lt;commit&gt;</code> 以来的所有后续提交在提交历史中暂时消失.<br />暂存区被清空,工作目录中所有未提交(包括未暂存和已暂存)的更改都会被永久丢弃</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>commit</code> 参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset a1b2c3d # 提交的哈希值.通常只需要前 7 个字符就足够唯一标识<br>git reset main    # 分支名.表示重置到该分支当前指向的提交<br>git reset v1.0    # 标签名.表示重置到该标签指向的提交<br>git reset HEAD    # 表示当前提交<br>git reset HEAD~n  # 表示当前提交的第 n 个提交<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p><code>hard</code>: 不保留工作区和暂存区的内容.这将导致高版本才添加的文件被删除(谨慎使用)</p>
+<li><p><code>soft</code> 最佳实践: 多次 <code>commit</code> 后,想要将其合并为一次 <code>commit</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset --soft &lt;commit&gt; # 先回退到修改前的 commit,此时所有的改动都回到暂存区<br>git add                   # 如果存在遗漏继续添加,否则不需要该步骤<br>git commit -m &quot;message&quot;   # 再次提交,此时先前的多个提交变成一次提交<br></code></pre></td></tr></table></figure>
 </li>
-<li><p><strong><code>mixed</code>: 默认参数.只保留工作区中的内容</strong></p>
-<ul>
-<li>当回退低版本时,高版本添加的文件将被保留到工作区,而非暂存区</li>
-<li>在工作区中对内容进行修改后,再进行 添加, 提交 操作</li>
-</ul>
+<li><p><code>mixed</code> 最佳实践: 提交了不需要的东西,想撤销这些提交,但工作目录中实际修改的代码仍需保留</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset HEAD~1 # 撤销最新一次 commit.但提交的修改以未暂存的状态保留到工作目录<br>git reset file   # 撤销特定文件的 add.但保留文件在工作目录的修改<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>使用场景: 多次 <code>commit</code> 后,想要将其合并为一次 <code>commit</code>: 先回退,然后提交</p>
-</li>
-</ul>
-</li>
+<li><p><code>hard</code> 最佳实践: 确保不需要工作目录和暂存区中未提交的修改情况下使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset --hard HEAD # 丢弃所有未提交修改<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="1-4-差异"><a href="#1-4-差异" class="headerlink" title="1.4 差异"></a>1.4 差异</h3><ol>
 <li><p><strong>查看差异</strong>: 后续可以使用 IDE 更美观地查看</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">git diff           <span class="hljs-comment"># 工作区 vs 暂存区</span><br>git diff HEAD      <span class="hljs-comment"># 工作区 + 暂存区 vs 本地仓库</span><br>git diff --cached  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br>git diff --staged  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br><br>git diff &lt;commit_hash&gt; &lt;commit_hash&gt;  <span class="hljs-comment"># 比较指定两次提交的差异</span><br>git diff HEAD~ HEAD                   <span class="hljs-comment"># 上一次提交 vs 本地仓库</span><br>git diff &lt;branch_hash&gt; &lt;branch_hash&gt;  <span class="hljs-comment"># 比较两个分支的差异</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">git diff           <span class="hljs-comment"># 工作目录 vs 暂存区</span><br>git diff HEAD      <span class="hljs-comment"># 工作目录 + 暂存区 vs 本地仓库</span><br>git diff --cached  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br>git diff --staged  <span class="hljs-comment"># 暂存区 vs 本地仓库</span><br><br>git diff &lt;commit_hash&gt; &lt;commit_hash&gt;  <span class="hljs-comment"># 比较指定两次提交的差异</span><br>git diff HEAD~ HEAD                   <span class="hljs-comment"># 上一次提交 vs 本地仓库</span><br>git diff &lt;branch_hash&gt; &lt;branch_hash&gt;  <span class="hljs-comment"># 比较两个分支的差异</span><br></code></pre></td></tr></table></figure>
 
 <p><img src="/2023/06/02/Tool/Git/1-Git-diff.png" srcset="/img/loading.gif" lazyload></p>
 </li>
-<li><p><strong>删除文件</strong>: 删除工作区和暂存区中的指定文件.但版本库不变</p>
+<li><p><strong>删除文件</strong>: 删除工作目录和暂存区中的指定文件.但版本库不变</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">rm</span> &lt;filename&gt;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>忽略文件</strong>: 通过 <code>.gitignore</code> 文件来指定忽略特定的文件</p>
@@ -421,7 +441,7 @@
 </ol>
 <h3 id="1-5-分支"><a href="#1-5-分支" class="headerlink" title="1.5 分支"></a>1.5 分支</h3><ol>
 <li><p>分支(Branch): 代码的不同版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">git branch           # 查看分支信息.结果中 * 表示当前所处的分支<br>git branch &lt;name&gt;    # 创建新分支.创建新分支后并不会自动切换分支<br>git branch -d &lt;name&gt; # 删除指定的已合并分支<br>git switch &lt;name&gt;    # 切换分支.同时工作区的文件会被自动替换为目标分支的状态<br>git merge &lt;name&gt;     # 将指定分支合并到当前分支.该指令会执行一次提交,因此需要输入提交信息<br>git log --graph --oneline --decorate --all # 查看分支图<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">git branch           # 查看分支信息.结果中 * 表示当前所处的分支<br>git branch &lt;name&gt;    # 创建新分支.创建新分支后并不会自动切换分支<br>git branch -d &lt;name&gt; # 删除指定的已合并分支(安全删除,因为必须已合并到其他分支才能被删除)<br>git switch &lt;name&gt;    # 切换分支.同时工作目录的文件会被自动替换为目标分支的状态<br>git merge &lt;name&gt;     # 将指定分支合并到当前分支.该指令会执行一次提交,因此需要输入提交信息<br>git log --graph --oneline --decorate --all # 查看分支图<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>合并冲突</p>
 <ul>
@@ -460,7 +480,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls ~/.ssh/id_rsa.pub  # 查看是否已经生成过密钥 id_rsa(私钥) id_rsa.pub(公钥)<br>cat ~/.ssh/id_rsa.pub # 查看生成的密钥(复制输出的内容.以 ssh-rsa AAA... 开头)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>如果没有 ssh key.则需要先生成(如果有 ssh key.则直接获取)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/.ssh  # 切换到.ssh目录<br>ssh-keygen -t rsa -b 4096  # 生成 rsa 密钥,大小为 4096<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/.ssh                 # 切换到.ssh目录<br>ssh-keygen -t rsa -b 4096 # 生成 rsa 密钥,大小为 4096<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>在 GitHub 账号中添加公钥</p>
@@ -479,7 +499,7 @@
 <li><p>本地仓库和远程仓库是不同的仓库.想要将两者的文件同步.需要 <code>git pull, git push</code> 指令</p>
 <p><img src="/2023/06/02/Tool/Git/1-Git-push.png" srcset="/img/loading.gif" lazyload></p>
 </li>
-<li><p>此时,完成了关联本地仓库与远程仓库的准备工作.</p>
+<li><p>此时,完成了关联本地仓库与远程仓库的准备工作</p>
 </li>
 <li><p>在 github 上创建一个新仓库.然后进行操作</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git remote add &lt;shortname&gt; &lt;url&gt; # 将本地仓库关联到远程仓库.同时创建了远程库的别名<br>git remote -v # 查看当前仓库对应的远程仓库的别名和地址(默认 shortname == origin)<br>git branch -M main # 指定分支名为 main<br>git push -u origin main # 将本地的 main 分支与远程仓库 origin 的 main 分支关联.并推送<br>git pull # 拉取远程仓库中的分支.默认为 origin 的 main 分支<br></code></pre></td></tr></table></figure></li>
@@ -759,11 +779,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="print-no-link">#工具箱</a>
+      
         <a href="/tags/Code/" class="print-no-link">#Code</a>
       
         <a href="/tags/Git/" class="print-no-link">#Git</a>
-      
-        <a href="/tags/%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="print-no-link">#工具箱</a>
       
         <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
       

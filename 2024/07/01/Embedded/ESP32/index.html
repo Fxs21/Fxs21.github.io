@@ -28,10 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/ESP32.svg">
 <meta property="article:published_time" content="2024-07-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-03T16:41:45.415Z">
+<meta property="article:modified_time" content="2025-08-04T14:29:18.405Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="ESP32">
 <meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="ESP32">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/ESP32.svg">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.6k 字
+          6k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          47 分钟
+          51 分钟
         
       </span>
     
@@ -285,136 +285,63 @@
 <ul>
 <li>拥有两个 USB 接口.一个是 USB 转串口, 另一个是 USB OTG 接口(JTAG 调试)</li>
 <li>拥有两个按键: RST 是复位键. 若按住 Boot 键的同时按一下 RST 进入 <code>固件下载</code> 模式</li>
-<li>RGB LED: 可寻址 RGB 发光二极管(WS2812). 由 GPIO48 驱动</li>
+<li>RGB LED: 可寻址 RGB 发光二极管(WS2812). 注意 v1.0 由 GPIO48 驱动, v1.1 由 GPIO38 驱动</li>
 </ul>
 </li>
 <li><p>开发板引脚图</p>
 <p><img src="/2024/07/01/Embedded/ESP32/0-ESP32-S3-DevKitC-Pin.jpg" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>芯片型号: <code>ESP32-S3 N16R8</code>.实际对应开发板为 <code>ESP32-S3-DevKit-1-N16R8V</code></li>
-<li>Flash: 16MB OT; PSRAM: 8MBOT; SPI 电压为 1.8V</li>
+<li>Flash: 16MB; PSRAM: 8MB; SPI 电压为 1.8V</li>
 </ul>
+</li>
+<li><p>本文档实际使用的是 <a target="_blank" rel="noopener" href="https://wiki.lckfb.com/zh-hans/szpi-esp32s3/">实战派开发板S3介绍 | 立创开发板技术文档中心</a></p>
 </li>
 </ol>
-<h3 id="0-2-Linux-开发"><a href="#0-2-Linux-开发" class="headerlink" title="0.2 Linux 开发"></a>0.2 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Linux 开发</a></h3><ol>
-<li><p>安装 WMware</p>
+<h3 id="0-2-Linux-环境"><a href="#0-2-Linux-环境" class="headerlink" title="0.2 Linux 环境"></a>0.2 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Linux 环境</a></h3><ol>
+<li><p>搭建 Linux 开发环境参考 Linux 文档环境搭建部分.这里默认搭建完成,并使用的是 Ubuntu</p>
+</li>
+<li><p>环境搭建</p>
 <ul>
-<li><p>创建新的虚拟机 -&gt; 自定义 -&gt; 选择 Ubuntu 的 ISO 镜像文件</p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-ISO.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>全名 fxsUbuntu, 用户名 fxs, 密码 fxs</p>
-</li>
-<li><p>在指定虚拟磁盘大小时给大一点,直接200G</p>
-</li>
-</ul>
-</li>
-<li><p>设置 Ubuntu</p>
-<ul>
-<li><p>语言选择: English</p>
-</li>
-<li><p>ssh 需要安装上,其他默认即可.最后进入 shell 页面</p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-Shell.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>获取网络 IP 后打开 MobaXterm: 在 <code>Session -&gt; SSH</code> 填入 <code>host</code> 和 <code>username</code>.登录到 Ubuntu</p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-MobaXterm.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-MobaXterm2.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ul>
-</li>
-<li><p>编译环境</p>
-<ul>
-<li><p>工具安装</p>
+<li><p>安装依赖</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt update<br>sudo apt install git wget flex bison gperf python3-pip python3-venv cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0 net-tools<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>拉取 ESP-IDF</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir esp32  # 创建工作目录<br>cd esp32<br><br>git clone https://gitee.com/EspressifSystems/esp-gitee-tools.git<br>cd esp-gitee-tools  # 执行 gitee 工具切换镜像脚本<br>./jihu-mirror.sh set  # 执行脚本,将 github 地址映射为 gitee<br><br>cd ..<br>git clone --recursive https://github.com/espressif/esp-idf.git  # 拉取源码<br><br>cd esp-idf<br>git checkout v5.2<br>git submodule update --init --recursive  # 切换到 5.2 版本,包括子模块<br></code></pre></td></tr></table></figure>
+<li><p>拉取 ESP-IDF 源码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建工作目录</span><br>mkdir esp32<br>cd esp32<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用脚本,将 github 地址映射为 gitee,减少因网络而导致的配置失败</span><br>git clone https://gitee.com/EspressifSystems/esp-gitee-tools.git<br>cd esp-gitee-tools   # 执行 gitee 工具切换镜像脚本<br>./jihu-mirror.sh set # 执行脚本,将 github 地址映射为 gitee<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取 esp-idf 源码</span><br>cd ..<br>git clone --recursive https://github.com/espressif/esp-idf.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换到 5.2 版本(包括子模块).保持环境一致(非必需)</span><br>cd esp-idf<br>git checkout v5.2<br>git submodule update --init --recursive<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>编译环境</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip config set global.index-url http://mirrors.aliyun.com/pypi/simple<br>pip config set global.trusted-host mirrors.aliyun.com  # 更换 pip 源.可以不运行<br><br>../esp-gitee-tools/install.sh  # 安装编译工具<br><br>source export.sh  # 设置环境变量,并将环境变量放到 .bashrc 中(每次开终端都要运行)<br>echo &quot;source ~/esp32/esp-idf/export.sh&quot; &gt;&gt; ~/.bashrc  # 每次开终端都执行 export.sh 脚本(非必需)<br><br>cd ~/esp32  # 下载课程配套源码,作为编译例程<br>git clone --recursive https://gitee.com/vi-iot/esp32-board.git<br><br>cd esp32-board/helloworld  # 编译<br>idf.py set-target esp32s3<br>idf.py build<br></code></pre></td></tr></table></figure>
+<li><p>配置编译环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">更换 pip 源(非必需).可以使用 pip config list 命令查看当前的 pip 镜像源</span><br>pip config set global.index-url http://mirrors.aliyun.com/pypi/simple<br>pip config set global.trusted-host mirrors.aliyun.com<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译工具</span><br>../esp-gitee-tools/install.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置环境变量.该操作每次打开一个终端都要运行,后面介绍解决办法</span><br>source export.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解决每次开终端都执行 <span class="hljs-built_in">source</span> export.sh 的问题(非必需)</span><br>echo &quot;source ~/esp32/esp-idf/export.sh&quot; &gt;&gt; ~/.bashrc<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>烧录文件: 将 esp32 连接到虚拟机</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">烧录指令.出现 Done 表示烧录完成.需要进入烧录模式(按住 boot 键,按一次 reset)</span><br>idf.py flash<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">此时会出现 /dev/ttyUSB0 failed to connect... 因此先修改权限</span><br>sudo chmod 777 /dev/ttyUSB0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">调试指令. Ctrl + ] 退出</span><br>idf.py monitor<br></code></pre></td></tr></table></figure></li>
+<li><p>编译示例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">下载课程配套源码,作为编译例程</span><br>cd ~/esp32<br>git clone --recursive https://gitee.com/vi-iot/esp32-board.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置芯片型号,并编译 helloworld 例程</span><br>cd esp32-board/helloworld # idf.py 的指令需要在项目的所处的目录中执行<br>idf.py set-target esp32s3 # 配置芯片型号.需查阅开发板原理图<br>idf.py build              # 编译项目<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>烧录示例: 需要将开发板连接到 Linux(如果使用是 WSL, 可参考 Linux 文档的连接 USB 设备部分)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">烧录指令.出现 Done 表示烧录完成.需要进入烧录模式(按住 boot 键,按一次 reset)</span><br>idf.py flash<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">此时会出现 /dev/ttyUSB0 failed to connect... 因此先修改权限</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">该操作会随着设备拔插失效,因此每次都要执行.后面描述解决办法</span><br>sudo chmod 777 /dev/ttyUSB0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">烧录并监视串口. Ctrl + ] 退出</span><br>idf.py flash monitor<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>优化项</p>
+<li><p>优化配置</p>
 <ul>
 <li><p>永久环境变量: 将添加环境变量的语句添加到 <code>.profile</code> 文件中</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~<br>vim .profile<br>source esp32/esp-idf/export.sh<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>解决每次插拔设备后权限不足的问题</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo usermod -aG dialout fxs   # 然后重启虚拟机<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">将当前用户添加到 dialout 组.使其获得串口设备的访问权限</span><br>sudo usermod -aG dialout $USER<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">然后重新连接客户会话终端.后续不再需要修改权限</span><br>exit              # 完全退出当前 SSH 会话或终端.然后需要手动重新连接<br>id | grep dialout # 验证修改.需要确认当前用户已经加入了 dialout 组<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>VSCode 远程连接</p>
-<ul>
-<li><p>安装拓展 <code>Remote - SSH</code>.打开配置文件 <code>C:\Users\fxs\.ssh\config</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">Host Ubuntu20.04_server<br>	HostName 192.168.221.129<br>	User fxs<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>单击 <code>在当前窗口连接...</code>.选择 <code>linux</code>,并输入密码即可</p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-VSCode-remote.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>直接打开文件夹即可选择需要编辑查看的代码</p>
+<li><p>使用 VSCode (远程连接部分参考 C 环境搭建部分)打开文件目录,可以看到上面示例的工程结构和源码</p>
 <p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-VSCode-hello.png" srcset="/img/loading.gif" lazyload></p>
 </li>
-<li><p>VSCode 中选择虚拟机安装拓展: <code>C/C++, ESP-IDF</code> 插件<br><strong>按 Ctrl + Shift + P, 搜索 esp-idf add VS Code Configuration Folder 将源码路径添加到工程</strong></p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-VSCode-ESP-IDF.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ul>
-</li>
-<li><p>使用密钥登陆,而非密码</p>
-<ul>
-<li><p>先在 Windows 的 shell 运行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t ed25519 -C yshuang68@163.com<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>生成的文本位于 <code>C:\Users\fxs\.ssh</code> 目录</li>
-</ul>
-<p><img src="/2024/07/01/Embedded/ESP32/0-keygen.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>打开公钥文件 <code>id_ed25519.pub</code>,并复制其内容</li>
-</ul>
-</li>
-<li><p>然后在 Ubuntu 中运行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/.ssh<br>vim authorized_keys  # 默认是空文件,将复制的内容保存到该文件中<br></code></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>配置工程</p>
-<ul>
-<li><p>在工程目录下执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py menuconfig<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>打开配置界面</p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-idf_menuconfig.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>修改项目</p>
-<ul>
-<li>系统主频: <code>Component config -&gt; ESP system setting -&gt; cpu frequency</code> 选为 240MHz</li>
-<li>Flash 大小: <code>Serial flasher config -&gt; Flash size</code> 选为 8MB</li>
-<li>芯片类型: <code>idf.py set-target esp32s3</code></li>
-<li>按 <kbd>S</kbd> 保存, <kbd>Q</kbd> 退出</li>
-</ul>
-</li>
-<li><p>修改了 <code>menuconfig</code> 后,需要重新编译工程(<code>idf.py build</code>)</p>
-</li>
-</ul>
-</li>
-<li><p>切换 idf 版本</p>
-<ul>
-<li><p>查看 idf 版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py --version<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>进入 IDF 目录并切换版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~/esp32/esp-idf<br>git checkout v5.4.1  # 切换到 V5.4.1<br>git submodule update --init --recursive  # 更新子模块<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>重新安装工具链</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">./install.sh         # 安装匹配的工具链<br>source export.sh     # 激活环境<br></code></pre></td></tr></table></figure></li>
-</ul>
+<li><p><code>ESP-IDF</code> 插件(在 VSCode 中选择虚拟机安装拓展)</p>
 </li>
 </ol>
-<h3 id="0-3-Windows-开发"><a href="#0-3-Windows-开发" class="headerlink" title="0.3 Windows 开发"></a>0.3 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Jm411r7zz?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Windows 开发</a></h3><ol>
-<li><p><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.3.2/esp32/get-started/windows-setup.html">官网下载</a> ESP-IDF Windows Installer Download.然后默认安装即可</p>
+<ul>
+<li>解决 VSCode 会因为不知道源码路径,头文件引入会标红,代码补全也无法使用的问题</li>
+<li>按 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd>, 搜索 <code>esp-idf add VS Code Configuration Folder</code> 将源码路径添加到工程</li>
+</ul>
+<h3 id="0-3-Windows-环境"><a href="#0-3-Windows-环境" class="headerlink" title="0.3 Windows 环境"></a>0.3 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Jm411r7zz?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Windows 环境</a></h3><ol>
+<li><p><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/windows-setup.html">官网下载</a> ESP-IDF Windows Installer Download.然后默认安装即可</p>
 </li>
-<li><p>验证安装</p>
+<li><p>通过命令行编译并烧录</p>
 <ul>
 <li><p>在 Espressif 安装目录下 <code>.\frameworks\esp-idf-v5.2.3\examples\get-started</code> 有例程 <code>hello_world</code></p>
 </li>
@@ -448,9 +375,117 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-4-FreeRTOS-接口"><a href="#0-4-FreeRTOS-接口" class="headerlink" title="0.4 FreeRTOS 接口"></a>0.4 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=6">FreeRTOS 接口</a></h3><ol>
+<h3 id="0-4-快速上手"><a href="#0-4-快速上手" class="headerlink" title="0.4 快速上手"></a>0.4 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/linux-macos-setup.html">快速上手</a></h3><ol>
+<li><p>这里是官方文档描述的快速上手步骤.参考上面的 Linux 环境搭建的步骤也可以</p>
+</li>
+<li><p>在拉取的 <code>esp-idf/examples</code> 目录中有很多示例代码.以 <code>get-started/hello_world</code> 为例</p>
+</li>
+<li><p>编译下载流程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd example/get-started/hello_world # 进入工程目录<br>idf.py set-target esp32s3          # 设置芯片类型<br>idf.py menuconfig                  # 修改 Flash 大小<br>idf.py build flash monitor         # 编译, 烧录, 监控<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>启动流程</p>
+<ul>
+<li>一级引导程序: 固化于 ROM 中,不可修改.加载二级引导程序到 RAM 执行<ul>
+<li>通过检查 IO0 引脚的电平,选择程序模式</li>
+<li>当芯片上电检测到 IO0 引脚为低电平时,进入下载模式,否则执行二级引导程序</li>
+</ul>
+</li>
+<li>二级引导程序: <code>boot loader</code> 程序.从 0x8000 处读取分区表,处理各种段,加载应用程序</li>
+<li>应用程序: 硬件外设和基本 C 语言运行环境的初始化, <code>freeRTOS</code> 初始化, 最后执行 <code>app_main()</code> 函数</li>
+</ul>
+</li>
+</ol>
+<h3 id="0-5-IDE-工具"><a href="#0-5-IDE-工具" class="headerlink" title="0.5 IDE 工具"></a>0.5 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/tools/idf-py.html">IDE 工具</a></h3><ol>
+<li><p><code>idf.py</code> 命令行工具提供了一个前端界面, 管理工程构建, 工程部署, 工程调试等操作</p>
+<ul>
+<li><code>CMake</code>: 配置要构建的工程</li>
+<li><code>Ninja</code>: 构建工程</li>
+<li><code>esptool</code>: 烧录目标芯片</li>
+<li>注意 <code>idf.py</code> 应在 ESP-IDF 工程目录下运行.即包含 <code>CMakeLists.txt</code> 文件的目录</li>
+</ul>
+</li>
+<li><p>前置工作相关</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py set-target esp32s3  # 指定芯片类型为 esp32s3<br>idf.py menuconfig          # 打开配置界面.一般第一次需要修改 flash size<br>idf.py save-defconfig      # 生成 sdkconfig.defaults 默认配置文件<br>idf.py create-project test # 创建一个名为 test 的工程<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>构建项目</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py build       # 编译项目代码, 生成可执行固件.默认输出到 build 目录<br>idf.py clean       # 清除构建生成的临时文件(保留配置)<br>idf.py fullclean   # 彻底清除构建目录和配置(包括 sdkconfig)<br>idf.py reconfigure # 重新运行 CMake 并更新配置<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>烧录固件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py flash          # 构建并烧录. -p &lt;port&gt; 指定串口, -b &lt;baud&gt; 指定烧录波特率<br>idf.py flash-settings # 仅烧录分区表和配置(非完整固件)<br>idf.py erase-flash    # 擦除整个 flash<br>idf.py erase-otadata  # 擦除 OTA 数据<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>调试监控</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py monitor # 启动串口监视器,查看设备日志(默认波特率 115200). Ctrl + ] 退出监视器<br>idf.py gdb     # 启动 GDB 调试器(需提前配置 OpenOCD 或 JTAG)<br>idf.py openocd # 启动 OpenOCD 调试服务<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>其他</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py size  # 显示应用程序大小.包括 RAM 和 flash 及各部分大小<br><br>idf.py merge bin        # 合并二进制文件<br>idf.py create-component # 创建新组件<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>切换 idf 版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前 idf 版本</span><br>idf.py --version<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换 idf 版本</span><br>cd ~/esp32/esp-idf  # 需要进入到 esp-idf 目录进行操作<br>git checkout v5.4.1 # 切换到 V5.4.1<br>git submodule update --init --recursive  # 更新子模块<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新安装工具链</span><br>./install.sh     # 安装匹配的工具链<br>source export.sh # 设置环境变量<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="0-6-工程选项配置"><a href="#0-6-工程选项配置" class="headerlink" title="0.6 工程选项配置"></a>0.6 工程选项配置</h3><ol>
+<li><p>在工程目录下执行下面命令打开交互式配置菜单(基于 Kconfig)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py menuconfig<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-idf-menuconfig.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><code>menuconfig</code> 用于配置芯片型号, 串口, Wi-Fi 等参数</li>
+<li>配置保存在 <code>sdkconfig</code> 文件中</li>
+</ul>
+</li>
+<li><p>目前阶段可修改的配置</p>
+<ul>
+<li>系统主频: <code>Component config -&gt; ESP system setting -&gt; cpu frequency</code> 选为 240MHz</li>
+<li>Flash 大小: <code>Serial flasher config -&gt; Flash size</code> 选为 16MB(需要根据具体芯片型号选择)</li>
+<li>按 <kbd>S</kbd> 保存, <kbd>Q</kbd> 退出</li>
+</ul>
+</li>
+<li><p>注意: 修改了 <code>menuconfig</code> 后,需要重新编译工程(<code>idf.py build</code>)</p>
+</li>
+</ol>
+<h3 id="0-7-API-约定"><a href="#0-7-API-约定" class="headerlink" title="0.7 API 约定"></a>0.7 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/api-conventions.html">API 约定</a></h3><ol>
+<li><p>编程接口</p>
+<ul>
+<li>在 ESP-IDF 组件的公共头文件中声明的 C 函数, 结构体, 枚举, 类型定义, 预处理器宏</li>
+<li>编译系统函数, 预定义变量, 选项</li>
+<li><code>Kconfig</code> 选项, 可用于代码及编译系统文件</li>
+<li>主机工具及其命令行参数</li>
+</ul>
+</li>
+<li><p>错误处理</p>
+<ul>
+<li>多数 ESP-IDF API 会返回由 <code>esp_err_t</code> 类型定义的错误代码.实质上是带符号的整型<ul>
+<li><code>ESP_OK</code> 代表成功,其值定义为0</li>
+<li>错误代码通常均以 <code>ESP_ERR_</code> 前缀开头</li>
+<li>常见错误(比如内存不足, 超时, 无效参数等)的错误代码则已经在 <code>esp_err.h</code> 文件中定义</li>
+</ul>
+</li>
+<li>向 <code>esp_err_to_name</code> 函数传递错误码作为参数即可转换为具体的错误消息</li>
+<li>宏 <code>ESP_ERROR_CHECK</code> 的功能和 <code>assert</code> 类似.若参数不等于 <code>ESP_OK</code>,则打印错误消息,并调用 <code>abort()</code></li>
+</ul>
+</li>
+<li><p>配置结构体</p>
+<ul>
+<li><p>为确保应用程序与未来 ESP-IDF 版本的兼容性,请正确初始化配置结构体</p>
+</li>
+<li><p>多数 ESP-IDF 中的初始化, 配置, 安装函数: 形如 <code>..._init(), ..._config(), ..._install()</code>,<br>都需要一个指向配置结构体的指针作为参数</p>
+</li>
+<li><p><strong>应用程序必须初始化结构体的所有字段</strong></p>
+</li>
+<li><p>使用 C99 的指定初始化器完成结构体的初始化.以简洁的方式设置字段,并将剩余字段初始化为0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">const</span> <span class="hljs-type">esp_timer_create_args_t</span> my_timer_args = &#123;<br>    .callback = &amp;my_timer_callback,<br>    <span class="hljs-comment">/* 正确，字段 .arg 和 .name 已初始化为零 */</span><br>&#125;;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>私有 API</p>
+<ul>
+<li><strong>某些头文件包含的 API 仅限于在 ESP-IDF 源代码中使用,不支持在应用程序中使用</strong></li>
+<li>此类头文件的名称或路径通常带有 <code>private</code> 或 <code>esp_private</code></li>
+<li>私有 API 可能在次要或补丁版本之间以不兼容的方式被删除或更改</li>
+</ul>
+</li>
+</ol>
+<h3 id="0-8-FreeRTOS-接口"><a href="#0-8-FreeRTOS-接口" class="headerlink" title="0.8 FreeRTOS 接口"></a>0.8 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=6">FreeRTOS 接口</a></h3><ol>
 <li><p>创建任务: 在 ESP-IDF 中,为了支持双核实现了新的函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskCreatePinnedToCore</span> <span class="hljs-params">(</span><br><span class="hljs-params">    TaskFunction_t pxTaskCode,  <span class="hljs-comment">// 指向任务函数的指针</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> pcName,   <span class="hljs-comment">// 任务名,最大长度为 configMax_TASK_NAME_LEN</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> configSTACK_DEPTH_TYPE usStackDepth,  <span class="hljs-comment">// 任务堆栈大小,默认单位为4字节</span></span><br><span class="hljs-params">    <span class="hljs-type">void</span> *<span class="hljs-type">const</span> pvParameters,  <span class="hljs-comment">// 传递给任务函数的参数</span></span><br><span class="hljs-params">    UBaseType_t uxPriority,    <span class="hljs-comment">// 任务优先级, 0 ~ configMAX_PRIORITIES - 1</span></span><br><span class="hljs-params">    TaskHandle_t *<span class="hljs-type">const</span> pxCreatedTask,  <span class="hljs-comment">// 任务句柄,即任务的控制块</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xCoreID  <span class="hljs-comment">// 分配到哪个内核运行</span></span><br><span class="hljs-params">)</span>;<br><span class="hljs-comment">// 返回值 pdPASS 表示创建成功. errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY 表示失败</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskCreatePinnedToCore</span> <span class="hljs-params">(</span><br><span class="hljs-params">    TaskFunction_t pxTaskCode,  <span class="hljs-comment">// 指向任务函数的指针</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> pcName,   <span class="hljs-comment">// 任务名,最大长度为 configMax_TASK_NAME_LEN</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> configSTACK_DEPTH_TYPE usStackDepth,  <span class="hljs-comment">// 任务堆栈大小,默认单位为4字节</span></span><br><span class="hljs-params">    <span class="hljs-type">void</span> *<span class="hljs-type">const</span> pvParameters,  <span class="hljs-comment">// 传递给任务函数的参数</span></span><br><span class="hljs-params">    UBaseType_t uxPriority,    <span class="hljs-comment">// 任务优先级, 0 ~ configMAX_PRIORITIES - 1</span></span><br><span class="hljs-params">    TaskHandle_t *<span class="hljs-type">const</span> pxCreatedTask,  <span class="hljs-comment">// 任务句柄,即任务的控制块</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xCoreID   <span class="hljs-comment">// 分配到哪个内核运行</span></span><br><span class="hljs-params">)</span>;<br><span class="hljs-comment">// 返回值 pdPASS 表示创建成功. errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY 表示失败</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>阻塞</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskDelay</span><span class="hljs-params">(<span class="hljs-type">const</span> TickType_t xTicksToDelay)</span>;<br>vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));  <span class="hljs-comment">// pdMS_TO_TICKS 会将时间转换为节拍数</span><br></code></pre></td></tr></table></figure>
@@ -492,83 +527,6 @@
 <li>临界区使用自旋锁确保同步(因为还有一个核心)</li>
 <li>若任务中用到浮点运算,则创建任务时必须指定具体运行的核心,而不能由系统安排</li>
 <li>通常负责处理无线网络的任务固定到 CPU0, 处理应用程序其余部分的任务被固定到 CPU1</li>
-</ul>
-</li>
-</ol>
-<h3 id="0-5-快速上手"><a href="#0-5-快速上手" class="headerlink" title="0.5 快速上手"></a>0.5 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=4">快速上手</a></h3><ol>
-<li><p>在拉取的 <code>esp-idf/examples</code> 目录中有很多示例代码.以 <code>get-started/hello_world</code> 为例</p>
-</li>
-<li><p>编译下载流程</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd example/get-started/hello_world<br>idf.py set-target esp32s3   # 设置芯片类型<br>idf.py menuconfig           # 修改 Flash 大小<br>idf.py build flash monitor  # 编译, 烧录, 监控<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>启动流程</p>
-<ul>
-<li>一级引导程序: 固化于 ROM 中,不可修改.加载二级引导程序到 RAM 执行.<ul>
-<li>通过检查 IO0 引脚的电平,选择程序模式</li>
-<li>当芯片上电检测到 IO0 引脚为低电平时,进入下载模式,否则执行二级引导程序</li>
-</ul>
-</li>
-<li>二级引导程序: <code>boot loader</code> 程序.从 0x8000 处读取分区表,处理各种段,加载应用程序</li>
-<li>应用程序: 硬件外设和基本 C 语言运行环境的初始化, <code>freeRTOS</code> 初始化, 最后执行 <code>app_main()</code> 函数</li>
-</ul>
-</li>
-</ol>
-<h3 id="0-6-IDE-工具"><a href="#0-6-IDE-工具" class="headerlink" title="0.6 IDE 工具"></a>0.6 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4.1/esp32/api-guides/tools/idf-py.html">IDE 工具</a></h3><ol>
-<li><p><code>idf.py</code> 命令行工具提供了一个前端界面, 管理工程构建, 工程部署, 工程调试等操作</p>
-<ul>
-<li><code>CMake</code>: 配置要构建的工程</li>
-<li><code>Ninja</code>: 构建工程</li>
-<li><code>esptool</code>: 烧录目标芯片</li>
-<li>注意 <code>idf.py</code> 应在 ESP-IDF 工程目录下运行.即包含 <code>CMakeLists.txt</code> 文件的目录</li>
-</ul>
-</li>
-<li><p>前置工作相关</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py set-target esp32s3  # 指定芯片类型为 esp32s3<br>idf.py menuconfig          # 打开配置界面.一般第一次需要修改 flash size<br>idf.py save-defconfig      # 生成 sdkconfig.defaults 默认配置文件<br>idf.py create-project test # 创建一个名为 test 的工程<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>编译烧录相关</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py build    # 构建<br>idf.py flash    # 构建并烧录<br>idf.py monitor  # 监控<br><br>idf.py fullclean     # 清空生成的中间文件<br>idf.py erase-flash   # 擦除整个 flash<br>idf.py erase-otadata # 擦除 OTA 数据<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>其他</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py docs  # 打开文档<br>idf.py size  # 显示应用程序大小.包括 RAM 和 flash 及各部分大小<br>idf.py merge bin         # 合并二进制文件<br>idf.py create-component  # 创建新组件<br></code></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="0-7-API-约定"><a href="#0-7-API-约定" class="headerlink" title="0.7 API 约定"></a>0.7 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/v5.4.1/esp32/api-reference/api-conventions.html">API 约定</a></h3><ol>
-<li><p>编程接口</p>
-<ul>
-<li>在 ESP-IDF 组件的公共头文件中声明的 C 函数, 结构体, 枚举, 类型定义, 预处理器宏</li>
-<li>编译系统函数, 预定义变量, 选项</li>
-<li><code>Kconfig</code> 选项, 可用于代码及编译系统文件</li>
-<li>主机工具及其命令行参数</li>
-</ul>
-</li>
-<li><p>错误处理</p>
-<ul>
-<li>多数 ESP-IDF API 会返回由 <code>esp_err_t</code> 类型定义的错误代码.实质上是带符号的整型<ul>
-<li><code>ESP_OK</code> 代表成功,其值定义为0</li>
-<li>错误代码通常均以 <code>ESP_ERR_</code> 前缀开头</li>
-<li>常见错误(比如内存不足, 超时, 无效参数等)的错误代码则已经在 <code>esp_err.h</code> 文件中定义</li>
-</ul>
-</li>
-<li>向 <code>esp_err_to_name</code> 函数传递错误码作为参数即可转换为具体的错误消息</li>
-<li>宏 <code>ESP_ERROR_CHECK</code> 的功能和 <code>assert</code> 类似.若参数不等于 <code>ESP_OK</code>,则打印错误消息,并调用 <code>abort()</code></li>
-</ul>
-</li>
-<li><p>配置结构体</p>
-<ul>
-<li><p>为确保应用程序与未来 ESP-IDF 版本的兼容性,请正确初始化配置结构体</p>
-</li>
-<li><p>多数 ESP-IDF 中的初始化, 配置, 安装函数: 形如 <code>..._init(), ..._config(), ..._install()</code>,<br>都需要一个指向配置结构体的指针作为参数</p>
-</li>
-<li><p><strong>应用程序必须初始化结构体的所有字段</strong></p>
-</li>
-<li><p>使用 C99 的指定初始化器完成结构体的初始化.以简洁的方式设置字段,并将剩余字段初始化为0</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">const</span> <span class="hljs-type">esp_timer_create_args_t</span> my_timer_args = &#123;<br>    .callback = &amp;my_timer_callback,<br>    <span class="hljs-comment">/* 正确，字段 .arg 和 .name 已初始化为零 */</span><br>&#125;;<br></code></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>私有 API</p>
-<ul>
-<li><strong>某些头文件包含的 API 仅限于在 ESP-IDF 源代码中使用,不支持在应用程序中使用</strong></li>
-<li>此类头文件的名称或路径通常带有 <code>private</code> 或 <code>esp_private</code></li>
-<li>私有 API 可能在次要或补丁版本之间以不兼容的方式被删除或更改</li>
 </ul>
 </li>
 </ol>
@@ -938,9 +896,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/ESP32/" class="print-no-link">#ESP32</a>
-      
         <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
+      
+        <a href="/tags/ESP32/" class="print-no-link">#ESP32</a>
       
     </div>
   
