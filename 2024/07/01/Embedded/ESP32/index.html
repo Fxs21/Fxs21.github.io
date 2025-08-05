@@ -28,10 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/ESP32.svg">
 <meta property="article:published_time" content="2024-07-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-04T14:29:18.405Z">
+<meta property="article:modified_time" content="2025-08-05T15:52:31.843Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="嵌入式">
 <meta property="article:tag" content="ESP32">
+<meta property="article:tag" content="嵌入式">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/ESP32.svg">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6k 字
+          6.8k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          51 分钟
+          57 分钟
         
       </span>
     
@@ -288,14 +288,20 @@
 <li>RGB LED: 可寻址 RGB 发光二极管(WS2812). 注意 v1.0 由 GPIO48 驱动, v1.1 由 GPIO38 驱动</li>
 </ul>
 </li>
-<li><p>开发板引脚图</p>
+<li><p>芯片型号: <code>ESP32-S3 N16R8</code>.模组 <code>ESP32-S3-DevKitC-1-N16R8V</code> 引脚</p>
 <p><img src="/2024/07/01/Embedded/ESP32/0-ESP32-S3-DevKitC-Pin.jpg" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>芯片型号: <code>ESP32-S3 N16R8</code>.实际对应开发板为 <code>ESP32-S3-DevKit-1-N16R8V</code></li>
-<li>Flash: 16MB; PSRAM: 8MB; SPI 电压为 1.8V</li>
-</ul>
 </li>
-<li><p>本文档实际使用的是 <a target="_blank" rel="noopener" href="https://wiki.lckfb.com/zh-hans/szpi-esp32s3/">实战派开发板S3介绍 | 立创开发板技术文档中心</a></p>
+<li><p>本文档实际使用的开发板为 <a target="_blank" rel="noopener" href="https://wiki.lckfb.com/zh-hans/szpi-esp32s3/">实战派开发板S3介绍 | 立创开发板技术文档中心</a></p>
+</li>
+<li><p>ESP32-S3-WROOM-1-N16R8: 乐鑫(Espressif)推出的一款高性能 Wi-Fi&#x2F;蓝牙双模模组</p>
+<ul>
+<li>ESP32-S3: 主控芯片型号(Xtensa LX7 双核, 240MHz)</li>
+<li>WROOM-1: 模组系列(集成 PCB 天线)</li>
+<li>N16: 内置 16MB SPI Flash.(四线 SPI, 支持 120MHz, 理论传输速率 60MB&#x2F;s)</li>
+<li>R8: 内置 8MB Octal PSRAM(八线 Octal PSRAM, 最高 120MHz, 理论带宽 120MB&#x2F;s)</li>
+<li>无线: 2.4GHz Wi-Fi 4 (802.11 b&#x2F;g&#x2F;n) + Bluetooth 5 LE</li>
+<li>天线: 板载 PCB 天线</li>
+</ul>
 </li>
 </ol>
 <h3 id="0-2-Linux-环境"><a href="#0-2-Linux-环境" class="headerlink" title="0.2 Linux 环境"></a>0.2 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Linux 环境</a></h3><ol>
@@ -310,7 +316,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建工作目录</span><br>mkdir esp32<br>cd esp32<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用脚本,将 github 地址映射为 gitee,减少因网络而导致的配置失败</span><br>git clone https://gitee.com/EspressifSystems/esp-gitee-tools.git<br>cd esp-gitee-tools   # 执行 gitee 工具切换镜像脚本<br>./jihu-mirror.sh set # 执行脚本,将 github 地址映射为 gitee<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取 esp-idf 源码</span><br>cd ..<br>git clone --recursive https://github.com/espressif/esp-idf.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换到 5.2 版本(包括子模块).保持环境一致(非必需)</span><br>cd esp-idf<br>git checkout v5.2<br>git submodule update --init --recursive<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>配置编译环境</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">更换 pip 源(非必需).可以使用 pip config list 命令查看当前的 pip 镜像源</span><br>pip config set global.index-url http://mirrors.aliyun.com/pypi/simple<br>pip config set global.trusted-host mirrors.aliyun.com<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译工具</span><br>../esp-gitee-tools/install.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置环境变量.该操作每次打开一个终端都要运行,后面介绍解决办法</span><br>source export.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解决每次开终端都执行 <span class="hljs-built_in">source</span> export.sh 的问题(非必需)</span><br>echo &quot;source ~/esp32/esp-idf/export.sh&quot; &gt;&gt; ~/.bashrc<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">更换 pip 源(非必需).可以使用 pip config list 命令查看当前的 pip 镜像源</span><br>pip config set global.index-url http://mirrors.aliyun.com/pypi/simple<br>pip config set global.trusted-host mirrors.aliyun.com<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译工具</span><br>../esp-gitee-tools/install.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置环境变量.该操作每次打开一个终端都要运行,后面介绍解决办法</span><br>source export.sh<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>编译示例</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">下载课程配套源码,作为编译例程</span><br>cd ~/esp32<br>git clone --recursive https://gitee.com/vi-iot/esp32-board.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置芯片型号,并编译 helloworld 例程</span><br>cd esp32-board/helloworld # idf.py 的指令需要在项目的所处的目录中执行<br>idf.py set-target esp32s3 # 配置芯片型号.需查阅开发板原理图<br>idf.py build              # 编译项目<br></code></pre></td></tr></table></figure>
@@ -322,7 +328,7 @@
 <li><p>优化配置</p>
 <ul>
 <li><p>永久环境变量: 将添加环境变量的语句添加到 <code>.profile</code> 文件中</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd ~<br>vim .profile<br>source esp32/esp-idf/export.sh<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;export IDF_PATH=\&quot;~/esp32/esp-idf\&quot;&quot; &gt;&gt; ~/.profile<br>echo &quot;source \&quot;$IDF_PATH/export.sh\&quot;&quot; &gt;&gt; ~/.profile<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>解决每次插拔设备后权限不足的问题</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">将当前用户添加到 dialout 组.使其获得串口设备的访问权限</span><br>sudo usermod -aG dialout $USER<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">然后重新连接客户会话终端.后续不再需要修改权限</span><br>exit              # 完全退出当前 SSH 会话或终端.然后需要手动重新连接<br>id | grep dialout # 验证修改.需要确认当前用户已经加入了 dialout 组<br></code></pre></td></tr></table></figure></li>
@@ -332,32 +338,32 @@
 <p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-VSCode-hello.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p><code>ESP-IDF</code> 插件(在 VSCode 中选择虚拟机安装拓展)</p>
-</li>
-</ol>
 <ul>
 <li>解决 VSCode 会因为不知道源码路径,头文件引入会标红,代码补全也无法使用的问题</li>
 <li>按 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd>, 搜索 <code>esp-idf add VS Code Configuration Folder</code> 将源码路径添加到工程</li>
 </ul>
+</li>
+</ol>
 <h3 id="0-3-Windows-环境"><a href="#0-3-Windows-环境" class="headerlink" title="0.3 Windows 环境"></a>0.3 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Jm411r7zz?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Windows 环境</a></h3><ol>
 <li><p><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/windows-setup.html">官网下载</a> ESP-IDF Windows Installer Download.然后默认安装即可</p>
 </li>
 <li><p>通过命令行编译并烧录</p>
 <ul>
-<li><p>在 Espressif 安装目录下 <code>.\frameworks\esp-idf-v5.2.3\examples\get-started</code> 有例程 <code>hello_world</code></p>
-</li>
-<li><p>将例程 <code>hello_world</code> 复制出来.然后运行 <code>ESP-IDF 5.2 PowerShell</code> 程序</p>
-</li>
-<li><p>进入到复制的目录下,使用 <code>idf.py build</code> 指令进行编译</p>
-</li>
-<li><p>将 esp32 开发板与电脑进行连接,打开设备管理器查看端口号</p>
-</li>
-<li><p>使用 <code>idf.py -p COM5 flash monitor</code> 指令进行下载程序并监视</p>
-</li>
-<li><p>此时屏幕上将打印(并且每10秒自动复位)</p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-hello-world.png" srcset="/img/loading.gif" lazyload></p>
-</li>
+<li>在 Espressif 安装目录下 <code>.\frameworks\esp-idf-v5.2.3\examples\get-started</code> 有例程 <code>hello_world</code></li>
 </ul>
 </li>
+</ol>
+<ul>
+<li>将例程 <code>hello_world</code> 复制出来.然后运行 <code>ESP-IDF 5.2 PowerShell</code> 程序<ul>
+<li>进入到复制的目录下,使用 <code>idf.py build</code> 指令进行编译</li>
+</ul>
+</li>
+<li>将 esp32 开发板与电脑进行连接,打开设备管理器查看端口号<ul>
+<li>使用 <code>idf.py -p COM5 flash monitor</code> 指令进行下载程序并监视</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
 <li><p>安装插件 <code>ESP-IDF</code> 并完成下列配置</p>
 <ul>
 <li><p>点击 VSCode 的查看 -&gt; 命令面板 -&gt; 搜索 <code>Configure ESP-IDF Extension</code> -&gt; <code>USE EXITING SETUP</code></p>
@@ -607,7 +613,100 @@
 <li><p>使用的 i2c 相关接口</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">i2c_master_bus_handle_t</span> bus_handle;<br><span class="hljs-type">static</span> <span class="hljs-type">i2c_master_dev_handle_t</span> qmi8658_handle;<br><span class="hljs-type">esp_err_t</span> <span class="hljs-title function_">bsp_i2c_init</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    <span class="hljs-type">i2c_master_bus_config_t</span> i2c_mst_config = &#123;<br>        .clk_source = I2C_CLK_SRC_DEFAULT,<br>        .i2c_port = BSP_I2C_NUM,    <span class="hljs-comment">// 0</span><br>        .scl_io_num = BSP_I2C_SCL,  <span class="hljs-comment">// GPIO_NUM_2</span><br>        .sda_io_num = BSP_I2C_SDA,  <span class="hljs-comment">// GPIO_NUM_1</span><br>        .glitch_ignore_cnt = <span class="hljs-number">7</span>,<br>        .flags.enable_internal_pullup = <span class="hljs-literal">true</span>,<br>    &#125;;<br><br>    ESP_ERROR_CHECK(i2c_new_master_bus(&amp;i2c_mst_config, &amp;bus_handle));<br><br>    <span class="hljs-type">i2c_device_config_t</span> dev_cfg = &#123;<br>        .dev_addr_length = I2C_ADDR_BIT_LEN_7,<br>        .device_address = QMI8658_SENSOR_ADDR,  <span class="hljs-comment">// 0x6A</span><br>        .scl_speed_hz = BSP_I2C_FREQ_HZ,        <span class="hljs-comment">// 100,000</span><br>    &#125;;<br>    ESP_ERROR_CHECK(i2c_master_bus_add_device(bus_handle, &amp;dev_cfg, &amp;qmi8658_handle));<br>    <span class="hljs-keyword">return</span> ESP_OK;<br>&#125;<br><br><span class="hljs-comment">// 读取 QMI8658 寄存器的值</span><br><span class="hljs-type">esp_err_t</span> <span class="hljs-title function_">qmi8658_register_read</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> reg_addr, <span class="hljs-type">uint8_t</span> *data, <span class="hljs-type">size_t</span> len)</span> &#123;<br>    <span class="hljs-keyword">return</span> i2c_master_transmit_receive(qmi8658_handle, &amp;reg_addr, <span class="hljs-number">1</span>, data, len, <span class="hljs-number">-1</span>);<br>&#125;<br><br><span class="hljs-comment">// 给 QMI8658 的寄存器写值</span><br><span class="hljs-type">esp_err_t</span> <span class="hljs-title function_">qmi8658_register_write_byte</span><span class="hljs-params">(<span class="hljs-type">uint8_t</span> reg_addr, <span class="hljs-type">uint8_t</span> data)</span> &#123;<br>    <span class="hljs-type">uint8_t</span> write_buf[<span class="hljs-number">2</span>] = &#123;reg_addr, data&#125;;<br>    <span class="hljs-keyword">return</span> i2c_master_transmit(qmi8658_handle, write_buf, <span class="hljs-keyword">sizeof</span>(write_buf), <span class="hljs-number">1000</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="1-9-SPI"><a href="#1-9-SPI" class="headerlink" title="1.9 SPI"></a>1.9 SPI</h3><h2 id="2-设备驱动"><a href="#2-设备驱动" class="headerlink" title="2 设备驱动"></a>2 设备驱动</h2><h3 id="2-1-TF-Card"><a href="#2-1-TF-Card" class="headerlink" title="2.1 TF Card"></a>2.1 TF Card</h3><ol>
+<h3 id="1-9-SPI"><a href="#1-9-SPI" class="headerlink" title="1.9 SPI"></a>1.9 SPI</h3><h3 id="1-10-PSRAM"><a href="#1-10-PSRAM" class="headerlink" title="1.10 PSRAM"></a>1.10 PSRAM</h3><ol>
+<li><p>ESP-IDF 默认不启用 PSRAM,即使硬件支持.需在配置中显式开启</p>
+<ul>
+<li>因为 PSRAM 的时钟配置和电源管理可能影响功耗和稳定性</li>
+</ul>
+</li>
+<li><p>启用 PSRAM</p>
+<ul>
+<li><p>ESP32-S3-WROOM-1-N16R8 的 PSRAM 通过 <strong>Octal SPI</strong> 连接,需确保配置为 <code>OPI</code> 模式</p>
+</li>
+<li><p>在 <code>menuconfig</code> 中开启 <code>external SPI-connected RAM</code> 并选择为 <code>Octal Mode PSRAM</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">Component config -&gt; ESP PSRAM -&gt; Support for external, SPI-connected RAM<br><span class="hljs-meta prompt_">-&gt; </span><span class="language-bash">Mode (QUAD/OCT) of SPI RAM chip <span class="hljs-keyword">in</span> use (Octal Mode PSRAM) -&gt; Octal Mode PSRAM</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>日志分析</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs shell">boot.esp32s3: Boot SPI Speed : 80MHz  # SPI Flash 运行频率为 80MHz<br>boot.esp32s3: SPI Mode       : DIO    # DIO 模式(Dual I/O, 双线数据输入输出)<br>boot.esp32s3: SPI Flash Size : 16MB   # 检测到外部 SPI Flash 容量为 16MB<br><br>boot: ## Label     Usage       Type  ST   Offset    Length<br>boot:  0 nvs       WiFi data    01   02  00009000  00006000 # 存储 Wi-Fi 配置等非易失性数据<br>boot:  1 phy_init  RF data      01   01  0000f000  00001000 # 存储 RF 射频校准数据<br>boot:  2 factory   factory app  00   00  00010000  00100000 # 主应用程序固件分区<br><br>I (233) esp_psram: Found 8MB PSRAM device  # 检测到 8MB Octal PSRAM,初始化成功<br>I (238) esp_psram: Speed: 40MHz            # 速度: 40MHz<br>I (973) esp_psram: SPI SRAM memory test OK # PSRAM 自检通过.耗时较长,约 700ms<br><br>cpu_start: Pro cpu start user code # 主核(CPU0)开始执行用户代码<br>cpu_start: cpu freq: 160000000 Hz  # CPU 主频设置为 160MHz<br><br>heap_init: Initializing. RAM available for dynamic allocation: # 初始化堆内存<br>heap_init: At 3FC95C20 len 00053AF0 (334 KiB): RAM  # 内部 RAM<br>heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM   # 内部 RAM<br>heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM  # 用于 DMA<br>heap_init: At 600FE010 len 00001FD8 (7 KiB): RTCRAM # 深度睡眠可保留内存<br>esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator # PSRAM 加入堆分配器<br><br>I (1104) main_task: Calling app_main() # 调用用户编写的 app_main(),应用程序正式运行<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>PSRAM 内存申请(系统初始化后,PSRAM 已自动加入堆分配器)</p>
+<ul>
+<li><p>标准分配函数(自动选择)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 普通 malloc 可能分配到内部 RAM 或 PSRAM</span><br><span class="hljs-comment">// 系统优先使用内部 RAM,大内存会自动分配到 PSRAM</span><br><span class="hljs-type">uint8_t</span> *buffer = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">2</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>); <span class="hljs-comment">// 分配 2MB</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>强制分配到 PSRAM</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;esp_heap_caps.h&quot;</span></span><br><br><span class="hljs-comment">// 明确分配在 PSRAM</span><br><span class="hljs-type">uint8_t</span> *psram_buffer = heap_caps_malloc(<span class="hljs-number">1</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>, MALLOC_CAP_SPIRAM); <br><br><span class="hljs-comment">// 分配并初始化为 0</span><br><span class="hljs-type">uint8_t</span> *psram_buffer_zero = heap_caps_calloc(<span class="hljs-number">1024</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">float</span>), MALLOC_CAP_SPIRAM);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>C++ 对象分配到 PSRAM</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;esp_heap_caps.h&quot;</span></span><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">SensorData</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">float</span> readings[<span class="hljs-number">2048</span>];<br>    <span class="hljs-comment">// ...</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">void</span>* <span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">heap_caps_malloc</span>(size, MALLOC_CAP_SPIRAM);<br>&#125;<br><br>SensorData *data = <span class="hljs-keyword">new</span> <span class="hljs-built_in">SensorData</span>(); <span class="hljs-comment">// 分配到 PSRAM</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>检查内存位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;esp_spiram.h&quot;</span></span><br><br><span class="hljs-keyword">if</span> (esp_spiram_is_initialized()) &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;PSRAM 可用, 总大小: %d MB\n&quot;</span>, esp_spiram_get_size() / <span class="hljs-number">1024</span> / <span class="hljs-number">1024</span>);<br>&#125;<br><br><span class="hljs-keyword">if</span> (esp_ptr_external_ram(ptr)) &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;指针指向 PSRAM\n&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>PSRAM 与 RAM 的区别</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">内部 RAM (SRAM)</th>
+<th align="left">PSRAM (SPI PSRAM)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>物理位置</strong></td>
+<td align="left">芯片内部</td>
+<td align="left">外部 SPI 芯片 (通常 Octal 8线)</td>
+</tr>
+<tr>
+<td align="left"><strong>速度</strong></td>
+<td align="left">160MHz 全速访问 (5-10ns)</td>
+<td align="left">40-80MHz SPI 访问 (25-50ns)</td>
+</tr>
+<tr>
+<td align="left"><strong>容量</strong></td>
+<td align="left">较小 (ESP32-S3: 512KB)</td>
+<td align="left">较大 (通常 2MB&#x2F;4MB&#x2F;8MB)</td>
+</tr>
+<tr>
+<td align="left"><strong>功耗</strong></td>
+<td align="left">低 (集成设计)</td>
+<td align="left">较高 (需 SPI 总线驱动)</td>
+</tr>
+<tr>
+<td align="left"><strong>保留数据</strong></td>
+<td align="left">睡眠时可保留</td>
+<td align="left">断电&#x2F;深度睡眠丢失数据</td>
+</tr>
+<tr>
+<td align="left"><strong>DMA 支持</strong></td>
+<td align="left">完全支持</td>
+<td align="left">不支持 (需复制到内部 RAM)</td>
+</tr>
+<tr>
+<td align="left"><strong>访问方式</strong></td>
+<td align="left">CPU 直接寻址</td>
+<td align="left">通过 SPI 控制器间接访问</td>
+</tr>
+<tr>
+<td align="left"><strong>成本</strong></td>
+<td align="left">较高 (占用芯片面积)</td>
+<td align="left">较低 (独立芯片)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>性能差异演示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// SRAM 写入耗时: 130152 cycles</span><br><span class="hljs-comment">// PSRAM 写入耗时: 162400 cycles</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">test_speed</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">uint8_t</span> *sram_buf = heap_caps_malloc(<span class="hljs-number">10000</span>, MALLOC_CAP_INTERNAL);<br>    <span class="hljs-type">uint8_t</span> *psram_buf = heap_caps_malloc(<span class="hljs-number">10000</span>, MALLOC_CAP_SPIRAM);<br><br>    <span class="hljs-type">uint32_t</span> start = esp_cpu_get_cycle_count();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++) sram_buf[i] = i % <span class="hljs-number">256</span>;<br>    <span class="hljs-type">uint32_t</span> sram_time = esp_cpu_get_cycle_count() - start;<br><br>    start = esp_cpu_get_cycle_count();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++) psram_buf[i] = i % <span class="hljs-number">256</span>;<br>    <span class="hljs-type">uint32_t</span> psram_time = esp_cpu_get_cycle_count() - start;<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;SRAM 写入耗时: %lu cycles\nPSRAM 写入耗时: %lu cycles\n&quot;</span>, <br>           sram_time, psram_time);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>最佳实践</p>
+<ul>
+<li>PSRAM: 大型缓冲(图像 &#x2F; 音频), 不频繁访问的配置数据</li>
+<li>内部 RAM: 高频访问数据, DMA 缓冲区, RTOS 任务栈</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-设备驱动"><a href="#2-设备驱动" class="headerlink" title="2 设备驱动"></a>2 设备驱动</h2><h3 id="2-1-TF-Card"><a href="#2-1-TF-Card" class="headerlink" title="2.1 TF Card"></a>2.1 TF Card</h3><ol>
 <li><p>硬件连接</p>
 <p><img src="/2024/07/01/Embedded/ESP32/2-TFCard.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
@@ -896,9 +995,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
-      
         <a href="/tags/ESP32/" class="print-no-link">#ESP32</a>
+      
+        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
       
     </div>
   
