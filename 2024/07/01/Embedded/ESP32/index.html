@@ -28,10 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/ESP32.svg">
 <meta property="article:published_time" content="2024-07-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-05T15:52:31.843Z">
+<meta property="article:modified_time" content="2025-08-07T14:43:07.513Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="ESP32">
 <meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="ESP32">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/ESP32.svg">
   
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.8k 字
+          6.4k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          57 分钟
+          54 分钟
         
       </span>
     
@@ -279,7 +279,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="ESP32-IDF"><a href="#ESP32-IDF" class="headerlink" title="ESP32-IDF"></a>ESP32-IDF</h1><h2 id="0-开发环境搭建"><a href="#0-开发环境搭建" class="headerlink" title="0 开发环境搭建"></a>0 开发环境搭建</h2><h3 id="0-1-ESP32-S3-开发板"><a href="#0-1-ESP32-S3-开发板" class="headerlink" title="0.1 ESP32-S3 开发板"></a>0.1 ESP32-S3 开发板</h3><ol>
+                <h1 id="ESP32-IDF"><a href="#ESP32-IDF" class="headerlink" title="ESP32-IDF"></a>ESP32-IDF</h1><h2 id="0-开发环境搭建"><a href="#0-开发环境搭建" class="headerlink" title="0 开发环境搭建"></a>0 开发环境搭建</h2><h3 id="0-1-开发板"><a href="#0-1-开发板" class="headerlink" title="0.1 开发板"></a>0.1 开发板</h3><ol>
 <li><p>开发板型号: <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-dev-kits/zh_CN/latest/esp32s3/esp32-s3-devkitc-1/index.html">ESP32-S3-DevKitC-1-wroom-1</a> 进入 ESP32 官网查看开发板资料</p>
 <p><img src="/2024/07/01/Embedded/ESP32/0-ESP32-S3-DevKitC-1-wroom-1.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
@@ -428,7 +428,7 @@
 <li><p>切换 idf 版本</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前 idf 版本</span><br>idf.py --version<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换 idf 版本</span><br>cd ~/esp32/esp-idf  # 需要进入到 esp-idf 目录进行操作<br>git checkout v5.4.1 # 切换到 V5.4.1<br>git submodule update --init --recursive  # 更新子模块<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新安装工具链</span><br>./install.sh     # 安装匹配的工具链<br>source export.sh # 设置环境变量<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="0-6-工程选项配置"><a href="#0-6-工程选项配置" class="headerlink" title="0.6 工程选项配置"></a>0.6 工程选项配置</h3><ol>
+<h3 id="0-6-工程配置"><a href="#0-6-工程配置" class="headerlink" title="0.6 工程配置"></a>0.6 工程配置</h3><ol>
 <li><p>在工程目录下执行下面命令打开交互式配置菜单(基于 Kconfig)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py menuconfig<br></code></pre></td></tr></table></figure>
 
@@ -489,46 +489,15 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-8-FreeRTOS-接口"><a href="#0-8-FreeRTOS-接口" class="headerlink" title="0.8 FreeRTOS 接口"></a>0.8 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=6">FreeRTOS 接口</a></h3><ol>
+<h3 id="0-8-FreeRTOS"><a href="#0-8-FreeRTOS" class="headerlink" title="0.8 FreeRTOS"></a>0.8 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=6">FreeRTOS</a></h3><ol>
 <li><p>创建任务: 在 ESP-IDF 中,为了支持双核实现了新的函数</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskCreatePinnedToCore</span> <span class="hljs-params">(</span><br><span class="hljs-params">    TaskFunction_t pxTaskCode,  <span class="hljs-comment">// 指向任务函数的指针</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> pcName,   <span class="hljs-comment">// 任务名,最大长度为 configMax_TASK_NAME_LEN</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> configSTACK_DEPTH_TYPE usStackDepth,  <span class="hljs-comment">// 任务堆栈大小,默认单位为4字节</span></span><br><span class="hljs-params">    <span class="hljs-type">void</span> *<span class="hljs-type">const</span> pvParameters,  <span class="hljs-comment">// 传递给任务函数的参数</span></span><br><span class="hljs-params">    UBaseType_t uxPriority,    <span class="hljs-comment">// 任务优先级, 0 ~ configMAX_PRIORITIES - 1</span></span><br><span class="hljs-params">    TaskHandle_t *<span class="hljs-type">const</span> pxCreatedTask,  <span class="hljs-comment">// 任务句柄,即任务的控制块</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xCoreID   <span class="hljs-comment">// 分配到哪个内核运行</span></span><br><span class="hljs-params">)</span>;<br><span class="hljs-comment">// 返回值 pdPASS 表示创建成功. errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY 表示失败</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>阻塞</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskDelay</span><span class="hljs-params">(<span class="hljs-type">const</span> TickType_t xTicksToDelay)</span>;<br>vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));  <span class="hljs-comment">// pdMS_TO_TICKS 会将时间转换为节拍数</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>队列操作</p>
-<ul>
-<li><p>创建队列</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">QueueHandle_t <span class="hljs-title function_">xQueueCreate</span><span class="hljs-params">(     <span class="hljs-comment">// 创建队列.成功则返回队列句柄</span></span><br><span class="hljs-params">    UBaseType_t uxQueueLength,  <span class="hljs-comment">// 队列容量</span></span><br><span class="hljs-params">    UBaseType_t uxItemSize)</span>;    <span class="hljs-comment">// 每个队列项所占内存的大小.单位为字节</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>发送 &#x2F; 接收消息</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xQueueSend</span><span class="hljs-params">(QueueHandle_t xQueue,        <span class="hljs-comment">// 队列句柄</span></span><br><span class="hljs-params">                      <span class="hljs-type">const</span> <span class="hljs-type">void</span> *pvItemToQueue,   <span class="hljs-comment">// 待发送消的指针</span></span><br><span class="hljs-params">                      TickType_t xTickToWait)</span>;     <span class="hljs-comment">// 等待时间</span><br>BaseType_t <span class="hljs-title function_">xQueueReceive</span><span class="hljs-params">(QueueHandle_t xQueue,     <span class="hljs-comment">// 队列句柄</span></span><br><span class="hljs-params">                         <span class="hljs-type">void</span> *pvBuffer,           <span class="hljs-comment">// 接收消息缓冲区的指针</span></span><br><span class="hljs-params">                         TickType_t xTickToWait)</span>   <span class="hljs-comment">// 等待时间</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>中断版本(<code>FromISR</code> 后缀)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xQueueSendFromISR</span><span class="hljs-params">(QueueHandle_t xQueue,       <span class="hljs-comment">// 队列句柄</span></span><br><span class="hljs-params">                             <span class="hljs-type">const</span> <span class="hljs-type">void</span> *pvItemToQueue,  <span class="hljs-comment">// 待发送消的指针</span></span><br><span class="hljs-params">                             BaseType_t *pxHigherPriorityTaskWoken)</span>;<br><span class="hljs-comment">// pxHigherPriorityTaskWoken: 如果被系统设为 pdTRUE,则中断退出前要执行上下文切换函数</span><br></code></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>信号量</p>
-<ul>
-<li><p>创建信号量</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateBinary</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;	<span class="hljs-comment">// 创建二值信号量</span><br>SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateCounting</span><span class="hljs-params">(		<span class="hljs-comment">// 创建计数型信号量</span></span><br><span class="hljs-params">                      UBaseType_t uxMaxCount,       <span class="hljs-comment">// 最大信号量数</span></span><br><span class="hljs-params">                      UBaseType_t uxInitialCount)</span>;  <span class="hljs-comment">// 初始信号数</span><br>SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateMutex</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;	<span class="hljs-comment">// 创建互斥锁</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>获取 &#x2F; 释放信号量</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xSemaPhoreTake</span><span class="hljs-params">(	<span class="hljs-comment">// 获取信号量,成功返回 pdTRUE	</span></span><br><span class="hljs-params">    SemaphoreHandle_t xSemaphore,  <span class="hljs-comment">// 信号量句柄</span></span><br><span class="hljs-params">    TickType_t xTicksToWait)</span>;      <span class="hljs-comment">// 等待时间</span><br>BaseType_t <span class="hljs-title function_">xSemaPhoreGive</span><span class="hljs-params">(SemaphoreHandle_t xSemaphore)</span>;  <span class="hljs-comment">// 释放信号量</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">vSemaphoreDelete</span><span class="hljs-params">(SemaphoreHandle_t xSemaphore)</span>;      <span class="hljs-comment">// 删除信号量</span><br></code></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>事件组</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">EventGroupHandle_t <span class="hljs-title function_">xEventGroupCreate</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;  <span class="hljs-comment">// 创建事件组</span><br>EventBits_t <span class="hljs-title function_">xEventGroupWaitBits</span><span class="hljs-params">(	<span class="hljs-comment">// 等待事件组中的某些标志位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventGroupHandle_t xEventGroup,    <span class="hljs-comment">// 事件组句柄</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventBits_t uxBitsToWaitFor,       <span class="hljs-comment">// 需要等待哪些位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xClearOnExit,           <span class="hljs-comment">// 是否自动清除标志位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xWaitForAllBits,        <span class="hljs-comment">// 是否需要等待的标志位全成功才返回</span></span><br><span class="hljs-params">    TickType_t xTicksToWait)</span>;                <span class="hljs-comment">// 最大阻塞时间</span><br>EventBits_t <span class="hljs-title function_">xEventGroupSetBits</span><span class="hljs-params">(		<span class="hljs-comment">// 设置标志位</span></span><br><span class="hljs-params">    EventGroupHandle_t xEventGroup,</span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventBits_t uxBitsToSet)</span>;          <span class="hljs-comment">// 需要设置哪些位</span><br>EventBits_t <span class="hljs-title function_">xEventGroupClearBits</span><span class="hljs-params">(	<span class="hljs-comment">// 清除标志位</span></span><br><span class="hljs-params">	EventGroupHandle_t xEventGroup,</span><br><span class="hljs-params">	<span class="hljs-type">const</span> EventBits_t uxBitsToClear)</span>;        <span class="hljs-comment">// 需要清除哪些位</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>直达任务通知</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskNotify</span><span class="hljs-params">(	<span class="hljs-comment">// 将通知直接发送到任务,并可能取消该任务的阻塞态</span></span><br><span class="hljs-params">	TaskHandle_t xTaskToNotify,  <span class="hljs-comment">// 通知的任务句柄</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulValue,            <span class="hljs-comment">// 携带的通知值</span></span><br><span class="hljs-params">	eNotifyAction eAction)</span>;      <span class="hljs-comment">// 执行的操作</span><br>BaseType_t <span class="hljs-title function_">xTaskNotifyWait</span><span class="hljs-params">(	<span class="hljs-comment">// 等待接收任务通知</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulBitsToClearOnEntry,  <span class="hljs-comment">// 进入函数清除的通知值位</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulBitsToClearOnExit,   <span class="hljs-comment">// 退出函数清除的通知值位</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> *pulNotificationValue, <span class="hljs-comment">// 通知值</span></span><br><span class="hljs-params">	TickType_t xTicksToWait)</span>;       <span class="hljs-comment">// 等待时长</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><code>esp-idf</code> 的 <code>freeRTOS</code></p>
 <ul>
 <li>优先级问题: esp32 有双核,因此任务是可以并行的</li>
 <li>esp-idf 自动创建5个任务: 空闲, 定时器, app_main, IPC, ESP 定时器</li>
 <li>esp-idf 不使用原生的 FreeRTOS 内存堆管理,实现了自己的堆</li>
-<li>创建任务使用 <code>xTaskCreatePinnedToCore()</code></li>
 <li>删除任务应避免删除另一个核心的任务</li>
 <li>临界区使用自旋锁确保同步(因为还有一个核心)</li>
 <li>若任务中用到浮点运算,则创建任务时必须指定具体运行的核心,而不能由系统安排</li>
@@ -995,9 +964,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/ESP32/" class="print-no-link">#ESP32</a>
-      
         <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
+      
+        <a href="/tags/ESP32/" class="print-no-link">#ESP32</a>
       
     </div>
   
