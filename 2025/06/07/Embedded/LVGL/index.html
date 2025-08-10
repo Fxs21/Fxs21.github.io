@@ -1,0 +1,1164 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Shuang">
+  <meta name="keywords" content="Shuang">
+  
+    <meta name="description" content="LVGL 模拟器; 控件; 布局; 界面; 移植">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LVGL">
+<meta property="og:url" content="http://example.com/2025/06/07/Embedded/LVGL/index.html">
+<meta property="og:site_name" content="Shuang blog">
+<meta property="og:description" content="LVGL 模拟器; 控件; 布局; 界面; 移植">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/LVGL.svg">
+<meta property="article:published_time" content="2025-06-07T07:15:14.458Z">
+<meta property="article:modified_time" content="2025-08-10T14:45:27.051Z">
+<meta property="article:author" content="Shuang">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="LVGL">
+<meta property="article:tag" content="GUI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/LVGL.svg">
+  
+  
+  
+  <title>LVGL - Shuang blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>windsand</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/train.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LVGL"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-06-07 15:15" pubdate>
+          2025年6月7日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">LVGL</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="LVGL"><a href="#LVGL" class="headerlink" title="LVGL"></a>LVGL</h1><h2 id="0-开发环境"><a href="#0-开发环境" class="headerlink" title="0 开发环境"></a>0 开发环境</h2><h3 id="0-1-简介"><a href="#0-1-简介" class="headerlink" title="0.1 简介"></a>0.1 简介</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://lvgl.io/">LVGL(Light and Versatile Graphics Librar)</a>: 一个开源的嵌入式图形库.用于创建图形用户界面的嵌入式系统</li>
+<li>特点<ul>
+<li><strong>轻量级</strong>: 设计用于资源受限的嵌入式系统,内存占用小</li>
+<li><strong>跨平台</strong>: 支持多种微控制器和显示器</li>
+<li><strong>丰富的组件</strong>: 按钮, 标签, 滑块, 图表, 列表等</li>
+<li><strong>多语言支持</strong>: 包括中文在内的多种语言</li>
+<li><strong>硬件加速</strong>: 支持利用GPU加速图形渲染</li>
+<li><strong>开源免费</strong>: 遵循 MIT 许可证</li>
+</ul>
+</li>
+<li>技术规格<ul>
+<li><strong>架构</strong>: 面向对象的 C 语言实现</li>
+<li><strong>内存需求</strong>: <ul>
+<li>最低配置: ~16KB RAM, ~64KB Flash</li>
+<li>推荐配置: ~48KB RAM, ~180KB Flash</li>
+</ul>
+</li>
+<li><strong>支持的操作系统</strong>: 可裸机运行或与 FreeRTOS, Zephyr 等 RTOS 集成</li>
+<li><strong>显示支持</strong>: 单缓冲, 双缓冲, 直接模式</li>
+<li><strong>输入设备</strong>: 触摸屏, 鼠标, 键盘, 编码器等</li>
+</ul>
+</li>
+</ol>
+<h3 id="0-2-模拟器"><a href="#0-2-模拟器" class="headerlink" title="0.2 模拟器"></a>0.2 模拟器</h3><ol>
+<li><p><a target="_blank" rel="noopener" href="https://www.yuque.com/icheima/vzsofu/fm096ylkxkt6dikd">使用模拟器依赖的源码</a>(统一使用 v8.3)</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lvgl/lv_port_pc_eclipse/tree/release/v8.3">模拟器源码</a>(Eclipse with SDLdriver)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lvgl/lvgl/tree/release/v8.3">LVGL 源码</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lvgl/lv_drivers/tree/release/v8.3">LVGL drivers 源码</a></li>
+</ul>
+</li>
+<li><p>将模拟器源码的文件解压得到 <code>lv_port_pc_eclipse-release-v8.3</code> 目录</p>
+<ul>
+<li>将 LVGL 源码解压并复制到到 <code>lvgl</code> 目录(原目录为空)</li>
+<li>将 LVGL drivers 源码解压并复制到到 <code>lv_drivers</code> 目录(原目录为空)</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/libsdl-org/SDL/releases">下载 SDL2 库</a></p>
+<ul>
+<li><p>将 <code>SDL2-devel-2.32.8-mingw.zip</code> 解压得到 <code>SDL2-2.32.8</code></p>
+</li>
+<li><p>添加环境变量(指向 SDL 安装目录的 <code>bin</code> 目录)</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">D</span>:\code\SDL2-<span class="hljs-number">2</span>.<span class="hljs-number">32</span>.<span class="hljs-number">8</span>\x86_64-w64-mingw32\bin<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>修改 <code>CMakeLists.txt</code> 文件</p>
+<ul>
+<li><p>在 <code>project(...)</code> 语句前添加</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(SDL2_DIR <span class="hljs-string">&quot;D:/code/SDL2-2.32.8/cmake&quot;</span>)  <span class="hljs-comment"># 指向 SDL2 的 cmake 目录</span><br><span class="hljs-keyword">set</span>(CMAKE_MODULE_PATH <span class="hljs-variable">$&#123;CMAKE_MODULE_PATH&#125;</span> <span class="hljs-string">&quot;D:/code/SDL2-2.32.8/cmake&quot;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>CMakeLists.txt</code> 中显式添加 SDL2 的库路径和链接库</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># target_link_libraries(main PRIVATE SDL2 )  # 将原有的路径注释掉</span><br><span class="hljs-keyword">link_directories</span>(<span class="hljs-string">&quot;D:/code/SDL2-2.32.8/x86_64-w64-mingw32/lib&quot;</span>)  <span class="hljs-comment"># 关键: 指定库文件路径</span><br><span class="hljs-keyword">target_link_libraries</span>(main <span class="hljs-variable">$&#123;SDL2_LIBRARIES&#125;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>将 <code>D:\code\SDL2-2.32.8\x86_64-w64-mingw32\bin\SDL2.dll</code> 动态链接文件复制到工程的 <code>bin</code> 目录下</p>
+</li>
+<li><p>将 <code>main</code> 函数改名为 <code>SDL_main</code>(SDL2 要求 Windows 平台的主函数必须是 <code>SDL_main</code>)</p>
+</li>
+</ul>
+</li>
+<li><p>编译执行代码(使用 CMake Tools 拓展生成)</p>
+<p><img src="/2025/06/07/Embedded/LVGL/0-lvgl-demo.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h2 id="1-基础对象"><a href="#1-基础对象" class="headerlink" title="1 基础对象"></a>1 基础对象</h2><h3 id="1-1-基类"><a href="#1-1-基类" class="headerlink" title="1.1 基类"></a>1.1 基类</h3><ol>
+<li><p>LVGL 中,<code>lv_obj_t</code> 是所有控件的基类(类似于面向对象编程中的父类)</p>
+<ul>
+<li>是构建用户界面的最基本元素</li>
+<li>所有控件(如按钮, 标签, 滑块等)都继承自 <code>lv_obj_t</code></li>
+</ul>
+</li>
+<li><p>创建对象</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_obj_t</span> *screen = lv_scr_act();  <span class="hljs-comment">// 获取当前屏幕.是没有父对象的特殊 lv_obj_t</span><br><span class="hljs-type">lv_obj_t</span> *obj = lv_obj_create(screen);  <span class="hljs-comment">// 在获取的屏幕上创建一个对象</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>删除对象</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">lv_obj_del(obj);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>删除对象本身及其所有子对象(递归删除整个子树)</li>
+<li>自动解除与父对象, 组, 动画等的关联</li>
+<li>释放对象占用的内存资源(如果使用 LVGL 的动态内存分配)</li>
+<li>触发相关事件(如 <code>LV_EVENT_DELETE</code>)</li>
+</ul>
+</li>
+<li><p>父子关系</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 设置父对象 */</span><br>lv_obj_set_parent(obj, new_parent);<br><br><span class="hljs-comment">/* 获取子对象 */</span><br><span class="hljs-type">lv_obj_t</span> * child = lv_obj_get_child(parent, index);<br><br><span class="hljs-comment">/* 遍历所有子对象 */</span><br><span class="hljs-type">lv_obj_t</span> * child;<br>LV_ITERATE_CHILDREN(child, parent) &#123;<br>    <span class="hljs-comment">// 处理每个子对象</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>父对象通常是容器.如 <code>lv_obj_t, lv_cont_t</code> 或屏幕 <code>lv_scr_act()</code></li>
+<li><strong>视觉层级</strong>: 子对象永远显示在父对象之上</li>
+<li><strong>坐标系统</strong>: 子对象的坐标是相对于父对象的,移动父对象时所有子对象会同步移动,无需逐个调整</li>
+<li><strong>继承属性</strong>: 子对象默认继承父对象的部分属性(如坐标相对父对象偏移, 是否可见, 是否启用等)</li>
+<li><strong>事件传递机制</strong>: 事件会从子对象向父对象冒泡(除非被拦截),方便实现复杂交互</li>
+<li><strong>管理生命周期</strong>: 删除父对象时会自动递归删除所有子对象</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-2-对象位置"><a href="#1-2-对象位置" class="headerlink" title="1.2 对象位置"></a>1.2 对象位置</h3><ol>
+<li><p>坐标系</p>
+<ul>
+<li><strong>绝对坐标</strong>: 以屏幕左上角为原点 (0,0)</li>
+<li><strong>相对坐标</strong>: 以父对象左上角为原点</li>
+<li><strong>坐标系方向</strong><ul>
+<li>X轴: 向右为正方向</li>
+<li>Y轴: 向下为正方向</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>坐标获取</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 获取对象相对于父对象的坐标</span><br><span class="hljs-type">lv_coord_t</span> x = lv_obj_get_x(obj);<br><span class="hljs-type">lv_coord_t</span> y = lv_obj_get_y(obj);<br><br><span class="hljs-comment">// 获取对象在屏幕上的绝对坐标</span><br><span class="hljs-type">lv_coord_t</span> abs_x = lv_obj_get_x2(obj);  <span class="hljs-comment">// 右下角 X</span><br><span class="hljs-type">lv_coord_t</span> abs_y = lv_obj_get_y2(obj);  <span class="hljs-comment">// 右下角 Y</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>位置设置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">lv_obj_set_pos(obj, x, y); <span class="hljs-comment">// 绝对坐标</span><br>lv_obj_set_x(obj, x);      <span class="hljs-comment">// 仅设置X</span><br>lv_obj_set_y(obj, y);      <span class="hljs-comment">// 仅设置Y</span><br>lv_obj_align(obj, align, x_ofs, y_ofs); <span class="hljs-comment">// 对齐方式</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>对齐设置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 基本对齐</span><br>lv_obj_align(obj, LV_ALIGN_..., x_ofs, y_ofs);<br><br><span class="hljs-comment">// 对齐到特定对象</span><br>lv_obj_align_to(obj_to_align, obj_ref, LV_ALIGN_..., x_ofs, y_ofs);<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">对齐标志</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>LV_ALIGN_TOP_LEFT</code></td>
+<td align="left">左上对齐</td>
+</tr>
+<tr>
+<td align="left"><code>LV_ALIGN_TOP_MID</code></td>
+<td align="left">顶部居中</td>
+</tr>
+<tr>
+<td align="left"><code>LV_ALIGN_TOP_RIGHT</code></td>
+<td align="left">右上对齐</td>
+</tr>
+<tr>
+<td align="left"><code>LV_ALIGN_BOTTOM_LEFT</code></td>
+<td align="left">左下对齐</td>
+</tr>
+<tr>
+<td align="left"><code>LV_ALIGN_CENTER</code></td>
+<td align="left">中心对齐</td>
+</tr>
+<tr>
+<td align="left"><code>LV_ALIGN_LEFT_MID</code></td>
+<td align="left">左侧居中</td>
+</tr>
+<tr>
+<td align="left"><code>LV_ALIGN_RIGHT_MID</code></td>
+<td align="left">右侧居中</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="1-3-尺寸"><a href="#1-3-尺寸" class="headerlink" title="1.3 尺寸"></a>1.3 尺寸</h3><ol>
+<li><p>尺寸设置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 设置尺寸</span><br>lv_obj_set_size(obj, width, height);  <span class="hljs-comment">// 同时设置宽高</span><br>lv_obj_set_width(obj, width);         <span class="hljs-comment">// 仅设置宽度</span><br>lv_obj_set_height(obj, height);       <span class="hljs-comment">// 仅设置高度</span><br><br><span class="hljs-comment">// 设置最小 / 最大尺寸</span><br>lv_obj_set_min_width(obj, min_w);<br>lv_obj_set_max_width(obj, max_w);<br>lv_obj_set_min_height(obj, min_h);<br>lv_obj_set_max_height(obj, max_h);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>尺寸获取</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_coord_t</span> width = lv_obj_get_width(obj);<br><span class="hljs-type">lv_coord_t</span> height = lv_obj_get_height(obj);<br><span class="hljs-type">lv_coord_t</span> content_width = lv_obj_get_content_width(obj);   <span class="hljs-comment">// 内容区宽度</span><br><span class="hljs-type">lv_coord_t</span> content_height = lv_obj_get_content_height(obj); <span class="hljs-comment">// 内容区高度</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>特殊尺寸设置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 根据内容自动调整大小</span><br>lv_obj_update_layout(obj);  <span class="hljs-comment">// 强制重新计算布局</span><br>lv_obj_refr_size(obj);      <span class="hljs-comment">// 刷新对象尺寸</span><br><br><span class="hljs-comment">// 设置尺寸模式</span><br>lv_obj_set_width_fit(obj, LV_SIZE_CONTENT);  <span class="hljs-comment">// 宽度适应内容</span><br>lv_obj_set_height_fit(obj, LV_SIZE_CONTENT); <span class="hljs-comment">// 高度适应内容</span><br><br><span class="hljs-comment">// 扩大对象的可点击区域</span><br>lv_obj_set_ext_click_area(obj, left, right, top, bottom);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="1-4-布局"><a href="#1-4-布局" class="headerlink" title="1.4 布局"></a>1.4 布局</h3><ol>
+<li><p>Flex</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 设置Flex布局</span><br>lv_obj_set_flex_flow(obj, LV_FLEX_FLOW_...);<br>lv_obj_set_flex_align(obj, main_place, cross_place, track_place);<br><br><span class="hljs-comment">// Flex流方向选项</span><br>LV_FLEX_FLOW_ROW                 <span class="hljs-comment">// 行排列(左→右)</span><br>LV_FLEX_FLOW_COLUMN              <span class="hljs-comment">// 列排列(上→下)</span><br>LV_FLEX_FLOW_ROW_WRAP            <span class="hljs-comment">// 行排列自动换行</span><br>LV_FLEX_FLOW_COLUMN_WRAP         <span class="hljs-comment">// 列排列自动换行</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Grid</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 定义网格描述符</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_coord_t</span> col_dsc[] = &#123;<span class="hljs-number">80</span>, <span class="hljs-number">80</span>, LV_GRID_TEMPLATE_LAST&#125;;<br><span class="hljs-type">static</span> <span class="hljs-type">lv_coord_t</span> row_dsc[] = &#123;<span class="hljs-number">50</span>, <span class="hljs-number">50</span>, LV_GRID_TEMPLATE_LAST&#125;;<br><br><span class="hljs-comment">// 应用网格布局</span><br>lv_obj_set_grid_dsc_array(obj, col_dsc, row_dsc);<br>lv_obj_set_grid_cell(obj, LV_GRID_ALIGN_..., col_pos, col_span,<br>                                LV_GRID_ALIGN_..., row_pos, row_span);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="2-样式"><a href="#2-样式" class="headerlink" title="2 样式"></a>2 样式</h2><h3 id="2-1-基础样式"><a href="#2-1-基础样式" class="headerlink" title="2.1 基础样式"></a>2.1 基础样式</h3><ol>
+<li><p>样式: 是构建美观界面的核心.它采用类似 CSS 的样式机制,可以灵活控制对象的外观表现</p>
+</li>
+<li><p>样式特点</p>
+<ul>
+<li><strong>层级化</strong>: 支持多个样式叠加</li>
+<li><strong>状态敏感</strong>: 不同状态(如按下, 禁用)可应用不同样式</li>
+<li><strong>继承机制</strong>: 子对象可继承父对象的部分样式属性</li>
+<li><strong>低内存占用</strong>: 样式可被多个对象共享</li>
+</ul>
+</li>
+<li><p>样式属性分类</p>
+<ul>
+<li><strong>大小与布局</strong>: 宽度, 高度, 对齐等</li>
+<li><strong>背景</strong>: 颜色, 透明度, 渐变等</li>
+<li><strong>边框</strong>: 宽度, 颜色, 圆角等</li>
+<li><strong>文本</strong>: 字体, 颜色, 对齐等</li>
+<li><strong>特效</strong>: 阴影, 模糊, 透明度动画等</li>
+</ul>
+</li>
+<li><p>样式初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn;<br>lv_style_init(&amp;style_btn);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>样式属性设置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 背景设置 */</span><br>lv_style_set_bg_opa(&amp;style_btn, LV_OPA_COVER);  <span class="hljs-comment">// 不透明度</span><br>lv_style_set_bg_color(&amp;style_btn, lv_palette_main(LV_PALETTE_BLUE));<br>lv_style_set_bg_grad_color(&amp;style_btn, lv_palette_darken(LV_PALETTE_BLUE, <span class="hljs-number">2</span>));<br><br><span class="hljs-comment">/* 边框设置 */</span><br>lv_style_set_border_width(&amp;style_btn, <span class="hljs-number">2</span>);<br>lv_style_set_border_color(&amp;style_btn, lv_palette_darken(LV_PALETTE_BLUE, <span class="hljs-number">3</span>));<br>lv_style_set_border_opa(&amp;style_btn, LV_OPA_80);<br><br><span class="hljs-comment">/* 文本设置 */</span><br>lv_style_set_text_font(&amp;style_btn, &amp;lv_font_montserrat_16);<br>lv_style_set_text_color(&amp;style_btn, lv_color_white());<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>样式应用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_obj_t</span> *btn = lv_btn_create(lv_scr_act());<br>lv_obj_add_style(btn, &amp;style_btn, LV_PART_MAIN | LV_STATE_DEFAULT);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-2-样式状态"><a href="#2-2-样式状态" class="headerlink" title="2.2 样式状态"></a>2.2 样式状态</h3><ol>
+<li><p>样式状态标志</p>
+<table>
+<thead>
+<tr>
+<th align="left">状态标志</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>LV_STATE_DEFAULT</code></td>
+<td align="left">默认状态</td>
+</tr>
+<tr>
+<td align="left"><code>LV_STATE_PRESSED</code></td>
+<td align="left">按下状态</td>
+</tr>
+<tr>
+<td align="left"><code>LV_STATE_FOCUSED</code></td>
+<td align="left">获得焦点</td>
+</tr>
+<tr>
+<td align="left"><code>LV_STATE_DISABLED</code></td>
+<td align="left">禁用状态</td>
+</tr>
+<tr>
+<td align="left"><code>LV_STATE_CHECKED</code></td>
+<td align="left">选中状态</td>
+</tr>
+<tr>
+<td align="left"><code>LV_STATE_EDITED</code></td>
+<td align="left">编辑状态</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>多样式示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 默认状态样式 */</span><br>lv_style_set_bg_color(&amp;style_btn, lv_palette_main(LV_PALETTE_BLUE));<br><br><span class="hljs-comment">/* 按下状态样式 */</span><br>lv_style_set_bg_color(&amp;style_btn_pressed, lv_palette_darken(LV_PALETTE_BLUE, <span class="hljs-number">2</span>));<br>lv_obj_add_style(btn, &amp;style_btn_pressed, LV_PART_MAIN | LV_STATE_PRESSED);<br><br><span class="hljs-comment">/* 禁用状态样式 */</span><br>lv_style_set_bg_color(&amp;style_btn_disabled, lv_palette_lighten(LV_PALETTE_GREY, <span class="hljs-number">3</span>));<br>lv_obj_add_style(btn, &amp;style_btn_disabled, LV_PART_MAIN | LV_STATE_DISABLED);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-3-样式部件"><a href="#2-3-样式部件" class="headerlink" title="2.3 样式部件"></a>2.3 样式部件</h3><ol>
+<li><p>样式部件</p>
+<table>
+<thead>
+<tr>
+<th align="left">部件</th>
+<th align="left">描述</th>
+<th align="left">适用对象</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>LV_PART_MAIN</code></td>
+<td align="left">主体部分</td>
+<td align="left">所有对象</td>
+</tr>
+<tr>
+<td align="left"><code>LV_PART_SCROLLBAR</code></td>
+<td align="left">滚动条</td>
+<td align="left">可滚动容器</td>
+</tr>
+<tr>
+<td align="left"><code>LV_PART_INDICATOR</code></td>
+<td align="left">指示器</td>
+<td align="left">滑块, 开关等</td>
+</tr>
+<tr>
+<td align="left"><code>LV_PART_KNOB</code></td>
+<td align="left">旋钮</td>
+<td align="left">滑块, 旋钮等</td>
+</tr>
+<tr>
+<td align="left"><code>LV_PART_SELECTED</code></td>
+<td align="left">选中项</td>
+<td align="left">列表, 表格等</td>
+</tr>
+<tr>
+<td align="left"><code>LV_PART_ITEMS</code></td>
+<td align="left">子项</td>
+<td align="left">列表, 菜单等</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>多部件样式示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 滑块主体样式 */</span><br>lv_style_set_bg_color(&amp;style_slider_main, lv_palette_lighten(LV_PALETTE_GREY, <span class="hljs-number">1</span>));<br>lv_obj_add_style(slider, &amp;style_slider_main, LV_PART_MAIN);<br><br><span class="hljs-comment">/* 滑块指示器样式 */</span><br>lv_style_set_bg_color(&amp;style_slider_indicator, lv_palette_main(LV_PALETTE_RED));<br>lv_obj_add_style(slider, &amp;style_slider_indicator, LV_PART_INDICATOR);<br><br><span class="hljs-comment">/* 滑块旋钮样式 */</span><br>lv_style_set_bg_color(&amp;style_slider_knob, lv_color_white());<br>lv_style_set_pad_all(&amp;style_slider_knob, <span class="hljs-number">6</span>);  <span class="hljs-comment">// 旋钮大小</span><br>lv_obj_add_style(slider, &amp;style_slider_knob, LV_PART_KNOB);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-4-高级样式"><a href="#2-4-高级样式" class="headerlink" title="2.4 高级样式"></a>2.4 高级样式</h3><ol>
+<li><p>样式转换(Transitions)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">lv_style_transition_dsc_t</span> trans;<br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">lv_style_prop_t</span> props[] = &#123;LV_STYLE_BG_COLOR, LV_STYLE_TRANSFORM_WIDTH, <span class="hljs-number">0</span>&#125;;<br><br><span class="hljs-comment">/* 配置过渡效果 */</span><br>lv_style_transition_dsc_init(&amp;trans, props, lv_anim_path_ease_out, <span class="hljs-number">200</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>);<br><br><span class="hljs-comment">/* 应用到样式 */</span><br>lv_style_set_transition(&amp;style_btn, &amp;trans);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>本地样式(Local Styles)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 直接设置对象样式(不创建样式变量) */</span><br>lv_obj_set_style_bg_color(obj, lv_palette_main(LV_PALETTE_GREEN), <span class="hljs-number">0</span>);<br>lv_obj_set_style_text_font(obj, &amp;lv_font_montserrat_20, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>样式继承</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 创建基础样式 */</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_base;<br>lv_style_init(&amp;style_base);<br>lv_style_set_bg_opa(&amp;style_base, LV_OPA_COVER);<br><br><span class="hljs-comment">/* 创建继承样式 */</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_child;<br>lv_style_init(&amp;style_child);<br>lv_style_set_bg_color(&amp;style_child, lv_palette_main(LV_PALETTE_RED));<br>lv_style_set_parent(&amp;style_child, &amp;style_base);  <span class="hljs-comment">// 继承基础样式</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-5-样式管理"><a href="#2-5-样式管理" class="headerlink" title="2.5 样式管理"></a>2.5 样式管理</h3><ol>
+<li><p>样式组织</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 按功能组织样式 */</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_card;        <span class="hljs-comment">// 卡片样式</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn_primary; <span class="hljs-comment">// 主要按钮</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn_secondary; <span class="hljs-comment">// 次要按钮</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_text_title;  <span class="hljs-comment">// 标题文本</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_text_body;   <span class="hljs-comment">// 正文文本</span><br><br><span class="hljs-comment">/* 按状态组织样式 */</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn_default;<br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn_pressed;<br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn_disabled;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>性能优化</p>
+<ul>
+<li><strong>共享样式</strong>: 多个相似对象使用同一个样式实例</li>
+<li><strong>避免频繁修改</strong>: 在界面初始化时集中设置样式</li>
+<li><strong>使用样式缓存</strong>: 对频繁切换的样式预先创建好</li>
+<li><strong>合理使用过渡动画</strong>: 避免同时激活过多动画效果</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-6-样式示例"><a href="#2-6-样式示例" class="headerlink" title="2.6 样式示例"></a>2.6 样式示例</h3><ol>
+<li><p>创建现代化按钮</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 基础按钮样式 */</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn;<br>lv_style_init(&amp;style_btn);<br>lv_style_set_radius(&amp;style_btn, <span class="hljs-number">8</span>);<br>lv_style_set_bg_opa(&amp;style_btn, LV_OPA_COVER);<br>lv_style_set_bg_color(&amp;style_btn, lv_palette_main(LV_PALETTE_BLUE));<br>lv_style_set_bg_grad_color(&amp;style_btn, lv_palette_darken(LV_PALETTE_BLUE, <span class="hljs-number">2</span>));<br>lv_style_set_shadow_width(&amp;style_btn, <span class="hljs-number">10</span>);<br>lv_style_set_shadow_ofs_y(&amp;style_btn, <span class="hljs-number">5</span>);<br><br><span class="hljs-comment">/* 按下状态 */</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_btn_pr;<br>lv_style_init(&amp;style_btn_pr);<br>lv_style_set_shadow_ofs_y(&amp;style_btn_pr, <span class="hljs-number">2</span>);<br>lv_style_set_translate_y(&amp;style_btn_pr, <span class="hljs-number">3</span>);<br><br><span class="hljs-comment">/* 应用到按钮 */</span><br><span class="hljs-type">lv_obj_t</span> * btn = lv_btn_create(lv_scr_act());<br>lv_obj_add_style(btn, &amp;style_btn, LV_PART_MAIN | LV_STATE_DEFAULT);<br>lv_obj_add_style(btn, &amp;style_btn_pr, LV_PART_MAIN | LV_STATE_PRESSED);<br><br><span class="hljs-comment">/* 添加标签 */</span><br><span class="hljs-type">lv_obj_t</span> * label = lv_label_create(btn);<br>lv_label_set_text(label, <span class="hljs-string">&quot;Modern Button&quot;</span>);<br>lv_obj_center(label);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建卡片式布局</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 卡片样式 */</span><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_card;<br>lv_style_init(&amp;style_card);<br>lv_style_set_radius(&amp;style_card, <span class="hljs-number">12</span>);<br>lv_style_set_bg_opa(&amp;style_card, LV_OPA_COVER);<br>lv_style_set_bg_color(&amp;style_card, lv_color_white());<br>lv_style_set_shadow_width(&amp;style_card, <span class="hljs-number">20</span>);<br>lv_style_set_pad_all(&amp;style_card, <span class="hljs-number">20</span>);<br>lv_style_set_layout(&amp;style_card, LV_LAYOUT_FLEX);<br>lv_style_set_flex_flow(&amp;style_card, LV_FLEX_FLOW_COLUMN);<br>lv_style_set_flex_main_place(&amp;style_card, LV_FLEX_ALIGN_CENTER);<br><br><span class="hljs-comment">/* 创建卡片 */</span><br><span class="hljs-type">lv_obj_t</span> * card = lv_obj_create(lv_scr_act());<br>lv_obj_set_size(card, <span class="hljs-number">200</span>, <span class="hljs-number">250</span>);<br>lv_obj_align(card, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>lv_obj_add_style(card, &amp;style_card, <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">/* 添加内容 */</span><br><span class="hljs-type">lv_obj_t</span> * icon = lv_img_create(card);<br>lv_img_set_src(icon, LV_SYMBOL_SETTINGS);<br>lv_obj_set_style_text_font(icon, &amp;lv_font_montserrat_24, <span class="hljs-number">0</span>);<br><br><span class="hljs-type">lv_obj_t</span> * title = lv_label_create(card);<br>lv_label_set_text(title, <span class="hljs-string">&quot;Settings&quot;</span>);<br>lv_obj_set_style_text_font(title, &amp;lv_font_montserrat_16, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="3-图层"><a href="#3-图层" class="headerlink" title="3 图层"></a>3 图层</h2><h3 id="3-1-图层概念"><a href="#3-1-图层概念" class="headerlink" title="3.1 图层概念"></a>3.1 图层概念</h3><ol>
+<li><p>LVGL 的图层系统是管理对象显示层级和特殊覆盖界面的核心机制,它构成了屏幕内容的立体堆叠结构</p>
+<p><img src="/2025/06/07/Embedded/LVGL/1-lvgl-layer.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>图层类型</p>
+<table>
+<thead>
+<tr>
+<th align="left">图层类型</th>
+<th align="left">描述</th>
+<th align="left">典型用途</th>
+<th align="left">访问函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>背景层</strong> (Background)</td>
+<td align="left">最底层</td>
+<td align="left">壁纸, 背景图</td>
+<td align="left"><code>lv_layer_bg()</code></td>
+</tr>
+<tr>
+<td align="left"><strong>主层</strong> (Main)</td>
+<td align="left">默认对象层</td>
+<td align="left">常规 UI 内容</td>
+<td align="left"><code>lv_layer_main()</code></td>
+</tr>
+<tr>
+<td align="left"><strong>顶部层</strong> (Top)</td>
+<td align="left">覆盖层</td>
+<td align="left">系统状态栏</td>
+<td align="left"><code>lv_layer_top()</code></td>
+</tr>
+<tr>
+<td align="left"><strong>系统层</strong> (Sys)</td>
+<td align="left">最高优先级</td>
+<td align="left">弹窗, 菜单</td>
+<td align="left"><code>lv_layer_sys()</code></td>
+</tr>
+</tbody></table>
+</li>
+<li><p>图层特性</p>
+<ul>
+<li><strong>固定层级关系</strong>: 系统维护严格的Z轴顺序</li>
+<li><strong>全局共享</strong>: 所有屏幕共用同一组图层</li>
+<li><strong>事件穿透</strong>: 高层可拦截低层的事件</li>
+<li><strong>独立渲染</strong>: 每层单独合成最终图像</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-2-图层管理"><a href="#3-2-图层管理" class="headerlink" title="3.2 图层管理"></a>3.2 图层管理</h3><ol>
+<li><p>分配对象到图层</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 创建到主层(默认)</span><br><span class="hljs-type">lv_obj_t</span> * main_obj = lv_obj_create(lv_layer_main());<br><br><span class="hljs-comment">// 创建到顶部层</span><br><span class="hljs-type">lv_obj_t</span> * top_bar = lv_obj_create(lv_layer_top());<br>lv_obj_set_size(top_bar, LV_HOR_RES, <span class="hljs-number">30</span>);<br><br><span class="hljs-comment">// 创建系统级弹窗</span><br><span class="hljs-type">lv_obj_t</span> * modal = lv_obj_create(lv_layer_sys());<br>lv_obj_set_size(modal, <span class="hljs-number">200</span>, <span class="hljs-number">150</span>);<br>lv_obj_center(modal);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>图层控制函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 设置图层可见性</span><br>lv_obj_add_flag(lv_layer_top(), LV_OBJ_FLAG_HIDDEN);  <span class="hljs-comment">// 隐藏顶部层</span><br>lv_obj_clear_flag(lv_layer_sys(), LV_OBJ_FLAG_HIDDEN); <span class="hljs-comment">// 显示系统层</span><br><br><span class="hljs-comment">// 移动对象到其他图层</span><br>lv_obj_move_to_layer(obj, lv_layer_sys());  <span class="hljs-comment">// 提升到系统层</span><br><br><span class="hljs-comment">// 获取对象所在图层</span><br><span class="hljs-type">lv_layer_t</span> * layer = lv_obj_get_layer(obj);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-3-图层应用"><a href="#3-3-图层应用" class="headerlink" title="3.3 图层应用"></a>3.3 图层应用</h3><ol>
+<li><p>模态对话框实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">show_modal_dialog</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 创建半透明遮罩</span><br>    <span class="hljs-type">lv_obj_t</span> * mask = lv_obj_create(lv_layer_sys());<br>    lv_obj_set_size(mask, LV_HOR_RES, LV_VER_RES);<br>    lv_obj_set_style_bg_opa(mask, LV_OPA_50, <span class="hljs-number">0</span>);<br>    lv_obj_set_style_bg_color(mask, lv_palette_darken(LV_PALETTE_GREY, <span class="hljs-number">4</span>), <span class="hljs-number">0</span>);<br><br>    <span class="hljs-comment">// 创建对话框内容</span><br>    <span class="hljs-type">lv_obj_t</span> * dialog = lv_obj_create(mask);<br>    lv_obj_set_size(dialog, <span class="hljs-number">300</span>, <span class="hljs-number">200</span>);<br>    lv_obj_center(dialog);<br><br>    <span class="hljs-comment">// 添加关闭按钮</span><br>    <span class="hljs-type">lv_obj_t</span> * close_btn = lv_btn_create(dialog);<br>    lv_obj_align(close_btn, LV_ALIGN_TOP_RIGHT, <span class="hljs-number">-10</span>, <span class="hljs-number">10</span>);<br>    lv_obj_add_event_cb(close_btn, close_dialog, LV_EVENT_CLICKED, mask);<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">close_dialog</span><span class="hljs-params">(<span class="hljs-type">lv_event_t</span> * e)</span> &#123;<br>    lv_obj_del(lv_event_get_user_data(e));  <span class="hljs-comment">// 删除遮罩连带删除所有子对象</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>浮动菜单实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_obj_t</span> * <span class="hljs-title function_">create_floating_menu</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> * menu = lv_obj_create(lv_layer_sys());<br>    lv_obj_set_size(menu, <span class="hljs-number">150</span>, <span class="hljs-number">200</span>);<br>    lv_obj_set_flex_flow(menu, LV_FLEX_FLOW_COLUMN);<br><br>    <span class="hljs-comment">// 添加菜单项</span><br>    <span class="hljs-type">const</span> <span class="hljs-type">char</span> * items[] = &#123;<span class="hljs-string">&quot;Copy&quot;</span>, <span class="hljs-string">&quot;Paste&quot;</span>, <span class="hljs-string">&quot;Cut&quot;</span>, <span class="hljs-string">&quot;Delete&quot;</span>, <span class="hljs-literal">NULL</span>&#125;;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; items[i]; i++) &#123;<br>        <span class="hljs-type">lv_obj_t</span> * btn = lv_btn_create(menu);<br>        <span class="hljs-type">lv_obj_t</span> * label = lv_label_create(btn);<br>        lv_label_set_text(label, items[i]);<br>        lv_obj_set_width(btn, lv_pct(<span class="hljs-number">100</span>));<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> menu;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-4-自定义图层"><a href="#3-4-自定义图层" class="headerlink" title="3.4 自定义图层"></a>3.4 自定义图层</h3><ol>
+<li><p>创建临时覆盖层</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_obj_t</span> * temp_layer = lv_obj_create(lv_layer_top());<br>lv_obj_remove_style_all(temp_layer);  <span class="hljs-comment">// 清除默认样式</span><br>lv_obj_set_size(temp_layer, LV_HOR_RES, LV_VER_RES);<br><br><span class="hljs-comment">// 添加半透明背景</span><br>lv_obj_set_style_bg_opa(temp_layer, LV_OPA_70, <span class="hljs-number">0</span>);<br>lv_obj_set_style_bg_color(temp_layer, lv_color_black(), <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">// 30秒后自动消失</span><br><span class="hljs-type">lv_anim_t</span> a;<br>lv_anim_init(&amp;a);<br>lv_anim_set_exec_cb(&amp;a, (<span class="hljs-type">lv_anim_exec_xcb_t</span>)lv_obj_del);<br>lv_anim_set_var(&amp;a, temp_layer);<br>lv_anim_set_delay(&amp;a, <span class="hljs-number">30000</span>);<br>lv_anim_start(&amp;a);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>图层混合模式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 设置图层的混合效果</span><br>lv_obj_set_style_blend_mode(layer_obj, LV_BLEND_MODE_ADDITIVE, <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">// 可用混合模式: </span><br><span class="hljs-comment">// LV_BLEND_MODE_NORMAL      - 正常叠加</span><br><span class="hljs-comment">// LV_BLEND_MODE_ADDITIVE    - 加色混合</span><br><span class="hljs-comment">// LV_BLEND_MODE_SUBTRACTIVE - 减色混合</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-5-图层与输入"><a href="#3-5-图层与输入" class="headerlink" title="3.5 图层与输入"></a>3.5 图层与输入</h3><ol>
+<li><p><strong>触摸 &#x2F; 点击事件</strong>从最高层向下传递</p>
+</li>
+<li><p>遇到设置了 <code>LV_OBJ_FLAG_CLICKABLE</code> 的对象时停止</p>
+</li>
+<li><p>低层对象会被高层遮挡</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 允许事件穿透(即使被遮挡也接收事件)</span><br>lv_obj_add_flag(obj, LV_OBJ_FLAG_EVENT_BUBBLE);<br><br><span class="hljs-comment">// 强制当前层处理所有输入</span><br>lv_obj_add_flag(lv_layer_sys(), LV_OBJ_FLAG_IGNORE_LAYOUT);<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>性能优化</p>
+<ul>
+<li><strong>最小化高层图层使用</strong>: 系统层渲染开销较大</li>
+<li><strong>合理使用隐藏 &#x2F; 显示</strong>: 替代频繁创建 &#x2F; 删除</li>
+<li><strong>静态内容放低层</strong>: 背景层不会重复渲染</li>
+<li><strong>避免全屏透明层</strong>: 会增加合成计算量</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-6-图层示例"><a href="#3-6-图层示例" class="headerlink" title="3.6 图层示例"></a>3.6 图层示例</h3><ol>
+<li><p>状态栏实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">create_status_bar</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> * bar = lv_obj_create(lv_layer_top());<br>    lv_obj_set_size(bar, LV_HOR_RES, <span class="hljs-number">25</span>);<br>    lv_obj_align(bar, LV_ALIGN_TOP_MID, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>    lv_obj_set_style_bg_opa(bar, LV_OPA_80, <span class="hljs-number">0</span>);<br><br>    <span class="hljs-comment">// 时间显示</span><br>    <span class="hljs-type">lv_obj_t</span> * time = lv_label_create(bar);<br>    lv_label_set_text(time, <span class="hljs-string">&quot;14:25&quot;</span>);<br>    lv_obj_align(time, LV_ALIGN_RIGHT_MID, <span class="hljs-number">-10</span>, <span class="hljs-number">0</span>);<br><br>    <span class="hljs-comment">// 电池图标</span><br>    <span class="hljs-type">lv_obj_t</span> * battery = lv_img_create(bar);<br>    lv_img_set_src(battery, LV_SYMBOL_BATTERY_FULL);<br>    lv_obj_align(battery, LV_ALIGN_LEFT_MID, <span class="hljs-number">10</span>, <span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>上下文菜单</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">show_context_menu</span><span class="hljs-params">(<span class="hljs-type">lv_obj_t</span> * parent, <span class="hljs-type">lv_point_t</span> * pos)</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> * menu = lv_obj_create(lv_layer_sys());<br>    lv_obj_set_size(menu, <span class="hljs-number">120</span>, <span class="hljs-number">180</span>);<br>    lv_obj_set_pos(menu, pos-&gt;x, pos-&gt;y);<br>    lv_obj_set_flex_flow(menu, LV_FLEX_FLOW_COLUMN);<br><br>    <span class="hljs-comment">// 添加菜单项...</span><br><br>    <span class="hljs-comment">// 点击外部关闭</span><br>    lv_obj_add_event_cb(lv_layer_sys(), menu_close_cb, LV_EVENT_CLICKED, menu);<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">menu_close_cb</span><span class="hljs-params">(<span class="hljs-type">lv_event_t</span> * e)</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> * menu = lv_event_get_user_data(e);<br>    <span class="hljs-keyword">if</span>(!lv_obj_is_visible(menu)) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-type">lv_point_t</span> p;<br>    lv_indev_get_point(lv_indev_active(), &amp;p);<br><br>    <span class="hljs-keyword">if</span>(!lv_obj_hit_test(menu, &amp;p)) &#123;<br>        lv_obj_del(menu);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="4-控件"><a href="#4-控件" class="headerlink" title="4 控件"></a>4 控件</h2><h3 id="4-1-lable"><a href="#4-1-lable" class="headerlink" title="4.1 lable"></a>4.1 lable</h3><ol>
+<li><p>显示文本</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_obj_t</span> *label = lv_label_create(lv_scr_act());  <span class="hljs-comment">// 创建 label 对象</span><br>lv_obj_align(label, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);       <span class="hljs-comment">// 设置居中对齐</span><br>lv_label_set_text(label, <span class="hljs-string">&quot;hello, world&quot;</span>);         <span class="hljs-comment">// 设置文本内容</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-2-font"><a href="#4-2-font" class="headerlink" title="4.2 font"></a>4.2 font</h3><ol>
+<li><p>中文支持: lvgl 自带的字库并不支持中文显示.需要常见自己的字体库</p>
+</li>
+<li><p>进入<a target="_blank" rel="noopener" href="https://lvgl.io/tools/fontconverter">字体在线转换网站</a>进行字体转换</p>
+</li>
+</ol>
+<p>  <img src="/2025/06/07/Embedded/LVGL/4-lvgl-font-converter.png" srcset="/img/loading.gif" lazyload></p>
+<ol start="3">
+<li><p>将转换得到的 <code>alimama.c</code> 文件加入到工程目录中</p>
+</li>
+<li><p>在 <code>CMakeLists.txt</code> 中添加 <code>alimama.c</code> 文件</p>
+</li>
+</ol>
+  <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(GLOB_RECURSE SOURCES  <span class="hljs-string">&quot;lv_drivers/*.c&quot;</span> <span class="hljs-string">&quot;lvgl/demos/*.c&quot;</span> <span class="hljs-string">&quot;lvgl/src/*.c&quot;</span> <span class="hljs-string">&quot;alimama.c&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>显示中文测试</li>
+</ol>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">LV_FONT_DECLARE(alimama);  <span class="hljs-comment">// 声明字体类型</span><br><br><span class="hljs-type">static</span> <span class="hljs-type">lv_style_t</span> style_label;<br>lv_style_init(&amp;style_label);<br>lv_style_set_text_font(&amp;style_label, &amp;alimama);  <span class="hljs-comment">// 设置字体类型</span><br><br><span class="hljs-type">lv_obj_t</span> *label = lv_label_create(lv_scr_act());<br>lv_obj_add_style(label, &amp;style_label, <span class="hljs-number">0</span>);<br>lv_obj_align(label, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>lv_label_set_text(label, <span class="hljs-string">&quot;好好学习\n天天向上&quot;</span>);  <span class="hljs-comment">// 设置 label 文本内容</span><br></code></pre></td></tr></table></figure>
+
+<p>  <img src="/2025/06/07/Embedded/LVGL/4-lvgl-label-Chinese.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="4-3-image"><a href="#4-3-image" class="headerlink" title="4.3 image"></a>4.3 image</h3><ol>
+<li><p>进入<a target="_blank" rel="noopener" href="https://lvgl.io/tools/imageconverter">图片转换在线网站</a>进行图片转换</p>
+<p><img src="/2025/06/07/Embedded/LVGL/4-lvgl-image-converter.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>将转换得到的 <code>abao.c</code> 文件加入到工程目录中</p>
+</li>
+<li><p>在 <code>CMakeLists.txt</code> 中添加 <code>alimama.c</code> 文件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(GLOB_RECURSE SOURCES  <span class="hljs-string">&quot;lv_drivers/*.c&quot;</span> <span class="hljs-string">&quot;lvgl/demos/*.c&quot;</span>  <span class="hljs-string">&quot;lvgl/src/*.c&quot;</span> <span class="hljs-string">&quot;abao.c&quot;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>显示图片测试</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">LV_IMG_DECLARE(abao);  <span class="hljs-comment">// 声明图片数据</span><br><span class="hljs-type">lv_obj_t</span>* obj_img = lv_img_create(lv_scr_act());<br>lv_img_set_src(obj_img, &amp;abao);  <span class="hljs-comment">// 设置图片源数据</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2025/06/07/Embedded/LVGL/4-lvgl-image.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="4-4-gif"><a href="#4-4-gif" class="headerlink" title="4.4 gif"></a>4.4 gif</h3><ol>
+<li><p>gif 的图像代码生成步骤与上面的步骤相同.但需要注意的是若想正常显示 gif, 需要在 <code>lv_conf.h</code> 文件中开启 GIF 功能</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/*GIF decoder library*/</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_GIF 1</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>进入<a target="_blank" rel="noopener" href="https://lvgl.io/tools/imageconverter">图片转换在线网站</a>进行图片转换</p>
+<p><img src="/2025/06/07/Embedded/LVGL/4-lvgl-image-converter-gif.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>将转换得到的 <code>astronauts.c</code> 文件加入到工程目录中</p>
+</li>
+<li><p>在 <code>CMakeLists.txt</code> 中添加 <code>astronauts.c</code> 文件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(GLOB_RECURSE SOURCES  <span class="hljs-string">&quot;lv_drivers/*.c&quot;</span> <span class="hljs-string">&quot;lvgl/demos/*.c&quot;</span>  <span class="hljs-string">&quot;lvgl/src/*.c&quot;</span> <span class="hljs-string">&quot;astronauts.c&quot;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>显示 gif 测试</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">LV_IMG_DECLARE(astronauts);  <span class="hljs-comment">// 声明图片数据</span><br><span class="hljs-type">lv_obj_t</span>* obj_gif = lv_gif_create(lv_scr_act());<br>lv_gif_set_src(obj_gif, &amp;astronauts);  <span class="hljs-comment">// 设置 gif 图片源数据</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/2025/06/07/Embedded/LVGL/4-lvgl-image-gif.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="4-5-button"><a href="#4-5-button" class="headerlink" title="4.5 button"></a>4.5 button</h3><ol>
+<li><p>创建一个可选中的 <code>button</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">lv_obj_t</span> *button = lv_btn_create(lv_scr_act());  <span class="hljs-comment">// 创建 button 对象</span><br>lv_obj_align(button, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);     <span class="hljs-comment">// 设置 button 对齐</span><br>lv_obj_add_flag(button, LV_OBJ_FLAG_CHECKABLE);  <span class="hljs-comment">// 设置 button 可被选中</span><br><br><span class="hljs-type">lv_obj_t</span> *label = lv_label_create(button);       <span class="hljs-comment">// 创建 label 对象</span><br>lv_label_set_text(label, <span class="hljs-string">&quot;Toggle&quot;</span>);              <span class="hljs-comment">// 设置 label 文本内容</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>显示效果(点击后颜色转变)</p>
+<p><img src="/2025/06/07/Embedded/LVGL/4-lvgl-button-1.png" srcset="/img/loading.gif" lazyload><img src="/2025/06/07/Embedded/LVGL/4-lvgl-button-2.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p><code>button</code> 绑定事件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// clicked 事件回调函数.改变 label 的 text</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">button_handler</span><span class="hljs-params">(<span class="hljs-type">lv_event_t</span> * e)</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span>* obj = lv_event_get_target(e);<br><br>    <span class="hljs-keyword">if</span>(lv_event_get_code(e) == LV_EVENT_CLICKED) &#123;<br>        <span class="hljs-type">lv_obj_t</span>* label = lv_obj_get_child(obj, <span class="hljs-number">0</span>); <span class="hljs-comment">// 获取按钮的第一个子对象(即label)</span><br>        <span class="hljs-keyword">if</span>(label &amp;&amp; lv_obj_check_type(label, &amp;lv_label_class))<br>            lv_label_set_text(label, <span class="hljs-string">&quot;clicked&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">demo_button</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> *button = lv_btn_create(lv_scr_act());  <span class="hljs-comment">// 创建 button 对象</span><br>    lv_obj_align(button, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);     <span class="hljs-comment">// 设置 button 对齐</span><br>    lv_obj_add_flag(button, LV_OBJ_FLAG_CHECKABLE);  <span class="hljs-comment">// 设置 button 可被选中</span><br>    lv_obj_add_event_cb(button, button_handler, <br>                      LV_EVENT_CLICKED, <span class="hljs-literal">NULL</span>);       <span class="hljs-comment">// 绑定 clicked 事件</span><br><br>    <span class="hljs-type">lv_obj_t</span> *label = lv_label_create(button);       <span class="hljs-comment">// 创建 label 对象</span><br>    lv_label_set_text(label, <span class="hljs-string">&quot;Toggle&quot;</span>);              <span class="hljs-comment">// 设置 label 文本内容</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-6-button-matrix"><a href="#4-6-button-matrix" class="headerlink" title="4.6 button matrix"></a>4.6 button matrix</h3><ol>
+<li><p>按钮矩阵(lv_btnmatrix)组件是一种在行和列中显示多个按钮的轻量级实现方式</p>
+</li>
+<li><p>创建按钮矩阵</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">char</span> *<span class="hljs-built_in">map</span>[] = &#123;<span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-string">&quot;4&quot;</span>, <span class="hljs-string">&quot;\n&quot;</span>,<br>                            <span class="hljs-string">&quot;5&quot;</span>, <span class="hljs-string">&quot;6&quot;</span>, <span class="hljs-string">&quot;7&quot;</span>, <span class="hljs-string">&quot;8&quot;</span>, <span class="hljs-string">&quot;9&quot;</span>, <span class="hljs-string">&quot;\n&quot;</span>,<br>                            <span class="hljs-string">&quot;back&quot;</span>, <span class="hljs-string">&quot;Enter&quot;</span>, <span class="hljs-string">&quot;&quot;</span>&#125;;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">button_matrix_handler</span><span class="hljs-params">(<span class="hljs-type">lv_event_t</span>* e)</span>&#123;<br>  <span class="hljs-type">lv_obj_t</span> *target = lv_event_get_target(e);<br><br>  <span class="hljs-keyword">if</span> (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) &#123;<br>    <span class="hljs-type">uint16_t</span> selected_btn_index = lv_btnmatrix_get_selected_btn(target);<br>    <span class="hljs-type">const</span> <span class="hljs-type">char</span> *text = lv_btnmatrix_get_btn_text(target, selected_btn_index);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;target: %p, selceted: %d, text: %s\n&quot;</span>, target, selected_btn_index, text);<br>  &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">demo_button_matrix</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">lv_obj_t</span> *btnm = lv_btnmatrix_create(lv_scr_act());  <span class="hljs-comment">// 创建 button matrix 对象</span><br>    lv_btnmatrix_set_map(btnm, <span class="hljs-built_in">map</span>);                     <span class="hljs-comment">// 设置 button matrix 的显示文本</span><br>    lv_obj_set_width(btnm, <span class="hljs-number">220</span>);                         <span class="hljs-comment">// 设置 button matrix 的宽度</span><br>    lv_obj_align(btnm, LV_ALIGN_CENTER, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);           <span class="hljs-comment">// 设置 button matrix 的对齐方式</span><br>    <span class="hljs-comment">// lv_btnmatrix_set_btn_width(btnm, 1, 3);           // 某个 button 的宽度</span><br>    lv_obj_add_event_cb(btnm, button_matrix_handler,     <span class="hljs-comment">// 绑定事件</span><br>                        LV_EVENT_ALL, <span class="hljs-literal">NULL</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>显示效果</p>
+<p><img src="/2025/06/07/Embedded/LVGL/4-lvgl-button-matrix.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h3 id="4-7-text-area"><a href="#4-7-text-area" class="headerlink" title="4.7 text area"></a>4.7 text area</h3><ol>
+<li><p>文本框是一个基础对象</p>
+<ul>
+<li>有一个标签(Label)和一个光标(Cursor)</li>
+<li>可以向文本框中添加文本或字符.长行会被换行,当文本内容变得足够长时,可以滚动文本框</li>
+</ul>
+</li>
+<li><p>按钮矩阵与文本框</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">char</span> *<span class="hljs-built_in">map</span>[] = &#123;<span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-string">&quot;3&quot;</span>, <span class="hljs-string">&quot;4&quot;</span>, <span class="hljs-string">&quot;\n&quot;</span>,<br>                            <span class="hljs-string">&quot;5&quot;</span>, <span class="hljs-string">&quot;6&quot;</span>, <span class="hljs-string">&quot;7&quot;</span>, <span class="hljs-string">&quot;8&quot;</span>, <span class="hljs-string">&quot;9&quot;</span>, <span class="hljs-string">&quot;\n&quot;</span>,<br>                            LV_SYMBOL_BACKSPACE, LV_SYMBOL_NEW_LINE, <span class="hljs-string">&quot;&quot;</span>&#125;;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">btnm_event_handler</span><span class="hljs-params">(<span class="hljs-type">lv_event_t</span> *e)</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> *target = lv_event_get_target(e);<br>    <span class="hljs-type">lv_obj_t</span> *textarea = lv_event_get_user_data(e);<br><br>    <span class="hljs-keyword">if</span> (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) &#123;<br>        <span class="hljs-type">uint16_t</span> index = lv_btnmatrix_get_selected_btn(target);  <span class="hljs-comment">// 获取单击的按钮编号</span><br>        <span class="hljs-type">const</span> <span class="hljs-type">char</span> *btn_text = lv_btnmatrix_get_btn_text(target, index);  <span class="hljs-comment">// 获取单击的按钮文本</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(btn_text, LV_SYMBOL_BACKSPACE) == <span class="hljs-number">0</span>)<br>      		lv_textarea_del_char(textarea);<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(btn_text, LV_SYMBOL_NEW_LINE) == <span class="hljs-number">0</span>)<br>			lv_event_send(textarea, LV_EVENT_READY, <span class="hljs-literal">NULL</span>);<br>        <span class="hljs-keyword">else</span><br>			lv_textarea_add_text(textarea, btn_text);  <span class="hljs-comment">// 向文本框中填入内</span><br>    &#125;<br>&#125;<br><br><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">textarea_event_handler</span><span class="hljs-params">(<span class="hljs-type">lv_event_t</span> *e)</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> *ta = lv_event_get_target(e);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Enter was pressed. The current text is: %s&quot;</span>, lv_textarea_get_text(ta));<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">button_matrix_text</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    <span class="hljs-type">lv_obj_t</span> *textarea = lv_textarea_create(lv_scr_act());  <span class="hljs-comment">// 创建 textarea 对象</span><br>    lv_textarea_set_one_line(textarea, <span class="hljs-literal">true</span>);               <span class="hljs-comment">// 设置为单行文本框</span><br>    lv_obj_align(textarea, LV_ALIGN_TOP_MID, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>);        <span class="hljs-comment">// 设置 textarea 位置</span><br>    lv_obj_set_width(textarea, <span class="hljs-number">220</span>);                        <span class="hljs-comment">// 设置 textarea 宽度</span><br>    lv_obj_add_state(textarea, LV_STATE_FOCUSED);<br>    lv_obj_add_event_cb(textarea, textarea_event_handler,   <span class="hljs-comment">// 绑定事件</span><br>                      LV_EVENT_READY, textarea);<br><br>    <span class="hljs-type">lv_obj_t</span> *btnm = lv_btnmatrix_create(lv_scr_act());     <span class="hljs-comment">// 创建 button matrix 对象</span><br>    lv_btnmatrix_set_map(btnm, <span class="hljs-built_in">map</span>);                        <span class="hljs-comment">// 设置 button matrix 的显示文本</span><br>    lv_obj_set_width(btnm, <span class="hljs-number">220</span>);                            <span class="hljs-comment">// 设置 button matrix 的宽度</span><br>    lv_obj_align(btnm, LV_ALIGN_TOP_MID, <span class="hljs-number">0</span>, <span class="hljs-number">80</span>);            <span class="hljs-comment">// 设置 button matrix 的对齐方式</span><br>    lv_obj_clear_flag(btnm, LV_OBJ_FLAG_CLICK_FOCUSABLE);<br>    lv_obj_add_event_cb(btnm, btnm_event_handler,           <span class="hljs-comment">// 绑定事件</span><br>                        LV_EVENT_VALUE_CHANGED, textarea);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>显示效果</p>
+<p><img src="/2025/06/07/Embedded/LVGL/4-lvgl-button-matrix-input.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ol>
+<h2 id="5-LVGL-移植"><a href="#5-LVGL-移植" class="headerlink" title="5 LVGL 移植"></a>5 LVGL 移植</h2><ol>
+<li>移植要求<ul>
+<li>16, 32, 64位 mcu</li>
+<li>时钟频率 &gt; 16MHz</li>
+<li>Flash &#x2F; ROM &gt; 64kB(推荐 &gt; 180kB)</li>
+<li>RAM<ul>
+<li>栈 &gt; 2kB(推荐 &gt; 8kB)</li>
+<li>堆 &gt; 2kB(推荐 &gt; 48kB)</li>
+<li>显示缓冲区 &gt; 水平分辨率像素(推荐 &gt; 1 &#x2F; 10 * 屏幕总像素)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="category-chain-item">嵌入式</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
+      
+        <a href="/tags/LVGL/" class="print-no-link">#LVGL</a>
+      
+        <a href="/tags/GUI/" class="print-no-link">#GUI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LVGL</div>
+      <div>http://example.com/2025/06/07/Embedded/LVGL/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Shuang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年6月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/01/Embedded/ESP32/" title="ESP32">
+                        <span class="hidden-mobile">ESP32</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

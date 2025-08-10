@@ -28,10 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/FreeRTOS.svg">
 <meta property="article:published_time" content="2024-06-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-07T21:57:21.724Z">
+<meta property="article:modified_time" content="2025-08-10T05:53:25.858Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="FreeRTOS">
 <meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="FreeRTOS">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/FreeRTOS.svg">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.4k 字
+          7.1k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          46 分钟
+          59 分钟
         
       </span>
     
@@ -462,13 +462,13 @@
 </li>
 </ol>
 <h3 id="0-8-空闲任务"><a href="#0-8-空闲任务" class="headerlink" title="0.8 空闲任务"></a>0.8 空闲任务</h3><ol>
-<li>RTOS 调度器启动时,自动创建空闲任务,确保始终存在一个能够运行的任务<ul>
+<li><strong>RTOS 调度器启动时,自动创建空闲任务,确保始终存在一个能够运行的任务</strong><ul>
 <li>每个任务调度器都有一个空闲任务</li>
 <li>创建时机: 在调用 <code>vTaskStartScheduler()</code> 时自动创建</li>
 <li>以最低优先级创建,确保有更高优先级任务处于准备就绪状态时,空闲任务不使用 CPU 时间</li>
 </ul>
 </li>
-<li>空闲任务功能<ul>
+<li><strong>空闲任务功能</strong><ul>
 <li>负责删除已被终止的任务(调用 <code>vTaskDelete()</code> 的任务)</li>
 <li>回收被删除任务的内存资源</li>
 <li>实现 Tickless 空闲模式(当启用 <code>configUSE_TICKLESS_IDLE</code> 时)</li>
@@ -573,12 +573,12 @@
 </ul>
 </li>
 </ol>
-<h2 id="2-任务控制"><a href="#2-任务控制" class="headerlink" title="2 任务控制"></a>2 任务控制</h2><h3 id="2-1-创建删除任务"><a href="#2-1-创建删除任务" class="headerlink" title="2.1 创建删除任务"></a>2.1 创建删除任务</h3><ol>
-<li><p>任务 API 函数</p>
+<h2 id="2-任务控制"><a href="#2-任务控制" class="headerlink" title="2 任务控制"></a>2 任务控制</h2><h3 id="2-1-任务控制-API"><a href="#2-1-任务控制-API" class="headerlink" title="2.1 任务控制 API"></a>2.1 任务控制 API</h3><ol>
+<li><p>任务 API</p>
 <table>
 <thead>
 <tr>
-<th>API 函数</th>
+<th>API</th>
 <th>描述</th>
 </tr>
 </thead>
@@ -596,12 +596,15 @@
 </tr>
 </tbody></table>
 <ul>
-<li>动态创建任务: 任务的控制块和栈空间由 FreeRTOS 管理</li>
+<li><strong>动态创建任务: 任务的控制块和栈空间由 FreeRTOS 管理</strong></li>
 <li>静态创建任务: 任务的控制块和栈空间由用户分配提供</li>
 </ul>
 </li>
-<li><p>动态创建任务函数原型</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskCreate</span> <span class="hljs-params">(</span><br><span class="hljs-params">    TaskFunction_t pxTaskCode,  <span class="hljs-comment">// 指向任务函数的指针</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> pcName,   <span class="hljs-comment">// 任务名,最大长度为 configMax_TASK_NAME_LEN</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> configSTACK_DEPTH_TYPE usStackDepth,  <span class="hljs-comment">// 任务堆栈大小,默认单位为4字节.最小为128</span></span><br><span class="hljs-params">    <span class="hljs-type">void</span> *<span class="hljs-type">const</span> pvParameters,  <span class="hljs-comment">// 传递给任务函数的参数</span></span><br><span class="hljs-params">    UBaseType_t uxPriority,    <span class="hljs-comment">// 任务优先级, 0 ~ configMAX_PRIORITIES - 1</span></span><br><span class="hljs-params">    TaskHandle_t *<span class="hljs-type">const</span> pxCreatedTask  <span class="hljs-comment">// 任务句柄,即任务的控制块</span></span><br><span class="hljs-params">)</span>;<br><span class="hljs-comment">// 返回值 pdPASS 表示创建成功. errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY 表示失败</span><br></code></pre></td></tr></table></figure>
+<li><p>静态创建任务函数与动态的区别在于</p>
+<ul>
+<li>动态创建任务使用任务句柄作为参数</li>
+<li>静态创建任务使用任务堆栈和任务控制块指针,返回任务句柄</li>
+</ul>
 </li>
 <li><p>动态创建任务步骤</p>
 <ul>
@@ -611,13 +614,10 @@
 <li><code>xTaskCreate</code> 创建的任务立刻进入就绪态,由任务调度器调度运行</li>
 </ul>
 </li>
-<li><p>静态创建任务函数与动态的区别在于</p>
-<ul>
-<li>动态创建任务使用任务句柄作为参数</li>
-<li>静态创建任务使用任务堆栈和任务控制块指针,返回任务句柄</li>
-</ul>
+<li><p>动态创建任务</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskCreate</span> <span class="hljs-params">(</span><br><span class="hljs-params">    TaskFunction_t pxTaskCode,  <span class="hljs-comment">// 指向任务函数的指针</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> pcName,   <span class="hljs-comment">// 任务名,最大长度为 configMax_TASK_NAME_LEN</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> configSTACK_DEPTH_TYPE usStackDepth,  <span class="hljs-comment">// 任务堆栈大小,默认单位为4字节.最小为128</span></span><br><span class="hljs-params">    <span class="hljs-type">void</span> *<span class="hljs-type">const</span> pvParameters,  <span class="hljs-comment">// 传递给任务函数的参数</span></span><br><span class="hljs-params">    UBaseType_t uxPriority,    <span class="hljs-comment">// 任务优先级, 0 ~ configMAX_PRIORITIES - 1</span></span><br><span class="hljs-params">    TaskHandle_t *<span class="hljs-type">const</span> pxCreatedTask  <span class="hljs-comment">// 任务句柄,即任务的控制块</span></span><br><span class="hljs-params">)</span>;<br><span class="hljs-comment">// 返回值 pdPASS 表示创建成功. errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY 表示失败</span><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>删除任务函数原型</p>
+<li><p>删除任务</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskDelete</span><span class="hljs-params">(TaskHandle_t xTaskToDelete)</span>;<br><span class="hljs-comment">// xTaskToDelete: 待删除任务的任务句柄</span><br><span class="hljs-comment">// 若传入 NULL: 删除任务自身(当前正在运行的任务)</span><br></code></pre></td></tr></table></figure>
 
 <ul>
@@ -625,10 +625,8 @@
 <li>空闲任务负责释放被删除任务中系统分配的内存</li>
 </ul>
 </li>
-<li><p>阻塞</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskDelay</span><span class="hljs-params">(<span class="hljs-type">const</span> TickType_t xTicksToDelay)</span>;<br>vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));  <span class="hljs-comment">// pdMS_TO_TICKS 会将时间转换为节拍数</span><br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="2-2-创建任务示例"><a href="#2-2-创建任务示例" class="headerlink" title="2.2 创建任务示例"></a>2.2 创建任务示例</h3><ol>
+<h3 id="2-2-任务控制示例"><a href="#2-2-任务控制示例" class="headerlink" title="2.2 任务控制示例"></a>2.2 任务控制示例</h3><ol>
 <li><p>目标: 使用 <code>xTaskCreate</code> 和 <code>vTaskDelete</code></p>
 <ul>
 <li><code>start_task</code>: 启动任务,用于创建其他任务</li>
@@ -654,10 +652,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 需要将宏 INCLUDE_vTaskResume 配置为1</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskResume</span><span class="hljs-params">( TaskHandle_t xTaskToResume )</span>;<br><span class="hljs-comment">// 无论 suspend 多少次,只需 resume 一次.被恢复的任务重新进入就绪态</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>在中断恢复被挂起的任务</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 需要将宏 INCLUDE_vTaskResume 和 INCLUDE_vTaskResumeFromISR 配置为1</span><br>BaseType_t <span class="hljs-title function_">xTaskResumeFromISR</span><span class="hljs-params">( TaskHandle_t xTaskToResume )</span>;<br><span class="hljs-comment">// 返回值: pdTRUE(pdFALSE) 表示任务恢复后需要(不需要)进行任务切换</span><br><span class="hljs-comment">// 在中断服务程序调用 Freertos 的 API 函数,要求中断优先级不高于 FreeRTOS 管理的最高中断优先级</span><br></code></pre></td></tr></table></figure>
-</li>
-<li><p>查看任务状态</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 开启追踪 task 信息 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_TRACE_FACILITY 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_STATS_FROMATTING_FUNCTIONS 1</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskList</span><span class="hljs-params">( <span class="hljs-type">char</span> *pcWriteBuffer )</span>;<br><span class="hljs-comment">// 输出格式形如:</span><br>名称   状态  优先级  堆栈使用  任务编号<br>task1   x      <span class="hljs-number">1</span>       <span class="hljs-number">79</span>       <span class="hljs-number">3</span><br><span class="hljs-comment">// 状态标志: X(运行), B(阻塞), R(就绪), S(挂起), D(删除)</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 需要将宏 INCLUDE_vTaskResume 和 INCLUDE_vTaskResumeFromISR 配置为1</span><br>BaseType_t <span class="hljs-title function_">xTaskResumeFromISR</span><span class="hljs-params">( TaskHandle_t xTaskToResume )</span>;<br><span class="hljs-comment">// 返回值: pdTRUE(pdFALSE) 表示任务恢复后需要(不需要)进行任务切换</span><br><span class="hljs-comment">// 在中断服务程序调用 Freertos 的 API 函数,要求中断优先级不高于 FreeRTOS 管理的最高中断优先级</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="2-4-中断管理"><a href="#2-4-中断管理" class="headerlink" title="2.4 中断管理"></a>2.4 中断管理</h3><ol>
 <li><p>优先级配置</p>
@@ -669,40 +664,66 @@
 <li><strong>在中断服务函数中调用 FreeRTOS 的 API 函数,必须使用 <code>From_ISR</code> 后缀的函数</strong></li>
 </ul>
 </li>
-<li><p>临界段代码</p>
-<ul>
-<li><p>临界区: 必须在不被打断的情况下完整运行的代码段.如对外设初始化有严格时序要求的代码</p>
-</li>
-<li><p>相关函数</p>
+<li><p><strong>临界区</strong>: 必须在不被打断的情况下完整运行的代码段.如对外设初始化有严格时序要求的代码</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">taskENTER_CRITICAL();  <span class="hljs-comment">// 进入临界区</span><br>taskEXIT_CRITICAL();   <span class="hljs-comment">// 退出临界区</span><br><br>taskENTER_CRITICAL_FROM_ISR(); <span class="hljs-comment">// 中断函数内</span><br>taskEXIT_CRITICAL_FROM_ISR();  <span class="hljs-comment">// 中断函数内</span><br></code></pre></td></tr></table></figure></li>
-</ul>
-</li>
 </ol>
 <h3 id="2-5-时间片调度"><a href="#2-5-时间片调度" class="headerlink" title="2.5 时间片调度"></a>2.5 时间片调度</h3><ol>
-<li>在 FreeRTOS 中,同等优先级的任务轮流分享相同的 CPU 时间.一个时间片的长度等同于 SysTick 中断的周期</li>
-<li>延时函数<ul>
-<li><code>vTaskDelay</code>: 相对延时.从执行该函数开始,直到延时完指定的参数</li>
-<li><code>xTaskDelayUntil</code>: 绝对延时.将整个任务的运行周期视为整体.适合固定频率定期执行的任务</li>
-</ul>
+<li><p>在 FreeRTOS 中,同等优先级的任务轮流分享相同的 CPU 时间.一个时间片的长度等同于 SysTick 中断的周期</p>
 </li>
+<li><p>相对延时: 从函数调用时刻开始计算.适合任务无需严格周期.或每次循环时间不确定</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 使当前任务阻塞指定的 时钟节拍数(Ticks) */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskDelay</span><span class="hljs-params">(<span class="hljs-type">const</span> TickType_t xTicksToDelay)</span>;<br><br><span class="hljs-comment">/* pdMS_TO_TICKS 宏将毫秒时间转换为节拍数 */</span><br>vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));  <span class="hljs-comment">// 延时 1000ms</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>相对延时示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskExample</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 任务逻辑代码</span><br>        vTaskDelay(<span class="hljs-number">1000</span> / portTICK_PERIOD_MS); <span class="hljs-comment">// 延时 1000ms(从调用时刻开始)</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>绝对延时: 使当前任务阻塞到绝对时间点(基于上一次唤醒时间 + 固定周期)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskDelayUntil</span><span class="hljs-params">(TickType_t *pxPreviousWakeTime,  <span class="hljs-comment">// 指向任务上一次唤醒时间的变量</span></span><br><span class="hljs-params">                          <span class="hljs-type">const</span> TickType_t xTimeIncrement)</span>; <span class="hljs-comment">// 期望的任务周期(Ticks)</span><br><span class="hljs-comment">// 返回 pdTRUE 表示正常延时,pdFALSE 表示因调度器挂起等原因导致计算的时间已过期</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>绝对延时示例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vStrictPeriodicTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    TickType_t xLastWakeTime = xTaskGetTickCount(); <span class="hljs-comment">// 初始化基准时间</span><br>    <br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 任务逻辑代码(执行时间可能变化)</span><br>        xTaskDelayUntil(&amp;xLastWakeTime, <span class="hljs-number">100</span> / portTICK_PERIOD_MS); <span class="hljs-comment">// 严格 100ms 周期</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="2-6-任务状态查询"><a href="#2-6-任务状态查询" class="headerlink" title="2.6 任务状态查询"></a>2.6 <a target="_blank" rel="noopener" href="https://www.freertos.org/zh-cn-cmn-s/Documentation/02-Kernel/04-API-references/03-Task-utilities/00-Task-utilities">任务状态查询</a></h3><ol>
-<li>获取任务优先级</li>
-<li>设置任务优先级</li>
-<li>获取任务历史栈剩余最小值</li>
-<li>获取所有任务信息(以表格形式)</li>
-<li>获取任务运行时间</li>
-</ol>
-<h2 id="3-消息队列"><a href="#3-消息队列" class="headerlink" title="3 消息队列"></a>3 消息队列</h2><h3 id="3-1-队列-API"><a href="#3-1-队列-API" class="headerlink" title="3.1 队列 API"></a>3.1 队列 API</h3><ol>
-<li><p>队列是任务间通信的主要形式,可用于任务之间以及中断和任务之间发送消息.特点有</p>
+<li><p>获取任务优先级</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">UBaseType_t <span class="hljs-title function_">uxTaskPriorityGet</span><span class="hljs-params">(TaskHandle_t xTask)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>设置任务优先级</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskPrioritySet</span><span class="hljs-params">(TaskHandle_t xTask, UBaseType_t uxNewPriority)</span>;<br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>FIFO 顺序: 先进先出</li>
-<li>线程安全: 队列操作是原子的</li>
-<li>阻塞和非阻塞: 任务可通过阻塞和非阻塞的方式收发消息</li>
-<li>优先级继承: 确保高优先级任务在队列操作期间不会被低优先级任务阻塞</li>
-<li>可变长度项: 队列中的项可以是不同长度的数据块,而非固定大小</li>
+<li>传入 <code>NULL</code> 表示当前任务</li>
+<li>修改优先级后.若新优先级高于当前运行任务的优先级,会立即触发任务切换(抢占)</li>
 </ul>
 </li>
+<li><p>获取任务运行历史上剩余堆栈的最小值(预留至少 10%~20% 的堆栈余量)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">UBaseType_t <span class="hljs-title function_">uxTaskGetStackHighWaterMark</span><span class="hljs-params">(TaskHandle_t xTask)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>数值越大: 堆栈剩余越多,安全性越高; 数值接近 0: 堆栈即将溢出,需增大堆栈空间</strong>.</p>
+</li>
+<li><p>FreeRTOS 默认 <strong>不提供堆栈溢出检测</strong>(需手动启用 <code>configCHECK_FOR_STACK_OVERFLOW</code>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> configCHECK_FOR_STACK_OVERFLOW 1  <span class="hljs-comment">// 方法1(检测调用链)或 2(检测栈尾)</span></span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>获取所有任务信息(以表格形式).用于快速监控任务运行状态</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 开启追踪 task 信息 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_TRACE_FACILITY 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_STATS_FROMATTING_FUNCTIONS 1</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskList</span><span class="hljs-params">(<span class="hljs-type">char</span> *pcWriteBuffer)</span>;<br><span class="hljs-comment">// 输出格式形如:</span><br>名称   状态  优先级  堆栈剩余  任务编号<br>task1   x      <span class="hljs-number">1</span>       <span class="hljs-number">79</span>       <span class="hljs-number">3</span><br><span class="hljs-comment">// 状态标志: X(运行), B(阻塞), R(就绪), S(挂起), D(删除)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>获取系统中所有任务的 CPU 占用率 和 运行时间信息</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 开启追踪 运行时间信息 */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configGENERATE_RUN_TIME_STATS        1 <span class="hljs-comment">// 启用运行时统计</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_STATS_FORMATTING_FUNCTIONS 1 <span class="hljs-comment">// 启用统计格式化函数</span></span><br><br><span class="hljs-comment">/* 需要实现的宏(提供计时基准) */</span><br><span class="hljs-keyword">extern</span> <span class="hljs-type">uint32_t</span> <span class="hljs-title function_">get_run_time_counter</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>; <span class="hljs-comment">// 示例: 获取系统运行时间(需用户实现)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() \  </span><br>    (<span class="hljs-type">void</span>)get_run_time_counter() <span class="hljs-comment">// 初始化统计计时器</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> portGET_RUN_TIME_COUNTER_VALUE() \  </span><br>    get_run_time_counter() <span class="hljs-comment">// 获取当前计时值</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskGetRunTimeStats</span><span class="hljs-params">(<span class="hljs-type">char</span> *pcWriteBuffer)</span>;<br><span class="hljs-comment">// 输出格式形如:</span><br>Task       Runtime  Stats:<br>main        <span class="hljs-number">125000</span>    <span class="hljs-number">32</span>%  <br>IDLE        <span class="hljs-number">250000</span>    <span class="hljs-number">64</span>%  <br>Tmr Svc      <span class="hljs-number">18750</span>     <span class="hljs-number">4</span>%  <br>Monitor       <span class="hljs-number">6250</span>     <span class="hljs-number">1</span>%<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="3-消息队列"><a href="#3-消息队列" class="headerlink" title="3 消息队列"></a>3 消息队列</h2><h3 id="3-1-队列概念"><a href="#3-1-队列概念" class="headerlink" title="3.1 队列概念"></a>3.1 队列概念</h3><ol>
+<li><strong>队列是任务间通信的主要形式,实现 任务间异步通信 或 任务与中断间通信,传递结构化数据或信号</strong><ul>
+<li><strong>线程安全</strong>: 自带互斥访问,无需额外同步</li>
+<li><strong>阻塞机制</strong>: 任务在队列空 &#x2F; 满时可选择阻塞等待</li>
+</ul>
+</li>
+<li>列队的运作原理<ul>
+<li>本质是一个环形缓冲区,存储固定大小的数据项</li>
+<li>包含头尾指针,支持 FIFO(默认) 或 LIFO 存取方式</li>
+</ul>
+</li>
+<li>队列中的项可以是不同长度的数据块,而非固定大小</li>
+</ol>
+<h3 id="3-2-队列-API"><a href="#3-2-队列-API" class="headerlink" title="3.2 队列 API"></a>3.2 队列 API</h3><ol>
 <li><p>创建队列</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">QueueHandle_t <span class="hljs-title function_">xQueueCreate</span><span class="hljs-params">(     <span class="hljs-comment">// 创建队列.成功则返回队列句柄</span></span><br><span class="hljs-params">    UBaseType_t uxQueueLength,  <span class="hljs-comment">// 队列容量</span></span><br><span class="hljs-params">    UBaseType_t uxItemSize)</span>;    <span class="hljs-comment">// 每个队列项所占内存的大小.单位为字节</span><br></code></pre></td></tr></table></figure>
 </li>
@@ -712,106 +733,214 @@
 <li><p>中断版本(<code>FromISR</code> 后缀)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xQueueSendFromISR</span><span class="hljs-params">(QueueHandle_t xQueue,       <span class="hljs-comment">// 队列句柄</span></span><br><span class="hljs-params">                             <span class="hljs-type">const</span> <span class="hljs-type">void</span> *pvItemToQueue,  <span class="hljs-comment">// 待发送消的指针</span></span><br><span class="hljs-params">                             BaseType_t *pxHigherPriorityTaskWoken)</span>;<br><span class="hljs-comment">// pxHigherPriorityTaskWoken: 如果被系统设为 pdTRUE,则中断退出前要执行上下文切换函数</span><br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="3-2-队列操作示例"><a href="#3-2-队列操作示例" class="headerlink" title="3.2 队列操作示例"></a>3.2 队列操作示例</h3><ol>
-<li><p>目标: </p>
+<h3 id="3-3-队列使用"><a href="#3-3-队列使用" class="headerlink" title="3.3 队列使用"></a>3.3 队列使用</h3><ol>
+<li><p><strong>示例: 任务间传递整数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c">QueueHandle_t xQueue;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vSenderTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-type">int</span> value = <span class="hljs-number">42</span>;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        xQueueSend(xQueue, &amp;value, portMAX_DELAY); <span class="hljs-comment">// 发送数据</span><br>        vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vReceiverTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-type">int</span> receivedValue;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">if</span> (xQueueReceive(xQueue, &amp;receivedValue, portMAX_DELAY) == pdPASS) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Received: %d\n&quot;</span>, receivedValue);<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    xQueue = xQueueCreate(<span class="hljs-number">5</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br>    xTaskCreate(vSenderTask, <span class="hljs-string">&quot;Sender&quot;</span>, <span class="hljs-number">128</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">NULL</span>);<br>    xTaskCreate(vReceiverTask, <span class="hljs-string">&quot;Receiver&quot;</span>, <span class="hljs-number">128</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">NULL</span>);<br>    vTaskStartScheduler();<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>实现</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;freeRTOS.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;task.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;queue.h&quot;</span></span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>示例: 中断与任务通信</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">QueueHandle_t xInterruptQueue;<br><br><span class="hljs-comment">// 中断服务程序(ISR)</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">USART1_IRQHandler</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    <span class="hljs-type">char</span> data = USART1-&gt;DR;<br>    BaseType_t xHigherPriorityTaskWoken = pdFALSE;<br>    <br>    xQueueSendFromISR(xInterruptQueue, &amp;data, &amp;xHigherPriorityTaskWoken);<br>    portYIELD_FROM_ISR(xHigherPriorityTaskWoken); <span class="hljs-comment">// 必要时触发任务切换</span><br>&#125;<br><br><span class="hljs-comment">// 任务处理中断数据</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">vISRHandlerTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-type">char</span> receivedData;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">if</span> (xQueueReceive(xInterruptQueue, &amp;receivedData, portMAX_DELAY)) &#123;<br>            process_data(receivedData); <span class="hljs-comment">// 处理数据</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="4-信号量"><a href="#4-信号量" class="headerlink" title="4 信号量"></a>4 信号量</h2><ol>
-<li><p>信号量是一种用于任务间同步和资源管理的机制.信号量可以是二值的(0 &#x2F; 1)或计数型(正整数)</p>
+<h2 id="4-信号量"><a href="#4-信号量" class="headerlink" title="4 信号量"></a>4 信号量</h2><h3 id="4-1-信号量概念"><a href="#4-1-信号量概念" class="headerlink" title="4.1 信号量概念"></a>4.1 信号量概念</h3><ol>
+<li><p><strong>信号量(Semaphore): 轻量级的任务间同步与互斥机制.主要用于 资源管理 或 事件通知</strong></p>
 <ul>
-<li>信号量的基础操作: 获取, 释放</li>
+<li>核心特点: 不传递具体数据,仅通过计数值协调任务</li>
+<li>信号量可以是二值的(0 &#x2F; 1)或计数型(正整数)</li>
+</ul>
+</li>
+<li><p><strong>信号量的类型</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">特点</th>
+<th align="left">典型应用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">二进制信号量</td>
+<td align="left">计数值仅 0 或 1,相当于互斥锁</td>
+<td align="left">共享资源保护(如外设访问)</td>
+</tr>
+<tr>
+<td align="left">计数信号</td>
+<td align="left">计数值可 &gt;1,表示可用资源数量</td>
+<td align="left">资源池管理(如内存块, 连接池)</td>
+</tr>
+<tr>
+<td align="left">互斥量(Mutex)</td>
+<td align="left">具有优先级继承机制,解决优先级反转问题</td>
+<td align="left">临界区保护(高优先级任务需访问)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>共享资源管理</p>
+<ul>
 <li>管理对共享资源的访问,确保同一时刻只有一个任务可以访问共享资源</li>
 <li>适用于对资源的互斥访问,控制任务的执行顺序.或限制同时访问某一资源的任务数量</li>
 </ul>
 </li>
-<li><p>二值信号量: 主要用于共享资源的互斥访问 或 任务间同步</p>
-<ul>
-<li><p>0: 资源不可用. 1: 资源可用</p>
-</li>
-<li><p>二值信号量 API</p>
-<table>
-<thead>
-<tr>
-<th>API 函数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>xSemaphoreCreateBinary</td>
-<td>使用动态方式创建二值信号量</td>
-</tr>
-<tr>
-<td>xSemaphoreGive</td>
-<td>释放信号量</td>
-</tr>
-<tr>
-<td>xSemaphoreTake</td>
-<td>获取信号量</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-<li><p>计数型信号量: 用于事件计数或资源数量计数</p>
-<ul>
-<li><p>计数型信号量 API</p>
-<table>
-<thead>
-<tr>
-<th>API 函数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>xSemaphoreCreateCounting</td>
-<td>使用动态方式创建计数型信号量</td>
-</tr>
-<tr>
-<td>xSemaphoreGetCount</td>
-<td>获取计数值</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-<li><p>互斥信号量: 包含优先级继承机制的二值信号量,防止优先级翻转</p>
-<ul>
-<li>互斥信号量 API: <code>xSemaphoreCreateMutex</code> 动态创建互斥信号量</li>
-</ul>
-</li>
+</ol>
+<h3 id="4-2-信号量-API"><a href="#4-2-信号量-API" class="headerlink" title="4.2 信号量 API"></a>4.2 信号量 API</h3><ol>
 <li><p>创建信号量</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateBinary</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;	<span class="hljs-comment">// 创建二值信号量</span><br>SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateCounting</span><span class="hljs-params">(		<span class="hljs-comment">// 创建计数型信号量</span></span><br><span class="hljs-params">                      UBaseType_t uxMaxCount,       <span class="hljs-comment">// 最大信号量数</span></span><br><span class="hljs-params">                      UBaseType_t uxInitialCount)</span>;  <span class="hljs-comment">// 初始信号数</span><br>SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateMutex</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;	<span class="hljs-comment">// 创建互斥锁</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 创建二进制信号量(初始值=0)</span><br>SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateBinary</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><br><span class="hljs-comment">// 创建计数型信号量</span><br>SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateCounting</span><span class="hljs-params">(</span><br><span class="hljs-params">                      UBaseType_t uxMaxCount,       <span class="hljs-comment">// 最大信号量数</span></span><br><span class="hljs-params">                      UBaseType_t uxInitialCount)</span>;  <span class="hljs-comment">// 初始信号数</span><br><br><span class="hljs-comment">// 创建互斥量</span><br>SemaphoreHandle_t <span class="hljs-title function_">xSemaphoreCreateMutex</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>获取信号量</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xSemaPhoreTake</span><span class="hljs-params">(	<span class="hljs-comment">// 获取信号量,成功返回 pdTRUE	</span></span><br><span class="hljs-params">    SemaphoreHandle_t xSemaphore,  <span class="hljs-comment">// 信号量句柄</span></span><br><span class="hljs-params">    TickType_t xTicksToWait)</span>;      <span class="hljs-comment">// 等待时间</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 获取信号量,成功返回 pdTRUE</span><br>BaseType_t <span class="hljs-title function_">xSemaPhoreTake</span><span class="hljs-params">(</span><br><span class="hljs-params">    SemaphoreHandle_t xSemaphore,  <span class="hljs-comment">// 信号量句柄</span></span><br><span class="hljs-params">    TickType_t xTicksToWait)</span>;      <span class="hljs-comment">// 阻塞超时时间(portMAX_DELAY 表示永久等待)</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>释放信号量</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xSemaPhoreGive</span><span class="hljs-params">(SemaphoreHandle_t xSemaphore)</span>;  <span class="hljs-comment">// 释放信号量</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">vSemaphoreDelete</span><span class="hljs-params">(SemaphoreHandle_t xSemaphore)</span>;      <span class="hljs-comment">// 删除信号量</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 释放信号量.  中断安全版本为: xSemaphoreGiveFromISR()</span><br>BaseType_t <span class="hljs-title function_">xSemaPhoreGive</span><span class="hljs-params">(SemaphoreHandle_t xSemaphore)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>删除信号量</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vSemaphoreDelete</span><span class="hljs-params">(SemaphoreHandle_t xSemaphore)</span>;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="5-事件标志组"><a href="#5-事件标志组" class="headerlink" title="5 事件标志组"></a>5 事件标志组</h2><ol>
-<li><p>事件标志组是一个标志牌集合,每个标志位代表一种特定的状态或事件</p>
-<ul>
-<li>任务通过等待或设置这些标志位,实现任务之间的协同工作</li>
-</ul>
+<h3 id="4-3-信号量使用"><a href="#4-3-信号量使用" class="headerlink" title="4.3 信号量使用"></a>4.3 信号量使用</h3><ol>
+<li><p><strong>示例: 二进制信号量实现任务同步</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c">SemaphoreHandle_t xBinarySem;<br><br><span class="hljs-comment">// 任务A: 释放信号量(触发任务B)</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskA</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        xSemaphoreGive(xBinarySem); <span class="hljs-comment">// 发送信号</span><br>        vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 任务B: 等待信号量</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskB</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">if</span> (xSemaphoreTake(xBinarySem, portMAX_DELAY) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Signal received!\n&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> main() &#123;<br>    xBinarySem = xSemaphoreCreateBinary();<br>    xTaskCreate(vTaskA, <span class="hljs-string">&quot;TaskA&quot;</span>, <span class="hljs-number">128</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">1</span>, <span class="hljs-literal">NULL</span>);<br>    xTaskCreate(vTaskB, <span class="hljs-string">&quot;TaskB&quot;</span>, <span class="hljs-number">128</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">2</span>, <span class="hljs-literal">NULL</span>);<br>    vTaskStartScheduler();<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>事件标志位可以规定将标志置1表示事件发生,0表示未发生</p>
-<ul>
-<li>事件标志位存储在单个无符号整数变量中.事件 0 存储于 bit0…</li>
-</ul>
-</li>
-<li><p>事件组</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">EventGroupHandle_t <span class="hljs-title function_">xEventGroupCreate</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;  <span class="hljs-comment">// 创建事件组</span><br>EventBits_t <span class="hljs-title function_">xEventGroupWaitBits</span><span class="hljs-params">(	<span class="hljs-comment">// 等待事件组中的某些标志位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventGroupHandle_t xEventGroup,    <span class="hljs-comment">// 事件组句柄</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventBits_t uxBitsToWaitFor,       <span class="hljs-comment">// 需要等待哪些位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xClearOnExit,           <span class="hljs-comment">// 是否自动清除标志位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xWaitForAllBits,        <span class="hljs-comment">// 是否需要等待的标志位全成功才返回</span></span><br><span class="hljs-params">    TickType_t xTicksToWait)</span>;                <span class="hljs-comment">// 最大阻塞时间</span><br>EventBits_t <span class="hljs-title function_">xEventGroupSetBits</span><span class="hljs-params">(		<span class="hljs-comment">// 设置标志位</span></span><br><span class="hljs-params">    EventGroupHandle_t xEventGroup,</span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventBits_t uxBitsToSet)</span>;          <span class="hljs-comment">// 需要设置哪些位</span><br>EventBits_t <span class="hljs-title function_">xEventGroupClearBits</span><span class="hljs-params">(	<span class="hljs-comment">// 清除标志位</span></span><br><span class="hljs-params">	EventGroupHandle_t xEventGroup,</span><br><span class="hljs-params">	<span class="hljs-type">const</span> EventBits_t uxBitsToClear)</span>;        <span class="hljs-comment">// 需要清除哪些位</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>示例: 互斥量保护共享资源</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c">SemaphoreHandle_t xMutex;<br><span class="hljs-type">int</span> sharedData = <span class="hljs-number">0</span>;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vWriteTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">if</span> (xSemaphoreTake(xMutex, portMAX_DELAY)) &#123;<br>            sharedData++; <span class="hljs-comment">// 安全修改数据</span><br>            xSemaphoreGive(xMutex);<br>        &#125;<br>        vTaskDelay(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vReadTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-keyword">if</span> (xSemaphoreTake(xMutex, portMAX_DELAY)) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Data: %d\n&quot;</span>, sharedData);<br>            xSemaphoreGive(xMutex);<br>        &#125;<br>        vTaskDelay(<span class="hljs-number">1000</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="6-任务通知"><a href="#6-任务通知" class="headerlink" title="6 任务通知"></a>6 任务通知</h2><ol>
-<li><p>任务通知允许一个任务向其他任务发送简单的通知或信号,实现任务间的同步和协作</p>
+<h2 id="5-事件标志组"><a href="#5-事件标志组" class="headerlink" title="5 事件标志组"></a>5 事件标志组</h2><h3 id="5-2-事件标志组概念"><a href="#5-2-事件标志组概念" class="headerlink" title="5.2 事件标志组概念"></a>5.2 事件标志组概念</h3><ol>
+<li><p>**事件标志组(Event Group): **任务间事件通知机制</p>
 <ul>
-<li>任务通知通常替代二值信号量或事件标志组,提供更轻量级的任务间通信方式</li>
+<li>允许任务 等待多个事件位的组合,并支持 同步多个任务的执行</li>
+<li>适用于需要 复杂事件触发逻辑 的场景</li>
 </ul>
 </li>
-<li><p>直达任务通知</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskNotify</span><span class="hljs-params">(	<span class="hljs-comment">// 将通知直接发送到任务,并可能取消该任务的阻塞态</span></span><br><span class="hljs-params">	TaskHandle_t xTaskToNotify,  <span class="hljs-comment">// 通知的任务句柄</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulValue,            <span class="hljs-comment">// 携带的通知值</span></span><br><span class="hljs-params">	eNotifyAction eAction)</span>;      <span class="hljs-comment">// 执行的操作</span><br>BaseType_t <span class="hljs-title function_">xTaskNotifyWait</span><span class="hljs-params">(	<span class="hljs-comment">// 等待接收任务通知</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulBitsToClearOnEntry,  <span class="hljs-comment">// 进入函数清除的通知值位</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulBitsToClearOnExit,   <span class="hljs-comment">// 退出函数清除的通知值位</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> *pulNotificationValue, <span class="hljs-comment">// 通知值</span></span><br><span class="hljs-params">	TickType_t xTicksToWait)</span>;       <span class="hljs-comment">// 等待时长</span><br></code></pre></td></tr></table></figure></li>
+<li><p><strong>事件位(Event Bits)</strong>: 每个事件标志组包含一个 32 位变量(<code>EventBits_t</code>),每位(bit)代表一个独立的事件</p>
+<ul>
+<li><strong>逻辑或(OR)</strong>: 任意一个事件位被置位即可唤醒任务</li>
+<li><strong>逻辑与(AND)</strong>: 所有指定事件位被置位才唤醒任务</li>
+</ul>
+<ul>
+<li><strong>跨任务同步</strong>: 多个任务可以等待同一组事件,实现协同操作</li>
+<li><strong>高效性</strong>: 比信号量, 队列更节省内存,适用于高频事件通知</li>
+</ul>
+</li>
+</ol>
+<h3 id="5-2-事件标志组-API"><a href="#5-2-事件标志组-API" class="headerlink" title="5.2 事件标志组 API"></a>5.2 事件标志组 API</h3><ol>
+<li><p>创建事件标志组</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">EventGroupHandle_t <span class="hljs-title function_">xEventGroupCreate</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>设置事件位</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">EventBits_t <span class="hljs-title function_">xEventGroupSetBits</span><span class="hljs-params">(</span><br><span class="hljs-params">    EventGroupHandle_t xEventGroup, <span class="hljs-comment">// 事件组句柄</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventBits_t uxBitsToSet   <span class="hljs-comment">// 要置位的事件位(按位或组合)</span></span><br><span class="hljs-params">)</span>;<br><br><span class="hljs-comment">// 置位 bit0 和 bit2</span><br>xEventGroupSetBits(xEventGroup, (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>) | (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">2</span>));<br><span class="hljs-comment">// 中断安全版本: xEventGroupSetBitsFromISR</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>清除事件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">EventBits_t <span class="hljs-title function_">xEventGroupClearBits</span><span class="hljs-params">(</span><br><span class="hljs-params">    EventGroupHandle_t xEventGroup,</span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventBits_t uxBitsToClear</span><br><span class="hljs-params">)</span>;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>等待事件位</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">EventBits_t <span class="hljs-title function_">xEventGroupWaitBits</span><span class="hljs-params">(	<span class="hljs-comment">// 等待事件组中的某些标志位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventGroupHandle_t xEventGroup,    <span class="hljs-comment">// 事件组句柄</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> EventBits_t uxBitsToWaitFor,       <span class="hljs-comment">// 需要等待哪些位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xClearOnExit,           <span class="hljs-comment">// pdTRUE: 退出时清除这些位</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xWaitForAllBits,        <span class="hljs-comment">// pdTRUE: 需所有位满足.pdFALSE: 任意位满足</span></span><br><span class="hljs-params">    TickType_t xTicksToWait)</span>;                <span class="hljs-comment">// 超时时间</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="5-3-事件标志组使用"><a href="#5-3-事件标志组使用" class="headerlink" title="5.3 事件标志组使用"></a>5.3 事件标志组使用</h3><ol>
+<li><p>示例: 等待单一事件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c">EventGroupHandle_t xEventGroup;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskSensor</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 模拟传感器数据就绪(置位 bit0)</span><br>        xEventGroupSetBits(xEventGroup, (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>));<br>        vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vTaskProcessor</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 等待 bit0 置位(不自动清除)</span><br>        xEventGroupWaitBits(xEventGroup, (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>), pdFALSE, pdFALSE, portMAX_DELAY);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sensor data ready!\n&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>示例: 多事件组合触发</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vControlTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 等待 bit0 AND bit1 同时置位,或 bit2 单独置位</span><br>        EventBits_t uxBits = xEventGroupWaitBits(<br>            xEventGroup,<br>            (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>) | (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">1</span>) | (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">2</span>), <span class="hljs-comment">// 监听 bit0/1/2</span><br>            pdTRUE,  <span class="hljs-comment">// 退出时清除所有监听位</span><br>            pdFALSE, <span class="hljs-comment">// 任意条件满足即可(改为 pdTRUE 则需全部满足)</span><br>            portMAX_DELAY<br>        );<br><br>        <span class="hljs-keyword">if</span> (uxBits &amp; (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">0</span>)) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Event 0 triggered!\n&quot;</span>);<br>        <span class="hljs-keyword">if</span> (uxBits &amp; (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">1</span>)) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Event 1 triggered!\n&quot;</span>);<br>        <span class="hljs-keyword">if</span> (uxBits &amp; (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">2</span>)) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Event 2 triggered!\n&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="6-任务通知"><a href="#6-任务通知" class="headerlink" title="6 任务通知"></a>6 任务通知</h2><h3 id="6-1-任务通知概念"><a href="#6-1-任务通知概念" class="headerlink" title="6.1 任务通知概念"></a>6.1 任务通知概念</h3><ol>
+<li><p><strong>任务通知(Task Notification)</strong> 是一种 <strong>轻量级, 高性能的任务间通信机制</strong></p>
+<ul>
+<li>允许一个任务或中断直接向另一个任务发送事件或数据,而无需使用队列, 信号量等传统通信对象</li>
+<li>任务通知是 FreeRTOS 中最快的通信方式,适用于对实时性要求极高的场景</li>
+</ul>
+</li>
+<li><p>任务通知的优点</p>
+<ul>
+<li><strong>极速通信</strong>: 比队列, 信号量快 <strong>45% ~ 500%</strong>(无需全局对象管理)</li>
+<li><strong>低内存占用</strong>: 每个任务自带通知字段,无需额外内存</li>
+<li><strong>多功能集成</strong>: 可模拟<ul>
+<li><strong>二进制信号量</strong>(通知值作为标志)</li>
+<li><strong>计数信号量</strong>(通知值作为计数器)</li>
+<li><strong>事件标志组</strong>(通知值的每一位作为事件)</li>
+<li><strong>轻量队列</strong>(传递 32 位数据或指针)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>任务通知的限制</p>
+<ul>
+<li><strong>单接收者</strong>: 每个通知只能发送给一个特定任务</li>
+<li><strong>无缓冲</strong>: 仅保存最新通知(覆盖旧值,除非使用计数模式)</li>
+</ul>
+</li>
+<li><p>通信机制</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>机制</strong></th>
+<th align="left"><strong>特点</strong></th>
+<th align="left"><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>事件标志组</strong></td>
+<td align="left">支持多事件组合触发,轻量高效</td>
+<td align="left">复杂事件条件, 多任务同步</td>
+</tr>
+<tr>
+<td align="left"><strong>信号量</strong></td>
+<td align="left">仅单事件通知,无位操作</td>
+<td align="left">简单资源管理或同步</td>
+</tr>
+<tr>
+<td align="left"><strong>队列</strong></td>
+<td align="left">可传递数据,但无法组合事件</td>
+<td align="left">需要数据传输的场景</td>
+</tr>
+<tr>
+<td align="left"><strong>任务通知</strong></td>
+<td align="left">极快,但只能传递单值</td>
+<td align="left">高性能一对一通信</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="6-2-任务通知-API"><a href="#6-2-任务通知-API" class="headerlink" title="6.2 任务通知 API"></a>6.2 任务通知 API</h3><ol>
+<li><p>发送任务通知</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskNotify</span><span class="hljs-params">(</span><br><span class="hljs-params">    TaskHandle_t xTaskToNotify, <span class="hljs-comment">// 目标任务句柄</span></span><br><span class="hljs-params">    <span class="hljs-type">uint32_t</span> ulValue,           <span class="hljs-comment">// 传递的数据(32位)</span></span><br><span class="hljs-params">    eNotifyAction eAction       <span class="hljs-comment">// 通知方式(见下表)</span></span><br><span class="hljs-params">)</span>;<br><br><span class="hljs-comment">// 中断安全版本</span><br>BaseType_t <span class="hljs-title function_">xTaskNotifyFromISR</span><span class="hljs-params">(</span><br><span class="hljs-params">    TaskHandle_t xTaskToNotify,</span><br><span class="hljs-params">    <span class="hljs-type">uint32_t</span> ulValue,</span><br><span class="hljs-params">    eNotifyAction eAction,</span><br><span class="hljs-params">    BaseType_t *pxHigherPriorityTaskWoken</span><br><span class="hljs-params">)</span>;<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left"><strong>动作</strong></th>
+<th align="left"><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>eNoAction</code></td>
+<td align="left">仅触发任务,不更新通知值(类似二进制信号量)</td>
+</tr>
+<tr>
+<td align="left"><code>eSetBits</code></td>
+<td align="left">按位或(OR)操作通知值(类似事件标志组)</td>
+</tr>
+<tr>
+<td align="left"><code>eIncrement</code></td>
+<td align="left">通知值 +1(类似计数信号量)</td>
+</tr>
+<tr>
+<td align="left"><code>eSetValueWithOverwrite</code></td>
+<td align="left">直接覆盖通知值(默认行为)</td>
+</tr>
+<tr>
+<td align="left"><code>eSetValueWithoutOverwrite</code></td>
+<td align="left">仅当通知值未被读取时更新(避免覆盖)</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>接受任务通知</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskNotifyWait</span><span class="hljs-params">(	<span class="hljs-comment">// 等待接收任务通知</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulBitsToClearOnEntry,  <span class="hljs-comment">// 进入函数清除的通知值位</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> ulBitsToClearOnExit,   <span class="hljs-comment">// 退出函数清除的通知值位</span></span><br><span class="hljs-params">	<span class="hljs-type">uint32_t</span> *pulNotificationValue, <span class="hljs-comment">// 存储接收到的值</span></span><br><span class="hljs-params">	TickType_t xTicksToWait)</span>;       <span class="hljs-comment">// 等待时长</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="6-3-任务通知使用"><a href="#6-3-任务通知使用" class="headerlink" title="6.3 任务通知使用"></a>6.3 任务通知使用</h3><ol>
+<li><p>示例: <strong>模拟二进制信号量(任务同步)</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vSenderTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 发送通知(不传递数据,仅触发任务)</span><br>        xTaskNotify(xReceiverTask, <span class="hljs-number">0</span>, eNoAction);<br>        vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">1000</span>));<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vReceiverTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 等待通知(类似 xSemaphoreTake)</span><br>        xTaskNotifyWait(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>, portMAX_DELAY);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Notification received!\n&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>示例: <strong>传递 32 位数据</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">vDataProducerTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-type">uint32_t</span> data = <span class="hljs-number">42</span>;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 发送数据并覆盖旧值</span><br>        xTaskNotify(xConsumerTask, data, eSetValueWithOverwrite);<br>        vTaskDelay(pdMS_TO_TICKS(<span class="hljs-number">500</span>));<br>        data++;<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vDataConsumerTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-type">uint32_t</span> receivedData;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 等待并读取数据</span><br>        xTaskNotifyWait(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, &amp;receivedData, portMAX_DELAY);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Data: %lu\n&quot;</span>, receivedData);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>示例: <strong>模拟事件标志组(多事件触发)</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_EVENT_DATA_READY  (1 &lt;&lt; 0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_EVENT_ERROR       (1 &lt;&lt; 1)</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vInterruptHandler</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    <span class="hljs-comment">// 在中断中设置事件位(bit0)</span><br>    xTaskNotifyFromISR(xHandlerTask, TASK_EVENT_DATA_READY, eSetBits, <span class="hljs-literal">NULL</span>);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vEventHandlerTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-type">uint32_t</span> ulNotifiedValue;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 等待任意事件位触发</span><br>        xTaskNotifyWait(<span class="hljs-number">0</span>, <span class="hljs-number">0xFF</span>, &amp;ulNotifiedValue, portMAX_DELAY);<br>        <br>        <span class="hljs-keyword">if</span> (ulNotifiedValue &amp; TASK_EVENT_DATA_READY) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Data ready event!\n&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (ulNotifiedValue &amp; TASK_EVENT_ERROR) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Error event!\n&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 
                 
@@ -846,9 +975,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/FreeRTOS/" class="print-no-link">#FreeRTOS</a>
-      
         <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
+      
+        <a href="/tags/FreeRTOS/" class="print-no-link">#FreeRTOS</a>
       
         <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="print-no-link">#操作系统</a>
       
