@@ -28,12 +28,12 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Git.svg">
 <meta property="article:published_time" content="2023-06-02T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-05T15:47:20.995Z">
+<meta property="article:modified_time" content="2025-08-19T16:16:26.635Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="Code">
-<meta property="article:tag" content="工具箱">
 <meta property="article:tag" content="Git">
+<meta property="article:tag" content="工具箱">
 <meta property="article:tag" content="笔记">
+<meta property="article:tag" content="Code">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/Git.svg">
   
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.4k 字
+          4.8k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          38 分钟
+          41 分钟
         
       </span>
     
@@ -461,11 +461,44 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-6-最佳实践"><a href="#1-6-最佳实践" class="headerlink" title="1.6 最佳实践"></a>1.6 最佳实践</h3><ol>
+<h3 id="1-6-暂存"><a href="#1-6-暂存" class="headerlink" title="1.6 暂存"></a>1.6 暂存</h3><ol>
+<li><p>暂存(Stash): 临时保存工作目录和暂存区的修改.可以快速切换上下文而不需要提交未完成的工作</p>
+<ul>
+<li><code>stash</code> 默认管理的对象<ul>
+<li>已追踪的修改(工作目录中)</li>
+<li>已暂存的文件</li>
+</ul>
+</li>
+<li><code>stash</code> 默认不管理的对象<ul>
+<li>未追踪的文件(新创建的文件)</li>
+<li>被 <code>.gitignore</code> 忽略的文件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>基础保存功能</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash                 # 保存当前修改到新 stash(默认消息)<br>git stash save &quot;message&quot;  # 保存并添加自定义消息<br><br>git stash list            # 查看所有 stash 列表<br><br>git stash pop             # 恢复最新 stash 并删除<br>git stash pop stash@&#123;2&#125;   # 恢复特定 stash<br><br>git stash apply           # 恢复 stash,但不删除<br>git stash apply stash@&#123;1&#125; # 恢复特定 stash,但不删除<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>包含未追踪的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash -u  # 包含未跟踪文件(新文件)<br>git stash -a  # 包含所有文件(包括被忽略的文件)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查看暂存信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash show stash@&#123;0&#125;     # 查看 stash 简略信息<br>git stash show -p stash@&#123;0&#125;  # 查看详细 diff 内容<br>git stash show -u stash@&#123;0&#125;  # 查看包含未跟踪文件的信息<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>管理 <code>stash</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash push -m &quot;message&quot;  # 创建带描述的新 stash<br>git stash push file1 file2   # 选择性 stash 部分文件<br>git stash drop stash@&#123;1&#125;     # 删除特定 stash<br>git stash clear              # 清空所有 stash<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>分支操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash branch new-branch-name stash@&#123;0&#125;  # 在新分支上应用 stash<br>git log --oneline stash@&#123;0&#125;  # 检查 stash 创建时的提交状态<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>最佳实践: 测试其他分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash push -am &quot;message&quot; # 将本地所有的修改暂存<br>git checkout other-branch    # 切换到其他进行工作<br><span class="hljs-meta prompt_"># </span><span class="language-bash">进行测试工作...</span><br>git checkout original-branch # 工作完成后切换回来<br>git stash pop                # 将暂存恢复<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="1-7-最佳实践"><a href="#1-7-最佳实践" class="headerlink" title="1.7 最佳实践"></a>1.7 最佳实践</h3><ol>
 <li><p>保证 <code>master</code> 分支中的代码是可发布的.不允许直接修改,只能合并,每当合并时生成一个版本号</p>
 <p><img src="/2023/06/02/Tool/Git/1-Git-GitHubFlow.png" srcset="/img/loading.gif" lazyload></p>
 </li>
-<li><p>case1: 接到开发 cpu 的需求</p>
+<li><p>case1: 接到开发 cpu 的需求,开发完成后 push</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout &lt;main&gt;                 # 1.确保在待开发的分支上.以 main 分支为例<br>git pull origin &lt;main&gt;              # 2.确保更新到最新版本<br>git checkout -b &lt;feature/cpu-test&gt;  # 3.创建 cpu 开发分支<br><br>git add .                           # 4.进行开发工作.修改文件,添加功能等<br>git commit -m &quot;update cpu&quot;          # 5.测试完成后在本地提交<br><br>git checkout &lt;main&gt;                 # 6.完成对 cpu 的开发后,返回 main 分支<br>git pull origin &lt;main&gt;              # 7.再次更新 main 分支到最新.如果存在冲突需手动解决<br>git merge --squash feature/cpu-test # 8.将 cpu 分支的所有变更压缩成一个提交合并到 main 分支<br>git commit -m &quot;complete cpu test&quot;   # 9.提交到本地 main 分支<br>git push origin main                # 10.推送到远程仓库<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>case2: 在上面开发 cpu 的第 4 或 5 步时可能接收到紧急任务,如需要开发 gpu 驱动.</p>
@@ -716,13 +749,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Code/" class="print-no-link">#Code</a>
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
       
         <a href="/tags/%E5%B7%A5%E5%85%B7%E7%AE%B1/" class="print-no-link">#工具箱</a>
       
-        <a href="/tags/Git/" class="print-no-link">#Git</a>
-      
         <a href="/tags/%E7%AC%94%E8%AE%B0/" class="print-no-link">#笔记</a>
+      
+        <a href="/tags/Code/" class="print-no-link">#Code</a>
       
     </div>
   
