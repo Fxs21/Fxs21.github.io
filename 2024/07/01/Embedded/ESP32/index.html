@@ -28,10 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/ESP32.svg">
 <meta property="article:published_time" content="2024-07-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-23T15:26:17.074Z">
+<meta property="article:modified_time" content="2025-08-24T06:21:34.818Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="嵌入式">
 <meta property="article:tag" content="ESP32">
+<meta property="article:tag" content="嵌入式">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/ESP32.svg">
   
@@ -293,7 +293,7 @@
 </li>
 <li><p>本文档实际使用的开发板为 <a target="_blank" rel="noopener" href="https://wiki.lckfb.com/zh-hans/szpi-esp32s3/">实战派开发板S3介绍 | 立创开发板技术文档中心</a></p>
 </li>
-<li><p>ESP32-S3-WROOM-1-N16R8: 乐鑫(Espressif)推出的一款高性能 Wi-Fi&#x2F;蓝牙双模模组</p>
+<li><p><strong>ESP32-S3-WROOM-1-N16R8: 乐鑫(Espressif)推出的一款高性能 Wi-Fi&#x2F;蓝牙双模模组</strong></p>
 <ul>
 <li>ESP32-S3: 主控芯片型号(Xtensa LX7 双核, 240MHz)</li>
 <li>WROOM-1: 模组系列(集成 PCB 天线)</li>
@@ -305,7 +305,7 @@
 </li>
 </ol>
 <h3 id="0-2-Linux-环境"><a href="#0-2-Linux-环境" class="headerlink" title="0.2 Linux 环境"></a>0.2 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Linux 环境</a></h3><ol>
-<li><p>搭建 Linux 开发环境参考 Linux 文档环境搭建部分.这里默认搭建完成,并使用的是 Ubuntu</p>
+<li><p>搭建 Linux 开发环境参考 Linux 文档环境搭建部分(这里默认搭建完成,并使用 Ubuntu)</p>
 </li>
 <li><p>环境搭建</p>
 <ul>
@@ -316,15 +316,20 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">创建工作目录</span><br>mkdir -p ~/esp<br>cd ~/esp<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用脚本,将 github 地址映射为 gitee,减少因网络而导致的配置失败</span><br>git clone https://gitee.com/EspressifSystems/esp-gitee-tools.git<br>cd esp-gitee-tools   # 执行 gitee 工具切换镜像脚本<br>./jihu-mirror.sh set # 执行脚本,将 github 地址映射为 gitee<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">拉取 esp-idf 源码(文件较多,耐心等待)</span><br>cd ~/esp<br>git clone --recursive https://github.com/espressif/esp-idf.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换到 5.2 版本(包括子模块).保持环境一致(非必需)</span><br>cd esp-idf<br>git checkout v5.2<br>git submodule update --init --recursive<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>配置编译环境</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">更换 pip 源(非必需).可以使用 pip config list 命令查看当前的 pip 镜像源</span><br>pip config set global.index-url http://mirrors.aliyun.com/pypi/simple<br>pip config set global.trusted-host mirrors.aliyun.com<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译工具</span><br>../esp-gitee-tools/install.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置环境变量.该操作每次打开一个终端都要运行,后面介绍解决办法</span><br>source export.sh<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>编译示例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">下载课程配套源码,作为编译例程</span><br>cd ~/esp<br>git clone --recursive https://gitee.com/vi-iot/esp32-board.git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">配置芯片型号,并编译 helloworld 例程</span><br>cd esp32-board/helloworld # idf.py 的指令需要在项目的所处的目录中执行<br>idf.py set-target esp32s3 # 配置芯片型号.需查阅开发板原理图<br>idf.py build              # 编译项目<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>烧录示例: 需要将开发板连接到 Linux(如果使用是 WSL, 可参考 Linux 文档的连接 USB 设备部分)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">烧录指令.出现 Done 表示烧录完成.需要进入烧录模式(按住 boot 键,按一次 reset)</span><br>idf.py flash<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">此时会出现 /dev/ttyUSB0 failed to connect... 因此先修改权限</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">该操作会随着设备拔插失效,因此每次都要执行.后面描述解决办法</span><br>sudo chmod 777 /dev/ttyUSB0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">烧录并监视串口. Ctrl + ] 退出</span><br>idf.py flash monitor<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">更换 pip 源(非必需).可以使用 pip config list 命令查看当前的 pip 镜像源</span><br>pip config set global.index-url http://mirrors.aliyun.com/pypi/simple<br>pip config set global.trusted-host mirrors.aliyun.com<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译工具</span><br>../esp-gitee-tools/install.sh<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">设置环境变量.该操作每次打开一个终端都要运行,后面介绍解决办法</span><br>source export.sh<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
+<li><p>编译示例</p>
+</li>
+</ol>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">copy 官方 example</span><br>cd ~/esp<br>mkdir esp-proj<br>cp -r esp-idf/examples/get-started/hello_world/ esp-proj/<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">编译工程</span><br>cd esp-proj/hello_world/   # 进入工程目录.idf.py 的指令需要在项目的所处的目录中执行<br>idf.py set-target esp32s3  # 配置芯片型号.需查阅开发板原理图<br>idf.py menuconfig          # 修改 Flash 大小<br>idf.py build               # 构建项目<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>烧录示例: 需要将开发板连接到 Linux(如果使用是 WSL, 可参考 Linux 文档的连接 USB 设备部分)</li>
+</ol>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">烧录指令.出现 Done 表示烧录完成.需要进入烧录模式(按住 boot 键,按一次 reset)</span><br>idf.py flash<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">此时会出现 /dev/ttyUSB0 failed to connect... 因此先修改权限</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">该操作会随着设备拔插失效,因此每次都要执行.后面描述解决办法</span><br>sudo chmod 777 /dev/ttyUSB0<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">烧录并监视串口. Ctrl + ] 退出</span><br>idf.py flash monitor<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
 <li><p>优化配置</p>
 <ul>
 <li><p>永久环境变量: 将添加环境变量的语句添加到 <code>.profile</code> 文件中</p>
@@ -334,9 +339,6 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">将当前用户添加到 dialout 组.使其获得串口设备的访问权限</span><br>sudo usermod -aG dialout $USER<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">然后重新连接客户会话终端.后续不再需要修改权限</span><br>exit              # 完全退出当前 SSH 会话或终端.然后需要手动重新连接<br>id | grep dialout # 验证修改.需要确认当前用户已经加入了 dialout 组<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>使用 VSCode (远程连接部分参考 C 环境搭建部分)打开文件目录,可以看到上面示例的工程结构和源码</p>
-<p><img src="/2024/07/01/Embedded/ESP32/0-Ubuntu-VSCode-hello.png" srcset="/img/loading.gif" lazyload></p>
-</li>
 <li><p><code>ESP-IDF</code> 插件(在 VSCode 中选择虚拟机安装拓展)</p>
 <ul>
 <li>解决 VSCode 会因为不知道源码路径,头文件引入会标红,代码补全也无法使用的问题</li>
@@ -344,51 +346,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-3-Windows-环境"><a href="#0-3-Windows-环境" class="headerlink" title="0.3 Windows 环境"></a>0.3 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Jm411r7zz?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=2">Windows 环境</a></h3><ol>
-<li><p><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/windows-setup.html">官网下载</a> ESP-IDF Windows Installer Download.然后默认安装即可</p>
-</li>
-<li><p>通过命令行编译并烧录</p>
-<ul>
-<li>在 Espressif 安装目录下 <code>.\frameworks\esp-idf-v5.2.3\examples\get-started</code> 有例程 <code>hello_world</code></li>
-<li>将例程 <code>hello_world</code> 复制出来.然后运行 <code>ESP-IDF 5.2 PowerShell</code> 程序</li>
-<li>进入到复制的目录下,使用 <code>idf.py build</code> 指令进行编译</li>
-<li>将 esp32 开发板与电脑进行连接,打开设备管理器查看端口号</li>
-<li>使用 <code>idf.py -p COM5 flash monitor</code> 指令进行下载程序并监视</li>
-</ul>
-</li>
-<li><p>安装插件 <code>ESP-IDF</code> 并配置</p>
-<ul>
-<li>点击 VSCode 的查看 -&gt; 命令面板 -&gt; 搜索 <code>Configure ESP-IDF Extension</code> -&gt; <code>USE EXITING SETUP</code></li>
-</ul>
-</li>
-<li><p>在 VSCode 最下方会出现 ESP-IDF 相关的快捷操作按钮</p>
-<ul>
-<li>在  <code>MenuConfige</code> 中,将 <code>Serial flasher config</code> 的 <code>Flash Size</code> 选为实际大小</li>
-<li>点击相应图标即可进行编译, 烧录, 监控, 清空项目</li>
-</ul>
-</li>
-</ol>
-<h3 id="0-4-快速上手"><a href="#0-4-快速上手" class="headerlink" title="0.4 快速上手"></a>0.4 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/linux-macos-setup.html">快速上手</a></h3><ol>
-<li><p>这里是官方文档描述的快速上手步骤.参考上面的 Linux 环境搭建的步骤也可以</p>
-</li>
-<li><p>在拉取的 <code>esp-idf/examples</code> 目录中有很多示例代码.以 <code>get-started/hello_world</code> 为例</p>
-</li>
-<li><p>编译下载流程</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd example/get-started/hello_world # 进入工程目录<br>idf.py set-target esp32s3          # 设置芯片类型<br>idf.py menuconfig                  # 修改 Flash 大小<br>idf.py build flash monitor         # 编译, 烧录, 监控<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>启动流程</p>
-<ul>
-<li>一级引导程序: 固化于 ROM 中,不可修改.加载二级引导程序到 RAM 执行<ul>
-<li>通过检查 IO0 引脚的电平,选择程序模式</li>
-<li>当芯片上电检测到 IO0 引脚为低电平时,进入下载模式,否则执行二级引导程序</li>
-</ul>
-</li>
-<li>二级引导程序: <code>boot loader</code> 程序.从 0x8000 处读取分区表,处理各种段,加载应用程序</li>
-<li>应用程序: 硬件外设和基本 C 语言运行环境的初始化, <code>freeRTOS</code> 初始化, 最后执行 <code>app_main()</code> 函数</li>
-</ul>
-</li>
-</ol>
-<h3 id="0-5-IDE-工具"><a href="#0-5-IDE-工具" class="headerlink" title="0.5 IDE 工具"></a>0.5 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/tools/idf-py.html">IDE 工具</a></h3><ol>
+<h3 id="0-3-IDE-工具"><a href="#0-3-IDE-工具" class="headerlink" title="0.3 IDE 工具"></a>0.3 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/tools/idf-py.html">IDE 工具</a></h3><ol>
 <li><p><code>idf.py</code> 命令行工具提供了一个前端界面, 管理工程构建, 工程部署, 工程调试等操作</p>
 <ul>
 <li><code>CMake</code>: 配置要构建的工程</li>
@@ -410,12 +368,24 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py monitor # 启动串口监视器,查看设备日志(默认波特率 115200). Ctrl + ] 退出监视器<br>idf.py gdb     # 启动 GDB 调试器(需提前配置 OpenOCD 或 JTAG)<br>idf.py openocd # 启动 OpenOCD 调试服务<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>其他</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py size  # 显示应用程序大小.包括 RAM 和 flash 及各部分大小<br><br>idf.py merge bin        # 合并二进制文件<br>idf.py create-component # 创建新组件<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py size             # 显示应用程序大小.包括 RAM 和 flash 及各部分大小<br>idf.py merge bin        # 合并二进制文件<br>idf.py create-component # 创建新组件<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>切换 idf 版本</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前 idf 版本</span><br>idf.py --version<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换 idf 版本</span><br>cd ~/esp32/esp-idf  # 需要进入到 esp-idf 目录进行操作<br>git checkout v5.4.1 # 切换到 V5.4.1<br>git submodule update --init --recursive  # 更新子模块<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新安装工具链</span><br>./install.sh     # 安装匹配的工具链<br>source export.sh # 设置环境变量<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看当前 idf 版本</span><br>idf.py --version<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">切换 idf 版本</span><br>cd ~/esp/esp-idf    # 需要进入到 esp-idf 目录进行操作<br>git checkout v5.4.1 # 切换到 V5.4.1<br>git submodule update --init --recursive  # 更新子模块<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新安装工具链</span><br>./install.sh     # 安装匹配的工具链<br>source export.sh # 设置环境变量<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>烧录完成后 esp32 的启动流程</p>
+<ul>
+<li>一级引导程序: 固化于 ROM 中,不可修改.加载二级引导程序到 RAM 执行<ul>
+<li>通过检查 IO0 引脚的电平,选择程序模式</li>
+<li>当芯片上电检测到 IO0 引脚为低电平时,进入下载模式,否则执行二级引导程序</li>
+</ul>
+</li>
+<li>二级引导程序: <code>boot loader</code> 程序.从 0x8000 处读取分区表,处理各种段,加载应用程序</li>
+<li>应用程序: 硬件外设和基本 C 语言运行环境的初始化, <code>freeRTOS</code> 初始化, 最后执行 <code>app_main()</code> 函数</li>
+</ul>
+</li>
 </ol>
-<h3 id="0-6-工程配置"><a href="#0-6-工程配置" class="headerlink" title="0.6 工程配置"></a>0.6 工程配置</h3><ol>
+<h3 id="0-4-工程配置"><a href="#0-4-工程配置" class="headerlink" title="0.4 工程配置"></a>0.4 工程配置</h3><ol>
 <li><p>在工程目录下执行下面命令打开交互式配置菜单(基于 Kconfig)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">idf.py menuconfig<br></code></pre></td></tr></table></figure>
 
@@ -434,6 +404,60 @@
 </li>
 <li><p>注意: 修改了 <code>menuconfig</code> 后,需要重新编译工程(<code>idf.py build</code>)</p>
 </li>
+</ol>
+<h3 id="0-5-工程结构"><a href="#0-5-工程结构" class="headerlink" title="0.5 工程结构"></a>0.5 工程结构</h3><ol>
+<li><p>最基础的 esp-idf 项目结构</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">my_esp32_project/   # 项目根目录<br>├── CMakeLists.txt  # 项目顶层 CMake 文件(必需): 设置项目名称和包含 esp-idf 构建系统<br>├── sdkconfig       # 项目配置文件(自动生成): 保存 idf.py menuconfig 的所有配置选项<br>├── build/          # 构建输出目录(自动生成): 包含最终的二进制文件(bootloader, 分区表, 应用程序)<br>├── main/           # main 组件(必需且名称固定): 特殊的必需组件.包含应用程序的入口点<br>│   ├── CMakeLists.txt          # main 组件的 CMake 文件<br>│   └── main.c                  # 应用程序入口文件<br>└── components/                 # 自定义组件目录(名称固定)<br>    └── my_component/           # 示例自定义组件<br>        ├── CMakeLists.txt      # 组件的 CMake 文件(必需)<br>        ├── Kconfig.projbuild   # 组件的配置选项(可选)<br>        ├── include/            # 公共头文件目录(可选)<br>        │   └── my_component.h  # 公共头文件<br>        └── src/<br>            └── my_component.c  # 实现文件<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>项目顶层 <code>CMakeLists.txt</code> </p>
+<ul>
+<li><p>最小项目</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># ./CMakeLists.txt</span><br><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.16</span>) <span class="hljs-comment"># 指定构建本项目所需的 CMake 最低版本</span><br><span class="hljs-keyword">include</span>($ENV&#123;IDF_PATH&#125;/tools/cmake/<span class="hljs-keyword">project</span>.cmake) <span class="hljs-comment"># 包含并导入 esp-idf 构建系统</span><br><span class="hljs-keyword">project</span>(hello_world)                 <span class="hljs-comment"># 定义项目名称并完成项目的最终配置</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>可选的配置项</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(IDF_TARGET esp32s3)              <span class="hljs-comment"># 可选: 设置目标芯片型号(默认为 esp32)</span><br><span class="hljs-keyword">set</span>(PARTITIONS_TABLE partitions.csv) <span class="hljs-comment"># 可选: 指定自定义分区表文件</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>导入组件到工程(idf 路径下的默认组件无需声明就可以使用.这里介绍的其他组件导入方式)</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">set</span>(EXTRA_COMPONENT_DIRS ../../components) <span class="hljs-comment"># 可选: 指定额外的组件目录</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>main</code> 组件</p>
+<ul>
+<li>包含 <code>app_main()</code> 函数.这是程序的起点</li>
+<li>构建系统会自动将其包含在项目中.无需在顶层 CMake 中显式声明</li>
+<li>可以依赖其他组件,但其他组件不能依赖 <code>main</code> 组件</li>
+</ul>
+</li>
+</ol>
+<h3 id="0-6-组件"><a href="#0-6-组件" class="headerlink" title="0.6 组件"></a>0.6 组件</h3><ol>
+<li><p>**组件(Component): 一个独立的代码库.**包含以下内容</p>
+<ul>
+<li>源代码(<code>.c</code> 文件)</li>
+<li>头文件(<code>.h</code> 文件)</li>
+<li>组件配置文件(<code>Kconfig.projbuild</code>)</li>
+<li>编译脚本(<code>CMakeLists.txt</code>)</li>
+<li>版本依赖, 资源文件等</li>
+</ul>
+</li>
+<li><p>ESP-IDF 本身就是由许多这样的组件构成的(如 <code>driver, spi_flash, nvs_flash, freertos</code> 等)</p>
+</li>
+<li><p>组件的 <code>CMakeLists.txt</code>: 定义组件的源文件, 头文件, 依赖</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># components/my_component/CMakeLists.txt</span><br><br><span class="hljs-comment"># 注册组件</span><br>idf_component_register(<br>    SRCS <span class="hljs-string">&quot;src/my_component.c&quot;</span>,  <span class="hljs-comment"># 列出所有源文件</span><br>    INCLUDE_DIRS <span class="hljs-string">&quot;include&quot;</span>,     <span class="hljs-comment"># 列出公共头文件目录.供其他组件包含</span><br>    REQUIRES driver esp_timer   <span class="hljs-comment"># 列出此组件依赖的公共组件</span><br>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>组件的配置文件(<code>Kconfig.projbuild</code>): 将你的组件的配置选项添加到 <code>idf.py menuconfig</code> 的图形化配置菜单中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">components/my_component/Kconfig.projbuild</span><br><br>menu &quot;My Component Configuration&quot;<br><br>    config MY_COMPONENT_ENABLE_FEATURE_X<br>        bool &quot;Enable feature X&quot;<br>        default y<br>        help<br>            This enables the magical feature X in my component.<br><br>    config MY_COMPONENT_GPIO_NUM<br>        int &quot;GPIO Number for Output&quot;<br>        range 0 48<br>        default 13<br>        help<br>            Select the GPIO number to use as an output.<br><br>endmenu<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用配置文件中定义的宏</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// src/my_component.c</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;my_component.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;esp_log.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sdkconfig.h&gt;</span> <span class="hljs-comment">// 这个头文件会自动包含所有 menuconfig 的配置宏</span></span><br><br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">char</span> *TAG = <span class="hljs-string">&quot;MY_COMP&quot;</span>;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">my_component_function</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> CONFIG_MY_COMPONENT_ENABLE_FEATURE_X</span><br>        ESP_LOGI(TAG, <span class="hljs-string">&quot;Feature X is enabled!&quot;</span>);<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-type">int</span> gpio_num = CONFIG_MY_COMPONENT_GPIO_NUM;<br>    ESP_LOGI(TAG, <span class="hljs-string">&quot;The configured GPIO number is %d&quot;</span>, gpio_num);<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>依赖</p>
+<ul>
+<li><code>REQUIRES</code>: 声明公共依赖.你的组件的头文件需要这些依赖的头文件.并继续传递下去</li>
+<li><code>PRIV_REQUIRES</code>: 声明私有依赖.这些依赖仅用于你的组件的源文件编译和链接.不会传递给其他组件</li>
+</ul>
+</li>
+<li><p>在 <code>main</code> 组件中使用其他组件</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># main/CMakeLists.txt</span><br><br>idf_component_register(<br>    SRCS <span class="hljs-string">&quot;main.c&quot;</span>,<br>    REQUIRES my_component  <span class="hljs-comment"># 声明 main 组件依赖于 my_component</span><br>)<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="0-7-API-约定"><a href="#0-7-API-约定" class="headerlink" title="0.7 API 约定"></a>0.7 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/api-conventions.html">API 约定</a></h3><ol>
 <li><p>编程接口</p>
@@ -475,8 +499,6 @@
 <li>私有 API 可能在次要或补丁版本之间以不兼容的方式被删除或更改</li>
 </ul>
 </li>
-</ol>
-<h3 id="0-8-FreeRTOS"><a href="#0-8-FreeRTOS" class="headerlink" title="0.8 FreeRTOS"></a>0.8 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eRg7exEcT?spm_id_from=333.788.videopod.episodes&vd_source=ca18f72085fcabc81ea5ba4e594aefe7&p=6">FreeRTOS</a></h3><ol>
 <li><p><code>esp-idf</code> 的 <code>freeRTOS</code></p>
 <ul>
 <li>优先级问题: esp32 有双核,因此任务是可以并行的</li>
@@ -490,39 +512,6 @@
 </li>
 <li><p>在 <code>esp-idf</code> 中,为了支持双核,重新实现了创建任务的 api</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">BaseType_t <span class="hljs-title function_">xTaskCreatePinnedToCore</span> <span class="hljs-params">(</span><br><span class="hljs-params">    TaskFunction_t pxTaskCode,  <span class="hljs-comment">// 指向任务函数的指针</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-type">const</span> pcName,   <span class="hljs-comment">// 任务名,最大长度为 configMax_TASK_NAME_LEN</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> configSTACK_DEPTH_TYPE usStackDepth,  <span class="hljs-comment">// 任务堆栈大小,默认单位为4字节</span></span><br><span class="hljs-params">    <span class="hljs-type">void</span> *<span class="hljs-type">const</span> pvParameters,  <span class="hljs-comment">// 传递给任务函数的参数</span></span><br><span class="hljs-params">    UBaseType_t uxPriority,    <span class="hljs-comment">// 任务优先级, 0 ~ configMAX_PRIORITIES - 1</span></span><br><span class="hljs-params">    TaskHandle_t *<span class="hljs-type">const</span> pxCreatedTask,  <span class="hljs-comment">// 任务句柄,即任务的控制块</span></span><br><span class="hljs-params">    <span class="hljs-type">const</span> BaseType_t xCoreID   <span class="hljs-comment">// 分配到哪个内核运行</span></span><br><span class="hljs-params">)</span>;<br><span class="hljs-comment">// 返回值 pdPASS 表示创建成功. errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY 表示失败</span><br></code></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="0-9-组件"><a href="#0-9-组件" class="headerlink" title="0.9 组件"></a>0.9 组件</h3><ol>
-<li><p>组件(Component): 一个独立的代码库.包含以下内容</p>
-<ul>
-<li>源代码(<code>.c</code> 文件)</li>
-<li>头文件(<code>.h</code> 文件)</li>
-<li>组件配置文件(<code>Kconfig.projbuild</code> 或 <code>Kconfig</code>)</li>
-<li>编译脚本(<code>CMakeLists.txt</code>)</li>
-<li>版本依赖, 资源文件等</li>
-</ul>
-</li>
-<li><p>ESP-IDF 本身就是由许多这样的组件构成的(如 <code>driver, spi_flash, nvs_flash, freertos</code> 等)</p>
-</li>
-<li><p>组件的目录结构</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">your-project/<br>├── CMakeLists.txt<br>├── sdkconfig<br>├── main/               # main 组件(特殊组件.名称固定)<br>│   ├── CMakeLists.txt<br>│   ├── component.mk    # 旧版 GNU Make 才需要.CMake 可忽略<br>│   └── main.c<br>├── components/         # 存放自定义组件的目录(目录名固定)<br>│   └── my_component/   # 你的自定义组件<br>│       ├── CMakeLists.txt    # (必需)组件的编译脚本<br>│       ├── Kconfig.projbuild # (可选)组件的配置选项<br>│       ├── include/          # (可选)建议放置公共头文件<br>│       │   └── my_component.h<br>│       └── src/<br>│           └── my_component.c<br>└── ...<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>组件的 <code>CMakeLists.txt</code>: 定义组件的源文件, 头文件, 依赖</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># components/my_component/CMakeLists.txt</span><br><br><span class="hljs-comment"># 注册组件</span><br>idf_component_register(<br>    SRCS <span class="hljs-string">&quot;src/my_component.c&quot;</span>,  <span class="hljs-comment"># 列出所有源文件</span><br>    INCLUDE_DIRS <span class="hljs-string">&quot;include&quot;</span>,     <span class="hljs-comment"># 列出公共头文件目录.供其他组件包含</span><br>    REQUIRES driver esp_timer   <span class="hljs-comment"># 列出此组件依赖的公共组件</span><br>)<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>组件的配置文件(<code>Kconfig.projbuild</code>): 将你的组件的配置选项添加到 <code>idf.py menuconfig</code> 的图形化配置菜单中</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">components/my_component/Kconfig.projbuild</span><br><br>menu &quot;My Component Configuration&quot;<br><br>    config MY_COMPONENT_ENABLE_FEATURE_X<br>        bool &quot;Enable feature X&quot;<br>        default y<br>        help<br>            This enables the magical feature X in my component.<br><br>    config MY_COMPONENT_GPIO_NUM<br>        int &quot;GPIO Number for Output&quot;<br>        range 0 48<br>        default 13<br>        help<br>            Select the GPIO number to use as an output.<br><br>endmenu<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>使用配置文件中定义的宏</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// src/my_component.c</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;my_component.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;esp_log.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sdkconfig.h&gt;</span> <span class="hljs-comment">// 这个头文件会自动包含所有 menuconfig 的配置宏</span></span><br><br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">char</span> *TAG = <span class="hljs-string">&quot;MY_COMP&quot;</span>;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">my_component_function</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> CONFIG_MY_COMPONENT_ENABLE_FEATURE_X</span><br>        ESP_LOGI(TAG, <span class="hljs-string">&quot;Feature X is enabled!&quot;</span>);<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-type">int</span> gpio_num = CONFIG_MY_COMPONENT_GPIO_NUM;<br>    ESP_LOGI(TAG, <span class="hljs-string">&quot;The configured GPIO number is %d&quot;</span>, gpio_num);<br>&#125;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>依赖</p>
-<ul>
-<li><code>REQUIRES</code>: 声明公共依赖.你的组件的头文件需要这些依赖的头文件.并继续传递下去</li>
-<li><code>PRIV_REQUIRES</code>: 声明私有依赖.这些依赖仅用于你的组件的源文件编译和链接.不会传递给其他组件</li>
-</ul>
-</li>
-<li><p>在 <code>main</code> 组件中使用其他组件</p>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># main/CMakeLists.txt</span><br><br>idf_component_register(<br>    SRCS <span class="hljs-string">&quot;main.c&quot;</span>,<br>    REQUIRES my_component  <span class="hljs-comment"># 声明 main 组件依赖于 my_component</span><br>)<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="1-基础外设"><a href="#1-基础外设" class="headerlink" title="1 基础外设"></a>1 基础外设</h2><h3 id="1-1-GPIO"><a href="#1-1-GPIO" class="headerlink" title="1.1 GPIO"></a>1.1 GPIO</h3><ol>
 <li><p>ESP32-S3 芯片具有 48 个物理 GPIO 管脚</p>
@@ -994,9 +983,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
-      
         <a href="/tags/ESP32/" class="print-no-link">#ESP32</a>
+      
+        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" class="print-no-link">#嵌入式</a>
       
     </div>
   
