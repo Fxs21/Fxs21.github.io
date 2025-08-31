@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-02T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-24T12:43:10.750Z">
+<meta property="article:modified_time" content="2025-08-27T13:24:02.626Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="C 语言">
 <meta property="article:tag" content="计算机">
@@ -359,7 +359,7 @@
 <li><p>Ubuntu 中下载, 验证安装 <code>clangd</code></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install clangd<br>clangd --version<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>在 <code>.vscode/setting.json</code> 中添加配置</p>
+<li><p>在 <code>.vscode/settings.json</code> 中添加配置</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;clangd.path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/clangd&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;clangd.arguments&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;--background-index&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--clang-tidy&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--completion-style=detailed&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--header-insertion=never&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;disabled&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 禁用微软引擎</span><br>  <span class="hljs-attr">&quot;C_Cpp.codeFolding&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;disabled&quot;</span><span class="hljs-punctuation">,</span>         <span class="hljs-comment">// 避免冲突</span><br>  <span class="hljs-attr">&quot;editor.semanticHighlighting.enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><code>clangd</code> 依赖 <code>compile_commands.json</code> 来获取项目的编译信息.CMake 生成该文件位于 <code>build</code> 目录</p>
