@@ -28,11 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-24T09:08:42.989Z">
+<meta property="article:modified_time" content="2025-09-02T16:29:15.294Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="C 语言">
 <meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
+<meta property="article:tag" content="C 语言">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/C-Language.svg">
   
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          14k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          97 分钟
+          116 分钟
         
       </span>
     
@@ -280,7 +280,219 @@
             
               <div class="markdown-body">
                 
-                <h2 id="0-编译链接"><a href="#0-编译链接" class="headerlink" title="0 编译链接"></a>0 编译链接</h2><h3 id="0-1-编译过程"><a href="#0-1-编译过程" class="headerlink" title="0.1 编译过程"></a>0.1 编译过程</h3><ol>
+                <h2 id="0-开发环境"><a href="#0-开发环境" class="headerlink" title="0 开发环境"></a>0 开发环境</h2><h3 id="0-1-Windows-环境"><a href="#0-1-Windows-环境" class="headerlink" title="0.1 Windows 环境"></a>0.1 Windows 环境</h3><ol>
+<li><p>下载安装 <a target="_blank" rel="noopener" href="https://www.mingw-w64.org/downloads/#mingw-w64-builds">MinGW</a></p>
+<ul>
+<li><p>将 <code>x86_64-15.1.0-release-win32-seh-ucrt-rt_v12-rev0.7z</code> 解压得到 <code>mingw64</code> 目录</p>
+</li>
+<li><p>配置环境变量: 在系统 <code>path</code> 中添加 <code>mingw64</code> 路径. 形如: <code>D:\code\mingw64\bin</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc --version # 检查安装<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Windows 可以通过<a target="_blank" rel="noopener" href="https://cmake.org/download/">官网下载安装 CMake</a>(如 <code>cmake-4.0.2-windows-x86_64.msi</code>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cmake --version # 检查安装<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>配置环境使得可以使用 CMake 构建项目, gdb 进行调试</p>
+<ul>
+<li><p>在 VS Code 中安装 <code>CMake, CMake Tools, Code Runner</code> 插件</p>
+</li>
+<li><p>创建 <code>.vscode/tasks.json</code> 文件内容如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2.0.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;tasks&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake-configure&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;shell&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake -B build -DCMAKE_BUILD_TYPE=Debug&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$gcc&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake-build&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;shell&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake --build build --parallel&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$gcc&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Full Build&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;dependsOn&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;cmake-configure&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;cmake-build&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;group&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;kind&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;isDefault&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建 <code>.vscode/launch.json</code> 文件.内容如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.2.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;GDB Debug&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppdbg&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;launch&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;program&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;command:cmake.launchTargetPath&#125;&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 需要 CMake Tools 插件</span><br>            <span class="hljs-attr">&quot;stopAtEntry&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;MIMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gdb&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;setupCommands&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Enable pretty-printing for gdb&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-enable-pretty-printing&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Set disassembly flavor to Intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-gdb-set disassembly-flavor intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-comment">// 调试前自动构建.注意与 tasks.json 匹配</span><br>            <span class="hljs-attr">&quot;preLaunchTask&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Full Build&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>创建 <code>CmakeLists.txt</code> 文件(在项目根目录下创建)</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.20</span>)<br><br><span class="hljs-comment"># 项目设置</span><br><span class="hljs-keyword">project</span>(HelloCMake)<br><br><span class="hljs-comment"># 严格编译器设置</span><br><span class="hljs-keyword">set</span>(CMAKE_C_STANDARD <span class="hljs-number">17</span>)          <span class="hljs-comment"># 使用 C17 标准</span><br><span class="hljs-keyword">set</span>(CMAKE_C_STANDARD_REQUIRED <span class="hljs-keyword">ON</span>) <span class="hljs-comment"># 强制要求编译器必须严格支持指定的 C 语言标准</span><br><span class="hljs-keyword">set</span>(CMAKE_C_EXTENSIONS <span class="hljs-keyword">OFF</span>)       <span class="hljs-comment"># 禁用编译器扩展(模拟-pedantic)</span><br><br><span class="hljs-comment"># 启用编译数据库生成.配合 clangd</span><br><span class="hljs-keyword">set</span>(CMAKE_EXPORT_COMPILE_COMMANDS <span class="hljs-keyword">ON</span>)<br><br><span class="hljs-comment"># 强制启用所有警告</span><br><span class="hljs-keyword">add_compile_options</span>(<br>    -Wall     <span class="hljs-comment"># 开启所有警告</span><br>    -Wextra   <span class="hljs-comment"># 启用额外警告</span><br>    -Werror   <span class="hljs-comment"># 将警告视为错误</span><br>    -pedantic <span class="hljs-comment"># 严格遵循标准</span><br>)<br><br><span class="hljs-comment"># 根据构建类型设置优化级别</span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">NOT</span> CMAKE_BUILD_TYPE)<br>  <span class="hljs-keyword">set</span>(CMAKE_BUILD_TYPE <span class="hljs-string">&quot;Debug&quot;</span>) <span class="hljs-comment"># 默认 Debug 模式(自动包含-g)</span><br><span class="hljs-keyword">endif</span>()<br><br><span class="hljs-comment"># 显式包含当前目录(确保头文件能找到)</span><br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>)<br><br><span class="hljs-comment"># 添加可执行文件(推荐显式列出文件)</span><br><span class="hljs-keyword">add_executable</span>(<br>    <span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span><br>    main.c<br>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>至此即可点击状态栏的 <code>CMake Tool</code> 相关图标进行构建, 运行项目</p>
+</li>
+</ul>
+</li>
+<li><p><code>clangd</code> 插件</p>
+<ul>
+<li><p>需要下载安装包含 <code>clangd</code> 可执行文件的 LLVM&#x2F;Clang 工具链(直接使用 VS Code 提示安装)</p>
+</li>
+<li><p>解决标准库标红(在项目根目录下创建 <code>.clangd</code> 文件)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">CompileFlags:<br>  Add: [<br>    --target=x86_64-w64-mingw32,<br>    -isystem, D:/code/mingw64/x86_64-w64-mingw32/include,<br>    -isystem, D:/code/mingw64/include,<br>  ]<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="0-2-Linux-环境"><a href="#0-2-Linux-环境" class="headerlink" title="0.2 Linux 环境"></a>0.2 Linux 环境</h3><ol>
+<li><p>在 Linux(发行版为 windows 的 wsl, Ubuntu 24.04) 使用 C 语言开发</p>
+</li>
+<li><p>在 Linux 安装必要的工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install build-essential gdb gcc g++ make<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Windows 远程连接到 Linux(需要先确保 Linux 服务器已开启 SSH 服务)</p>
+<ul>
+<li><p>在 PowerShell 中生成密钥(默认保存路径为 <code>C:\Users\你的用户名\.ssh\id_rsa</code>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查看生成的密钥(复制输出的内容.以 <code>ssh-rsa AAA...</code> 开头)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat ~\.ssh\id_rsa.pub<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 Linux 上添加公钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir -p ~/.ssh  # 如果目录不存在则创建<br>echo &quot;&lt;复制 Windows 中输出的公钥内容&gt;&quot; &gt;&gt; ~/.ssh/authorized_keys<br>chmod 600 ~/.ssh/authorized_keys  # 设置权限<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 PowerShell 中测试 ssh 连接(若能够直接连接而无需密码,表示配置正确)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh username@linux_server_ip # 格式为 用户名@ip地址<br>logout                       # 退出 ssh<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>在 VS Code 安装 <code>remote</code> 扩展</p>
+<ul>
+<li><p>按 <kbd>F1</kbd> 或 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd> -&gt; <code>Remote-SSH: Connect to Host...</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh username@linux_server_ip<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>VS Code 会提示选择 SSH 配置文件(默认是 <code>C:\Users\你的用户名\.ssh\config</code>),确认保存</p>
+</li>
+<li><p>ssh 连接 <code>config</code> 文件的含义(非必需项,仅了解含义)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">Host mylinux  # 自定义别名<br>    HostName linux_server_ip<br>    User username<br>    IdentityFile ~/.ssh/id_rsa<br>    Port 22  # 默认端口,如果修改过请调整<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>CMake</code> 使用(<code>.vscode/tasks.json, .vscode/launch.json, CmakeLists.txt</code> 文件内容同上)</p>
+</li>
+<li><p><code>clangd</code> 使用</p>
+<ul>
+<li><p>VS Code 中需安装 <code>clangd</code> 插件</p>
+</li>
+<li><p>Ubuntu 中下载, 验证安装 <code>clangd</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install clangd<br>clangd --version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>.vscode/settings.json</code> 中添加配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;clangd.path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/clangd&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;clangd.arguments&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;--background-index&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--clang-tidy&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--completion-style=detailed&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;--header-insertion=never&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;disabled&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 禁用微软引擎</span><br>  <span class="hljs-attr">&quot;C_Cpp.codeFolding&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;disabled&quot;</span><span class="hljs-punctuation">,</span>         <span class="hljs-comment">// 避免冲突</span><br>  <span class="hljs-attr">&quot;editor.semanticHighlighting.enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><code>clangd</code> 依赖 <code>compile_commands.json</code> 来获取项目的编译信息.CMake 生成该文件位于 <code>build</code> 目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ln -s build/compile_commands.json .  # 创建软连接供 clangd 使用<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>clang-format</code> 使用</p>
+<ul>
+<li><p>格式化代码(VS Code 快捷键 <kbd>Shift</kbd><kbd>Alt</kbd><kbd>F</kbd>)</p>
+</li>
+<li><p>安装 <code>clang-format</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt install clang-format<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在项目根目录新建 <code>.clang-format</code> 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">BasedOnStyle: Google  # 使用 Google 风格<br>IndentWidth: 4        # 覆盖为 4 空格缩进<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="0-3-GCC-编译器"><a href="#0-3-GCC-编译器" class="headerlink" title="0.3 GCC 编译器"></a>0.3 GCC 编译器</h3><ol>
+<li><p>GCC(GNU Compiler Collection): gcc &#x2F; g++ 分别是 GNU 的 C &#x2F; C++ 编译器</p>
+</li>
+<li><p>gcc &#x2F; g++ 在执行编译工作的步骤</p>
+<ul>
+<li>预处理器 cpp: 预处理,生成 <code>.i</code> 的文件</li>
+</ul>
+<ul>
+<li>编译器 egcs: 将预处理后的文件转换成汇编语言, 生成 <code>.s</code> 文件</li>
+<li>汇编器 as: 有汇编变为目标代码(机器代码)生成 <code>.o</code> 的文件</li>
+<li>链接器 ld: 连接目标代码, 生成可执行程序</li>
+</ul>
+</li>
+<li><p>查看版本信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc --version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>gcc 编译选项(gcc 会按照后缀名进行编译.对于 C 程序,应当保持后缀名为 <code>.c</code>)</p>
+<ul>
+<li><p>编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -E hello.c &gt; hello.i  # 只激活预处理,不生成文件.但可以重定向到一个输出文件<br>gcc -S hello.i -o hello.s # 只激活预处理和编译.将文件编译成汇编代码<br>gcc -c hello.s -o hello.o # 只激活预处理, 编译, 汇编.生成 obj 文件<br>gcc hello.o -o hello      # 完整地编译文件(默认生成的可以执行文件名为 a.out)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>调试, 优化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -g hello.c -o hello  # 生成可供 gdb 调试可执行文件<br>gcc -O2 hello.c -o hello # 优化级别2<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>标准, 警告</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -Wall hello.c    # 打印 gcc 的警告信息<br>gcc -w hello.c       # 关闭 gcc 的警告信息<br>gcc -std=c11 hello.c # 使用 C11 标准<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>编译时定义宏</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -D宏名 hello.c<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h3 id="0-4-GDB-调试器"><a href="#0-4-GDB-调试器" class="headerlink" title="0.4 GDB 调试器"></a>0.4 GDB 调试器</h3><ol>
+<li><p>GDB(GNU Project Debugger) 功能</p>
+<ul>
+<li>指定参数</li>
+<li>设置断点</li>
+<li>分析 crash 现场</li>
+<li>直接修改程序,观测结果</li>
+</ul>
+</li>
+<li><p>下载, 验证安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt-get install gbd<br>gdb --version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>启动 gdb(注意: 在 gcc 编译时需要加上 <code>-g</code> 选项才能生成可供调试的可执行文件)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gdb filename       # 从头运行程序并调试<br>gdb filename core  # 调试 crash 的程序<br>gdb -p 进程号      # 调试运行中的程序<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>gdb 命令(<kbd>Enter</kbd> 表示重复上一命令)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell">run         # 运行<br>start       # 单步执行.停在第一行<br>quit(q)     # 退出<br>list(l)     # 查看代码<br>break(b)    # 设置断点,行数<br>delete(d)   # 删除断点<br>next(n)     # 单步执行,逐过程<br>step(s)     # 单步执行,逐语句<br>finish      # 结束当前函数,跳出<br>continue(c) # 继续运行<br>display     # 追踪变量<br>undisplay   # 取消追踪<br>watch       # 观察点修改时进行打印<br><br>print(p) # 查看变量<br>set var  # 设置变量<br>info(i)  # 查看信息<br>x 0x...  # 查看内存信息<br>!clear   # 清屏<br>thread   # 线程<br>disass   # 汇编<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="0-5-CMake-构建"><a href="#0-5-CMake-构建" class="headerlink" title="0.5 CMake 构建"></a>0.5 CMake 构建</h3><ol>
+<li><p><strong>CMake: 开源的 跨平台构建工具,用于管理软件编译过程</strong></p>
+<ul>
+<li>CMake 不直接构建项目,而是生成标准的构建文件(如 Makefile)</li>
+<li>再由底层工具(如 <code>make, ninja</code>)完成实际编译</li>
+<li>使用 <code>CMakeLists.txt</code> 文件定义构建规则,语法类似脚本语言</li>
+</ul>
+</li>
+<li><p>CMake 构建流程</p>
+<ul>
+<li><p>Windows 可以通过<a target="_blank" rel="noopener" href="https://cmake.org/download/">官网下载安装 <code>CMake</code></a>(如 <code>cmake-4.0.2-windows-x86_64.msi</code>)</p>
+</li>
+<li><p>Ubuntu 使用如下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt update         # 更新软件包列表<br>sudo apt install cmake  # 安装 CMake<br>cmake --version         # 验证安装<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>源码安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译依赖.下载 CMake 源码</span><br>sudo apt update &amp;&amp; sudo apt install -y build-essential libssl-dev<br>wget https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压并编译安装 CMake</span><br>tar -zxvf cmake-4.0.3.tar.gz<br>cd cmake-4.0.3<br>./bootstrap --prefix=/usr/local --parallel=$(nproc) # 指定安装路径并启用多核编译<br>make -j$(nproc)   # 并行编译加速<br>sudo make install # 安装 CMake<br>cmake --version   # 验证安装<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>卸载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt remove cmake # 通过 apt 卸载<br><br>cd cmake-4.0.3/build<br>sudo make uninstall   # 手动编译卸载<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>编写 <code>CMakeLists.txt</code> 文件.下面是最基础的配置</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.20</span>)   <span class="hljs-comment"># CMake 最低版本要求</span><br><span class="hljs-keyword">project</span>(hello)                         <span class="hljs-comment"># 配置项目名称为 hello</span><br><span class="hljs-keyword">add_executable</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> main.c) <span class="hljs-comment"># 为生成可执行文件所使用到的源文件</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>CMake 手动构建命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cmake -B build      # 创建 build 目录,编译 CMakeList.txt<br>cmake --build build # 构建项目,生成可执行文件<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>若修改了 <code>CMakeLists.txt</code> 文件但并未及时生效,可以删除 <code>./build</code> 目录后重新构建</p>
+</li>
+</ul>
+</li>
+<li><p>CMake 语法</p>
+<ul>
+<li><p>CMake 项目基于 CMakeLists.txt 构建,其中(或 <code>*.cmake</code> 文件)使用的就是 CMake Language</p>
+</li>
+<li><p>cmake 命令行工具由5个可执行文件构成: <code>cmake, ctest, cpack, cmake-gui, ccmake</code></p>
+</li>
+<li><p>不通过 CMakeLists.txt 运行 CMake 的方法(该方法仅学习语法,实际并不会用到)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cmake -P *.cmake<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>获取 CMake 变量</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">message</span>(<span class="hljs-variable">$&#123;CMAKE_VERSION&#125;</span>)  <span class="hljs-comment"># 打印版本号</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>CMake 的变量(区分大小写)分为: CMake 提供 和 自定义的</li>
+<li>CMake 的变量存储时均为字符串</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CMake 构建项目的方式</p>
+<ul>
+<li><code>add_executable</code> 中直接写入相对路径.此时在源码中引入头文件也需要写相对路径</li>
+</ul>
+</li>
+<li><p>生成静态库和动态库</p>
+<ul>
+<li>静态库: 在连接阶段,将汇编的 <code>.o</code> 文件与引用到的库一起打包到可执行文件中</li>
+<li>动态库: 不会在编译时连接,而是在运行时才载入</li>
+</ul>
+</li>
+<li><p>调用静态库和动态库</p>
+</li>
+</ol>
+<h2 id="1-编译链接"><a href="#1-编译链接" class="headerlink" title="1 编译链接"></a>1 编译链接</h2><h3 id="1-1-编译过程"><a href="#1-1-编译过程" class="headerlink" title="1.1 编译过程"></a>1.1 编译过程</h3><ol>
 <li><strong>预处理(Preprocessing)</strong>: 对源代码(source code file)进行文本替换(宏定义, 条件编译, 文件包含)<ul>
 <li>删除所有注释 <code>//, /* */</code></li>
 <li>展开所有宏定义 <code>#define</code></li>
@@ -303,7 +515,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-2-宏定义"><a href="#0-2-宏定义" class="headerlink" title="0.2 宏定义"></a>0.2 宏定义</h3><ol>
+<h3 id="1-2-宏定义"><a href="#1-2-宏定义" class="headerlink" title="1.2 宏定义"></a>1.2 宏定义</h3><ol>
 <li><p>程序扩展 <code>#define</code> 的步骤</p>
 <ul>
 <li>调用宏时,对参数进行检查.如果包含了 <code>#define</code>  定义的符号,将其替换(双引号中的除外)</li>
@@ -446,7 +658,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-3-条件编译"><a href="#0-3-条件编译" class="headerlink" title="0.3 条件编译"></a>0.3 条件编译</h3><ol>
+<h3 id="1-3-条件编译"><a href="#1-3-条件编译" class="headerlink" title="1.3 条件编译"></a>1.3 条件编译</h3><ol>
 <li><p><strong>预处理指令</strong></p>
 <table>
 <thead>
@@ -515,7 +727,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-4-文件包含"><a href="#0-4-文件包含" class="headerlink" title="0.4 文件包含"></a>0.4 文件包含</h3><ol>
+<h3 id="1-4-文件包含"><a href="#1-4-文件包含" class="headerlink" title="1.4 文件包含"></a>1.4 文件包含</h3><ol>
 <li><p>头文件(约定后缀为 <code>.h</code>)中通常会包含以下内容</p>
 <ul>
 <li><p>明示常量, 宏函数, 函数声明, 结构体模板定义, 类型定义</p>
@@ -576,7 +788,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-5-词法分析"><a href="#0-5-词法分析" class="headerlink" title="0.5 词法分析"></a>0.5 词法分析</h3><ol>
+<h3 id="1-5-词法分析"><a href="#1-5-词法分析" class="headerlink" title="1.5 词法分析"></a>1.5 词法分析</h3><ol>
 <li><p><code>token</code>: 程序的一个基本组成单元</p>
 </li>
 <li><p>词法分析器: 编译器中负责将程序分解为一个一个符号的部分</p>
@@ -593,7 +805,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-6-链接"><a href="#0-6-链接" class="headerlink" title="0.6 链接"></a>0.6 链接</h3><ol>
+<h3 id="1-6-链接"><a href="#1-6-链接" class="headerlink" title="1.6 链接"></a>1.6 链接</h3><ol>
 <li><p>编译与链接</p>
 <ul>
 <li><strong>C 程序可由多个部分分别编译组成,连接器可以将其合并成一个整体</strong></li>
@@ -628,7 +840,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="1-数据"><a href="#1-数据" class="headerlink" title="1 数据"></a>1 数据</h2><h3 id="1-1-基本数据类型"><a href="#1-1-基本数据类型" class="headerlink" title="1.1 基本数据类型"></a>1.1 基本数据类型</h3><ol>
+<h2 id="2-数据"><a href="#2-数据" class="headerlink" title="2 数据"></a>2 数据</h2><h3 id="2-1-基本数据类型"><a href="#2-1-基本数据类型" class="headerlink" title="2.1 基本数据类型"></a>2.1 基本数据类型</h3><ol>
 <li><p><strong>C 语言中的所有类型,要么是对象类型,要么是函数类型</strong></p>
 <ul>
 <li><strong>对象</strong>: 可以在其中表示值的一块存储区域(注意并非面向对象的对象)</li>
@@ -804,7 +1016,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-2-变量"><a href="#1-2-变量" class="headerlink" title="1.2 变量"></a>1.2 变量</h3><ol>
+<h3 id="2-2-变量"><a href="#2-2-变量" class="headerlink" title="2.2 变量"></a>2.2 变量</h3><ol>
 <li><p>变量和常量是程序处理的两种基本数据类型</p>
 <ul>
 <li>通常待处理的数据会被置于内存中</li>
@@ -909,7 +1121,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-3-常量"><a href="#1-3-常量" class="headerlink" title="1.3 常量"></a>1.3 常量</h3><ol>
+<h3 id="2-3-常量"><a href="#2-3-常量" class="headerlink" title="2.3 常量"></a>2.3 常量</h3><ol>
 <li><p>基本数据类型中的数据类型可作为常量.常用的还有字符串常量和符号常量</p>
 <ul>
 <li><p><strong>字符串常量: C 语言没有单独的字符串类型,采取字符数组的方式定义字符串</strong></p>
@@ -1015,7 +1227,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-4-运算符"><a href="#1-4-运算符" class="headerlink" title="1.4 运算符"></a>1.4 运算符</h3><ol>
+<h3 id="2-4-运算符"><a href="#2-4-运算符" class="headerlink" title="2.4 运算符"></a>2.4 运算符</h3><ol>
 <li><p>使用括号可以完全避免因不清楚运算符优先级导致的问题.但括号太多反而会不好理解</p>
 <table>
 <thead>
@@ -1143,7 +1355,7 @@
 <li><p><strong>C 语言采用短路求值: 当前一个运算数的无法确定逻辑运算的结果时,才会对第二个运算数求值.</strong><br>换言之,如果第一个运算数已经可以确实整个逻辑运算的结果,后一个运算数便不会计算</p>
 </li>
 </ol>
-<h3 id="1-5-作用域"><a href="#1-5-作用域" class="headerlink" title="1.5 作用域"></a>1.5 作用域</h3><ol>
+<h3 id="2-5-作用域"><a href="#2-5-作用域" class="headerlink" title="2.5 作用域"></a>2.5 作用域</h3><ol>
 <li>对象, 函数, 宏, 标识符均有作用域(scope)<ul>
 <li>标识符的作用域: 程序中该标识符可以被使用的区域</li>
 <li><strong>C 语言提供的作用域: 文件, 块, 函数原型, 函数</strong></li>
@@ -1174,7 +1386,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-6-存储期"><a href="#1-6-存储期" class="headerlink" title="1.6 存储期"></a>1.6 存储期</h3><ol>
+<h3 id="2-6-存储期"><a href="#2-6-存储期" class="headerlink" title="2.6 存储期"></a>2.6 存储期</h3><ol>
 <li><strong>对象的存储期决定其生命周期.分为: 自动, 静态, 线程, 分配</strong></li>
 <li><strong>自动存储期</strong><ul>
 <li>自动存储期对象将在语句块执行结束时被释放</li>
@@ -1200,7 +1412,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="1-7-链接属性"><a href="#1-7-链接属性" class="headerlink" title="1.7 链接属性"></a>1.7 链接属性</h3><ol>
+<h3 id="2-7-链接属性"><a href="#2-7-链接属性" class="headerlink" title="2.7 链接属性"></a>2.7 链接属性</h3><ol>
 <li><p>标识符的链接属性决定如何处理在不同文件中出现的标识符</p>
 <ul>
 <li>外部(<code>external</code>): 无论在哪个源文件,声明多少次.均当作同一实体</li>
@@ -1306,7 +1518,7 @@
 </tbody></table>
 </li>
 </ol>
-<h2 id="2-控制流"><a href="#2-控制流" class="headerlink" title="2 控制流"></a>2 控制流</h2><h3 id="2-1-分支"><a href="#2-1-分支" class="headerlink" title="2.1 分支"></a>2.1 分支</h3><ol>
+<h2 id="3-控制流"><a href="#3-控制流" class="headerlink" title="3 控制流"></a>3 控制流</h2><h3 id="3-1-分支"><a href="#3-1-分支" class="headerlink" title="3.1 分支"></a>3.1 分支</h3><ol>
 <li><p><code>if</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (expression_1) &#123;<br>    code block <span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (expression_2) &#123;<br>    code block <span class="hljs-number">2</span>;<br>&#125;<br>...<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (expression_n) &#123;<br>    code block n;<br>&#125;<br><span class="hljs-keyword">else</span> &#123;<br>    code blcok;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -1324,7 +1536,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="2-2-循环"><a href="#2-2-循环" class="headerlink" title="2.2 循环"></a>2.2 循环</h3><ol>
+<h3 id="3-2-循环"><a href="#3-2-循环" class="headerlink" title="3.2 循环"></a>3.2 循环</h3><ol>
 <li><p><code>while</code>: 先计算表达式,若为真则执行循环体中的代码. 重复该步骤,直到条件表达式为假</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span> (expression) &#123;<br>    code block;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
@@ -1360,7 +1572,7 @@
 <li><p><code>continue</code>: 跳过本轮循环,进入下一轮</p>
 </li>
 </ol>
-<h3 id="2-3-函数"><a href="#2-3-函数" class="headerlink" title="2.3 函数"></a>2.3 函数</h3><ol>
+<h3 id="3-3-函数"><a href="#3-3-函数" class="headerlink" title="3.3 函数"></a>3.3 函数</h3><ol>
 <li><p>函数的定义方式</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">类型名 函数名(参数列表) &#123;<br>    函数体<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
@@ -1407,7 +1619,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="3-指针"><a href="#3-指针" class="headerlink" title="3 指针"></a>3 指针</h2><h3 id="3-1-指针与变量"><a href="#3-1-指针与变量" class="headerlink" title="3.1 指针与变量"></a>3.1 指针与变量</h3><ol>
+<h2 id="4-指针"><a href="#4-指针" class="headerlink" title="4 指针"></a>4 指针</h2><h3 id="4-1-指针与变量"><a href="#4-1-指针与变量" class="headerlink" title="4.1 指针与变量"></a>4.1 指针与变量</h3><ol>
 <li><p><strong>指针就是内存地址. 而指针变量是: 存放内存地址的变量</strong></p>
 </li>
 <li><p>定义指针变量的方式</p>
@@ -1454,7 +1666,7 @@
 <li><p><code>&amp;</code> 取址运算符: 对变量进行取址操作,获得变量的地址</p>
 </li>
 </ol>
-<h3 id="3-2-指针与函数"><a href="#3-2-指针与函数" class="headerlink" title="3.2 指针与函数"></a>3.2 指针与函数</h3><ol>
+<h3 id="4-2-指针与函数"><a href="#4-2-指针与函数" class="headerlink" title="4.2 指针与函数"></a>4.2 指针与函数</h3><ol>
 <li><p>指针函数</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> *<span class="hljs-title function_">fp</span><span class="hljs-params">()</span>;  <span class="hljs-comment">// fp 是指针函数</span><br></code></pre></td></tr></table></figure>
 
@@ -1486,7 +1698,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="3-3-一维数组"><a href="#3-3-一维数组" class="headerlink" title="3.3 一维数组"></a>3.3 一维数组</h3><ol>
+<h3 id="4-3-一维数组"><a href="#4-3-一维数组" class="headerlink" title="4.3 一维数组"></a>4.3 一维数组</h3><ol>
 <li><p>声明方式</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">数据类型 数组名[数量];<br><span class="hljs-type">int</span> arr[<span class="hljs-number">5</span>];  <span class="hljs-comment">// 数组下标索引从 0 开始</span><br></code></pre></td></tr></table></figure>
 
@@ -1527,7 +1739,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="3-4-二维数组"><a href="#3-4-二维数组" class="headerlink" title="3.4 二维数组"></a>3.4 二维数组</h3><ol>
+<h3 id="4-4-二维数组"><a href="#4-4-二维数组" class="headerlink" title="4.4 二维数组"></a>4.4 二维数组</h3><ol>
 <li><p>定义二维数组</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">数据类型 数组名[行数][列数];<br><span class="hljs-type">int</span> a[<span class="hljs-number">4</span>][<span class="hljs-number">5</span>];<br></code></pre></td></tr></table></figure>
 
@@ -1555,7 +1767,7 @@
 <li><p>多维数组: 形式上与二维数组类似,仅需在定义时增加下标数量</p>
 </li>
 </ol>
-<h3 id="3-5-指针的组合"><a href="#3-5-指针的组合" class="headerlink" title="3.5 指针的组合"></a>3.5 指针的组合</h3><ol>
+<h3 id="4-5-指针的组合"><a href="#4-5-指针的组合" class="headerlink" title="4.5 指针的组合"></a>4.5 指针的组合</h3><ol>
 <li><p><strong>二级指针(指针在定义就表明了如何解引用.定义时用到了多少 <code>*</code>,得到值就需要多少 <code>*</code>)</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> num = <span class="hljs-number">520</span>;  <span class="hljs-comment">// int 类型变量</span><br><span class="hljs-type">int</span> *p = &amp;num;  <span class="hljs-comment">// int * 类型指针</span><br><span class="hljs-type">int</span> **pp = &amp;p;  <span class="hljs-comment">// int ** 类型的二级指针</span><br></code></pre></td></tr></table></figure>
 </li>
@@ -1583,7 +1795,7 @@
 <li><p>指向常量的常量指针: 指针自身不允许修改,其指向的值也不允许修改</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">const</span> <span class="hljs-type">int</span> cnum = <span class="hljs-number">520</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> *<span class="hljs-type">const</span> p = &amp;cnum;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="4-复合数据"><a href="#4-复合数据" class="headerlink" title="4 复合数据"></a>4 复合数据</h2><h3 id="4-1-结构体"><a href="#4-1-结构体" class="headerlink" title="4.1 结构体"></a>4.1 结构体</h3><ol>
+<h2 id="5-复合数据"><a href="#5-复合数据" class="headerlink" title="5 复合数据"></a>5 复合数据</h2><h3 id="5-1-结构体"><a href="#5-1-结构体" class="headerlink" title="5.1 结构体"></a>5.1 结构体</h3><ol>
 <li><p>结构体定义方式</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> 结构体名称 &#123;</span><br>    结构体成员<span class="hljs-number">1</span>;<br>    结构体成员<span class="hljs-number">2</span>;<br>    ...<br>    结构体成员n;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
@@ -1632,7 +1844,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="4-2-typedef"><a href="#4-2-typedef" class="headerlink" title="4.2 typedef"></a>4.2 <code>typedef</code></h3><ol>
+<h3 id="5-2-typedef"><a href="#5-2-typedef" class="headerlink" title="5.2 typedef"></a>5.2 <code>typedef</code></h3><ol>
 <li><p>给数据类型起别名</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-type">int</span> integer;<br>integer a;<br></code></pre></td></tr></table></figure>
 </li>
@@ -1651,7 +1863,7 @@
 <li><p><strong>与结构体搭配(数据结构的链表需要该技巧)</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 将 struct Date   赋予别名 DATE</span><br><span class="hljs-comment">** 将 struct Date * 赋予别名 PDATE */</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Date</span> &#123;</span><br>    <span class="hljs-type">int</span> year;<br>    <span class="hljs-type">int</span> month;<br>    <span class="hljs-type">int</span> day;<br>&#125; DATE, *PDATE;<br><br>DATE date;    <span class="hljs-comment">// 定义结构体不再需要关键字 struct</span><br>PDATE pdate;  <span class="hljs-comment">// 定义的是 结构体指针</span><br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="4-3-简化声明"><a href="#4-3-简化声明" class="headerlink" title="4.3 简化声明"></a>4.3 简化声明</h3><ol>
+<h3 id="5-3-简化声明"><a href="#5-3-简化声明" class="headerlink" title="5.3 简化声明"></a>5.3 简化声明</h3><ol>
 <li><p>数组指针</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> (*ptr)[<span class="hljs-number">3</span>];<br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">int</span> <span class="hljs-params">(*PTR2ARRAY)</span>[3];<br></code></pre></td></tr></table></figure>
 </li>
@@ -1683,7 +1895,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="4-4-union"><a href="#4-4-union" class="headerlink" title="4.4 union"></a>4.4 union</h3><ol>
+<h3 id="5-4-union"><a href="#5-4-union" class="headerlink" title="5.4 union"></a>5.4 union</h3><ol>
 <li><p><strong>共用体可以将多个成员存储在同一空间中,它们拥有相同的起始地址.最终存储的值取决最后赋值的变量</strong></p>
 </li>
 <li><p>声明方式: 与 struct 类似</p>
@@ -1712,7 +1924,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="4-6-位域"><a href="#4-6-位域" class="headerlink" title="4.6 位域"></a>4.6 位域</h3><ol>
+<h3 id="5-6-位域"><a href="#5-6-位域" class="headerlink" title="5.6 位域"></a>5.6 位域</h3><ol>
 <li><p><strong>位域将1字节(Byte)的二进制位划分为几个不同的区域,并指定每个区域的位数</strong></p>
 </li>
 <li><p>每个域有一个域名,允许在程序中按域名进行单独的操作</p>
@@ -1725,7 +1937,7 @@
 <li><p>位域成员可以没有名称.但需要给出数据类型和位宽.用于填充或调整成员的位置,不能使用</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> :<span class="hljs-number">4</span>;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="5-位操作"><a href="#5-位操作" class="headerlink" title="5 位操作"></a>5 位操作</h2><h3 id="5-1-位运算符"><a href="#5-1-位运算符" class="headerlink" title="5.1 位运算符"></a>5.1 位运算符</h3><ol>
+<h2 id="6-位操作"><a href="#6-位操作" class="headerlink" title="6 位操作"></a>6 位操作</h2><h3 id="6-1-位运算符"><a href="#6-1-位运算符" class="headerlink" title="6.1 位运算符"></a>6.1 位运算符</h3><ol>
 <li><p>位操作</p>
 <ul>
 <li><strong>C 语言并未明确规定1字节(Byte)的尺寸.而是将其定义为:</strong><br><strong>可寻址的数据存储单位,其尺寸必须可以容纳运行环境的基本字符集的任何成员</strong></li>
@@ -1767,7 +1979,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="5-2-掩码"><a href="#5-2-掩码" class="headerlink" title="5.2 掩码"></a>5.2 掩码</h3><ol>
+<h3 id="6-2-掩码"><a href="#6-2-掩码" class="headerlink" title="6.2 掩码"></a>6.2 掩码</h3><ol>
 <li><p>掩码</p>
 <ul>
 <li><strong>掩码是一串二进制数字,通过与目标数字的按位操作,达到屏蔽指定位实现需求</strong></li>
@@ -1819,11 +2031,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
-      
         <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="print-no-link">#计算机</a>
       
         <a href="/tags/Code/" class="print-no-link">#Code</a>
+      
+        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
       
     </div>
   
@@ -1880,9 +2092,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/02/Computer/C-Language-Environment/" title="C Language Environment">
+                      <a href="/2023/05/03/Computer/C-Language-Advanced/" title="C Language Advanced">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">C Language Environment</span>
+                        <span class="hidden-mobile">C Language Advanced</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

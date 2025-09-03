@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Python.svg">
 <meta property="article:published_time" content="2023-07-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-02T05:31:42.024Z">
+<meta property="article:modified_time" content="2025-09-02T16:29:15.294Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          9.3k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          89 分钟
+          78 分钟
         
       </span>
     
@@ -525,13 +525,11 @@
 </ul>
 </li>
 <li><p><code>string</code> 的内建函数</p>
-<ul>
-<li><p>判断字符串内容形式</p>
 <table>
 <thead>
 <tr>
 <th>函数</th>
-<th>说明(满足条件返回 true)</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -543,24 +541,8 @@
 <td>非空 &amp; 所有字符都是字母或数字</td>
 </tr>
 <tr>
-<td>isalpha()</td>
-<td>非空 &amp; 所有字符都是字母或中文</td>
-</tr>
-<tr>
-<td>islower() &#x2F; isupper()</td>
-<td>非空 &amp; 全为小&#x2F;大写</td>
-</tr>
-<tr>
-<td>isnumeric()</td>
-<td>非空 &amp; 只包含数字字符</td>
-</tr>
-<tr>
 <td>isspace()</td>
 <td>非空 &amp; 只包含空白</td>
-</tr>
-<tr>
-<td>istitle()</td>
-<td>是标题化的</td>
 </tr>
 <tr>
 <td>endswith(suffix, beg&#x3D;0, end&#x3D;len(string))</td>
@@ -570,75 +552,15 @@
 <td><strong>startswith(substr, beg&#x3D;0,end&#x3D;len(string))</strong></td>
 <td><strong>字符串以 substr 开头</strong></td>
 </tr>
-</tbody></table>
-</li>
-<li><p>格式化字符串</p>
-<table>
-<thead>
 <tr>
-<th>函数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>capitalize()</td>
-<td>首字母大写化</td>
+<td>strip([chars])</td>
+<td>删除字符串左右的指定字符(默认空格)</td>
 </tr>
 <tr>
-<td><strong>title()</strong></td>
-<td><strong>标题化</strong></td>
+<td>center(width[, fillchar])</td>
+<td>居中对齐</td>
 </tr>
 <tr>
-<td>lower()</td>
-<td>小写化</td>
-</tr>
-<tr>
-<td>upper()</td>
-<td>大写化</td>
-</tr>
-<tr>
-<td>lstrip([chars])</td>
-<td>删除字符串左边的指定字符(默认空格)</td>
-</tr>
-<tr>
-<td>rstrip([chars])</td>
-<td>删除字符串末尾的指定字符(默认空格)</td>
-</tr>
-<tr>
-<td><strong>strip([chars])</strong></td>
-<td><strong>执行 lstrip(), rstrip()</strong></td>
-</tr>
-<tr>
-<td>swapcase()</td>
-<td>大小写反向</td>
-</tr>
-<tr>
-<td><strong>center(width[, fillchar])</strong></td>
-<td><strong>居中对齐</strong></td>
-</tr>
-<tr>
-<td>ljust(width[, fillchar])</td>
-<td>左对齐</td>
-</tr>
-<tr>
-<td>rjust(width[, fillchar])</td>
-<td>右对齐</td>
-</tr>
-<tr>
-<td>expandtabs(tabsize&#x3D;8)</td>
-<td>将 tab 符号转为空格(默认为8个)</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>字符串处理</p>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
 <td><strong>split(str&#x3D;””, num&#x3D;string.count(str))</strong></td>
 <td><strong>分割字符串</strong></td>
 </tr>
@@ -667,8 +589,6 @@
 <td>指定编码的格式</td>
 </tr>
 </tbody></table>
-</li>
-</ul>
 </li>
 </ol>
 <h3 id="0-6-内置函数"><a href="#0-6-内置函数" class="headerlink" title="0.6 内置函数"></a>0.6 内置函数</h3><ol>
@@ -1660,217 +1580,6 @@
 <li>后续 <kbd>Ctrl</kbd><kbd>`</kbd> 打开的终端直接会进入虚拟环境</li>
 </ul>
 </li>
-<li><p>在 PyCharm 中使用虚拟环境: <code>设置</code> -&gt; <code>Python</code> 解释器中进行选择</p>
-<p><img src="/2023/07/01/Computer/Python-Crash-Course/6-virtualenv.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ol>
-<h2 id="附录B-Pycharm-使用"><a href="#附录B-Pycharm-使用" class="headerlink" title="附录B Pycharm 使用"></a>附录B Pycharm 使用</h2><ol>
-<li><p>新建 Python 项目</p>
-<ul>
-<li><p><kbd>新建项目</kbd> -&gt; 在<kbd>位置</kbd>栏选择项目所存放的位置</p>
-</li>
-<li><p>Python 解释器选中 <kbd>先前配置的解释器</kbd>(注意不要选择上面的虚拟环境,导包可能出现问题)</p>
-</li>
-<li><p>若<kbd>解释器</kbd>栏中显示<code>无解释器</code>,点击<kbd>添加解释器</kbd> -&gt; <kbd>系统解释器</kbd>选择合适的解释器</p>
-</li>
-<li><p><kbd>创建 main.py 欢迎脚本</kbd>可以取消勾选</p>
-<p><img src="/2023/07/01/Computer/Python-Crash-Course/5-PyCharm_Create_Project.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-</ul>
-</li>
-<li><p>Pycharm 基础操作</p>
-<ul>
-<li>新建 Python 文件: 右键左侧的<kbd>pythonProject</kbd> -&gt; <kbd>新建</kbd> -&gt; <kbd>Python 文件</kbd> -&gt; 输入文件名并确认</li>
-<li>运行 Python 代码: 右键文本区域,执行<kbd>运行&#39;main&#39;</kbd>即可执行当前代码</li>
-<li><strong>万能快捷键</strong>: <kbd>Alt</kbd><kbd>Enter</kbd>.可以在不同的场景下实现不同的操作</li>
-<li><strong>随处搜索</strong>: <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>A</kbd>  or  双击<kbd>Shift</kbd>  or  右上角的<kbd>随处搜索</kbd></li>
-<li><kbd>Python 控制台</kbd>: 可以直接输入代码运行,直接与 Python 交互</li>
-</ul>
-</li>
-<li><p>开启&#x2F;关闭 Pycharm 速度太慢的解决方案</p>
-<ul>
-<li>关闭 Pycharm 时一直显示 <strong>正在关闭项目…</strong><br>在<kbd>随处搜索</kbd>中搜索注册表,找到 <code>ide.await.scope.completion</code>,取消勾选即可</li>
-<li>打开 Pycharm 时一直显示 <strong>正在扫描要建立索引的文件</strong><br>设置中的<kbd>工具</kbd> -&gt; <kbd>共享索引</kbd>.将<code>Python 软件包</code>改为<code>不下载,使用本地索引</code></li>
-</ul>
-</li>
-<li><p>调整编辑区字体</p>
-<ul>
-<li><p>右上角的齿轮 -&gt; <kbd>设置</kbd> -&gt; <kbd>编辑器</kbd> -&gt; <kbd>字体</kbd>.调整字体为 <kbd>Consolas</kbd></p>
-</li>
-<li><p>在<kbd>编辑器</kbd> -&gt; <kbd>常规</kbd>中,勾选 <kbd>使用 Ctrl + 鼠标滚轮改动字号</kbd>.方便调整字体大小</p>
-</li>
-</ul>
-</li>
-<li><p>Pycharm 主界面</p>
-<p><img src="/2023/07/01/Computer/Python-Crash-Course/5-PyCharm_Main_Interface.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p><strong>安装第三方库</strong></p>
-<ul>
-<li><p>点击左下角的<kbd>终端</kbd>,即可使用 pip 安装第三方库([参考 4.2 第三方库](# 4.2 第三方库))</p>
-</li>
-<li><p>在<kbd>Python软件包</kbd>可以更方便的管理 Python 包,在设置图标(管理仓库)点击<kbd>+</kbd>新建即可</p>
-<p><img src="/2023/07/01/Computer/Python-Crash-Course/5-PyCharm_Python_Package.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>由于 pip 下载需要连接国外的网站,下载缓慢.可以找一个国内的镜像网站作为下载源</li>
-<li>清华源: <code>https://pypi.tuna.tsinghua.edu.cn/simple</code></li>
-<li>阿里源: <code>http://mirrors.aliyun.com/pypi/simple</code></li>
-</ul>
-</li>
-<li><p>若出现 <code>Error: Python packaging tool &#39;setuptools&#39; not found</code></p>
-<ul>
-<li>在终端中执行 <code>pip install setuptools</code> 即可</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>在左侧的<kbd>学习</kbd>中,可以学习 Python 的 IDE 功能</strong></p>
-<table>
-<thead>
-<tr>
-<th>代码段操作</th>
-<th>操作方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>扩展 &#x2F; 收缩代码选区</td>
-<td><kbd>Ctrl</kbd><kbd>W</kbd> &#x2F; <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>W</kbd></td>
-</tr>
-<tr>
-<td>注释 &#x2F; 复制 &#x2F; 删除行</td>
-<td><kbd>Ctrl</kbd><kbd>/</kbd> &#x2F; <kbd>D</kbd> &#x2F; <kbd>Y</kbd></td>
-</tr>
-<tr>
-<td>移动代码段</td>
-<td><kbd>Alt/Ctrl</kbd><kbd>Shift</kbd><kbd>箭头</kbd></td>
-</tr>
-<tr>
-<td>收起 &#x2F; 展开</td>
-<td><kbd>Ctrl</kbd><kbd>-</kbd> &#x2F; <kbd>=</kbd>.<kbd>Shift</kbd>可以增强为选中所有</td>
-</tr>
-<tr>
-<td>包围 &#x2F; 解包</td>
-<td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>T</kbd> &#x2F; <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Delete</kbd></td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>代码补全</th>
-<th>操作方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>显式代码补全</td>
-<td><kbd>Ctrl</kbd><kbd>Space</kbd>在选择时按<kbd>Tab</kbd>可以覆盖后面的内容<br /><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>Space</kbd>调用智能补全</td>
-</tr>
-<tr>
-<td>后缀补全</td>
-<td>键入的内容将自动转换为某种表达式<br />如<code>.ifnn</code>将转换为<code>if XX is not None:</code></td>
-</tr>
-<tr>
-<td><code>F-String</code>补全</td>
-<td>键入<kbd>{</kbd>后再输入变量,可以按 F-String 的形式补全</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>重构</th>
-<th>操作方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>显示所有可用的重构</td>
-<td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd><kbd>T</kbd></td>
-</tr>
-<tr>
-<td>重命名字段</td>
-<td><kbd>Shift</kbd><kbd>F6</kbd></td>
-</tr>
-<tr>
-<td>提取局部变量 &#x2F; 方法</td>
-<td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>V</kbd> &#x2F; <kbd>M</kbd></td>
-</tr>
-<tr>
-<td>就地重构</td>
-<td>要给局部变量重命名或给方法添加参数时<br /><kbd>Alt</kbd><kbd>Enter</kbd>展示出 Pycharm 的猜测</td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>代码辅助</th>
-<th>操作方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>还原移除的代码</td>
-<td>在编辑器右键,选择<kbd>本地历史记录</kbd>.即可浏览历史修改</td>
-</tr>
-<tr>
-<td>更正代码格式</td>
-<td><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>L</kbd>.<kbd>Shift</kbd>增强为显示重新格式化设置</td>
-</tr>
-<tr>
-<td>显示形参信息 &#x2F; 文档内容</td>
-<td><kbd>Ctrl</kbd><kbd>P</kbd> &#x2F; <kbd>Q</kbd></td>
-</tr>
-<tr>
-<td>转到下一个高亮显示的错误</td>
-<td><kbd>F2</kbd></td>
-</tr>
-<tr>
-<td>展开警告说明</td>
-<td><kbd>Ctrl</kbd><kbd>F1</kbd></td>
-</tr>
-<tr>
-<td>高亮显示符号的所有用法</td>
-<td><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>F7</kbd></td>
-</tr>
-</tbody></table>
-<table>
-<thead>
-<tr>
-<th>导航</th>
-<th>操作方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>打开<code>在文件中查找 / 替换</code>窗口</td>
-<td><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>F</kbd> &#x2F; <kbd>R</kbd></td>
-</tr>
-<tr>
-<td>跳转到方法的声明 &#x2F; 查看器所有的用法</td>
-<td><kbd>Ctrl</kbd><kbd>B</kbd></td>
-</tr>
-<tr>
-<td>显示最近打开的文件</td>
-<td><kbd>Ctrl</kbd><kbd>E</kbd>.<kbd>Delete</kbd>可以删除文件历史记录</td>
-</tr>
-</tbody></table>
-</li>
-<li><p>调试程序</p>
-<ul>
-<li><p>若程序并未按照预期执行,可以通过设置断点(点击行号即可)的方式调试程序</p>
-<p><img src="/2023/07/01/Computer/Python-Crash-Course/5-PyCharm_Debug.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>执行代码的方式</p>
-<ul>
-<li>步过 <kbd>F8</kbd>: 执行并越过该行的子函数</li>
-<li>步入 <kbd>F7</kbd>: 进入该行的子函数的源码继续执行</li>
-<li>步出 <kbd>Shift</kbd><kbd>F8</kbd>: 跳出函数体,回到调用该函数的地方</li>
-<li>恢复程序 <kbd>F9</kbd>: 继续执行代码,直到下一断点</li>
-<li>单步执行 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>F7</kbd>: 步入,但忽略 libraries 的语句</li>
-<li>执行到光标处 <kbd>Alt</kbd><kbd>F9</kbd></li>
-</ul>
-</li>
-<li><p>对表达式求值: 在监视窗口可以对<kbd>表达式求值</kbd>,以及<kbd>添加监视</kbd><br><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>F8</kbd>可以对光标所在位置的表达式快速求值.还可以结合控制台的输出进行判断<br>找出错误的表达式并进行修改,然后重新运行代码,排除问题</p>
-</li>
-</ul>
-</li>
-<li><p>设置文件模板: <code>编辑器</code> -&gt; <code>文件和代码模板</code> -&gt; <code>Python Script</code></p>
-<p><img src="/2023/07/01/Computer/Python-Crash-Course/5-Python_Script.png" srcset="/img/loading.gif" lazyload></p>
-</li>
 </ol>
 
                 
@@ -1966,9 +1675,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/01/Embedded/STM32/" title="STM32">
+                      <a href="/2024/01/19/Computer/C++-Basic/" title="C++ Basic">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">STM32</span>
+                        <span class="hidden-mobile">C++ Basic</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

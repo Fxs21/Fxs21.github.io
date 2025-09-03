@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Git.svg">
 <meta property="article:published_time" content="2023-06-02T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-08-27T16:15:34.729Z">
+<meta property="article:modified_time" content="2025-09-02T16:29:15.294Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="Code">
 <meta property="article:tag" content="Git">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k 字
+          4.8k 字
         
       </span>
     
@@ -372,15 +372,15 @@
 <li><p>查看状态</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git log    # 查看提交记录.包含: 提交 ID, 作者, 时间, 备注信息<br>git status # 查看目录中的文件的状态<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>添加: 将指定的文件添加到暂存区(会排除 <code>.gitignore</code> 中匹配的文件)</p>
+<li><p><strong>添加: 将指定的文件添加到暂存区(会排除 <code>.gitignore</code> 中匹配的文件)</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add &lt;filename&gt; # 添加指定文件(无论是修改, 新建, 删除均使用 add 暂存)<br>git add .          # 添加当前目录及其所有子目录下的所有新文件和已修改文件<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>提交: 将暂存区中的修改提交到本地仓库(注意不会提交工作目录的文件)</p>
+<li><p><strong>提交: 将暂存区中的修改提交到本地仓库(注意不会提交工作目录的文件)</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git commit -m &quot;message&quot; # 提交并直接在命令行中提供提交信息的标题<br>git commit --amend      # 修改提交信息 或 添加遗漏的文件<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>版本穿梭</p>
+<li><p>放弃修改</p>
 <p><img src="/2023/06/02/Tool/Git/1-Git-Reset.png" srcset="/img/loading.gif" lazyload></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset --&lt;mode&gt; &lt;commit&gt; # 穿梭到指定的 commit 版本<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset --&lt;mode&gt; &lt;commit&gt;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><p><strong><code>git reset</code> 本质上是移动当前分支所指向的提交(即 <code>HEAD</code> 指针)到指定的历史提交</strong></p>
@@ -443,7 +443,7 @@
 </li>
 </ol>
 <h3 id="1-5-分支"><a href="#1-5-分支" class="headerlink" title="1.5 分支"></a>1.5 分支</h3><ol>
-<li><p>分支(Branch): 代码的不同版本</p>
+<li><p><strong>分支(Branch): 代码的不同版本</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">git branch           # 查看分支信息.结果中 * 表示当前所处的分支<br>git branch &lt;name&gt;    # 创建新分支.创建新分支后并不会自动切换分支<br>git branch -d &lt;name&gt; # 删除指定的已合并分支(安全删除,因为必须已合并到其他分支才能被删除)<br>git switch &lt;name&gt;    # 切换分支.同时工作目录的文件会被自动替换为目标分支的状态<br>git merge &lt;name&gt;     # 将指定分支合并到当前分支.该指令会执行一次提交,因此需要输入提交信息<br>git log --graph --oneline --decorate --all # 查看分支图<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>合并冲突</p>
@@ -465,7 +465,7 @@
 </li>
 </ol>
 <h3 id="1-6-暂存"><a href="#1-6-暂存" class="headerlink" title="1.6 暂存"></a>1.6 暂存</h3><ol>
-<li><p>暂存(Stash): 临时保存工作目录和暂存区的修改.可以快速切换上下文而不需要提交未完成的工作</p>
+<li><p><strong>暂存(Stash): 临时保存工作目录和暂存区的修改.可以快速切换上下文而不需要提交未完成的工作</strong></p>
 <ul>
 <li><code>stash</code> 默认管理的对象<ul>
 <li>已追踪的修改(工作目录中)</li>
@@ -495,17 +495,17 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash branch new-branch-name stash@&#123;0&#125;  # 在新分支上应用 stash<br>git log --oneline stash@&#123;0&#125;  # 检查 stash 创建时的提交状态<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>最佳实践: 测试其他分支</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash push -am &quot;message&quot; # 将本地所有的修改暂存<br>git checkout other-branch    # 切换到其他进行工作<br><span class="hljs-meta prompt_"># </span><span class="language-bash">进行测试工作...</span><br>git checkout original-branch # 工作完成后切换回来<br>git stash pop                # 将暂存恢复<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash push -am &quot;message&quot; # 将本地所有的修改暂存<br>git switch other-branch      # 切换到其他进行工作<br><span class="hljs-meta prompt_"># </span><span class="language-bash">进行测试工作...</span><br>git switch original-branch   # 工作完成后切换回来<br>git stash pop                # 将暂存恢复<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="1-7-最佳实践"><a href="#1-7-最佳实践" class="headerlink" title="1.7 最佳实践"></a>1.7 最佳实践</h3><ol>
 <li><p>保证 <code>master</code> 分支中的代码是可发布的.不允许直接修改,只能合并,每当合并时生成一个版本号</p>
 <p><img src="/2023/06/02/Tool/Git/1-Git-GitHubFlow.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p>case1: 接到开发 cpu 的需求,开发完成后 push</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout &lt;main&gt;                 # 1.确保在待开发的分支上.以 main 分支为例<br>git pull origin &lt;main&gt;              # 2.确保更新到最新版本<br>git checkout -b &lt;feature/cpu-test&gt;  # 3.创建 cpu 开发分支<br><br>git add .                           # 4.进行开发工作.修改文件,添加功能等<br>git commit -m &quot;update cpu&quot;          # 5.测试完成后在本地提交<br><br>git checkout &lt;main&gt;                 # 6.完成对 cpu 的开发后,返回 main 分支<br>git pull origin &lt;main&gt;              # 7.再次更新 main 分支到最新.如果存在冲突需手动解决<br>git merge --squash feature/cpu-test # 8.将 cpu 分支的所有变更压缩成一个提交合并到 main 分支<br>git commit -m &quot;complete cpu test&quot;   # 9.提交到本地 main 分支<br>git push origin main                # 10.推送到远程仓库<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">git switch &lt;main&gt;                   # 1.确保在待开发的分支上.以 main 分支为例<br>git pull origin &lt;main&gt;              # 2.确保更新到最新版本<br>git switch -c &lt;feature/cpu-test&gt;    # 3.创建 cpu 开发分支<br><br>git add .                           # 4.进行开发工作.修改文件,添加功能等<br>git commit -m &quot;update cpu&quot;          # 5.测试完成后在本地提交<br><br>git switch &lt;main&gt;                   # 6.完成对 cpu 的开发后,返回 main 分支<br>git pull origin &lt;main&gt;              # 7.再次更新 main 分支到最新.如果存在冲突需手动解决<br>git merge --squash feature/cpu-test # 8.将 cpu 分支的所有变更压缩成一个提交合并到 main 分支<br>git commit -m &quot;complete cpu test&quot;   # 9.提交到本地 main 分支<br>git push origin main                # 10.推送到远程仓库<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>case2: 在上面开发 cpu 的第 4 或 5 步时可能接收到紧急任务,如需要开发 gpu 驱动.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash push -u -m &quot;cpu developing&quot; # 1. 暂存所有未提交的修改(包括已跟踪和未跟踪文件)<br>git stash list                        # 2. 验证暂存列表<br>git checkout &lt;main&gt;                   # 3. 切换到 main 分支<br>git pull origin &lt;main&gt;                # 4. 确保更新到最新版本<br>git checkout -b &lt;feature/gpu-test&gt;    # 5. 创建并切换到干净的 gpu 开发分支<br><br>git add drivers/gpu/                  # 6.模拟本地对文件的修改<br>git commit -m &quot;update gpu&quot;            # 7.测试完成后在本地提交<br>git checkout &lt;main&gt;                   # 8.完成对 gpu 的开发后,返回 main 分支<br>git pull origin &lt;main&gt;                # 9.更新 main 分支到最新<br>git merge --squash feature/gpu-test   # 10.将 gpu 分支的所有变更压缩成一个提交合并到 main 分支<br>git commit -m &quot;complete cpu test&quot;     # 11.提交到本地 main 分支<br>git push origin main                  # 12.推送到远程仓库<br>git branch -d feature/gpu-test        # 13.删除已合并的本地 gpu 开发分支<br><br>git checkout feature/cpu-test         # 14.回到 cpu 开发分支,继续开发<br>git stash pop                         # 15.恢复工作现场<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">git stash push -u -m &quot;cpu developing&quot; # 1. 暂存所有未提交的修改(包括已跟踪和未跟踪文件)<br>git stash list                        # 2. 验证暂存列表<br>git switch &lt;main&gt;                     # 3. 切换到 main 分支<br>git pull origin &lt;main&gt;                # 4. 确保更新到最新版本<br>git switch -c &lt;feature/gpu-test&gt;      # 5. 创建并切换到干净的 gpu 开发分支<br><br>git add drivers/gpu/                  # 6.模拟本地对文件的修改<br>git commit -m &quot;update gpu&quot;            # 7.测试完成后在本地提交<br>git switch &lt;main&gt;                     # 8.完成对 gpu 的开发后,返回 main 分支<br>git pull origin &lt;main&gt;                # 9.更新 main 分支到最新<br>git merge --squash feature/gpu-test   # 10.将 gpu 分支的所有变更压缩成一个提交合并到 main 分支<br>git commit -m &quot;complete cpu test&quot;     # 11.提交到本地 main 分支<br>git push origin main                  # 12.推送到远程仓库<br>git branch -d feature/gpu-test        # 13.删除已合并的本地 gpu 开发分支<br><br>git switch feature/cpu-test           # 14.回到 cpu 开发分支,继续开发<br>git stash pop                         # 15.恢复工作现场<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="2-GitHub-Pages"><a href="#2-GitHub-Pages" class="headerlink" title="2 GitHub Pages"></a>2 GitHub Pages</h2><h3 id="2-1-关联-github"><a href="#2-1-关联-github" class="headerlink" title="2.1 关联 github"></a>2.1 关联 github</h3><ol>
 <li><p>要关联本地仓库与远程仓库,首先需要设置 SSH 密钥</p>
@@ -885,12 +885,6 @@
   
 
 
-  
-  
-
-
-
-
 
 
 
@@ -1081,49 +1075,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
