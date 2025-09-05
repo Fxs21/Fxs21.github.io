@@ -28,11 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-02T16:29:15.294Z">
+<meta property="article:modified_time" content="2025-09-04T14:49:57.149Z">
 <meta property="article:author" content="Shuang">
+<meta property="article:tag" content="C 语言">
 <meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
-<meta property="article:tag" content="C 语言">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/C-Language.svg">
   
@@ -238,7 +238,7 @@
         
         
         
-          116 分钟
+          117 分钟
         
       </span>
     
@@ -302,7 +302,7 @@
 <li><p>创建 <code>.vscode/launch.json</code> 文件.内容如下</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.2.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;GDB Debug&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppdbg&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;launch&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;program&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;command:cmake.launchTargetPath&#125;&quot;</span><span class="hljs-punctuation">,</span>  <span class="hljs-comment">// 需要 CMake Tools 插件</span><br>            <span class="hljs-attr">&quot;stopAtEntry&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;MIMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gdb&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;setupCommands&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Enable pretty-printing for gdb&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-enable-pretty-printing&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Set disassembly flavor to Intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;text&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;-gdb-set disassembly-flavor intel&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;ignoreFailures&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-comment">// 调试前自动构建.注意与 tasks.json 匹配</span><br>            <span class="hljs-attr">&quot;preLaunchTask&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Full Build&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>创建 <code>CmakeLists.txt</code> 文件(在项目根目录下创建)</p>
+<li><p>创建 <code>./CmakeLists.txt</code> 文件.内容如下</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.20</span>)<br><br><span class="hljs-comment"># 项目设置</span><br><span class="hljs-keyword">project</span>(HelloCMake)<br><br><span class="hljs-comment"># 严格编译器设置</span><br><span class="hljs-keyword">set</span>(CMAKE_C_STANDARD <span class="hljs-number">17</span>)          <span class="hljs-comment"># 使用 C17 标准</span><br><span class="hljs-keyword">set</span>(CMAKE_C_STANDARD_REQUIRED <span class="hljs-keyword">ON</span>) <span class="hljs-comment"># 强制要求编译器必须严格支持指定的 C 语言标准</span><br><span class="hljs-keyword">set</span>(CMAKE_C_EXTENSIONS <span class="hljs-keyword">OFF</span>)       <span class="hljs-comment"># 禁用编译器扩展(模拟-pedantic)</span><br><br><span class="hljs-comment"># 启用编译数据库生成.配合 clangd</span><br><span class="hljs-keyword">set</span>(CMAKE_EXPORT_COMPILE_COMMANDS <span class="hljs-keyword">ON</span>)<br><br><span class="hljs-comment"># 强制启用所有警告</span><br><span class="hljs-keyword">add_compile_options</span>(<br>    -Wall     <span class="hljs-comment"># 开启所有警告</span><br>    -Wextra   <span class="hljs-comment"># 启用额外警告</span><br>    -Werror   <span class="hljs-comment"># 将警告视为错误</span><br>    -pedantic <span class="hljs-comment"># 严格遵循标准</span><br>)<br><br><span class="hljs-comment"># 根据构建类型设置优化级别</span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">NOT</span> CMAKE_BUILD_TYPE)<br>  <span class="hljs-keyword">set</span>(CMAKE_BUILD_TYPE <span class="hljs-string">&quot;Debug&quot;</span>) <span class="hljs-comment"># 默认 Debug 模式(自动包含-g)</span><br><span class="hljs-keyword">endif</span>()<br><br><span class="hljs-comment"># 显式包含当前目录(确保头文件能找到)</span><br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>)<br><br><span class="hljs-comment"># 添加可执行文件(推荐显式列出文件)</span><br><span class="hljs-keyword">add_executable</span>(<br>    <span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span><br>    main.c<br>)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>至此即可点击状态栏的 <code>CMake Tool</code> 相关图标进行构建, 运行项目</p>
@@ -327,16 +327,16 @@
 <li><p>Windows 远程连接到 Linux(需要先确保 Linux 服务器已开启 SSH 服务)</p>
 <ul>
 <li><p>在 PowerShell 中生成密钥(默认保存路径为 <code>C:\Users\你的用户名\.ssh\id_rsa</code>)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t rsa -b 4096<br></code></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">ssh<span class="hljs-literal">-keygen</span> <span class="hljs-literal">-t</span> rsa <span class="hljs-literal">-b</span> <span class="hljs-number">4096</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>查看生成的密钥(复制输出的内容.以 <code>ssh-rsa AAA...</code> 开头)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cat ~\.ssh\id_rsa.pub<br></code></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">cat</span> ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>在 Linux 上添加公钥</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir -p ~/.ssh  # 如果目录不存在则创建<br>echo &quot;&lt;复制 Windows 中输出的公钥内容&gt;&quot; &gt;&gt; ~/.ssh/authorized_keys<br>chmod 600 ~/.ssh/authorized_keys  # 设置权限<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>在 PowerShell 中测试 ssh 连接(若能够直接连接而无需密码,表示配置正确)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh username@linux_server_ip # 格式为 用户名@ip地址<br>logout                       # 退出 ssh<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">ssh username@linux_server_ip <span class="hljs-comment"># 格式为 用户名@ip地址</span><br>logout                       <span class="hljs-comment"># 退出 ssh</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>在 VS Code 安装 <code>remote</code> 扩展</p>
@@ -347,7 +347,7 @@
 <li><p>VS Code 会提示选择 SSH 配置文件(默认是 <code>C:\Users\你的用户名\.ssh\config</code>),确认保存</p>
 </li>
 <li><p>ssh 连接 <code>config</code> 文件的含义(非必需项,仅了解含义)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">Host mylinux  # 自定义别名<br>    HostName linux_server_ip<br>    User username<br>    IdentityFile ~/.ssh/id_rsa<br>    Port 22  # 默认端口,如果修改过请调整<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">Host mylinux                   # 自定义别名.将会在插件中显示为主机名<br>    HostName linux_server_ip   # 远程服务器的真实 ip 地址或域名<br>    User username              # 登录远程服务器时使用的用户名<br>    IdentityFile ~/.ssh/id_rsa # 用于认证的私钥文件路径<br>    Port 22                    # ssh 服务端口号.默认为 22,若修改过需要对应调整<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p><code>CMake</code> 使用(<code>.vscode/tasks.json, .vscode/launch.json, CmakeLists.txt</code> 文件内容同上)</p>
@@ -379,9 +379,9 @@
 </li>
 </ol>
 <h3 id="0-3-GCC-编译器"><a href="#0-3-GCC-编译器" class="headerlink" title="0.3 GCC 编译器"></a>0.3 GCC 编译器</h3><ol>
-<li><p>GCC(GNU Compiler Collection): gcc &#x2F; g++ 分别是 GNU 的 C &#x2F; C++ 编译器</p>
+<li><p>GCC(GNU Compiler Collection): gcc &#x2F; g++ 分别是 GNU 的 c&#x2F;c++ 编译器</p>
 </li>
-<li><p>gcc &#x2F; g++ 在执行编译工作的步骤</p>
+<li><p>gcc&#x2F;g++ 在执行编译工作的步骤</p>
 <ul>
 <li>预处理器 cpp: 预处理,生成 <code>.i</code> 的文件</li>
 </ul>
@@ -396,20 +396,29 @@
 </li>
 <li><p>gcc 编译选项(gcc 会按照后缀名进行编译.对于 C 程序,应当保持后缀名为 <code>.c</code>)</p>
 <ul>
-<li><p>编译</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -E hello.c &gt; hello.i  # 只激活预处理,不生成文件.但可以重定向到一个输出文件<br>gcc -S hello.i -o hello.s # 只激活预处理和编译.将文件编译成汇编代码<br>gcc -c hello.s -o hello.o # 只激活预处理, 编译, 汇编.生成 obj 文件<br>gcc hello.o -o hello      # 完整地编译文件(默认生成的可以执行文件名为 a.out)<br></code></pre></td></tr></table></figure>
+<li><p>基础编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc hello.c                    # 直接生成可执行文件(默认输出 a.out)<br>gcc hello.c -o hello           # 指定输出文件名<br>gcc main.c utils.c -o program  # 编译多个源文件<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>编译流程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -E hello.c &gt; hello.i  # 只激活预处理,不生成文件.但可以重定向到一个输出文件<br>gcc -S hello.i -o hello.s # 只激活预处理和编译.将文件编译成汇编代码<br>gcc -c hello.s -o hello.o # 只激活预处理, 编译, 汇编.生成 obj 文件<br>gcc hello.o -o hello      # 完整地编译文件<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>调试, 优化</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -g hello.c -o hello  # 生成可供 gdb 调试可执行文件<br>gcc -O2 hello.c -o hello # 优化级别2<br></code></pre></td></tr></table></figure>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -g hello.c -o hello  # 生成可供 gdb 调试可执行文件<br>gcc -O2 hello.c -o hello # 优化级别(O0 ~ O3,通常用-O2)<br>gcc -pg hello.c -o hello # 生成性能分析信息(用于 gprof)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>标准, 警告</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -Wall hello.c    # 打印 gcc 的警告信息<br>gcc -w hello.c       # 关闭 gcc 的警告信息<br>gcc -std=c11 hello.c # 使用 C11 标准<br></code></pre></td></tr></table></figure>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -Wall hello.c    # 打印 gcc 的警告信息<br>gcc -w hello.c       # 关闭 gcc 的警告信息<br>gcc -std=c11 hello.c # 使用 C11 标准<br></code></pre></td></tr></table></figure>
+<ul>
+<li><p>头文件与库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -I./include hello.c -o hello # 指定头文件搜索路径<br>gcc -L./lib hello.c -o hello     # 指定库文件搜索路径<br>gcc hello.c -lm -o hello         # 链接特定库(如数学库-lm)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>编译时定义宏</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gcc -D宏名 hello.c<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-</ol>
+</ul>
 <h3 id="0-4-GDB-调试器"><a href="#0-4-GDB-调试器" class="headerlink" title="0.4 GDB 调试器"></a>0.4 GDB 调试器</h3><ol>
 <li><p>GDB(GNU Project Debugger) 功能</p>
 <ul>
@@ -428,57 +437,57 @@
 <li><p>gdb 命令(<kbd>Enter</kbd> 表示重复上一命令)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell">run         # 运行<br>start       # 单步执行.停在第一行<br>quit(q)     # 退出<br>list(l)     # 查看代码<br>break(b)    # 设置断点,行数<br>delete(d)   # 删除断点<br>next(n)     # 单步执行,逐过程<br>step(s)     # 单步执行,逐语句<br>finish      # 结束当前函数,跳出<br>continue(c) # 继续运行<br>display     # 追踪变量<br>undisplay   # 取消追踪<br>watch       # 观察点修改时进行打印<br><br>print(p) # 查看变量<br>set var  # 设置变量<br>info(i)  # 查看信息<br>x 0x...  # 查看内存信息<br>!clear   # 清屏<br>thread   # 线程<br>disass   # 汇编<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="0-5-CMake-构建"><a href="#0-5-CMake-构建" class="headerlink" title="0.5 CMake 构建"></a>0.5 CMake 构建</h3><ol>
+<h3 id="0-5-CMake-环境"><a href="#0-5-CMake-环境" class="headerlink" title="0.5 CMake 环境"></a>0.5 CMake 环境</h3><ol>
 <li><p><strong>CMake: 开源的 跨平台构建工具,用于管理软件编译过程</strong></p>
 <ul>
-<li>CMake 不直接构建项目,而是生成标准的构建文件(如 Makefile)</li>
+<li>cmake 不直接构建项目,而是生成标准的构建文件(如 <code>Makefile</code>)</li>
 <li>再由底层工具(如 <code>make, ninja</code>)完成实际编译</li>
 <li>使用 <code>CMakeLists.txt</code> 文件定义构建规则,语法类似脚本语言</li>
 </ul>
 </li>
-<li><p>CMake 构建流程</p>
+<li><p>cmake 安装</p>
 <ul>
 <li><p>Windows 可以通过<a target="_blank" rel="noopener" href="https://cmake.org/download/">官网下载安装 <code>CMake</code></a>(如 <code>cmake-4.0.2-windows-x86_64.msi</code>)</p>
 </li>
 <li><p>Ubuntu 使用如下命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt update         # 更新软件包列表<br>sudo apt install cmake  # 安装 CMake<br>cmake --version         # 验证安装<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>源码安装</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译依赖.下载 CMake 源码</span><br>sudo apt update &amp;&amp; sudo apt install -y build-essential libssl-dev<br>wget https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压并编译安装 CMake</span><br>tar -zxvf cmake-4.0.3.tar.gz<br>cd cmake-4.0.3<br>./bootstrap --prefix=/usr/local --parallel=$(nproc) # 指定安装路径并启用多核编译<br>make -j$(nproc)   # 并行编译加速<br>sudo make install # 安装 CMake<br>cmake --version   # 验证安装<br></code></pre></td></tr></table></figure>
+<li><p>通过源码安装(可选)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装编译依赖.下载 CMake 源码</span><br>sudo apt update &amp;&amp; sudo apt install -y build-essential libssl-dev<br>wget https://github.com/Kitware/CMake/releases/download/v4.0.3/cmake-4.0.3.tar.gz<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压并编译安装 CMake</span><br>tar -zxvf cmake-4.0.3.tar.gz<br>cd cmake-4.0.3<br>./bootstrap --prefix=/usr/local --parallel=$(nproc) # 指定安装路径并启用多核编译<br>make -j$(nproc)   # 并行编译加速<br>sudo make install # 安装 CMake<br>cmake --version   # 验证安装<br></code></pre></td></tr></table></figure></li>
+</ul>
 </li>
-<li><p>卸载</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt remove cmake # 通过 apt 卸载<br><br>cd cmake-4.0.3/build<br>sudo make uninstall   # 手动编译卸载<br></code></pre></td></tr></table></figure>
+<li><p>cmake 卸载</p>
 </li>
+</ol>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt remove cmake # 通过 apt 方式卸载<br><br>cd cmake-4.0.3/build<br>sudo make uninstall   # 通过源码编译安装的卸载方式<br></code></pre></td></tr></table></figure>
+
+<h3 id="0-6-CMake-构建"><a href="#0-6-CMake-构建" class="headerlink" title="0.6 CMake 构建"></a>0.6 CMake 构建</h3><ol>
 <li><p>编写 <code>CMakeLists.txt</code> 文件.下面是最基础的配置</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.20</span>)   <span class="hljs-comment"># CMake 最低版本要求</span><br><span class="hljs-keyword">project</span>(hello)                         <span class="hljs-comment"># 配置项目名称为 hello</span><br><span class="hljs-keyword">add_executable</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> main.c) <span class="hljs-comment"># 为生成可执行文件所使用到的源文件</span><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>CMake 手动构建命令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cmake -B build      # 创建 build 目录,编译 CMakeList.txt<br>cmake --build build # 构建项目,生成可执行文件<br></code></pre></td></tr></table></figure>
+<li><p>cmake 手动构建命令(若修改了 <code>CMakeLists.txt</code> 文件但并未及时生效,可以删除 <code>./build</code> 目录后重新构建)</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake">cmake -B build      <span class="hljs-comment"># 创建 build 目录,编译 CMakeList.txt</span><br>cmake --build build <span class="hljs-comment"># 构建项目,生成可执行文件</span><br></code></pre></td></tr></table></figure>
 </li>
-<li><p>若修改了 <code>CMakeLists.txt</code> 文件但并未及时生效,可以删除 <code>./build</code> 目录后重新构建</p>
-</li>
-</ul>
-</li>
-<li><p>CMake 语法</p>
+<li><p>cmake 语法</p>
 <ul>
-<li><p>CMake 项目基于 CMakeLists.txt 构建,其中(或 <code>*.cmake</code> 文件)使用的就是 CMake Language</p>
+<li><p>cmake 项目基于 <code>CMakeLists.txt</code> 构建,其中(或 <code>*.cmake</code> 文件)使用的就是 CMake Language</p>
 </li>
 <li><p>cmake 命令行工具由5个可执行文件构成: <code>cmake, ctest, cpack, cmake-gui, ccmake</code></p>
 </li>
-<li><p>不通过 CMakeLists.txt 运行 CMake 的方法(该方法仅学习语法,实际并不会用到)</p>
+<li><p>不通过 <code>CMakeLists.txt</code> 运行 cmake 的方法(该方法仅学习语法,实际并不会用到)</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">cmake -P *.cmake<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>获取 CMake 变量</p>
+<li><p>获取 cmake 变量</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">message</span>(<span class="hljs-variable">$&#123;CMAKE_VERSION&#125;</span>)  <span class="hljs-comment"># 打印版本号</span><br></code></pre></td></tr></table></figure>
 
 <ul>
-<li>CMake 的变量(区分大小写)分为: CMake 提供 和 自定义的</li>
-<li>CMake 的变量存储时均为字符串</li>
+<li>cmake 的变量(区分大小写)分为: cmake 提供 和 自定义的</li>
+<li>cmake 的变量存储时均为字符串</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>CMake 构建项目的方式</p>
+<li><p>cmake  构建项目的方式</p>
 <ul>
 <li><code>add_executable</code> 中直接写入相对路径.此时在源码中引入头文件也需要写相对路径</li>
 </ul>
@@ -2031,11 +2040,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
+        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
+      
         <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="print-no-link">#计算机</a>
       
         <a href="/tags/Code/" class="print-no-link">#Code</a>
-      
-        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
       
     </div>
   
