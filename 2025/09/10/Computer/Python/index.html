@@ -19,16 +19,16 @@
   <meta name="author" content="Shuang">
   <meta name="keywords" content="Shuang">
   
-    <meta name="description" content="Python Crash Course; Fluent Python">
+    <meta name="description" content="Python Crash Course; Fluent Python; Automate The Boring Stuff With Python.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python">
 <meta property="og:url" content="http://example.com/2025/09/10/Computer/Python/index.html">
 <meta property="og:site_name" content="Shuang blog">
-<meta property="og:description" content="Python Crash Course; Fluent Python">
+<meta property="og:description" content="Python Crash Course; Fluent Python; Automate The Boring Stuff With Python.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Python.svg">
 <meta property="article:published_time" content="2025-09-10T15:52:56.924Z">
-<meta property="article:modified_time" content="2025-09-14T11:43:16.485Z">
+<meta property="article:modified_time" content="2025-09-18T15:07:01.815Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.9k 字
+          11k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          83 分钟
+          92 分钟
         
       </span>
     
@@ -301,7 +301,7 @@
 </ul>
 </li>
 <li><p>注释</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8  # 文件编码声明注释(位于文件首行)</span><br><span class="hljs-string">&#x27;&#x27;&#x27; 多行注释 &#x27;&#x27;&#x27;</span><br><span class="hljs-string">&quot;&quot;&quot; 多上注释 &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># coding:utf-8  # 文件编码声明注释(位于文件首行)</span><br><span class="hljs-string">&#x27;&#x27;&#x27; 多行注释 &#x27;&#x27;&#x27;</span><br><span class="hljs-string">&quot;&quot;&quot; 多行注释 &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>行与缩进</p>
 <ul>
@@ -436,7 +436,7 @@
 </li>
 </ol>
 <h3 id="0-3-字符串"><a href="#0-3-字符串" class="headerlink" title="0.3 字符串"></a>0.3 字符串</h3><ol>
-<li><p>表示形式: 用 <code>&#39;</code> 或 <code>&quot;</code> 或 <code>&#39;&#39;&#39;</code> 包围.特别地,<strong>三引号允许字符串跨行</strong></p>
+<li><p>字符串表示形式: 用 <code>&#39;</code> 或 <code>&quot;</code> 或 <code>&#39;&#39;&#39;</code> 包围.特别地,<strong>三引号允许字符串跨行</strong></p>
 </li>
 <li><p><strong>python 没有 <code>char</code> 类型.使用长度为 1 的字符串代替</strong></p>
 </li>
@@ -449,39 +449,33 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>+</code></td>
+<td>+</td>
 <td>拼接字符串</td>
 </tr>
 <tr>
-<td><code>*</code></td>
+<td>*</td>
 <td>重复字符串</td>
 </tr>
 <tr>
-<td><code>[]</code></td>
+<td>[]</td>
 <td>下标索引</td>
 </tr>
 <tr>
-<td><code>in / not in</code></td>
+<td>in &#x2F; not in</td>
 <td>成员运算</td>
 </tr>
 <tr>
-<td><code>r / R</code></td>
+<td>r &#x2F; R</td>
 <td>raw string: 前缀 r 表示不进行字符转义</td>
 </tr>
 <tr>
-<td><code>%</code></td>
+<td>%</td>
 <td>格式字符串.如 <code>print(&quot;%d&quot; % age)</code></td>
 </tr>
 </tbody></table>
 </li>
 <li><p>格式化输出</p>
-<ul>
-<li><p><code>.format</code> 方法</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># print 默认换行输出.如果要实现不换行输出,需要在变量末尾加上 end=&quot;&quot;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;age: &#123;&#125;, name: &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(age, name), end=<span class="hljs-string">&quot;&quot;</span>)<br></code></pre></td></tr></table></figure>
-</li>
-<li><p><strong><code>f-string</code>(字面量格式化字符串,python3.6添加)</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 以 f 作为字符串前缀,用 &#123;&#125; 包围表达式.其中的表达式将会被计算后的值替换</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;age: <span class="hljs-subst">&#123;age&#125;</span>, name: <span class="hljs-subst">&#123;name&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure></li>
-</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># format 方法格式化.print 默认换行输出.如果要实现不换行输出,需要在变量末尾加上 end=&quot;&quot;</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;age: &#123;&#125;, name: &#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(age, name), end=<span class="hljs-string">&quot;&quot;</span>)<br><br><span class="hljs-comment"># f-string(python3.6).f 作为前缀,用 &#123;&#125; 包围表达式.其中的表达式将会被计算后的值替换</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;age: <span class="hljs-subst">&#123;age&#125;</span>, name: <span class="hljs-subst">&#123;name&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>标准输入</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 将 &quot;prompt&quot; 字符串进行标准输出,然后等待用户输入,并以 string 类型返回(读取一行)</span><br><span class="hljs-built_in">str</span> = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;prompt&quot;</span>)<br></code></pre></td></tr></table></figure>
@@ -547,7 +541,29 @@
 </ol>
 <h3 id="0-4-内置函数"><a href="#0-4-内置函数" class="headerlink" title="0.4 内置函数"></a>0.4 内置函数</h3><ol>
 <li><p>判断对象所属类型</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">type</span>(obj)                   <span class="hljs-comment"># 返回对象的类型</span><br><span class="hljs-built_in">isinstance</span>(obj, class_name)	<span class="hljs-comment"># 判断对象是否是已知类型</span><br><span class="hljs-comment"># 区别在于 type 不认子类,而 isinstance 认为子类是父类类型</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">type</span>(obj)                   <span class="hljs-comment"># 返回对象的类型</span><br><span class="hljs-built_in">isinstance</span>(obj, class_name)	<span class="hljs-comment"># 判断对象是否是已知类型.会认为子类对象是父类类型</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>转换函数</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bin(), oct(), hex()</td>
+<td>进制转换.分别为 二进制, 八进制, 十六进制</td>
+</tr>
+<tr>
+<td>chr()</td>
+<td>Unicode 码点 -&gt; 字符</td>
+</tr>
+<tr>
+<td>ord()</td>
+<td>字符 -&gt; Unicode 码点</td>
+</tr>
+</tbody></table>
 </li>
 <li><p>数学函数(<code>import math</code>)</p>
 <table>
@@ -574,16 +590,16 @@
 <td>$\mathrm{ln}x$ &#x2F; $\mathrm{log}_{10}x$</td>
 </tr>
 <tr>
-<td><strong>max(x, y,…) &#x2F; min(x, y,…)</strong></td>
-<td><strong>取最大&#x2F;小值,参数可以为序列</strong></td>
+<td>max(x, y,…) &#x2F; min(x, y,…)</td>
+<td>取最大 &#x2F; 小值,参数可以为序列</td>
 </tr>
 <tr>
 <td>modf(x)</td>
-<td>返回x的整数部分与小数部分,符号与x相同</td>
+<td>返回 x的 整数部分与小数部分(符号与 x 相同)</td>
 </tr>
 <tr>
-<td><strong>round(x[, n])</strong></td>
-<td><strong>4舍6进5看齐,奇进偶舍. n 指定位数</strong></td>
+<td>round(x[, n])</td>
+<td>4舍6进5看齐,奇进偶舍. n 指定位数</td>
 </tr>
 </tbody></table>
 </li>
@@ -727,7 +743,7 @@
 <li><p><code>if - elif - else</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> &lt;condition_1&gt;:  <span class="hljs-comment"># 条件表达式的值为 True 时,则执行,且下面的判断不在执行</span><br>    &lt;statement_block_1&gt;<br><span class="hljs-keyword">elif</span> condition_2:  <span class="hljs-comment"># 当 condition_1 的值为 False,才会进行判断</span><br>    &lt;statement_block_2&gt;<br><span class="hljs-keyword">else</span>:              <span class="hljs-comment"># 当所有的条件表达式都为 False,才会执行</span><br>    &lt;statement_block_3&gt;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p><code>match - case</code>(python3.10 添加)</p>
+<li><p><code>match - case</code>(python3.10)</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">match</span> subject:         <span class="hljs-comment"># 类似于 C 中的 switch-case</span><br>    <span class="hljs-keyword">case</span> &lt;pattern_1&gt;:  <span class="hljs-comment"># 当成功匹配时,执行相应的语句</span><br>        &lt;action_1&gt;<br>    <span class="hljs-keyword">case</span> &lt;pattern_2&gt;:<br>        &lt;action_2&gt;<br>    <span class="hljs-keyword">case</span> _:            <span class="hljs-comment"># 可以匹配一切.该语句与 C 中的 &#x27;default:&#x27; 作用类似</span><br>        &lt;action_wildcard&gt;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><code>while</code>(python 没有 <code>do while</code>)</p>
@@ -771,7 +787,7 @@
 </tr>
 <tr>
 <td align="left">状态</td>
-<td align="left">无状态（通常）</td>
+<td align="left">无状态(通常)</td>
 <td align="left">有状态(记住当前位置)</td>
 </tr>
 <tr>
@@ -800,7 +816,7 @@
 <li><p>生成器执行过程</p>
 <ul>
 <li>生成器函数中遇到 <code>yield</code> 语句时,函数的执行暂停,然后将 <code>yield</code> 后面的表达式作为当前迭代的值返回</li>
-<li>每次调用生成器的 <code>next</code> 函数或使用 <code>for</code> 循环进行迭代时,函数会从上次暂停的地方继续执行,直到再次遇到 <code>yield</code> 语句</li>
+<li>调用生成器的 <code>next</code> 函数或使用 <code>for</code> 循环迭代时,函数会从上次暂停的地方继续执行,直到再次遇到 <code>yield</code> 语句</li>
 </ul>
 </li>
 <li><p>生成器使用示例</p>
@@ -922,7 +938,7 @@
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Animal</span>:<br>    <span class="hljs-comment"># 属性 (通过特殊的 __init__ 方法初始化.这是构造函数)</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name</span>):  <span class="hljs-comment"># self 代表类的实例本身.类似 c++ 的 this 指针</span><br>        <span class="hljs-variable language_">self</span>.name = name       <span class="hljs-comment"># public 属性(设计思想: 约定优先于配置)</span><br>        <span class="hljs-variable language_">self</span>._mood = <span class="hljs-string">&quot;happy&quot;</span>   <span class="hljs-comment"># protected 属性(只是约定,并不强制)</span><br>        <span class="hljs-variable language_">self</span>.__secret = <span class="hljs-number">18</span>     <span class="hljs-comment"># private 属性(并非真正的私有,而是被混淆为 _Dog__secret)</span><br><br>    <span class="hljs-comment"># 方法 (Method).类的声明与实现位于同一文件.无需分离</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">speak</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;self.name&#125;</span> says: unknown sound&quot;</span><br><br>animal = Animal(<span class="hljs-string">&quot;Buddy&quot;</span>) <span class="hljs-comment"># 创建对象.无需使用 new</span><br><span class="hljs-built_in">print</span>(animal.name)       <span class="hljs-comment"># 访问公有属性</span><br><span class="hljs-built_in">print</span>(animal.speak())    <span class="hljs-comment"># 调用方法</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>继承(python 允许多继承)</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> abc <span class="hljs-keyword">import</span> ABC, abstractmethod<br><br><span class="hljs-comment"># 定义抽象基类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Shape</span>(<span class="hljs-title class_ inherited__">ABC</span>):   <span class="hljs-comment"># 继承自 ABC.相当于 C++ 的 public 继承</span><br><span class="hljs-meta">    @abstractmethod </span><span class="hljs-comment"># 装饰器.声明为抽象方法,强制子类必须实现此方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">area</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">pass</span><br><br><span class="hljs-meta">    @staticmethod   </span><span class="hljs-comment"># 标记为静态方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">validate_positive</span>(<span class="hljs-params">value, name=<span class="hljs-string">&quot;value&quot;</span></span>):<br>        <span class="hljs-keyword">if</span> value &lt;= <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;name&#125;</span> must be positive&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><span class="hljs-comment"># 具体子类必须实现所有抽象方法</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Circle</span>(<span class="hljs-title class_ inherited__">Shape</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, radius</span>):<br>        Shape.validate_positive(radius, <span class="hljs-string">&quot;radius&quot;</span>)<br>        <span class="hljs-variable language_">self</span>._radius = radius<br><br><span class="hljs-meta">    @classmethod    </span><span class="hljs-comment"># 标记为类方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">from_diameter</span>(<span class="hljs-params">cls, diameter</span>):  <span class="hljs-comment"># cls 是类本身(Circle).而非类实例</span><br>        cls.validate_positive(diameter, <span class="hljs-string">&quot;diameter&quot;</span>)<br>        <span class="hljs-keyword">return</span> cls(diameter / <span class="hljs-number">2</span>)       <span class="hljs-comment"># 实现通过 diameter 创建实例,如 c = Circle.from_diameter(100)</span><br><br><span class="hljs-meta">    @property       </span><span class="hljs-comment"># 标记为 setter 方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">radius</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>._radius<br><br><span class="hljs-meta">    @radius.setter  </span><span class="hljs-comment"># 标记为 getter 方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">radius</span>(<span class="hljs-params">self, value</span>):<br>        Shape.validate_positive(value, <span class="hljs-string">&#x27;radius&#x27;</span>)<br>        <span class="hljs-variable language_">self</span>._radius = value<br><br>    <span class="hljs-comment"># 方法重写(Override).python 所有的函数都是虚函数.直接重新定义即可</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">area</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">3.14159</span> * <span class="hljs-variable language_">self</span>._radius ** <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> abc <span class="hljs-keyword">import</span> ABC, abstractmethod<br><br><span class="hljs-comment"># 定义抽象基类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Shape</span>(<span class="hljs-title class_ inherited__">ABC</span>):   <span class="hljs-comment"># 继承自 ABC.相当于 C++ 的 public 继承</span><br><span class="hljs-meta">    @abstractmethod </span><span class="hljs-comment"># 装饰器.声明为抽象方法,强制子类必须实现此方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">area</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">pass</span><br><br><span class="hljs-meta">    @staticmethod   </span><span class="hljs-comment"># 标记为静态方法.只是写在类中的普通方法.不需要 self 或 cls</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">validate_positive</span>(<span class="hljs-params">value, name=<span class="hljs-string">&quot;value&quot;</span></span>):<br>        <span class="hljs-keyword">if</span> value &lt;= <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;name&#125;</span> must be positive&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><span class="hljs-comment"># 具体子类必须实现所有抽象方法</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Circle</span>(<span class="hljs-title class_ inherited__">Shape</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, radius</span>):<br>        Shape.validate_positive(radius, <span class="hljs-string">&quot;radius&quot;</span>)<br>        <span class="hljs-variable language_">self</span>._radius = radius<br><br><span class="hljs-meta">    @classmethod    </span><span class="hljs-comment"># 标记为类方法.此时第一个参数 cls 是类本身(Circle).而非类实例 self</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">from_diameter</span>(<span class="hljs-params">cls, diameter</span>):<br>        cls.validate_positive(diameter, <span class="hljs-string">&quot;diameter&quot;</span>)<br>        <span class="hljs-keyword">return</span> cls(diameter / <span class="hljs-number">2</span>)       <span class="hljs-comment"># 实现通过 diameter 创建实例,如 c = Circle.from_diameter(100)</span><br><br><span class="hljs-meta">    @property       </span><span class="hljs-comment"># 标记为 setter 方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">radius</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>._radius<br><br><span class="hljs-meta">    @radius.setter  </span><span class="hljs-comment"># 标记为 getter 方法</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">radius</span>(<span class="hljs-params">self, value</span>):<br>        Shape.validate_positive(value, <span class="hljs-string">&#x27;radius&#x27;</span>)<br>        <span class="hljs-variable language_">self</span>._radius = value<br><br>    <span class="hljs-comment"># 方法重写(Override).python 所有的函数都是虚函数.直接重新定义即可</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">area</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">3.14159</span> * <span class="hljs-variable language_">self</span>._radius ** <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>多态: python 不关心对象的实际类型,只关心是否需要的方法或属性</p>
 </li>
@@ -1219,7 +1235,16 @@
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 使用 try</span><br>file = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./hello.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>)<br><span class="hljs-keyword">try</span>:<br>    file.write(<span class="hljs-string">&#x27;hello world&#x27;</span>)<br><span class="hljs-keyword">finally</span>:<br>    file.close()<br><br><span class="hljs-comment"># 使用 with</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./hello.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> file:<br>    file.write(<span class="hljs-string">&#x27;hello,world!&#x27;</span>)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>自定义异常</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCustomError</span>(<span class="hljs-title class_ inherited__">Exception</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;A custom exception for my application.&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 通常非常简单, pass 即可.因为继承本身就提供了类型区分</span><br>    <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure></li>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCustomError</span>(<span class="hljs-title class_ inherited__">Exception</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;A custom exception for my application.&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 通常非常简单, pass 即可.因为继承本身就提供了类型区分</span><br>    <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>断言: 健全性检查,用于确保代码没有做明显错误的事情</p>
+<ul>
+<li><p>若 <code>assert</code> 语句检查失败,则抛出 <code>AssertionError</code> 异常</p>
+</li>
+<li><p>断言成功时,无作用.当断言失败时,说明程序出现 bug,应立即停止程序(快速失败)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">assert</span> condition, <span class="hljs-string">&#x27;错误信息&#x27;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
 </ol>
 <h3 id="3-5-文件"><a href="#3-5-文件" class="headerlink" title="3.5 文件"></a>3.5 文件</h3><ol>
 <li><p>python 风格采用上下文管理器(context manager)和 <code>with</code> 语句进行资源管理</p>
@@ -1259,20 +1284,122 @@
 </tbody></table>
 </li>
 </ol>
-<h2 id="4-python-库"><a href="#4-python-库" class="headerlink" title="4 python 库"></a>4 python 库</h2><h3 id="4-1-标准库概括"><a href="#4-1-标准库概括" class="headerlink" title="4.1 标准库概括"></a>4.1 标准库概括</h3><ol>
-<li><code>os</code> 模块: 提供与操作系统交互的函数</li>
-<li><code>sys</code> 模块:提供与 python 解释器和系统相关的功能</li>
-<li><code>time</code> 模块: 提供处理时间的函数</li>
-<li><code>datetime</code> 模块: 提供更高级的日期和时间处理函数</li>
-<li><code>random</code> 模块: 提供生成随机数的函数</li>
-<li><code>math</code> 模块: 提供数学函数</li>
-<li><code>re</code> 模块: 提供正则表达式处理函数</li>
-<li><code>json</code> 模块: 提供 JSON 编解码函数.可将 python 对象转换为 JSON 格式,并从 JSON 格式解析出 python 对象</li>
-<li><code>urllib</code> 模块: 提供访问网页和处理 URL 的功能.包括下载文件,发送 POST 请求,处理 cookies 等</li>
+<h2 id="4-标准库"><a href="#4-标准库" class="headerlink" title="4 标准库"></a>4 标准库</h2><h3 id="4-1-sys"><a href="#4-1-sys" class="headerlink" title="4.1 sys"></a>4.1 sys</h3><ol>
+<li><p>sys 模块: 提供 python 解释器本身以及其环境交互的变量和函数</p>
+</li>
+<li><p>获取命令行参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># script.py</span><br><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;脚本名:&quot;</span>, sys.argv[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;参数个数:&quot;</span>, <span class="hljs-built_in">len</span>(sys.argv) - <span class="hljs-number">1</span>)<br><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) &gt; <span class="hljs-number">1</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;参数列表:&quot;</span>, sys.argv[<span class="hljs-number">1</span>:])<br>    <span class="hljs-keyword">for</span> i, arg <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(sys.argv[<span class="hljs-number">1</span>:], <span class="hljs-number">1</span>):<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;参数 <span class="hljs-subst">&#123;i&#125;</span>: <span class="hljs-subst">&#123;arg&#125;</span>&quot;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;请提供命令行参数。&quot;</span>)<br><br><span class="hljs-comment"># 运行方式: python script.py arg1 arg2 arg3</span><br><span class="hljs-comment"># 输出:</span><br><span class="hljs-comment"># 脚本名: script.py</span><br><span class="hljs-comment"># 参数个数: 3</span><br><span class="hljs-comment"># 参数列表: [&#x27;arg1&#x27;, &#x27;arg2&#x27;, &#x27;arg3&#x27;]</span><br><span class="hljs-comment"># 参数 1: arg1</span><br><span class="hljs-comment"># 参数 2: arg2</span><br><span class="hljs-comment"># 参数 3: arg3</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>退出程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">sys.exit(<span class="hljs-number">1</span>)  <span class="hljs-comment"># 非零状态码表示错误退出</span><br>sys.exit(<span class="hljs-number">0</span>)  <span class="hljs-comment"># 零状态码表示成功退出</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>解释器版本信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;版本字符串:&quot;</span>, sys.version)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;版本元组:&quot;</span>, sys.version_info)<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="4-2-第三方库"><a href="#4-2-第三方库" class="headerlink" title="4.2 第三方库"></a>4.2 第三方库</h3><ol>
-<li><p><strong><a target="_blank" rel="noopener" href="https://pypi.org/project/pip/">pip</a>: python 的包管理工具.提供对 python 包的查找, 下载, 安装, 卸载功能</strong></p>
+<h3 id="4-2-pathlib"><a href="#4-2-pathlib" class="headerlink" title="4.2 pathlib"></a>4.2 pathlib</h3><ol>
+<li><p>os 模块: 现代 python 中处理文件路径的推荐方式</p>
+</li>
+<li><p>path 对象创建(将文件系统路径视为具有方法和属性的对象.而非普通的字符串)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path<br><br>data_file = Path(<span class="hljs-string">&#x27;data&#x27;</span>) / <span class="hljs-string">&#x27;file.csv&#x27;</span>     <span class="hljs-comment"># 重载 \ 运算符</span><br>config_file = Path(<span class="hljs-string">&#x27;config/settings.ini&#x27;</span>) <span class="hljs-comment"># 字符串构造</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>路径信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">p = Path(<span class="hljs-string">&#x27;/home/user/projects/python_script.py&#x27;</span>)<br><br>p.name       <span class="hljs-comment"># 文件名(包含后缀): &#x27;python_script.py&#x27;</span><br>p.stem       <span class="hljs-comment"># 文件名(不包含后缀): &#x27;python_script&#x27;</span><br>p.suffix     <span class="hljs-comment"># 文件后缀: &#x27;.py&#x27;</span><br>p.suffixes   <span class="hljs-comment"># 所有后缀列表: [&#x27;.py&#x27;] (对于 &#x27;.tar.gz&#x27; 则返回 [&#x27;.tar&#x27;, &#x27;.gz&#x27;])</span><br>p.parent     <span class="hljs-comment"># 父目录: Path(&#x27;/home/user/projects&#x27;)</span><br>p.anchor     <span class="hljs-comment"># 根目录(盘符或 &#x27;/&#x27;): &#x27;/&#x27; 或 &#x27;C:\\&#x27;</span><br><br>str_path = <span class="hljs-built_in">str</span>(p)      <span class="hljs-comment"># 将路径转化为字符串(有时需要传给只接受字符串的函数)</span><br>abs_path = p.resolve() <span class="hljs-comment"># 获取绝对路径(如果路径是相对的,会基于当前工作目录进行解析)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>路径状态(真正访问磁盘数据)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">p = Path(<span class="hljs-string">&#x27;my_file.txt&#x27;</span>)<br><br>p.exists()      <span class="hljs-comment"># 路径是否存在(文件或目录)</span><br>p.is_file()     <span class="hljs-comment"># 是否是文件</span><br>p.is_dir()      <span class="hljs-comment"># 是否是目录</span><br>p.is_absolute() <span class="hljs-comment"># 是否是绝对路径</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>遍历目录</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">p = Path(<span class="hljs-string">&#x27;/home/user/projects&#x27;</span>)<br><br><span class="hljs-comment"># 遍历当前目录下的所有子项(文件和目录)</span><br><span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> p.iterdir():<br>    <span class="hljs-built_in">print</span>(child)<br><br><span class="hljs-comment"># 递归遍历当前目录及其所有子目录下的文件(通配符搜索)</span><br><span class="hljs-comment"># 查找所有 .py 文件</span><br><span class="hljs-keyword">for</span> py_file <span class="hljs-keyword">in</span> p.rglob(<span class="hljs-string">&#x27;*.py&#x27;</span>):<br>    <span class="hljs-built_in">print</span>(py_file)<br><br><span class="hljs-comment"># 非递归的通配符搜索(类似 iterdir() 但可以过滤)</span><br><span class="hljs-keyword">for</span> py_file <span class="hljs-keyword">in</span> p.glob(<span class="hljs-string">&#x27;*.py&#x27;</span>):<br>    <span class="hljs-built_in">print</span>(py_file)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>文件系统操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">p.mkdir()  <span class="hljs-comment"># 创建一级目录</span><br>p.unlink() <span class="hljs-comment"># 删除文件</span><br>p.rmdir()  <span class="hljs-comment"># 删除空目录</span><br><br><span class="hljs-comment"># 重命名或移动文件</span><br>source = Path(<span class="hljs-string">&#x27;old_name.txt&#x27;</span>)<br>destination = Path(<span class="hljs-string">&#x27;new_name.txt&#x27;</span>)<br>source.rename(destination)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-3-json"><a href="#4-3-json" class="headerlink" title="4.3 json"></a>4.3 json</h3><ol>
+<li><p><code>json</code> 模块: 处理 json 数据</p>
+</li>
+<li><p>json 字符串与 python 对象的转换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> json<br><br>data = &#123;<br>    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;张三&quot;</span>,<br>    <span class="hljs-string">&quot;age&quot;</span>: <span class="hljs-number">30</span>,<br>    <span class="hljs-string">&quot;is_student&quot;</span>: <span class="hljs-literal">False</span>,<br>    <span class="hljs-string">&quot;hobbies&quot;</span>: [<span class="hljs-string">&quot;读书&quot;</span>, <span class="hljs-string">&quot;编程&quot;</span>, <span class="hljs-string">&quot;音乐&quot;</span>],<br>    <span class="hljs-string">&quot;address&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;city&quot;</span>: <span class="hljs-string">&quot;北京&quot;</span>,<br>        <span class="hljs-string">&quot;country&quot;</span>: <span class="hljs-string">&quot;中国&quot;</span><br>    &#125;,<br>    <span class="hljs-string">&quot;score&quot;</span>: <span class="hljs-literal">None</span><br>&#125;<br><br><span class="hljs-comment"># dict --&gt; json str</span><br>json_string = json.dumps(data, ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">2</span>)<br><br><span class="hljs-comment"># json str --&gt; dict</span><br>python_obj  = json.loads(json_string)<br><br><span class="hljs-comment"># dict --&gt; user.json file</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;users.json&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    json.dump(data, f, ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">2</span>)<br><br><span class="hljs-comment"># user.json file --&gt; dict</span><br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;users.json&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    data = json.load(f)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-4-re"><a href="#4-4-re" class="headerlink" title="4.4 re"></a>4.4 re</h3><ol>
+<li><p><code>re</code> 模块: 提供正则表达式处理函数</p>
+</li>
+<li><p>正则表达式匹配规则</p>
 <ul>
+<li>字面字符: 普通字符.如数字, 字母, 空格</li>
+<li>字符类: 使用 <code>[]</code> 包围的字符集合.匹配其中的任意一个</li>
+<li>转义字符: 具有特殊含义的字符,匹配它们需要加上 <code>\</code>. 如 <code>. ^ $ * + ? &#123; &#125; [ ] \ | ( )</code></li>
+<li>预定义字符<ul>
+<li><code>.</code>: 任意单个字符</li>
+<li><code>\d</code>: 数字; <code>\D</code>: 非数字</li>
+<li><code>\w</code>: 单词字符(字母, 数字, 下划线); <code>\W</code>: 非单词字符</li>
+</ul>
+</li>
+<li>量词: 重复匹配<ul>
+<li><code>*</code>: 0次或多次; <code>+</code> 1次或多次; <code>?</code>: 0次或1次</li>
+<li><code>&#123;n&#125;</code>: 恰好 n 次; <code>&#123;n,&#125;</code>: 至少 n 次; <code>&#123;n,m&#125;</code>: n 到 m 次</li>
+</ul>
+</li>
+<li>位置锚点<ul>
+<li><code>^</code>: 字符串开头; <code>$</code>: 字符串结尾</li>
+<li><code>\b</code>: 单词边界; <code>\B</code>: 非单词边界</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>匹配字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> re<br><br>text = <span class="hljs-string">&quot;hello world hello python&quot;</span><br>result = re.<span class="hljs-keyword">match</span>(<span class="hljs-string">r&quot;hello&quot;</span>, text)    <span class="hljs-comment"># 从开头匹配</span><br>result = re.search(<span class="hljs-string">r&quot;hello&quot;</span>, text)   <span class="hljs-comment"># 搜索整个字符串的第一个匹配项</span><br>result = re.findall(<span class="hljs-string">r&quot;hello&quot;</span>, text)  <span class="hljs-comment"># 查找所有匹配项</span><br>result = re.finditer(<span class="hljs-string">r&quot;hello&quot;</span>, text) <span class="hljs-comment"># 查找所有匹配项.并返回迭代器</span><br><br>result = re.sub(<span class="hljs-string">r&quot;hello&quot;</span>, <span class="hljs-string">r&quot;hi&quot;</span>, text)         <span class="hljs-comment"># 替换匹配项</span><br>result, count = re.sub(<span class="hljs-string">r&quot;hello&quot;</span>, <span class="hljs-string">r&quot;hi&quot;</span>, text)  <span class="hljs-comment"># 替换匹配项.并返回次数</span><br>result = re.split(<span class="hljs-string">r&quot;hello&quot;</span>, text)              <span class="hljs-comment"># 分割字符串</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>match 对象: 匹配成功后返回的结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">result.group()  <span class="hljs-comment"># 获取匹配的组.可以指定索引(字符串或元组类型)</span><br>result.groups() <span class="hljs-comment"># 获取所有分组(元组类型)</span><br>result.span()   <span class="hljs-comment"># 获取匹配范围.左闭右开区间(元组类型)</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="4-5-logging"><a href="#4-5-logging" class="headerlink" title="4.5 logging"></a>4.5 logging</h3><ol>
+<li><p><code>logging</code> 模块: 日志记录</p>
+</li>
+<li><p>日志级别</p>
+<table>
+<thead>
+<tr>
+<th align="left">级别</th>
+<th align="left">函数</th>
+<th align="left">使用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DEBUG</td>
+<td align="left">10</td>
+<td align="left">详细的调试信息.开发时使用</td>
+</tr>
+<tr>
+<td align="left">INFO</td>
+<td align="left">20</td>
+<td align="left">确认程序按预期运行</td>
+</tr>
+<tr>
+<td align="left">WARNING</td>
+<td align="left">30</td>
+<td align="left">表明一些意外情况.但程序还能运行</td>
+</tr>
+<tr>
+<td align="left">ERROR</td>
+<td align="left">40</td>
+<td align="left">由于严重问题.某些功能无法正常运行</td>
+</tr>
+<tr>
+<td align="left">CRITICAL</td>
+<td align="left">50</td>
+<td align="left">严重错误.程序本身可能无法继续运行</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>实例: 调试 <code>factorial</code> 阶乘函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><span class="hljs-comment"># 该语句需要位于程序上方,而无需关注其原理</span><br>logging.basicConfig(level=logging.DEBUG,<br>                    <span class="hljs-built_in">format</span>=<span class="hljs-string">&#x27;%(asctime)s - %(levelname)s - %(message)s&#x27;</span><br>)<br><span class="hljs-comment"># logging.disable(logging.CRITICAL)  # 该语句可禁用日志</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">factorial</span>(<span class="hljs-params">n</span>):<br>    logging.debug(<span class="hljs-string">f&#x27;进入 factorial(<span class="hljs-subst">&#123;n&#125;</span>)&#x27;</span>)<br>    total = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):<br>        total *= i<br>        logging.debug(<span class="hljs-string">f&#x27;i = <span class="hljs-subst">&#123;i&#125;</span>, total = <span class="hljs-subst">&#123;total&#125;</span>&#x27;</span>)<br>    logging.debug(<span class="hljs-string">f&#x27;结束 factorial(<span class="hljs-subst">&#123;n&#125;</span>)&#x27;</span>)<br>    <span class="hljs-keyword">return</span> total<br><br><span class="hljs-built_in">print</span>(factorial(<span class="hljs-number">5</span>))<br><span class="hljs-comment"># 终端输出:</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">2024-06-20 00:12:32,424 - DEBUG - 进入 factorial(5)</span><br><span class="hljs-string">2024-06-20 00:12:32,439 - DEBUG - i = 1, total = 1</span><br><span class="hljs-string">2024-06-20 00:12:32,449 - DEBUG - i = 2, total = 2</span><br><span class="hljs-string">2024-06-20 00:12:32,457 - DEBUG - i = 3, total = 6</span><br><span class="hljs-string">2024-06-20 00:12:32,469 - DEBUG - i = 4, total = 24</span><br><span class="hljs-string">2024-06-20 00:12:32,479 - DEBUG - i = 5, total = 120</span><br><span class="hljs-string">2024-06-20 00:12:32,488 - DEBUG - 结束 factorial(5)</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>记录到文件: 修改 <code>basicConfig</code> 的关键字参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">logging.basicConfig(level=logging.DEBUG,<br>                    filename=<span class="hljs-string">r&#x27;D:\test.log&#x27;</span>,<br>                    filemode=<span class="hljs-string">&#x27;a&#x27;</span>,<br>                    <span class="hljs-built_in">format</span>=<span class="hljs-string">&#x27;%(asctime)s - %(levelname)s - %(message)s&#x27;</span>,<br>                    encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span><br>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="5-三方库"><a href="#5-三方库" class="headerlink" title="5 三方库"></a>5 三方库</h2><h3 id="5-1-pip"><a href="#5-1-pip" class="headerlink" title="5.1 pip"></a>5.1 pip</h3><ol>
+<li><p><strong><a target="_blank" rel="noopener" href="https://pypi.org/project/pip/">pip</a>: python 的包管理工具.提供对 python 包的查找, 下载, 安装, 卸载功能</strong></p>
+</li>
 <li><p>配置 <code>pip</code> 从清华源下载</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple<br></code></pre></td></tr></table></figure>
 </li>
@@ -1287,19 +1414,27 @@
 </li>
 <li><p>其他功能</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip list                 # 显示已安装的包<br>pip list -o              # 查看可升级的包<br>pip show                 # 显示安装包信息<br>pip show -f SomePackage  # 查找指定包的信息<br>pip search SomePackage   # 搜索包<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="5-2-virtualenv"><a href="#5-2-virtualenv" class="headerlink" title="5.2 virtualenv"></a>5.2 virtualenv</h3><ol>
+<li><p>Windows 环境(<code>pip</code> 会随着 python 一起安装)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip --version                        # 查看 pip 版本<br>python -m pip install --upgrade pip  # 更新 pip<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建一个 .venv 的虚拟环境文件夹.并使用 --upgrade-deps 自动升级 pip 和 setuptools</span><br>python -m venv .venv --upgrade-deps<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">激活指定的虚拟环境, 此时终端(cmd)提示符前会显示 (.venv)</span><br>.\.venv\Scripts\activate<br><span class="hljs-meta prompt_"># </span><span class="language-bash">若出现 Execution Policy 报错,使用 管理员身份打开 PowerShell,运行下面命令</span><br>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>linux 环境: 在 Ubuntu 20.04.6 LTS 中,默认安装 python2 (<code>python</code>) 和 python3 (<code>python3</code>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">python --version   # python 2.7.18<br>python3 --version  # python 3.8.10<br><br>sudo apt update<br>sudo apt install python3-pip  # 安装官方仓库的 pip<br>pip3 --version                # 验证安装<br><br>pip3 install virtualenv       # 安装 virtualenv<br>python3 -m virtualenv .venv   # 创建虚拟环境<br>source .venv/bin/activate     # 激活虚拟环境<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>虚拟环境的使用与删除</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">进入虚拟环境后安装的第三方库不会影响到其他环境</span><br>pip install numpy<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">退出虚拟环境. 将会退出到默认全局 python 环境</span><br>deactivate<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除虚拟环境. 只需删除对应的目录文件即可</span><br>rm -rf .venv<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在 VS Code 中使用虚拟环境</p>
+<ul>
+<li>安装 <code>python</code> 拓展.在状态栏中直接选择 python 虚拟环境</li>
+<li>或 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd> 搜索 <code>Python: Select Interpreter</code>. 选择虚拟环境</li>
+<li>后续 <kbd>Ctrl</kbd><kbd>`</kbd> 打开的终端直接会进入虚拟环境</li>
 </ul>
 </li>
-<li><p><code>pytest</code>: python 测试框架.用于代码测试</p>
-</li>
-<li><p><code>pygame</code>: 基于 python 的游戏开发库</p>
-</li>
-<li><p><code>Matplotlib</code>: python 2D-绘图领域使用最广泛的套件</p>
-</li>
-<li><p><code>Plotly</code>: 创建漂亮的基于 web 的交互式可视化</p>
-</li>
 </ol>
-<h3 id="4-3-pytest"><a href="#4-3-pytest" class="headerlink" title="4.3 pytest"></a>4.3 pytest</h3><ol>
-<li><p>在虚拟环境安装 <code>pytest</code></p>
+<h3 id="5-3-pytest"><a href="#5-3-pytest" class="headerlink" title="5.3 pytest"></a>5.3 pytest</h3><ol>
+<li><p><code>pytest</code>: python 测试框架.用于代码测试</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install pytest<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>测试函数</p>
@@ -1319,35 +1454,7 @@
 </li>
 <li><p>在终端窗口执行 <code>pytest</code>.将自动完成测试,并在终端输出测试信息</p>
 </li>
-<li><p>为管理测试函数,还可以将其封装在类中</p>
-</li>
-<li><p>测试类方法时需实例化对象.然后测试过程与测试函数相似</p>
-</li>
-<li><p>夹具(fixture)</p>
-<ul>
-<li><p>使用 <code>@pytest.fixture</code> 装饰函数,使得该函数可以成为其他测试函数的参数</p>
-</li>
-<li><p>其他测试函数可接收该参数(被装饰的函数名)继续测试</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pytest<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dog</span>:<br>    <span class="hljs-string">&quot;&quot;&quot; Dog类有2个属性: name, age.以及对应的 setter 方法 &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, name, age</span>):<br>        <span class="hljs-variable language_">self</span>.age = age<br>        <span class="hljs-variable language_">self</span>.name = name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">setName</span>(<span class="hljs-params">self, name</span>):<br>        <span class="hljs-variable language_">self</span>.name = name<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">setAge</span>(<span class="hljs-params">self, age</span>):<br>        <span class="hljs-variable language_">self</span>.age = age<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test_class_Dog</span>:<br>    <span class="hljs-string">&quot;&quot;&quot; 将测试函数封装在类中 &quot;&quot;&quot;</span><br><span class="hljs-meta">    @pytest.fixture(<span class="hljs-params">scope=<span class="hljs-string">&quot;class&quot;</span></span>)</span><br>    <span class="hljs-comment"># scope可为 session -&gt; module(默认) -&gt; class -&gt; function</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dog_object_test</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot; 实例化一个 Dog 对象,将其作为测试用例 &quot;&quot;&quot;</span><br>        dog = Dog(<span class="hljs-string">&quot;Tom&quot;</span>, <span class="hljs-number">3</span>)<br>        <span class="hljs-keyword">return</span> dog<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">test_set_name</span>(<span class="hljs-params">self, dog_object_test</span>):<br>        <span class="hljs-string">&quot;&quot;&quot; 测试 setName 方法&quot;&quot;&quot;</span><br>        dog_object_test.setName(<span class="hljs-string">&quot;Jerry&quot;</span>)<br>        <span class="hljs-keyword">assert</span> dog_object_test.name == <span class="hljs-string">&quot;Jerry&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">test_set_age</span>(<span class="hljs-params">self, dog_object_test</span>):<br>        <span class="hljs-string">&quot;&quot;&quot; 测试 setAge 方法 &quot;&quot;&quot;</span><br>        dog_object_test.setAge(<span class="hljs-number">5</span>)<br>        <span class="hljs-keyword">assert</span> dog_object_test.age == <span class="hljs-number">5</span><br></code></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ol>
-<h2 id="附录A-虚拟环境"><a href="#附录A-虚拟环境" class="headerlink" title="附录A 虚拟环境"></a>附录A 虚拟环境</h2><ol>
-<li><p>Windows 环境(<code>pip</code> 会随着 python 一起安装)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip --version                        # 查看 pip 版本<br>python -m pip install --upgrade pip  # 更新 pip<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">创建一个 .venv 的虚拟环境文件夹.并使用 --upgrade-deps 自动升级 pip 和 setuptools</span><br>python -m venv .venv --upgrade-deps<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">激活指定的虚拟环境, 此时终端(cmd)提示符前会显示 (.venv)</span><br>.\.venv\Scripts\activate<br><span class="hljs-meta prompt_"># </span><span class="language-bash">若出现 Execution Policy 报错,使用 管理员身份打开 PowerShell,运行下面命令</span><br>Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>linux 环境: 在 Ubuntu 20.04.6 LTS 中,默认安装 python2 (<code>python</code>) 和 python3 (<code>python3</code>)</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">python --version   # python 2.7.18<br>python3 --version  # python 3.8.10<br><br>sudo apt update<br>sudo apt install python3-pip  # 安装官方仓库的 pip<br>pip3 --version                # 验证安装<br><br>pip3 install virtualenv       # 安装 virtualenv<br>python3 -m virtualenv .venv   # 创建虚拟环境<br>source .venv/bin/activate     # 激活虚拟环境<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>虚拟环境的使用与删除</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">进入虚拟环境后安装的第三方库不会影响到其他环境</span><br>pip install numpy<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">退出虚拟环境. 将会退出到默认全局 python 环境</span><br>deactivate<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">删除虚拟环境. 只需删除对应的目录文件即可</span><br>rm -rf .venv<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>在 VS Code 中使用虚拟环境</p>
-<ul>
-<li>安装 <code>python</code> 拓展.在状态栏中直接选择 python 虚拟环境</li>
-<li>或 <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd> 搜索 <code>Python: Select Interpreter</code>. 选择虚拟环境</li>
-<li>后续 <kbd>Ctrl</kbd><kbd>`</kbd> 打开的终端直接会进入虚拟环境</li>
-</ul>
+<li><p>为管理测试函数,还可以将其封装在类中.测试类方法时需实例化对象.过程与测试函数相似</p>
 </li>
 </ol>
 
