@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/FreeRTOS.svg">
 <meta property="article:published_time" content="2024-06-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-02T16:29:15.294Z">
+<meta property="article:modified_time" content="2025-09-23T16:32:59.868Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="嵌入式">
 <meta property="article:tag" content="FreeRTOS">
@@ -902,7 +902,7 @@
 <li><p>示例: <strong>模拟事件标志组(多事件触发)</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_EVENT_DATA_READY  (1 &lt;&lt; 0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TASK_EVENT_ERROR       (1 &lt;&lt; 1)</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vInterruptHandler</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    <span class="hljs-comment">// 在中断中设置事件位(bit0)</span><br>    xTaskNotifyFromISR(xHandlerTask, TASK_EVENT_DATA_READY, eSetBits, <span class="hljs-literal">NULL</span>);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">vEventHandlerTask</span><span class="hljs-params">(<span class="hljs-type">void</span> *pvParameters)</span> &#123;<br>    <span class="hljs-type">uint32_t</span> ulNotifiedValue;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 等待任意事件位触发</span><br>        xTaskNotifyWait(<span class="hljs-number">0</span>, <span class="hljs-number">0xFF</span>, &amp;ulNotifiedValue, portMAX_DELAY);<br>        <br>        <span class="hljs-keyword">if</span> (ulNotifiedValue &amp; TASK_EVENT_DATA_READY) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Data ready event!\n&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (ulNotifiedValue &amp; TASK_EVENT_ERROR) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Error event!\n&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-
+<h2 id="7-源码分析"><a href="#7-源码分析" class="headerlink" title="7 源码分析"></a>7 源码分析</h2><h3 id="7-1-双向链表"><a href="#7-1-双向链表" class="headerlink" title="7.1 双向链表"></a>7.1 双向链表</h3><h3 id="7-2-队列"><a href="#7-2-队列" class="headerlink" title="7.2 队列"></a>7.2 队列</h3><h3 id="7-3-内存管理"><a href="#7-3-内存管理" class="headerlink" title="7.3 内存管理"></a>7.3 内存管理</h3>
                 
               </div>
             
