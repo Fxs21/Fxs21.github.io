@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-03T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-09-27T14:08:12.680Z">
+<meta property="article:modified_time" content="2025-11-25T14:38:32.576Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
@@ -319,23 +319,23 @@
 <td align="left"><code>printf(&quot;%o&quot;, 10);</code> → <code>12</code></td>
 </tr>
 <tr>
-<td align="left"><code>%x</code> 或 <code>%X</code></td>
+<td align="left"><code>%x / %X</code></td>
 <td align="left">无符号十六进制整数</td>
 <td align="left"><code>printf(&quot;%x&quot;, 255);</code> → <code>ff</code></td>
 </tr>
 <tr>
-<td align="left"><code>%f</code> 或 <code>%F</code></td>
+<td align="left"><code>%f / %F</code></td>
 <td align="left">十进制浮点数</td>
 <td align="left"><code>printf(&quot;%f&quot;, 3.14);</code> → <code>3.140000</code></td>
 </tr>
 <tr>
-<td align="left"><code>%e</code> 或 <code>%E</code></td>
+<td align="left"><code>%e / %E</code></td>
 <td align="left">科学计数法浮点数</td>
 <td align="left"><code>printf(&quot;%e&quot;, 123.45);</code> → <code>1.234500e+02</code></td>
 </tr>
 <tr>
-<td align="left"><code>%g</code> 或 <code>%G</code></td>
-<td align="left">自动选择 <code>%f</code> 或 <code>%e</code></td>
+<td align="left"><code>%g / %G</code></td>
+<td align="left">自动选择 <code>%f / %e</code></td>
 <td align="left"><code>printf(&quot;%g&quot;, 0.000123);</code> → <code>0.000123</code></td>
 </tr>
 <tr>
@@ -602,7 +602,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 二分查找成功返回指向该元素的指针.未找到返回 NULL</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">bsearch</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *key, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">              <span class="hljs-type">int</span> (*compare)(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *))</span>;<br><span class="hljs-comment">// key:     查找元素的指针.注意数据类型应该与数组元素保持相同</span><br><span class="hljs-comment">// base:    目标数组</span><br><span class="hljs-comment">// nmemb:   数组中元素数量</span><br><span class="hljs-comment">// size:    每个元素的大小(单位为 byte)</span><br><span class="hljs-comment">// compare: 比较函数的指针</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>快排使用示例</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-comment">// 数据结构.其中 key 为排序依据</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-type">char</span> key[<span class="hljs-number">10</span>];<br>    <span class="hljs-type">int</span> value;<br>&#125; Record;<br><br><span class="hljs-comment">// 比较函数(字典序)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">record_compare</span><span class="hljs-params">(<span class="hljs-type">void</span> <span class="hljs-type">const</span> *a, <span class="hljs-type">void</span> <span class="hljs-type">const</span> *b)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">strcmp</span>(((Record *)a)-&gt;key, ((Record *)b)-&gt;key);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    Record records[<span class="hljs-number">4</span>] = &#123;<br>        &#123;<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-number">100</span>&#125;, &#123;<span class="hljs-string">&quot;apple&quot;</span>, <span class="hljs-number">200</span>&#125;, &#123;<span class="hljs-string">&quot;date&quot;</span>, <span class="hljs-number">300</span>&#125;, &#123;<span class="hljs-string">&quot;cherry&quot;</span>, <span class="hljs-number">400</span>&#125;&#125;;<br><br>    <span class="hljs-comment">// 排序</span><br>    qsort(records, <span class="hljs-number">4</span>, <span class="hljs-keyword">sizeof</span>(Record), record_compare);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++)<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;records[%d] %s - %d\n&quot;</span>, i, records[i].key, records[i].value);<br><br>    <span class="hljs-comment">// 查找</span><br>    Record key = &#123;<span class="hljs-string">&quot;cherry&quot;</span>, <span class="hljs-number">0</span>&#125;;<br>    Record *result = bsearch(&amp;key, records, <span class="hljs-number">4</span>, <span class="hljs-keyword">sizeof</span>(Record), record_compare);<br><br>    <span class="hljs-keyword">if</span> (result)<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Found: %s, data: %d\n&quot;</span>, result-&gt;key, result-&gt;value);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Not found\n&quot;</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-comment">// 数据结构.其中 key 为排序依据</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-type">char</span> key[<span class="hljs-number">10</span>];<br>    <span class="hljs-type">int</span> value;<br>&#125; Record;<br><br><span class="hljs-comment">// 比较函数(字典序)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">record_compare</span><span class="hljs-params">(<span class="hljs-type">void</span> <span class="hljs-type">const</span> *a, <span class="hljs-type">void</span> <span class="hljs-type">const</span> *b)</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">strcmp</span>(((Record *)a)-&gt;key, ((Record *)b)-&gt;key);<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    Record records[<span class="hljs-number">4</span>] = &#123;<br>        &#123;<span class="hljs-string">&quot;banana&quot;</span>, <span class="hljs-number">100</span>&#125;, &#123;<span class="hljs-string">&quot;apple&quot;</span>, <span class="hljs-number">200</span>&#125;, &#123;<span class="hljs-string">&quot;date&quot;</span>, <span class="hljs-number">300</span>&#125;, &#123;<span class="hljs-string">&quot;cherry&quot;</span>, <span class="hljs-number">400</span>&#125;&#125;;<br><br>    <span class="hljs-comment">// 排序</span><br>    qsort(records, <span class="hljs-number">4</span>, <span class="hljs-keyword">sizeof</span>(Record), record_compare);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++)<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;records[%d] %s - %d\n&quot;</span>, i, records[i].key, records[i].value);<br><br>    <span class="hljs-comment">// 查找</span><br>    Record key = &#123;<span class="hljs-string">&quot;cherry&quot;</span>, <span class="hljs-number">0</span>&#125;;<br>    Record *result = bsearch(&amp;key, records, <span class="hljs-number">4</span>, <span class="hljs-keyword">sizeof</span>(Record), record_compare);<br><br>    <span class="hljs-keyword">if</span> (result)<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Found: %s, data: %d\n&quot;</span>, result-&gt;key, result-&gt;value);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Not found\n&quot;</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="1-内存管理"><a href="#1-内存管理" class="headerlink" title="1 内存管理"></a>1 内存管理</h2><h3 id="1-1-内存布局"><a href="#1-1-内存布局" class="headerlink" title="1.1 内存布局"></a>1.1 内存布局</h3><ol>
 <li><p>C 程序在运行时,内存分为以下几个主要区域(Segments)</p>
@@ -673,34 +673,25 @@
 </li>
 </ol>
 <h3 id="1-3-内存池"><a href="#1-3-内存池" class="headerlink" title="1.3 内存池"></a>1.3 内存池</h3><ol>
-<li><p>内存泄漏</p>
-<ul>
+<li>内存泄漏<ul>
 <li>C 语言不具备垃圾回收机制,需要手动释放内存.<code>malloc</code> 和 <code>free</code> 应该成对编写</li>
 <li><code>malloc</code> 可以申请任意尺寸的内存空间.得到的空间是连续的,经常使用数组索引</li>
 </ul>
 </li>
-<li><p>内存池: 预先从系统申请分配一大块内存.然后由程序自己管理这块内存的分配和释放,而不是每次需要时都想操作系统申请</p>
-<ul>
+<li>内存池: 预先从系统申请分配一大块内存.然后由程序自己管理这块内存的分配和释放,而不是每次需要时都想操作系统申请<ul>
 <li>频繁使用 <code>malloc</code> 和 <code>free</code> 手动分配和释放内存很容易产生大量的内存碎片</li>
 <li>系统调用开销: <code>malloc</code> 函数向操作系统申请堆内存经历了从应用层切入系统内核层的过程</li>
 <li><code>malloc</code> 的执行时间是不确定的.取决于当前堆的状态,对于实时系统是致命的</li>
 </ul>
 </li>
-<li><p>内存池的工作流程</p>
-</li>
-</ol>
-<ul>
-<li>预分配: 在程序初始化或对象创建时,一次性向系统申请一大块连续内存<ul>
+<li>内存池的工作流程<ul>
+<li>预分配: 在程序初始化或对象创建时,一次性向系统申请一大块连续内存</li>
 <li>自定义分配: 当程序需要内存时,从这块预分配的内存中划出一部分给程序使用</li>
 <li>自定义释放: 当程序释放内存时,并不真正还给系统.而是将其标记为空闲,放回池中供下次分配使用</li>
 <li>集中销毁: 当整个池不再需要时(如程序退出或对象销毁), 一次性将整块大内存归还给系统</li>
 </ul>
 </li>
-</ul>
-<ol start="4">
-<li>固定大小内存池(Fixed-Size Pool)</li>
-</ol>
-<ul>
+<li>固定大小内存池(Fixed-Size Pool)<ul>
 <li>思想: 池中所有内存块都是固定大小的</li>
 <li>优点: 分配和释放仅为 O(1),速度块; 不会产生无法利用的小空闲块; 分配 &#x2F; 释放的时间固定</li>
 <li>缺点: 申请的大小与池中块大小不匹配时无法使用.通常用于频繁分配单一类型对象的场景</li>
@@ -712,6 +703,8 @@
 </ul>
 </li>
 </ul>
+</li>
+</ol>
 <h2 id="2-文件-IO"><a href="#2-文件-IO" class="headerlink" title="2 文件 IO"></a>2 文件 IO</h2><h3 id="2-1-打开文件"><a href="#2-1-打开文件" class="headerlink" title="2.1 打开文件"></a>2.1 打开文件</h3><ol>
 <li><p>文件操作的思想</p>
 <ul>
@@ -779,7 +772,7 @@
 </tbody></table>
 </li>
 <li><p><code>fclose</code> 函数: 关闭一个文件</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">fclose</span><span class="hljs-params">( FILE *fp )</span>;<br><span class="hljs-comment">/* fp: 使用 fopen 获取的文件指针</span><br><span class="hljs-comment"> * 调用成功返回0,失败返回 EOF</span><br><span class="hljs-comment"> * 调用 fclose 后系统才会将缓冲区的数据写入文件,并释放该文件的相关资源*/</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">fclose</span><span class="hljs-params">( FILE *fp )</span>;<br><span class="hljs-comment">/* fp: 使用 fopen 获取的文件指针</span><br><span class="hljs-comment"> * 调用成功返回0,失败返回 EOF</span><br><span class="hljs-comment"> * 调用 fclose 后系统才会将缓冲区的数据写入文件,并释放该文件的相关资源 */</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="2-2-顺序读写"><a href="#2-2-顺序读写" class="headerlink" title="2.2 顺序读写"></a>2.2 顺序读写</h3><ol>
 <li><p>读取单个字符(下列函数均声明于 <code>&lt;stdio.h&gt;</code>)</p>
