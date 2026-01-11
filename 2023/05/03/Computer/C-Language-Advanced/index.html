@@ -28,10 +28,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-03T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-25T14:38:32.576Z">
+<meta property="article:modified_time" content="2025-12-31T10:20:27.359Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
+<meta property="article:tag" content="计算机">
 <meta property="article:tag" content="C 语言">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/C-Language.svg">
@@ -238,7 +238,7 @@
         
         
         
-          100 分钟
+          99 分钟
         
       </span>
     
@@ -705,8 +705,8 @@
 </ul>
 </li>
 </ol>
-<h2 id="2-文件-IO"><a href="#2-文件-IO" class="headerlink" title="2 文件 IO"></a>2 文件 IO</h2><h3 id="2-1-打开文件"><a href="#2-1-打开文件" class="headerlink" title="2.1 打开文件"></a>2.1 打开文件</h3><ol>
-<li><p>文件操作的思想</p>
+<h2 id="2-文件-IO"><a href="#2-文件-IO" class="headerlink" title="2 文件 IO"></a>2 文件 IO</h2><h3 id="2-1-文件操作"><a href="#2-1-文件操作" class="headerlink" title="2.1 文件操作"></a>2.1 文件操作</h3><ol>
+<li><p>文件操作思想</p>
 <ul>
 <li>流(stream): C 将 文件, 设备, 内存缓冲区抽象为 流.是一个单向流动的数据序列</li>
 <li>缓冲机制(buffering): 程序不直接与硬件交互,而是与一块内存区域(缓冲)交互.直接满足特定条件时进行 flush</li>
@@ -726,12 +726,12 @@
 </li>
 <li><p>对于读取操作,如果数据已经在缓冲区中,则立即返回给程序.否则,系统会将一大块数据从设备读入缓冲区</p>
 </li>
-<li><p>如果需要立即将数据写入设备中,可使用 <code>fflush</code> 函数</p>
+<li><p>如果需要立即将数据写入设备中,可使用</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">fflush</span><span class="hljs-params">(FILE *stream)</span>;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p><code>fopen</code>: 打开一个文件</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">FILE *<span class="hljs-title function_">fopen</span><span class="hljs-params">( <span class="hljs-type">const</span> <span class="hljs-type">char</span> *filename, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *mode )</span>;<br><span class="hljs-comment">// 调用成功返回一个指向 FILE 结构的文件指针.通过该指针对文件进行操作.失败返回 NULL</span><br></code></pre></td></tr></table></figure>
+<li><p>打开 &#x2F; 关闭文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">FILE *<span class="hljs-title function_">fopen</span><span class="hljs-params">( <span class="hljs-type">const</span> <span class="hljs-type">char</span> *filename, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *mode )</span>;<br><span class="hljs-comment">/* return: 调用成功返回文件指针,通过该指针对文件进行操作.失败返回 NULL */</span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">fclose</span><span class="hljs-params">( FILE *fp )</span>;<br><span class="hljs-comment">/* fp: 通过 fopen 获取的文件指针</span><br><span class="hljs-comment"> * return: 调用成功返回0,失败返回 EOF */</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>打开模式</p>
 <table>
@@ -766,29 +766,27 @@
 <td>读写.文件存在则可读可追加,不存在则创建</td>
 </tr>
 <tr>
-<td>b</td>
+<td>“b”</td>
 <td>可与以上6种模式结合(如 “rb, “r+b”); 表示操作对象为二进制文件</td>
 </tr>
 </tbody></table>
 </li>
-<li><p><code>fclose</code> 函数: 关闭一个文件</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">fclose</span><span class="hljs-params">( FILE *fp )</span>;<br><span class="hljs-comment">/* fp: 使用 fopen 获取的文件指针</span><br><span class="hljs-comment"> * 调用成功返回0,失败返回 EOF</span><br><span class="hljs-comment"> * 调用 fclose 后系统才会将缓冲区的数据写入文件,并释放该文件的相关资源 */</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="2-2-顺序读写"><a href="#2-2-顺序读写" class="headerlink" title="2.2 顺序读写"></a>2.2 顺序读写</h3><ol>
 <li><p>读取单个字符(下列函数均声明于 <code>&lt;stdio.h&gt;</code>)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fgetc, getc: 从文件流中读取下一个字符,并推进文件的位置指示器 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fgetc</span><span class="hljs-params">(FILE *stream)</span>;  <span class="hljs-comment">// 函数原型</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">getc</span><span class="hljs-params">(FILE *stream)</span>;   <span class="hljs-comment">// 通常实现为宏</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fgetc, getc: 从文件流中读取下一个字符,并推进文件的位置指示器 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fgetc</span><span class="hljs-params">(FILE *stream)</span>; <span class="hljs-comment">// 函数实现</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">getc</span><span class="hljs-params">(FILE *stream)</span>;  <span class="hljs-comment">// 宏实现</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>写入单个字符</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fputc, putc 函数: 向文件流写入单个字符 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fputc</span><span class="hljs-params">(<span class="hljs-type">int</span> c, FILE *stream)</span>;  <span class="hljs-comment">// 函数原型</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">putc</span><span class="hljs-params">(<span class="hljs-type">int</span> c, FILE *stream)</span>;   <span class="hljs-comment">// 通常实现为宏</span><br><span class="hljs-comment">/* 返回值: 遇到错误或文件结束时返回 EOF.否则返回已写入的字符本身 */</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fputc, putc 函数: 向文件流写入单个字符 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fputc</span><span class="hljs-params">(<span class="hljs-type">int</span> c, FILE *stream)</span>; <span class="hljs-comment">// 函数实现</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">putc</span><span class="hljs-params">(<span class="hljs-type">int</span> c, FILE *stream)</span>;  <span class="hljs-comment">// 宏实现</span><br><span class="hljs-comment">/* return: 遇到错误或文件结束时返回 EOF.否则返回已写入的字符本身 */</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>读取字符串</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fgets 函数: 从指定的文件中读取字符串 */</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">fgets</span><span class="hljs-params">(<span class="hljs-type">char</span> *s, <span class="hljs-type">int</span> size, FILE *stream)</span>;<br><span class="hljs-comment">/* s: 指向存放读取得到字符串的位置</span><br><span class="hljs-comment"> * size: 指定读取的字符数(包括自动添加的 &#x27;\0&#x27;).想读取10个字符,应令 size = 11</span><br><span class="hljs-comment"> * stream: 指定一个待操作的数据流</span><br><span class="hljs-comment"> * 返回值: 调用成功,返回 s 指向的地址.若发生错误,返回 NULL</span><br><span class="hljs-comment"> * 当遇到换行符 &#x27;\n&#x27; 就会停止本次字符串的读取</span><br><span class="hljs-comment"> * 注意 gets 函数不安全,已被 C99 弃用并从 C11 除名 */</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fgets 函数: 从指定的文件中读取字符串 */</span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">fgets</span><span class="hljs-params">(<span class="hljs-type">char</span> *s, <span class="hljs-type">int</span> size, FILE *stream)</span>;<br><span class="hljs-comment">/* s: 接收读取到的数据</span><br><span class="hljs-comment"> * size: 指定读取的字符数(包括自动添加的 &#x27;\0&#x27;)</span><br><span class="hljs-comment"> * stream: 数据流</span><br><span class="hljs-comment"> * return: 调用成功返回 s 指向的地址.若发生错误返回 NULL</span><br><span class="hljs-comment"> * 当遇到换行符 &#x27;\n&#x27; 就会停止本次字符串的读取</span><br><span class="hljs-comment"> * 注意 gets 函数不安全,已被 C99 弃用并从 C11 除名 */</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>写入字符串</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fputs 函数: 将字符串写入到指定的文件中,结尾的 &#x27;\0&#x27; 不会被写入 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fputs</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s, FILE *stream)</span>;<br><br><span class="hljs-comment">/* puts 函数: 将字符串写入 stdout 并自动追加换行符.方便打印消息 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">puts</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s)</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 将字符串写入到指定的文件中,结尾的 &#x27;\0&#x27; 不会被写入 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fputs</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s, FILE *stream)</span>;<br><br><span class="hljs-comment">/* 将字符串写入 stdout 并自动追加换行符.方便打印消息 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">puts</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *s)</span>;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>格式化读写文件</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* fscanf 函数: f 表示 file,对文件进行读取 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fscanf</span><span class="hljs-params">(FILE *stream, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *format, ...)</span>;<br><br><span class="hljs-comment">/* fprintf 函数: f 表示 file,对文件进行写入 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fprintf</span><span class="hljs-params">(FILE *stream, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *format, ...)</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 按照格式读取数据.成功返回匹配到的参数,匹配失败返回0,遇到文件末尾返回 EOF */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fscanf</span><span class="hljs-params">(FILE *stream, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *format, ...)</span>;<br><br><span class="hljs-comment">/* 输出格式化的字符串 */</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fprintf</span><span class="hljs-params">(FILE *stream, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *format, ...)</span>;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>二进制读写文件</p>
 <ul>
@@ -798,10 +796,10 @@
 </ul>
 </li>
 <li><p><code>fread</code> 函数: 从指定文件中读取指定尺寸的数据</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">size_t</span> <span class="hljs-title function_">fread</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> size, <span class="hljs-type">size_t</span> nmemb, FILE *stream)</span>;<br><span class="hljs-comment">/* ptr:     指向存放数据的内存块地址</span><br><span class="hljs-comment"> * size:    待读取的每个元素的尺寸</span><br><span class="hljs-comment"> * nmemb:   指定待读取的元素个数</span><br><span class="hljs-comment"> * stream:  指向一个待读取的文件流</span><br><span class="hljs-comment"> * 返回值:  调用成功返回实际读取到的元素个数,即 nmemb</span><br><span class="hljs-comment"> * 如果返回值小于 nmemb,说明读取到文件末尾或发生错误 */</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">size_t</span> <span class="hljs-title function_">fread</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> size, <span class="hljs-type">size_t</span> nmemb, FILE *stream)</span>;<br><span class="hljs-comment">/* ptr: 接收数据的地址</span><br><span class="hljs-comment"> * size: 每个元素的 byte</span><br><span class="hljs-comment"> * nmemb: 元素个数</span><br><span class="hljs-comment"> * stream: 数据流</span><br><span class="hljs-comment"> * return: 调用成功返回实际读取到的元素个数,即 nmemb</span><br><span class="hljs-comment"> * 如果返回值小于 nmemb,说明读取到文件末尾或发生错误 */</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><code>fwrite</code> 函数: 将指定数据写入到指定文件</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">size_t</span> <span class="hljs-title function_">fwrite</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> size, <span class="hljs-type">size_t</span> nmemb, FILE *stream)</span>;<br><span class="hljs-comment">/* ptr:    指向存放数据的内存块地址</span><br><span class="hljs-comment"> * size:   待写入的每个元素的尺寸</span><br><span class="hljs-comment"> * nmemb:  指定待写入的元素个数</span><br><span class="hljs-comment"> * stream: 指向一个待写入的文件流 */</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">size_t</span> <span class="hljs-title function_">fwrite</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> size, <span class="hljs-type">size_t</span> nmemb, FILE *stream)</span>;<br><span class="hljs-comment">/* ptr: 存放数据的地址</span><br><span class="hljs-comment"> * size: 每个元素的 byte</span><br><span class="hljs-comment"> * nmemb: 元素个数</span><br><span class="hljs-comment"> * stream: 数据流 */</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="2-3-随机读写"><a href="#2-3-随机读写" class="headerlink" title="2.3 随机读写"></a>2.3 随机读写</h3><ol>
 <li><p>系统为每个打开的文件设置了一个位置指示器,用于表示当前的读写位置</p>
@@ -838,7 +836,7 @@
 <ul>
 <li>不同操作系统对换行符的处理不同,导致定位会出现误差</li>
 <li>对于二进制模式打开的文件, <code>fseek</code> 在某些操作系统中可能不支持 SEEK_END</li>
-<li>对于文本模式打开的文件, <code>whence</code> 参数只有取 SEEK_SET 才有意义</li>
+<li>对于文本模式打开的文件, <code>whence</code> 参数只有取 <code>SEEK_SET</code> 才有意义</li>
 <li>传递给 offset 的参数值要么为 0,要么是上一次对同一文件调用 <code>ftell</code> 函数获得的返回值</li>
 </ul>
 </li>
@@ -1427,9 +1425,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="print-no-link">#计算机</a>
-      
         <a href="/tags/Code/" class="print-no-link">#Code</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="print-no-link">#计算机</a>
       
         <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
       
