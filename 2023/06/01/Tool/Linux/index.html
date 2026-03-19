@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Linux.svg">
 <meta property="article:published_time" content="2023-06-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-02-26T17:12:38.140Z">
+<meta property="article:modified_time" content="2026-03-19T15:56:45.319Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="Code">
 <meta property="article:tag" content="工具箱">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.4k 字
+          5.6k 字
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          45 分钟
+          47 分钟
         
       </span>
     
@@ -338,7 +338,23 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-3-远程登陆"><a href="#0-3-远程登陆" class="headerlink" title="0.3 远程登陆"></a>0.3 远程登陆</h3><ol>
+<h3 id="0-3-代理"><a href="#0-3-代理" class="headerlink" title="0.3 代理"></a>0.3 代理</h3><ol>
+<li><p>开启镜像模式: 创建 <code>C:\Users\你的用户名\.wslconfig</code> 文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">[wsl2]<br>networkingMode=mirrored<br>dnsTunneling=true<br>firewall=true<br>autoProxy=true<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>关闭 wsl 后重新打开(然后就可以使用 <code>127.0.0.1</code> 访问 windows)</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">wsl <span class="hljs-literal">--shutdown</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>测试方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">ip route show default | awk &#x27;&#123;print $3&#125;&#x27; # HOST_IP(非 mirror) or 127.0.0.1<br>curl https://www.google.com -I # fail<br>curl -x http://&lt;HOST_IP&gt;:7890 https://www.google.com -I # pass<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>代理脚本: 写入到 <code>~/.bashrc</code> (需要开启 <code>允许局域网连接</code>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs shell">proxy() &#123;<br>    # HOST_IP=$(ip route show default | awk &#x27;&#123;print $3&#125;&#x27;)<br>    HOST_IP=&quot;127.0.0.1&quot;<br><br>    case $1 in<br>        on)<br>            export http_proxy=&quot;http://$HOST_IP:7890&quot;<br>            export https_proxy=&quot;http://$HOST_IP:7890&quot;<br>            export HTTP_PROXY=$http_proxy<br>            export HTTPS_PROXY=$https_proxy<br>            export no_proxy=&quot;localhost,127.0.0.1,::1&quot;<br>            echo &quot;代理已开启 ($HOST_IP)&quot;<br>            ;;<br>        off)<br>            unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY no_proxy<br>            echo &quot;代理已关闭&quot;<br>            ;;<br>        test)<br>            curl -I https://www.google.com<br>            ;;<br>        status)<br>            echo &quot;http_proxy=$http_proxy&quot;<br>            echo &quot;https_proxy=$https_proxy&quot;<br>            echo &quot;no_proxy=$no_proxy&quot;<br>            ;;<br>        *)<br>            echo &quot;用法: proxy &#123;on|off|test|status&#125;&quot;<br>            ;;<br>    esac<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">source ~/.bashrc<br>proxy on<br>proxy test<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="0-4-远程登陆"><a href="#0-4-远程登陆" class="headerlink" title="0.4 远程登陆"></a>0.4 远程登陆</h3><ol>
 <li><p>Xshell &amp; Xftp 使用(Xshell 用于执行指令.Xftp 用于文件传输)</p>
 <ul>
 <li><p>在 linux 终端查询 ip 地址(inet 后面即为 ip 地址)</p>
@@ -368,7 +384,7 @@
 </ul>
 </li>
 </ol>
-<h3 id="0-4-ubuntu"><a href="#0-4-ubuntu" class="headerlink" title="0.4 ubuntu"></a>0.4 ubuntu</h3><ol>
+<h3 id="0-5-ubuntu"><a href="#0-5-ubuntu" class="headerlink" title="0.5 ubuntu"></a>0.5 ubuntu</h3><ol>
 <li><p><strong><a target="_blank" rel="noopener" href="https://cn.ubuntu.com/download">ubuntu</a>: 一个以桌面应用为主的开源 GNU&#x2F;Linux 操作系统</strong></p>
 </li>
 <li><p>中文支持</p>
