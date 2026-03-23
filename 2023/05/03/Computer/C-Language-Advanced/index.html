@@ -28,11 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-03T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-31T10:20:27.359Z">
+<meta property="article:modified_time" content="2026-03-22T17:50:37.682Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="C 语言">
 <meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
+<meta property="article:tag" content="C 语言">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/C-Language.svg">
   
@@ -455,7 +455,7 @@
 </li>
 </ol>
 <h3 id="0-2-标准输入"><a href="#0-2-标准输入" class="headerlink" title="0.2 标准输入"></a>0.2 标准输入</h3><ol>
-<li><p><code>scanf</code>: 从标准输入读取输入,根据 format 进行匹配, 赋给后续的各个参数.等价于 <code>scanf(stdout, ...)</code></p>
+<li><p><code>scanf</code>: 从标准输入读取输入,根据 format 进行匹配,赋给后续的各个参数.等价于 <code>fscanf(stdin, ...)</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">scanf</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *format, ...)</span>;<br><span class="hljs-comment">// format: 格式化字符串,指定输入数据的预期格式</span><br><span class="hljs-comment">// ...: 可变参数列表, 对应格式字符串中的格式说明符.注意必须是变量的地址</span><br><span class="hljs-comment">// 返回值: 成功时返回成功读取的数据项数量.失败或到达文件末尾时返回 EOF</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>格式串字符串结构</p>
@@ -595,8 +595,8 @@
 </li>
 </ol>
 <h3 id="0-3-排序查找"><a href="#0-3-排序查找" class="headerlink" title="0.3 排序查找"></a>0.3 排序查找</h3><ol>
-<li><p>快速排序算法 <code>&lt;stdlib.h&gt;</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// qsort 函数是类型无关的通用排序函数.实现了 Quick Sort</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">qsort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">           <span class="hljs-type">int</span> (*compare)(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *))</span>;<br><span class="hljs-comment">// base:    目标数组</span><br><span class="hljs-comment">// nmemb:   数组中元素数量</span><br><span class="hljs-comment">// size:    每个元素的大小(单位为 byte)</span><br><span class="hljs-comment">// compare: 比较函数的指针.返回值小于 0 时.表示 param1 排在 param2 前(即默认升序)</span><br></code></pre></td></tr></table></figure>
+<li><p>通用排序函数 <code>&lt;stdlib.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// qsort 函数是类型无关的通用排序函数</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">qsort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">           <span class="hljs-type">int</span> (*compare)(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *))</span>;<br><span class="hljs-comment">// base:    目标数组</span><br><span class="hljs-comment">// nmemb:   数组中元素数量</span><br><span class="hljs-comment">// size:    每个元素的大小(单位为 byte)</span><br><span class="hljs-comment">// compare: 比较函数的指针.返回值小于 0 时.表示 param1 排在 param2 前(即默认升序)</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>二分查找 <code>&lt;stdlib.h&gt;</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 二分查找成功返回指向该元素的指针.未找到返回 NULL</span><br><span class="hljs-type">void</span> *<span class="hljs-title function_">bsearch</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *key, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size,</span><br><span class="hljs-params">              <span class="hljs-type">int</span> (*compare)(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *))</span>;<br><span class="hljs-comment">// key:     查找元素的指针.注意数据类型应该与数组元素保持相同</span><br><span class="hljs-comment">// base:    目标数组</span><br><span class="hljs-comment">// nmemb:   数组中元素数量</span><br><span class="hljs-comment">// size:    每个元素的大小(单位为 byte)</span><br><span class="hljs-comment">// compare: 比较函数的指针</span><br></code></pre></td></tr></table></figure>
@@ -648,10 +648,10 @@
 <li><p>需要使用到 <code>&lt;stdlib.h&gt;</code> 头文件中的库函数</p>
 </li>
 <li><p><code>malloc</code>: 向系统申请分配 <code>size</code> 个字节的内存空间,返回一个指向该空间的指针</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> *<span class="hljs-title function_">malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-comment">// 调用成功返回一个申请的内存空间指针,类型为 void *</span><br><span class="hljs-comment">// 调用失败返回 NULL.若设置 size = 0,同样返回 NULL</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> *<span class="hljs-title function_">malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-comment">// 调用成功返回一个申请的内存空间指针,类型为 void *,失败返回 NULL</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><code>calloc</code>: 在内存中动态的申请 <code>nmemb</code> 个长度为 <code>size</code> 的连续内存空间,并全部初始化为0</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> *<span class="hljs-title function_">calloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-comment">// 调用成功返回一个申请的内存空间指针,类型为 void *</span><br><span class="hljs-comment">// 调用失败返回 NULL.若设置 size = 0,同样返回 NULL</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> *<span class="hljs-title function_">calloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size)</span>;<br><span class="hljs-comment">// 成功返回一个申请的内存空间指针,类型为 void *,失败返回 NULL</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><code>realloc</code>: 重新分配内存空间</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> *<span class="hljs-title function_">realloc</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr, <span class="hljs-type">size_t</span> size)</span>;<br></code></pre></td></tr></table></figure>
@@ -853,12 +853,12 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;person.h&quot;</span></span><br><br><span class="hljs-comment">/* 完整定义 Person(仅在此文件可见) */</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Person</span> &#123;</span><br>    <span class="hljs-type">char</span> *name;<br>    <span class="hljs-type">int</span> age;<br>&#125;;<br><br><span class="hljs-comment">/* 实现构造函数 / 析构函数 */</span><br>Person* <span class="hljs-title function_">person_create</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *name, <span class="hljs-type">int</span> age)</span> &#123;<br>    Person *p = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Person));<br>    p-&gt;name = strdup(name);<br>    p-&gt;age = age;<br>    <span class="hljs-keyword">return</span> p;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">person_destroy</span><span class="hljs-params">(Person *p)</span> &#123;<br>    <span class="hljs-built_in">free</span>(p-&gt;name);<br>    <span class="hljs-built_in">free</span>(p);<br>&#125;<br><br><span class="hljs-comment">/* 公共方法实现 */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">person_greet</span><span class="hljs-params">(<span class="hljs-type">const</span> Person *p)</span> &#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello, I&#x27;m %s, age %d!\n&quot;</span>, p-&gt;name, p-&gt;age);<br>&#125;<br><br><span class="hljs-comment">/* set, get 方法实现 */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">person_set_name</span><span class="hljs-params">(Person *p, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *name)</span> &#123;<br>    <span class="hljs-built_in">free</span>(p-&gt;name);<br>    p-&gt;name = strdup(name);<br>&#125;<br><br><span class="hljs-type">const</span> <span class="hljs-type">char</span>* <span class="hljs-title function_">person_get_name</span><span class="hljs-params">(<span class="hljs-type">const</span> Person *p)</span> &#123;<br>    <span class="hljs-keyword">return</span> p-&gt;name;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">person_set_age</span><span class="hljs-params">(Person *p, <span class="hljs-type">int</span> age)</span> &#123;<br>    p-&gt;age = age;<br>&#125;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">person_get_age</span><span class="hljs-params">(<span class="hljs-type">const</span> Person *p)</span> &#123;<br>    <span class="hljs-keyword">return</span> p-&gt;age;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><code>main.c</code> 使用示例</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;student.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    Person *p = person_create(<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">25</span>);<br>    person_greet(p);  <span class="hljs-comment">// 输出: Hello, I&#x27;m Alice, age 25!</span><br>    person_set_age(p, <span class="hljs-number">10</span>);<br>    person_set_name(p, <span class="hljs-string">&quot;Bob&quot;</span>);<br>    person_greet(p);  <span class="hljs-comment">// 输出: Hello, I&#x27;m Bob, age 10!</span><br>    person_destroy(p);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;person.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    Person *p = person_create(<span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">25</span>);<br>    person_greet(p);  <span class="hljs-comment">// 输出: Hello, I&#x27;m Alice, age 25!</span><br>    person_set_age(p, <span class="hljs-number">10</span>);<br>    person_set_name(p, <span class="hljs-string">&quot;Bob&quot;</span>);<br>    person_greet(p);  <span class="hljs-comment">// 输出: Hello, I&#x27;m Bob, age 10!</span><br>    person_destroy(p);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="3-2-继承"><a href="#3-2-继承" class="headerlink" title="3.2 继承"></a>3.2 继承</h3><ol>
 <li><p><strong>继承: 子类继承父类的属性和方法</strong></p>
 </li>
-<li><p>实现方式: 结构体嵌套(父结构体作为子结构体的第一个成员),通过类型转换模拟继承</p>
+<li><p>实现方式: 结构体组合(在子结构体中持有父结构体对象或指针),再通过接口转发模拟继承</p>
 </li>
 <li><p><code>student.h</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;person.h&quot;</span></span><br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span> <span class="hljs-title">Student</span>;</span><br>Student* <span class="hljs-title function_">student_create</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *name, <span class="hljs-type">int</span> age, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *university)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">student_destroy</span><span class="hljs-params">(Student *s)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">student_study</span><span class="hljs-params">(<span class="hljs-type">const</span> Student *s, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *subject)</span>;<br></code></pre></td></tr></table></figure>
@@ -904,7 +904,7 @@
 <li><code>_Generic</code> 仅通过 <code>expression</code> 分析类型,不会计算 <code>expression</code></li>
 <li><code>_Generic</code> 可以返回任意类型.如函数指针(然后立即进行函数调用,实现函数重载)</li>
 <li><code>_Generic</code> 支持匹配各种类型.如指针, 数组, 结构体</li>
-<li><code>_Generic</code> 会将 <code>const, volatile</code> 也作为区别类型的依据</li>
+<li>对于普通表达式,顶层的 <code>const, volatile</code> 往往会在类型转换后被忽略,不适合作为稳定的区分依据</li>
 <li>必须有匹配到的类型. 若没有匹配到的类型且没有 <code>default</code>, 将会编译报错</li>
 </ul>
 </li>
@@ -926,7 +926,7 @@
 <li>$\mathrm{if} \quad \exists c,n_0\in N_+,N\geq n_0\quad\mathrm{s.t.} T(N)\leq cf(N), \mathrm{then} \quad T(N)&#x3D;O(f(N))$</li>
 <li>$\mathrm{if} \quad \exists c,n_0\in N_+,N\geq n_0  \quad  \mathrm{s.t.} T(N)\geq cg(N),\mathrm{then} \quad T(N)&#x3D;\Omega(g(N))$</li>
 <li>$T(N)&#x3D;O(h(N))  \quad and\quad T(N)&#x3D;\Omega(h(N)) \iff T(N)&#x3D;\Theta(h(N))$</li>
-<li>$T(N)&#x3D;O(p(N)) \quad and \quad T(N)\neq \Theta(p(N)), \mathrm{then} \quad T(N)&#x3D;o(f(N))$</li>
+<li>$T(N)&#x3D;O(p(N)) \quad and \quad T(N)\neq \Theta(p(N)), \mathrm{then} \quad T(N)&#x3D;o(p(N))$</li>
 </ul>
 </li>
 <li>简要说明<ul>
@@ -1038,7 +1038,7 @@
 <li><p>堆排序(heap sort): 考虑建立二叉堆 $O(N)$,执行 N 次 <code>deleteMin</code> $O(N\log N)$.按照顺序,最小的元素将会先离开堆,将这些元素记录到第二个数组即可得到排序数组</p>
 <ul>
 <li>上述算法需要额外的数组空间,可以每次在 <code>deleteMin</code> 操作后,将最后空出来的单元用于存放元素.此时得到的将是逆序的排序数组,因而可以构建具有 <code>deleteMax</code> 操作的二叉堆</li>
-<li>堆排序是非常稳定的算法: 平均使用的比较只比最坏情形略少</li>
+<li>堆排序是不稳定排序,但平均使用的比较次数只比最坏情形略少</li>
 </ul>
 </li>
 <li><p>归并排序(merge sort): 以分治递归的形式合并已排序数组 $O(N\log N)$.使用的比较次数几乎最优</p>
@@ -1144,7 +1144,7 @@
 <li><p>动态规划(dynamic programming)</p>
 <ul>
 <li>动态规划将复杂问题分解为相对简单的子问题.并通过存储子问题的解来避免重复计算.提高效率</li>
-<li>数学递归公式均可直接翻译为递归算法,但现实中编译器往往不发正确对待递归算法,而导致低效</li>
+<li>数学递归公式均可直接翻译为递归算法,但现实中编译器往往无法高效地处理递归,从而导致低效</li>
 <li>当这种情况发生时,便需要给编译器提供帮助.改写为非递归的算法,并将子问题的答案记录在一个表内</li>
 </ul>
 </li>
@@ -1329,7 +1329,7 @@
 </li>
 <li><p>图中的路径(path)</p>
 <ul>
-<li>路径是顶点序列: $w_1, w_2, \dots, w_N \space\space \mathrm{s.t.}(w_i,w_{i+1})\in E,1\leq i&lt;E$ </li>
+<li>路径是顶点序列: $w_1, w_2, \dots, w_N \space\space \mathrm{s.t.}(w_i,w_{i+1})\in E,1\leq i&lt;N$ </li>
 <li>路径的长(length): 边的数量,即 N-1</li>
 <li>环(loop): 从一个顶点到自身的边</li>
 <li>简单路径: 所有的顶点都互异,但第一个和最后一个顶点可以相同</li>
@@ -1370,7 +1370,7 @@
 </li>
 <li><p>输入一个赋权图: 与每条边 $(v_i, v_j)$ 联系的是穿越该弧的代价 $c_{i,j}$</p>
 <ul>
-<li>赋权路径长(weighted path length): $v_1v_2\dots v_N$ 路径的值为 $\sum\limits^{N-1}<em>{i&#x3D;1}c</em>{i,j}$</li>
+<li>赋权路径长(weighted path length): $v_1v_2\dots v_N$ 路径的值为 $\sum\limits^{N-1}<em>{i&#x3D;1}c</em>{i,i+1}$</li>
 </ul>
 </li>
 <li><p>单源最短路径问题: 给定赋权图 $G&#x3D;(V,E)$ 和特定顶点 s 作为输入,找出 s 到 G 每个点的最短赋权路径</p>
@@ -1425,11 +1425,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
-      
         <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="print-no-link">#计算机</a>
       
         <a href="/tags/Code/" class="print-no-link">#Code</a>
+      
+        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
       
     </div>
   

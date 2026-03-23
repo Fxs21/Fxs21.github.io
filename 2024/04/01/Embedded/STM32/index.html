@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/STM32.svg">
 <meta property="article:published_time" content="2024-04-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2025-11-25T14:38:32.576Z">
+<meta property="article:modified_time" content="2026-03-23T03:36:52.334Z">
 <meta property="article:author" content="Shuang">
 <meta property="article:tag" content="嵌入式">
 <meta property="article:tag" content="STM32">
@@ -292,7 +292,7 @@
 <li>3V3 与 GND 间的 100nF 滤波电容: 保证供电电压的稳定</li>
 <li><strong>晶振</strong>: 8MHz 晶振的典型电路.20pF 作为起振电容.接到芯片的5,6号脚.3,4号引脚预留接 32.768KHz 晶振</li>
 <li><strong>复位</strong>: NRST 接到7号引脚,低电平复位<ul>
-<li>刚上电时,电容充电,相当于短路,NRST 下拉至 GND(上电复位).充满电后短路,上拉至 3V3</li>
+<li>刚上电时,电容充电,相当于短路,NRST 下拉至 GND(上电复位).充满电后相当于开路,NRST 被上拉至 3V3</li>
 <li>之后,K1 断开时,NRST 拉至 3V3.K1 闭合时,电容放电,NRST 接地(手动复位)</li>
 </ul>
 </li>
@@ -387,7 +387,7 @@
 <li><p>测试配置: 打开 <code>main</code> 文件在空白处右击,选择 insert <code>#include file stm32f10x.h</code> -&gt; 编写任意代码 -&gt; <code>Build</code></p>
 </li>
 <li><p>若编译没有错误说明工程建立正常.到此可以进行<strong>基于寄存器的开发</strong>.如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stm32f10x.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;  <span class="hljs-comment">/* 点亮 PC13 的 LED */</span><br>	RCC-&gt;APB2ENR |= <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">4</span>;				<span class="hljs-comment">/* 开启 APB2 的 GPIOC 时钟 */</span><br>	GPIOC-&gt;CRH |= <span class="hljs-number">3</span> &lt;&lt; (<span class="hljs-number">4</span> * (<span class="hljs-number">13</span> - <span class="hljs-number">8</span>));	<span class="hljs-comment">/* 指定 GPIO_Pin_13 为推挽输出.50MHz */</span><br>	GPIOC-&gt;ODR &amp;= !(<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">13</span>);			<span class="hljs-comment">/* 指定 GPIO_Pin_13 引脚的电压为低 */</span><br>	<span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stm32f10x.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;  <span class="hljs-comment">/* 点亮 PC13 的 LED */</span><br>	RCC-&gt;APB2ENR |= <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">4</span>;				<span class="hljs-comment">/* 开启 APB2 的 GPIOC 时钟 */</span><br>	GPIOC-&gt;CRH &amp;= ~(<span class="hljs-number">0xF</span> &lt;&lt; (<span class="hljs-number">4</span> * (<span class="hljs-number">13</span> - <span class="hljs-number">8</span>))); <span class="hljs-comment">/* 先清除 PC13 的配置位 */</span><br>	GPIOC-&gt;CRH |=  (<span class="hljs-number">0x3</span> &lt;&lt; (<span class="hljs-number">4</span> * (<span class="hljs-number">13</span> - <span class="hljs-number">8</span>))); <span class="hljs-comment">/* MODE13=11,CNF13=00 -&gt; 推挽输出 50MHz */</span><br>	GPIOC-&gt;ODR &amp;= ~(<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">13</span>);			<span class="hljs-comment">/* 指定 GPIO_Pin_13 引脚的电压为低 */</span><br>	<span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>连接最小系统板时需要选择对应的调试方式(这里使用 STLink)</p>
@@ -455,7 +455,7 @@
 <ul>
 <li><p>需要连接 USB转串口模块的 RX(PA9), TX(PA10), GND</p>
 </li>
-<li><p>需要工程生成的 HEX 文件(在 Keil 中 <code>Options for target</code> -&gt; <code>output</code> 勾选 <code>Creact HEX File</code>)</p>
+<li><p>需要工程生成的 HEX 文件(在 Keil 中 <code>Options for target</code> -&gt; <code>output</code> 勾选 <code>Create HEX File</code>)</p>
 <p><img src="/2024/04/01/Embedded/STM32/2-CreateHEX.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p><code>搜索串口</code> -&gt; bps 默认115200 -&gt; 选择下载的程序文件(.hex)</p>
@@ -644,7 +644,7 @@
 </li>
 </ol>
 <h3 id="4-3-EXTI"><a href="#4-3-EXTI" class="headerlink" title="4.3 EXTI"></a>4.3 EXTI</h3><ol>
-<li><p><strong>EXTI(Extern Interrupt, 外部中断)</strong></p>
+<li><p><strong>EXTI(External Interrupt, 外部中断)</strong></p>
 <p><img src="/2024/04/01/Embedded/STM32/4-EXTI.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li>EXTI 可以监测指定 GPIO 口的电平信号,当其指定的 GPIO 口产生电平变化时,EXTI 将立即向 NVIC 发出中断申请,经过 NVIC 裁决后即可中断 CPU 主程序,使 CPU 执行 EXTI 对应的中断程序</li>
@@ -728,9 +728,9 @@
 </ul>
 </li>
 <li><code>ITR</code> 信号: 来自其他定时器从 <code>TRGO</code> 的输出</li>
-<li><code>TIIF_ED</code>: 连接到输入捕获单元的 CH1 引脚</li>
+<li><code>TI1F_ED</code>: 连接到输入捕获单元的 CH1 引脚</li>
 <li><code>TI1FP1, TI2FP2</code>: 连接到输入滤波器和边沿检测器的后面</li>
-<li><strong>主模式输出: TRGO 可将内部的事件映射到 TRGO 引脚</strong></li>
+<li><strong>主模式输出: TRGO 是定时器的内部触发输出信号,可用于触发其他定时器或外设</strong></li>
 </ul>
 </li>
 <li><p>高级定时器</p>
@@ -784,7 +784,7 @@
 <li><p><strong>OC(Output Compare, 输出比较)</strong></p>
 <ul>
 <li><strong>通过比较 CNT 和 CCR 寄存器值(CNT 计数自增,CCR 手动给定).</strong><br><strong>然后对输出电平 置1 &#x2F; 置0 &#x2F; 翻转,实现输出一定频率和占空比的 PWM 波形</strong></li>
-<li>每个高级寄存器(前3个通道拥有死区生成和互补输出功能)和通用寄存器均拥有4个输出比较通道</li>
+<li>每个高级定时器(前3个通道拥有死区生成和互补输出功能)和通用定时器均拥有4个输出比较通道</li>
 <li>CCR 被输入捕获和输出比较共用<ul>
 <li>使用输入捕获时,CCR 作为捕获寄存器</li>
 <li>使用输出比较时,CCR 作为比较寄存器</li>
@@ -879,7 +879,7 @@
 <li><p><strong>确定 PSC, ARR, CCR 的方式</strong></p>
 <ul>
 <li>首先根据分辨率决定 ARR.如要求分辨率为 1% 时, (ARR + 1) &#x3D; 100.此后固定 ARR 的值,方便计算</li>
-<li>此时 CRR 值即为占空比的百分数.如 CCR &#x3D; 50 时,占空比 duty &#x3D; 50%.代码中改变 CRR,即可调节占空比</li>
+<li>此时 CCR 值即为占空比的百分数.如 CCR &#x3D; 50 时,占空比 duty &#x3D; 50%.代码中改变 CCR,即可调节占空比</li>
 <li>最后确定 PSC 的值.代码中改变 PSC,即可调节频率</li>
 </ul>
 </li>
@@ -914,7 +914,7 @@
 <li><p>主从触发模式</p>
 <p><img src="/2024/04/01/Embedded/STM32/5-%E4%B8%BB%E4%BB%8E%E8%A7%A6%E5%8F%91%E6%A8%A1%E5%BC%8F.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
-<li><strong>主模式: 可将定时器内部的信号映射到 TRGO 引脚,触发其他外设</strong></li>
+<li><strong>主模式: 通过内部触发输出信号 TRGO 触发其他定时器或外设</strong></li>
 <li><strong>从模式: 接收其他外设或使用自身外设的信号.用以控制自身控制器的运行</strong></li>
 <li>触发源选择: 指定 从模式的触发信号 得到 TRGI,然后触发选定的从模式</li>
 </ul>
@@ -1117,7 +1117,7 @@
 <li><p>DMA1 请求</p>
 <p><img src="/2024/04/01/Embedded/STM32/7-DMA1-request-map.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
-<li><strong>每个通道的硬件触发源不同(而软件触发都一样).需要根据触发源选择对应 ADC 通道</strong></li>
+<li><strong>每个通道的硬件触发源不同(而软件触发都一样).需要根据触发源选择对应 DMA 通道</strong></li>
 <li>对于外设请求信号的选择: 由外设的 DMA 控制决定,开启就可以发出请求信号</li>
 <li>外设请求信号经过 或门到硬件请求.一般只开启一个外设请求</li>
 </ul>
@@ -1251,7 +1251,7 @@
 </li>
 <li><p>然后主机释放 SCL.由主机读取数据位</p>
 </li>
-<li><p><strong>SDA 总是在 SCL 低电平(下降沿)时被放置数据,在 SCL 高点平(上升沿)时被读取</strong></p>
+<li><p><strong>SDA 总是在 SCL 低电平期间被放置数据,在 SCL 高电平期间保持稳定并被读取</strong></p>
 <p><img src="/2024/04/01/Embedded/STM32/9-I2C-receive-byte.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ul>
@@ -1318,7 +1318,7 @@
 </li>
 </ol>
 <h2 id="10-SPI"><a href="#10-SPI" class="headerlink" title="10 SPI"></a>10 SPI</h2><h3 id="10-1-SPI-协议"><a href="#10-1-SPI-协议" class="headerlink" title="10.1 SPI 协议"></a>10.1 SPI 协议</h3><ol>
-<li><p><strong>SPI(Serial Peripheral Interface): 由Motorola公司开发的一种通用数据总线</strong></p>
+<li><p><strong>SPI(Serial Peripheral Interface): 由 Motorola 公司开发的一种通用数据总线</strong></p>
 <ul>
 <li>通信线: SCK(Serial Clock), SS(Slave Select), MOSI(Master Output Slave Input), MISO(Master Input Slave Output)</li>
 <li>同步, 全双工.支持总线挂载多设备(一主多从)</li>
@@ -1344,8 +1344,9 @@
 <li><p>SPI 数据交换</p>
 <p><img src="/2024/04/01/Embedded/STM32/10-SPI-swap-byte.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
-<li><code>波特率发生器</code>时钟上升沿时,所有移位寄存器向左移位,置于引脚</li>
-<li><code>波特率发生器</code>时钟下降沿时,对引脚电平采样,置于移位寄存器的最低位</li>
+<li>以下交换示意图以模式0(CPOL&#x3D;0, CPHA&#x3D;0)为例</li>
+<li><code>波特率发生器</code>时钟上升沿时,对引脚电平采样并写入移位寄存器</li>
+<li><code>波特率发生器</code>时钟下降沿时,移位寄存器左移,并把下一位数据送到引脚</li>
 <li>主机与从机的数据交换<ul>
 <li>在一个周期内,从机由高位移出的数据传输到主机的低位,主机由高位移出的数据传输到从机的低位</li>
 <li>循环8次后,从机的数据完整到达主机,主机的数据也完整达到从机,完成一次数据交换</li>
@@ -1618,7 +1619,7 @@
 <p><img src="/2024/04/01/Embedded/STM32/14-Flash-struct.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p><strong>指针访问存储器</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// #define __IO volatile  // STM32 对 __IO 的宏定义</span><br><span class="hljs-type">uint16_t</span> Data = *((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x08000000</span>));  <span class="hljs-comment">// 读取 0x8000 0000 地址的数据</span><br>*((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x80000000</span>)) = <span class="hljs-number">0x1234</span>;  <span class="hljs-comment">// 给 0x8000 0000 地址写入数据.需要先解锁,执行相应流程</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// #define __IO volatile  // STM32 对 __IO 的宏定义</span><br><span class="hljs-type">uint16_t</span> Data = *((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x08000000</span>));  <span class="hljs-comment">// 读取 0x0800 0000 地址的数据</span><br>*((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x08000000</span>)) = <span class="hljs-number">0x1234</span>;  <span class="hljs-comment">// 给 0x0800 0000 地址写入数据.需要先解锁,执行相应流程</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>器件电子签名: 存放于闪存的系统存储区域,不可更改</strong></p>
 <ul>
@@ -1632,7 +1633,7 @@
 <li><p>读取芯片 ID</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">*((__IO <span class="hljs-type">uint16_t</span> *)(<span class="hljs-number">0x1FFFF7E0</span>));  <span class="hljs-comment">// 闪存容量寄存器的值</span><br>*((__IO <span class="hljs-type">uint32_t</span> *)(<span class="hljs-number">0x1FFFF7E8</span>));  <span class="hljs-comment">// 产品唯一身份标识寄存器的值,96bit</span><br>*((__IO <span class="hljs-type">uint32_t</span> *)(<span class="hljs-number">0x1FFFF7E8</span> + <span class="hljs-number">0x04</span>));<br>*((__IO <span class="hljs-type">uint32_t</span> *)(<span class="hljs-number">0x1FFFF7E8</span> + <span class="hljs-number">0x08</span>));<br></code></pre></td></tr></table></figure>
 </li>
-<li><p><strong>指定烧录程序是的起始地址</strong>: 打开工程选项 -&gt; Target</p>
+<li><p><strong>指定烧录程序时的起始地址</strong>: 打开工程选项 -&gt; Target</p>
 <p><img src="/2024/04/01/Embedded/STM32/14-start-addr.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p><strong>程序占用空间大小查看</strong></p>
@@ -1770,9 +1771,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/01/Embedded/FreeRTOS/" title="FreeRTOS">
+                      <a href="/2025/06/07/Embedded/LVGL/" title="LVGL">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">FreeRTOS</span>
+                        <span class="hidden-mobile">LVGL</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

@@ -28,11 +28,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/C-Language.svg">
 <meta property="article:published_time" content="2023-05-01T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-03-14T08:03:37.534Z">
+<meta property="article:modified_time" content="2026-03-22T17:26:21.090Z">
 <meta property="article:author" content="Shuang">
-<meta property="article:tag" content="C 语言">
 <meta property="article:tag" content="计算机">
 <meta property="article:tag" content="Code">
+<meta property="article:tag" content="C 语言">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/img/C-Language.svg">
   
@@ -238,7 +238,7 @@
         
         
         
-          98 分钟
+          99 分钟
         
       </span>
     
@@ -414,13 +414,13 @@
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-comment"># target: 要生成的文件</span><br><span class="hljs-comment"># dependencies: 依赖的文件.注意头文件也要加入</span><br><span class="hljs-comment"># command: 执行的命令(必须用 TAB 缩进)</span><br><span class="hljs-section">target: dependencies</span><br>	command<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>使用示例</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs makefile">CC = gcc                      <span class="hljs-comment"># 编译器</span><br>CFLAGS = -Wall -g -I./<span class="hljs-keyword">include</span> <span class="hljs-comment"># 编译选项</span><br>TARGET = myprogram     <span class="hljs-comment"># 最终生成文件名</span><br>SRCS = main.c utils.c  <span class="hljs-comment"># 源文件</span><br>OBJS = $(SRCS:.c=.o)   <span class="hljs-comment"># 变量替换.将 SRCS 的 .c 替换为 .o</span><br><br><span class="hljs-variable">$(TARGET)</span>: <span class="hljs-variable">$(OBJS)</span><br>	<span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$(CFLAGS)</span> -o <span class="hljs-variable">$(TARGET)</span> <span class="hljs-variable">$(OBJS)</span> <span class="hljs-comment"># 链接</span><br><br><span class="hljs-comment"># 模式规则. $ 是通配符</span><br><span class="hljs-section">%.o: %.c</span><br>	<span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$(CFLAGS)</span> -c <span class="hljs-variable">$&lt;</span> -o <span class="hljs-variable">$@</span> <span class="hljs-comment"># 生成 .o 文件</span><br><br><span class="hljs-comment"># 调试功能.如 make print-CC 将会输出 CC = gcc</span><br><span class="hljs-section">print-%:</span><br>	@echo &#x27;<span class="hljs-variable">$*</span>=$(<span class="hljs-variable">$*</span>)&#x27; <span class="hljs-comment"># @ 表示不在终端显示命令本身,只显示结果</span><br><br><span class="hljs-comment"># 声明伪目标. make clean 不会被当成文件处理</span><br><span class="hljs-section">clean:</span><br>	rm -f <span class="hljs-variable">$(OBJS)</span> <span class="hljs-variable">$(TARGET)</span><br><br><span class="hljs-meta"><span class="hljs-keyword">.PHONY</span>: clean</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs makefile">CC = gcc                      <span class="hljs-comment"># 编译器</span><br>CFLAGS = -Wall -g -I./<span class="hljs-keyword">include</span> <span class="hljs-comment"># 编译选项</span><br>TARGET = myprogram     <span class="hljs-comment"># 最终生成文件名</span><br>SRCS = main.c utils.c  <span class="hljs-comment"># 源文件</span><br>OBJS = $(SRCS:.c=.o)   <span class="hljs-comment"># 变量替换.将 SRCS 的 .c 替换为 .o</span><br><br><span class="hljs-variable">$(TARGET)</span>: <span class="hljs-variable">$(OBJS)</span><br>	<span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$(CFLAGS)</span> -o <span class="hljs-variable">$(TARGET)</span> <span class="hljs-variable">$(OBJS)</span> <span class="hljs-comment"># 链接</span><br><br><span class="hljs-comment"># 模式规则. % 是通配符, $ 用于引用变量</span><br><span class="hljs-section">%.o: %.c</span><br>	<span class="hljs-variable">$(CC)</span> <span class="hljs-variable">$(CFLAGS)</span> -c <span class="hljs-variable">$&lt;</span> -o <span class="hljs-variable">$@</span> <span class="hljs-comment"># 生成 .o 文件</span><br><br><span class="hljs-comment"># 调试功能.如 make print-CC 将会输出 CC = gcc</span><br><span class="hljs-section">print-%:</span><br>	@echo &#x27;<span class="hljs-variable">$*</span>=$(<span class="hljs-variable">$*</span>)&#x27; <span class="hljs-comment"># @ 表示不在终端显示命令本身,只显示结果</span><br><br><span class="hljs-comment"># 声明伪目标. make clean 不会被当成文件处理</span><br><span class="hljs-section">clean:</span><br>	rm -f <span class="hljs-variable">$(OBJS)</span> <span class="hljs-variable">$(TARGET)</span><br><br><span class="hljs-meta"><span class="hljs-keyword">.PHONY</span>: clean</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>自动变量</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-variable">$@</span> <span class="hljs-comment"># 目标文件名</span><br><span class="hljs-variable">$&lt;</span> <span class="hljs-comment"># 第一个依赖文件名</span><br><span class="hljs-variable">$^</span> <span class="hljs-comment"># 所有依赖文件列表</span><br><span class="hljs-variable">$?</span> <span class="hljs-comment"># 比目标新的依赖文件</span><br><span class="hljs-variable">$*</span> <span class="hljs-comment"># 匹配通配符的部分</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>函数调用</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs makefile">$(fn, arguments)<br><span class="hljs-comment"># fn: 函数名</span><br><span class="hljs-comment"># arguments: 函数参数</span><br><br><span class="hljs-variable">$(<span class="hljs-built_in">shell</span> &lt;command&gt; &lt;arguments&gt;)</span> <span class="hljs-comment"># 返回 shell 命令 command 的结果</span><br><span class="hljs-variable">$(<span class="hljs-built_in">subst</span> &lt;from&gt;, &lt;to&gt;, &lt;text&gt;)</span>  <span class="hljs-comment"># 将 text 中的 from 替换为 to</span><br><span class="hljs-variable">$(<span class="hljs-built_in">patsubst</span> &lt;pattern&gt;, &lt;replacement&gt;, &lt;text&gt;)</span> <span class="hljs-comment"># 模式字符串替换</span><br><span class="hljs-variable">$(<span class="hljs-built_in">foreach</span> &lt;var&gt;, &lt;list&gt;, &lt;text&gt;)</span> <span class="hljs-comment"># 将 list 字符串取出.执行 text 的表达式</span><br><br><span class="hljs-variable">$(<span class="hljs-built_in">dir</span> &lt;names...&gt;)</span>      <span class="hljs-comment"># 获取文件的目录路径</span><br><span class="hljs-variable">$(<span class="hljs-built_in">notdir</span> &lt;names...&gt;)</span>   <span class="hljs-comment"># 去除文件的目录路径</span><br><span class="hljs-variable">$(<span class="hljs-built_in">filter</span> &lt;names...&gt;)</span>   <span class="hljs-comment"># 过滤部分文件</span><br><span class="hljs-variable">$(<span class="hljs-built_in">basename</span> &lt;names...&gt;)</span> <span class="hljs-comment"># 去掉后缀</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs makefile"><span class="hljs-variable">$(function arguments)</span><br><span class="hljs-comment"># function: 函数名</span><br><span class="hljs-comment"># arguments: 函数参数.多个参数通常用逗号分隔</span><br><br><span class="hljs-variable">$(<span class="hljs-built_in">shell</span> &lt;command&gt;)</span> <span class="hljs-comment"># 返回 shell 命令 command 的输出</span><br><span class="hljs-variable">$(<span class="hljs-built_in">subst</span> &lt;from&gt;, &lt;to&gt;, &lt;text&gt;)</span>  <span class="hljs-comment"># 将 text 中的 from 替换为 to</span><br><span class="hljs-variable">$(<span class="hljs-built_in">patsubst</span> &lt;pattern&gt;, &lt;replacement&gt;, &lt;text&gt;)</span> <span class="hljs-comment"># 模式字符串替换</span><br><span class="hljs-variable">$(<span class="hljs-built_in">foreach</span> &lt;var&gt;, &lt;list&gt;, &lt;text&gt;)</span> <span class="hljs-comment"># 将 list 字符串取出.执行 text 的表达式</span><br><br><span class="hljs-variable">$(<span class="hljs-built_in">dir</span> &lt;names...&gt;)</span>      <span class="hljs-comment"># 获取文件的目录路径</span><br><span class="hljs-variable">$(<span class="hljs-built_in">notdir</span> &lt;names...&gt;)</span>   <span class="hljs-comment"># 去除文件的目录路径</span><br><span class="hljs-variable">$(<span class="hljs-built_in">filter</span> &lt;names...&gt;)</span>   <span class="hljs-comment"># 过滤部分文件</span><br><span class="hljs-variable">$(<span class="hljs-built_in">basename</span> &lt;names...&gt;)</span> <span class="hljs-comment"># 去掉后缀</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="0-6-CMake"><a href="#0-6-CMake" class="headerlink" title="0.6 CMake"></a>0.6 CMake</h3><ol>
 <li><p><strong>cmake: 开源的 跨平台构建工具,用于管理软件编译过程</strong></p>
@@ -473,7 +473,7 @@
 </ol>
 <h3 id="1-2-宏定义"><a href="#1-2-宏定义" class="headerlink" title="1.2 宏定义"></a>1.2 宏定义</h3><ol>
 <li><p><strong>宏定义: 预处理器的一种指令.核心思想为将代码中的宏名简单替换为指定文本</strong></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 无参宏.每当 name 出现,预处理器将其替换为 stuff */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> name stuff</span><br><br><span class="hljs-comment">/* 含参数宏定义.每当 name(parameter-list) 出现,将替换为 stuff,且参数对应被替换  */</span><br><span class="hljs-meta">#dedine name(parameter-list) stuff</span><br><br><span class="hljs-comment">/* 可变参数宏定义. */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHOWLIST(...) printf(__VA_ARGS__)</span><br><span class="hljs-comment">// ... 表示可变参数.可变参数允许空参数</span><br><span class="hljs-comment">// __VA_ARGS__ 在预处理中被实际的参数集替换</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* 无参宏.每当 name 出现,预处理器将其替换为 stuff */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> name stuff</span><br><br><span class="hljs-comment">/* 含参数宏定义.每当 name(parameter-list) 出现,将替换为 stuff,且参数对应被替换  */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> name(parameter-list) stuff</span><br><br><span class="hljs-comment">/* 可变参数宏定义. */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHOWLIST(...) printf(__VA_ARGS__)</span><br><span class="hljs-comment">// ... 表示可变参数.可变参数允许空参数</span><br><span class="hljs-comment">// __VA_ARGS__ 在预处理中被实际的参数集替换</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>宏定义中的空格不能忽视</li>
@@ -610,7 +610,7 @@
 </tr>
 <tr>
 <td align="left">#error</td>
-<td align="left">当遇到标准错误时,输出错误消息</td>
+<td align="left">触发预处理错误,输出自定义错误消息</td>
 </tr>
 <tr>
 <td align="left">#pragma</td>
@@ -691,7 +691,7 @@
 <li>枚举(<code>enum</code>)</li>
 </ul>
 </li>
-<li><p>C 并未给定 int 的具体尺寸为多少字节,只需满足: <code>short &lt;= int &lt;= long &lt;= long int</code></p>
+<li><p>C 并未给定 int 的具体尺寸为多少字节,只需满足: <code>sizeof(short) &lt;= sizeof(int) &lt;= sizeof(long) &lt;= sizeof(long long)</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 使用 sizeof 运算符获取数据类型或表达式的尺寸</span><br><span class="hljs-keyword">sizeof</span>(type_name);<br><span class="hljs-keyword">sizeof</span>(object);<br><span class="hljs-keyword">sizeof</span> object;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>默认的 <code>char</code> 并未规定是否有符号.使用 <code>char</code> 型变量时最好将其范围限制在 [0, 127]</p>
@@ -700,7 +700,7 @@
 </li>
 <li><p>枚举类型: 其值为符号常量(本质上是整型),而非字面值</p>
 </li>
-<li><p>浮点类型: 默认情况下为 <code>double</code> 类型.后缀为 l&#x2F;L 可指定其为 <code>float</code></p>
+<li><p>浮点类型: 默认情况下为 <code>double</code> 类型.后缀为 l&#x2F;L 可指定其为 <code>long double</code></p>
 </li>
 </ol>
 <h3 id="2-2-变量"><a href="#2-2-变量" class="headerlink" title="2.2 变量"></a>2.2 变量</h3><ol>
@@ -1050,7 +1050,7 @@
 <li><strong>线程存储期</strong>(C11 引入)<ul>
 <li>使用 <code>_Thread_local</code> 关键字声明线程局部变量</li>
 <li>线程局部变量的地址在不同线程中是不同的,在每个线程中都有一份独立的实例</li>
-<li>线程局部变量的析构在线程退出时进行</li>
+<li>线程局部变量在线程的整个生命周期内存在,在线程退出时其存储期结束</li>
 </ul>
 </li>
 </ol>
@@ -1106,7 +1106,7 @@
 <td>形参</td>
 <td>函数头部</td>
 <td>是</td>
-<td>函数作用域</td>
+<td>代码块作用域</td>
 <td>&#x2F;</td>
 </tr>
 </tbody></table>
@@ -1173,7 +1173,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">switch</span> (expression) &#123;<br><span class="hljs-keyword">case</span> constant_expression_1:<br>    code block <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> constant_expression_2:<br>    code block <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">break</span>;<br>...<br><span class="hljs-keyword">case</span> constant_expression_n:<br>    code block n;<br>    <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">default</span>:<br>    code block;<br>    <span class="hljs-keyword">break</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
-<li><code>break</code> 语句是可选的,若没有 <code>break</code>,将发生 <code>break</code> 穿透</li>
+<li><code>break</code> 语句是可选的,若没有 <code>break</code>,将发生 <code>case</code> 贯穿(fallthrough)</li>
 <li><code>default</code> 语句是可选的,用于处理没有成功匹配的情况</li>
 </ul>
 </li>
@@ -1222,10 +1222,8 @@
 </li>
 <li><p>任何一个 C 函数都有返回类型: <code>void</code> 或函数生成结果的类型</p>
 <ul>
-<li><p><code>main</code> 函数和其他函数一样,如果未显示声明返回类型,则默认返回整型</p>
-</li>
-<li><p>C 通过 <code>main</code> 函数的返回值告知系统是否执行成功(0 表示成功, 非0表示失败)</p>
-</li>
+<li><code>main</code> 函数必须显式声明返回类型(通常为 <code>int</code>).“默认返回整型”属于旧式 C,不适用于现代 C 标准</li>
+<li>C 通过 <code>main</code> 函数的返回值告知系统是否执行成功(0 表示成功, 非0表示失败)</li>
 </ul>
 </li>
 <li><p>参数的传递</p>
@@ -1256,7 +1254,7 @@
 <li><p><code>void</code> 指针: 通用指针,可以指向任意类型的数据</p>
 <ul>
 <li>不要对 <code>void</code> 指针解引用</li>
-<li>任何类型的指针均可转换为 <code>void</code> 指针,而再转换回来需要强制类型转换</li>
+<li>任何对象指针均可转换为 <code>void</code> 指针,而再转换回来在 C 中通常不需要强制类型转换</li>
 </ul>
 </li>
 <li><p><code>NULL</code> 指针</p>
@@ -1296,7 +1294,7 @@
 </ul>
 </li>
 <li><p>函数指针</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> (*fp)(<span class="hljs-type">int</span>);  	 <span class="hljs-comment">// fp 是函数指针</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">func</span><span class="hljs-params">(<span class="hljs-type">int</span> num)</span>;   <span class="hljs-comment">// fun 函数名也是首地址,本质也是一个指针.类型为 int (*)(int)</span><br>                     <span class="hljs-comment">// 对于函数名而言: 它本身是一个指针,且对其取值或取址的值仍是其本身</span><br>fp = func;           <span class="hljs-comment">// 对函数指针的赋值方式.类型匹配可直接赋值</span><br>result = (*fp)(num); <span class="hljs-comment">// K&amp;R C 的调用方式.从声明形式的等价得出</span><br>result = fp(num);    <span class="hljs-comment">// UNIX 推广者的调用方式.从赋值语句的等价得出</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> (*fp)(<span class="hljs-type">int</span>);  	 <span class="hljs-comment">// fp 是函数指针</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">func</span><span class="hljs-params">(<span class="hljs-type">int</span> num)</span>;   <span class="hljs-comment">// func 是函数声明.在大多数表达式中,函数名可转换为指向该函数的指针</span><br>                     <span class="hljs-comment">// 但函数本身不是“指针变量”,对函数名取地址后得到的才是函数指针</span><br>fp = func;           <span class="hljs-comment">// 对函数指针的赋值方式.类型匹配可直接赋值</span><br>result = (*fp)(num); <span class="hljs-comment">// K&amp;R C 的调用方式.从声明形式的等价得出</span><br>result = fp(num);    <span class="hljs-comment">// UNIX 推广者的调用方式.从赋值语句的等价得出</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>函数指针作为参数</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">sub</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">calc</span><span class="hljs-params">(<span class="hljs-type">int</span> (*fp)(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>), <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span>; <span class="hljs-comment">// 第一个参数为函数指针</span><br><br><span class="hljs-comment">/* 函数名 add 作为实参传入 calc 函数.形参为 fp,是一个函数指针 */</span><br>result = calc(add, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>);<br></code></pre></td></tr></table></figure>
@@ -1318,7 +1316,7 @@
 <li><code>[]</code>: 后缀运算符,表示声明的对象是数组</li>
 <li>数据类型: 指明当对数组中的元素进行访问时得到的数据类型</li>
 <li>数量: 编译器需要根据 <code>数组类型和数量</code> 确定要分配的内存大小</li>
-<li><strong>数组名: 其本质上是一个常量指针,其值为数组首元素的地址</strong></li>
+<li><strong>数组名: 在多数表达式中会转换为指向首元素的指针,但数组本身不是指针</strong></li>
 </ul>
 </li>
 <li><p>初始化</p>
@@ -1369,8 +1367,8 @@
 </li>
 <li><p>访问二维数组元素</p>
 <ul>
-<li><strong>数组名被理解为常量指针,而二维数组又是数组的数组</strong></li>
-<li>因而,<code>a[3][4]</code> 将被计算为 <code>*(*(a+3)+4)</code></li>
+<li><strong>数组名在多数表达式中会转换为指向首元素的指针,而二维数组又是数组的数组</strong></li>
+<li>因而,<code>a[i][j]</code> 可写作 <code>*(*(a+i)+j)</code></li>
 </ul>
 </li>
 <li><p>遍历二维数组: 采用嵌套循环的方式</p>
@@ -1529,9 +1527,9 @@
 </li>
 <li><p>左侧表示被移位的数据,右侧指定移动的位数</p>
 </li>
-<li><p><strong>右移移出的位数全部舍弃.左侧用 0 填充(如果是负数,用1填充.因此负数右移永远不会为0)</strong></p>
+<li><p><strong>右移移出的位数全部舍弃.对于无符号数,左侧补0;对于有符号负数,结果通常依赖实现</strong></p>
 </li>
-<li><p>将整数右移 N 位相当于除以 $2^N$</p>
+<li><p>对无符号整数,右移 N 位相当于除以 $2^N$</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">result = <span class="hljs-number">0b11001010</span> &gt;&gt; <span class="hljs-number">2</span>;<br><span class="hljs-comment">// result = 0b00110010</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
@@ -1555,7 +1553,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">value |= mask;   <span class="hljs-comment">// 置1</span><br>value &amp;= ~mask;  <span class="hljs-comment">// 置0</span><br>value ^= mask;   <span class="hljs-comment">// 翻转</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="6-3-位域"><a href="#6-3-位域" class="headerlink" title="6.3 位域"></a>6.3 位域</h3><ol>
-<li><p><strong>位域将1字节(Byte)的二进制位划分为几个不同的区域,并指定每个区域的位数</strong></p>
+<li><p><strong>位域将一个整数存储单元中的二进制位划分为几个不同的区域,并指定每个区域的位数</strong></p>
 </li>
 <li><p>每个域有一个域名,允许在程序中按域名进行单独的操作</p>
 </li>
@@ -1600,11 +1598,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
-      
         <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" class="print-no-link">#计算机</a>
       
         <a href="/tags/Code/" class="print-no-link">#Code</a>
+      
+        <a href="/tags/C-%E8%AF%AD%E8%A8%80/" class="print-no-link">#C 语言</a>
       
     </div>
   
